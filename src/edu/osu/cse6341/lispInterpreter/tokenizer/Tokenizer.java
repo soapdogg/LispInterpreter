@@ -1,8 +1,12 @@
+package edu.osu.cse6341.lispInterpreter.tokenizer;
+
 import java.util.Queue;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-class Tokenizer implements ITokenizer{
+import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
+
+public class Tokenizer implements ITokenizer{
 
 	private static Tokenizer singletonTokenizer;
 	private Queue<IToken> tokens;
@@ -28,5 +32,10 @@ class Tokenizer implements ITokenizer{
 	
 			}
 		}
+	}
+
+	@Override
+	public IToken getNextToken(){
+		return null;
 	}
 }
