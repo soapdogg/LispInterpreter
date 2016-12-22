@@ -1,0 +1,13 @@
+# Class files
+*.class
+
+#Package files
+*.jar
+*.war
+*.ear
+
+#Output directory
+/output/*
+
+#Sources .txt 
+sources.txt
