@@ -5,6 +5,9 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
+import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.EndOfFileToken;
+import edu.osu.cse6341.lispInterpreter.tokenizer.states.IState;
+import edu.osu.cse6341.lispInterpreter.tokenizer.states.StartingState;
 
 public class Tokenizer implements ITokenizer{
 
@@ -22,25 +25,30 @@ public class Tokenizer implements ITokenizer{
 
 	@Override
 	public void tokenize(Scanner in){
-		boolean continueScanning = true;
-		String line;
-		while(in.hasNextLine() && continueScanning){
-			line = in.nextLine().trim();
-			int startingPosition;
-			int currentPosition = 0;
-			while (continueScanning && currentPosition >= line.length()){
-	
-			}
-		}
+		tokens = new LinkedList<>();
+        boolean continueParsing = true;
+        IState state = new StartingState();
+        String line;
+        while(in.hasNextLine() && continueParsing)
+        {
+            line = in.nextLine().trim();
+            continueParsing = state.processState(line, 0, 0);
+        }
+		if(continueParsing) tokens.add(new EndOfFileToken());
 	}
 
 	@Override
 	public IToken getNextToken(){
-		return null;
+		return tokens.remove();	
 	}
 
 	@Override
 	public void addToTokens(IToken token){
 		tokens.add(token);
+	}
+
+	@Override
+	public boolean hasNext(){
+		return !tokens.isEmpty();
 	}
 }

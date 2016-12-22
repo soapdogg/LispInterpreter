@@ -14,7 +14,7 @@ public class ErrorToken implements IToken{
 
 	public void process(IInterpreter interpreter){
 		System.out.print("ERROR: Invalid token: ");
-		System.out.print(atomValue);
+		System.out.println(atomValue);
 		System.exit(-3);
 	} 
 }

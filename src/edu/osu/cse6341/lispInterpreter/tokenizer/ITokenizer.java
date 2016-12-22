@@ -10,6 +10,8 @@ public interface ITokenizer{
 	public IToken getNextToken();	
 
 	public void addToTokens(IToken token);
+
+	public boolean hasNext();
 }
 
 

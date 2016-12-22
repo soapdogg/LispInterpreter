@@ -8,6 +8,5 @@ public class Main{
 	public static void main(String [] args){
 		IInterpreter interpreter = Interpreter.getInterpreter();
 		interpreter.interpret();
-		System.out.println("FUCK THE WORLD");
 	}
 }

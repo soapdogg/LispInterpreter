@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import edu.osu.cse6341.lispInterpreter.IInterpreter;
 import edu.osu.cse6341.lispInterpreter.tokenizer.ITokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
+import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
 
 public final class Interpreter implements IInterpreter{
 
@@ -39,7 +40,10 @@ public final class Interpreter implements IInterpreter{
 	}
 
 	private void processTokens(){
-
+		while(tokenizer.hasNext()){
+			IToken token = tokenizer.getNextToken();
+			token.process(this);
+		}
 	}
 
 	public void incrementOpenCount(){
