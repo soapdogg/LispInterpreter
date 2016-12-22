@@ -5,7 +5,8 @@ public class WhitespaceState implements IState{
 
 	@Override
 	public boolean processState(String line, int pos, int startingPos){
-		return false;
+		IState nextState = new StartingState();
+		return nextState.processState(line, ++pos, ++startingPos);
 	}
 
 }
