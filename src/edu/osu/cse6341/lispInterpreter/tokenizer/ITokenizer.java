@@ -8,6 +8,8 @@ public interface ITokenizer{
 	public void tokenize(Scanner in);
 
 	public IToken getNextToken();	
+
+	public void addToTokens(IToken token);
 }
 
 

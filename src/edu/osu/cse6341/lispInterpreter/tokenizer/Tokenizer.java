@@ -38,4 +38,9 @@ public class Tokenizer implements ITokenizer{
 	public IToken getNextToken(){
 		return null;
 	}
+
+	@Override
+	public void addToTokens(IToken token){
+		tokens.add(token);
+	}
 }
