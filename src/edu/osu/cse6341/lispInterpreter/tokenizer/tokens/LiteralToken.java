@@ -9,8 +9,4 @@ public class LiteralToken implements IToken{
 	public LiteralToken(String atomValue){
 		this.atomValue = atomValue;
 	}
-
-	public void process(IInterpreter interpreter){
-		interpreter.addToLiteralAtoms(atomValue);
-	}
 }

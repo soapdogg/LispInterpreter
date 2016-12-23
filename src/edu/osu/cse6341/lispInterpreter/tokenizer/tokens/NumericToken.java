@@ -10,9 +10,4 @@ public class NumericToken implements IToken{
 	public NumericToken(int atomValue){
 		this.atomValue = atomValue;
 	}
-
-	public void process(IInterpreter interpreter){
-		interpreter.incrementNumericAtomCount();
-		interpreter.addToNumericAtomSum(atomValue);
-	}
 }

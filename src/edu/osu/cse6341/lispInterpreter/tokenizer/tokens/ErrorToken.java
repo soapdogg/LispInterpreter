@@ -12,9 +12,4 @@ public class ErrorToken implements IToken{
 		this.atomValue = atomValue;
 	}
 
-	public void process(IInterpreter interpreter){
-		System.out.print("ERROR: Invalid token: ");
-		System.out.println(atomValue);
-		System.exit(-3);
-	} 
 }

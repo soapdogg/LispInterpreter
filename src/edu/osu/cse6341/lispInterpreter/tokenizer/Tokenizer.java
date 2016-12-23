@@ -12,7 +12,7 @@ import edu.osu.cse6341.lispInterpreter.tokenizer.states.StartingState;
 public class Tokenizer implements ITokenizer{
 
 	private static Tokenizer singletonTokenizer;
-	private Queue<IToken> tokens;
+	private Queue<IToken> tokens;	
 
 	private Tokenizer(){
 		tokens = new LinkedList<>();
@@ -51,4 +51,10 @@ public class Tokenizer implements ITokenizer{
 	public boolean hasNext(){
 		return !tokens.isEmpty();
 	}
+
+	@Override
+	public IToken getCurrent(){
+		return tokens.peek();
+	}
+
 }

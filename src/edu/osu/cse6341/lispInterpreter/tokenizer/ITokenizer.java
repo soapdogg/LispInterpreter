@@ -12,6 +12,8 @@ public interface ITokenizer{
 	public void addToTokens(IToken token);
 
 	public boolean hasNext();
+
+	public IToken getCurrent();
 }
 
 
