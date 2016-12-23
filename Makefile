@@ -3,5 +3,5 @@ all:
 	javac @sources.txt
 
 clean:
-	find . -name \*.class -type f -delete
+	find . -name "*.class" -type f -delete
 
