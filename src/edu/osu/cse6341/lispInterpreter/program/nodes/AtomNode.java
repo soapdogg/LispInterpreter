@@ -13,4 +13,9 @@ public class AtomNode implements IAtomNode{
 	public String toString(){
 		return value;
 	}
+
+	@Override
+	public IExpressionChild newInstance(){
+		return new AtomNode();
+	}
 }

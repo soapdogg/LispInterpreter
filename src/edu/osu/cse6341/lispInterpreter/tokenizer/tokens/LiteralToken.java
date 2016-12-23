@@ -6,6 +6,8 @@ public class LiteralToken implements IToken{
 
 	private String atomValue;
 
+	public LiteralToken(){}
+
 	public LiteralToken(String atomValue){
 		this.atomValue = atomValue;
 	}
