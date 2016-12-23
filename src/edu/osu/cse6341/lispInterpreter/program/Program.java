@@ -35,10 +35,9 @@ public class Program implements IProgram
      * interprets the program
      */
     @Override
-    public void interpret()
+    public void parse()
     {
         rootNode.parse();
-        System.out.print(toString());
     }
 
     
