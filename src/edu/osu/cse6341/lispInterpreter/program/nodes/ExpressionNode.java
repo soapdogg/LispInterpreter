@@ -11,9 +11,7 @@ public class ExpressionNode implements IExpressionNode{
 	private static final Map<TokenKind, IExpressionChild> tokenExpressionChildMap;
 	private IExpressionChild expressionChild;
 	private boolean isList;
-    /**
-     * static constructor
-     */
+
     static
     {
         tokenExpressionChildMap = new HashMap<>();
@@ -24,13 +22,14 @@ public class ExpressionNode implements IExpressionNode{
 
 	@Override 
 	public void parse(){
-		//TODO Valid token type
-		expressionChild = tokenExpressionChildMap.get(Tokenizer.getTokenizer().getCurrent().getTokenKind());
+		IToken token = Tokenizer.getTokenizer().getCurrent();
+		assertTokenIsAtomOrOpen(token);
+		expressionChild = tokenExpressionChildMap.get(token.getTokenKind());
 		expressionChild = expressionChild.newInstance();
 		isList = expressionChild instanceof ListNode;
 		if(isList) Tokenizer.getTokenizer().getNextToken();
 		expressionChild.parse();
-		if(isList) Tokenizer.getTokenizer().getNextToken();
+		if(isList) assertTokenIsClose(Tokenizer.getTokenizer().getNextToken());
 	}
 
 	@Override
@@ -38,5 +37,19 @@ public class ExpressionNode implements IExpressionNode{
 		StringBuilder sb = new StringBuilder();
 		sb.append(expressionChild.toString());
 		return sb.toString();
+	}
+
+	private static void assertTokenIsAtomOrOpen(IToken token){
+		if(tokenExpressionChildMap.containsKey(token.getTokenKind())) return;
+		System.out.println("Expected either an ATOM or OPEN token. Actual: " 
+			+ token.getTokenKind().toString() + "\tValue: " + token.toString());
+		System.exit(-5);
+	}
+	
+	private static void assertTokenIsClose(IToken token){
+		if(token.getTokenKind() == TokenKind.CLOSE_TOKEN) return;
+		System.out.println("Expected CLOSE token. Actual: " 
+			+ token.getTokenKind().toString() + "\tValue: " + token.toString());
+		System.exit(-6);
 	}
 }

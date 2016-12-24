@@ -35,6 +35,7 @@ public class Tokenizer implements ITokenizer{
             continueParsing = state.processState(line, 0, 0);
         }
 		if(continueParsing) tokens.add(new EndOfFileToken());
+		else reportError();
 	}
 
 	@Override
@@ -57,4 +58,10 @@ public class Tokenizer implements ITokenizer{
 		return tokens.peek();
 	}
 
+	private void reportError(){
+		IToken token = null;
+		while(!tokens.isEmpty()) token = tokens.remove();
+		System.out.println("Error! Invalid token: " + token.toString());
+		System.exit(-4);
+	}
 }

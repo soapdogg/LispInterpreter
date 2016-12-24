@@ -1,6 +1,8 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes;
 
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
+import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
+import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 
 public class AtomNode implements IAtomNode{
 	
@@ -8,7 +10,9 @@ public class AtomNode implements IAtomNode{
 
 	@Override
 	public void parse(){
-		value = Tokenizer.getTokenizer().getNextToken().toString();
+		IToken token =  Tokenizer.getTokenizer().getNextToken();
+		assertTokenIsAtom(token);
+		value = token.toString();
 	}
 
 	@Override
@@ -19,5 +23,13 @@ public class AtomNode implements IAtomNode{
 	@Override
 	public IExpressionChild newInstance(){
 		return new AtomNode();
+	}
+	
+	private static void assertTokenIsAtom(IToken token){
+		TokenKind tokenKind = token.getTokenKind();
+		if(tokenKind == TokenKind.NUMERIC_TOKEN ||
+			tokenKind == TokenKind.LITERAL_TOKEN) return;
+		System.out.println("Expected NUMERIC or LITERAL token, Actual Token:" + 
+			tokenKind.toString() +"\tValue: " + token.toString());
 	}
 }

@@ -13,4 +13,9 @@ public class EndOfFileToken implements IToken{
 	public int hashCode(){
 		return (int) getTokenKind().ordinal();
 	}
+
+	@Override
+	public String toString(){
+		return "EOF";
+	}
 }

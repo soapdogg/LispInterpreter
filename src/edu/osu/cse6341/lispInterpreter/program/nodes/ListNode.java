@@ -13,7 +13,6 @@ public class ListNode implements IListNode{
 	public void parse(){
 		isEmpty = Tokenizer.getTokenizer().getCurrent().getTokenKind() == TokenKind.CLOSE_TOKEN;
 		if(isEmpty) return;
-//		Tokenizer.getTokenizer().getNextToken();
 		expressionNode = new ExpressionNode();
 		listNode = new ListNode();
 		expressionNode.parse();
