@@ -11,5 +11,13 @@ public class ErrorToken implements IToken{
 	public ErrorToken(String atomValue){
 		this.atomValue = atomValue;
 	}
+	
+	public TokenKind getTokenKind(){
+		return TokenKind.ERROR_TOKEN;
+	}
 
+	@Override
+	public int hashCode(){
+		return (int) getTokenKind().ordinal();
+	}
 }

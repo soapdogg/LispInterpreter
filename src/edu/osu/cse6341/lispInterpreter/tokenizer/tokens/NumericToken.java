@@ -12,4 +12,18 @@ public class NumericToken implements IToken{
 	public NumericToken(int atomValue){
 		this.atomValue = atomValue;
 	}
+	
+	public TokenKind getTokenKind(){
+		return TokenKind.NUMERIC_TOKEN;
+	}
+	
+	@Override
+	public int hashCode(){
+		return (int) getTokenKind().ordinal();
+	}
+	
+	@Override
+	public String toString(){
+		return String.valueOf(atomValue);
+	}
 }

@@ -7,15 +7,18 @@ import java.util.LinkedList;
 import edu.osu.cse6341.lispInterpreter.IInterpreter;
 import edu.osu.cse6341.lispInterpreter.tokenizer.ITokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
+import edu.osu.cse6341.lispInterpreter.program.*;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
 
 public final class Interpreter implements IInterpreter{
 
 	private static Interpreter singletonInterpreter;
+	private IProgram program;
 	private ITokenizer tokenizer;
 
 	private Interpreter(){
 		tokenizer = Tokenizer.getTokenizer();
+		program = Program.getProgram();
 	}
 
 	public static Interpreter getInterpreter(){
@@ -25,7 +28,7 @@ public final class Interpreter implements IInterpreter{
 
 	public void interpret(){
 		tokenize();
-		System.out.println(toString());
+		program.parse();
 	}
 
 	private void tokenize(){
@@ -37,8 +40,7 @@ public final class Interpreter implements IInterpreter{
 	
 	@Override
 	public String toString(){
-		StringBuilder sb = new StringBuilder();
-		return sb.toString();
+		return program.toString(); 
 	}
 }
 
