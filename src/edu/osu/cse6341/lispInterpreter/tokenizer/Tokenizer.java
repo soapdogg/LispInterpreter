@@ -12,7 +12,7 @@ import edu.osu.cse6341.lispInterpreter.tokenizer.states.StartingState;
 public class Tokenizer implements ITokenizer{
 
 	private static Tokenizer singletonTokenizer;
-	private Queue<IToken> tokens;
+	private Queue<IToken> tokens;	
 
 	private Tokenizer(){
 		tokens = new LinkedList<>();
@@ -35,6 +35,7 @@ public class Tokenizer implements ITokenizer{
             continueParsing = state.processState(line, 0, 0);
         }
 		if(continueParsing) tokens.add(new EndOfFileToken());
+		else reportError();
 	}
 
 	@Override
@@ -50,5 +51,17 @@ public class Tokenizer implements ITokenizer{
 	@Override
 	public boolean hasNext(){
 		return !tokens.isEmpty();
+	}
+
+	@Override
+	public IToken getCurrent(){
+		return tokens.peek();
+	}
+
+	private void reportError(){
+		IToken token = null;
+		while(!tokens.isEmpty()) token = tokens.remove();
+		System.out.println("Error! Invalid token: " + token.toString());
+		System.exit(-4);
 	}
 }
