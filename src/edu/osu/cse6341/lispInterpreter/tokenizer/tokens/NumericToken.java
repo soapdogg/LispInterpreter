@@ -6,13 +6,24 @@ import edu.osu.cse6341.lispInterpreter.IInterpreter;
 public class NumericToken implements IToken{
 
 	private int atomValue;
+
+	public NumericToken(){}
 	
 	public NumericToken(int atomValue){
 		this.atomValue = atomValue;
 	}
-
-	public void process(IInterpreter interpreter){
-		interpreter.incrementNumericAtomCount();
-		interpreter.addToNumericAtomSum(atomValue);
+	
+	public TokenKind getTokenKind(){
+		return TokenKind.NUMERIC_TOKEN;
+	}
+	
+	@Override
+	public int hashCode(){
+		return (int) getTokenKind().ordinal();
+	}
+	
+	@Override
+	public String toString(){
+		return String.valueOf(atomValue);
 	}
 }

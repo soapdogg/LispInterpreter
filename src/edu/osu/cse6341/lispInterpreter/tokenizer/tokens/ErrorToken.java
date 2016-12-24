@@ -11,10 +11,18 @@ public class ErrorToken implements IToken{
 	public ErrorToken(String atomValue){
 		this.atomValue = atomValue;
 	}
+	
+	public TokenKind getTokenKind(){
+		return TokenKind.ERROR_TOKEN;
+	}
 
-	public void process(IInterpreter interpreter){
-		System.out.print("ERROR: Invalid token: ");
-		System.out.println(atomValue);
-		System.exit(-3);
-	} 
+	@Override
+	public int hashCode(){
+		return (int) getTokenKind().ordinal();
+	}
+
+	@Override
+	public String toString(){
+		return atomValue;
+	}
 }
