@@ -1,14 +1,14 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes;
 
+import edu.osu.cse6341.lispInterpreter.program.IParsable;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.EndOfFileToken;
 /**
  * Node that represents the start node in the BNF for lisp
  */
-public class StartNode implements IStartNode
-{
-    private final IExpressionNode expressionNode;
-	private IStartNode startNode;
+public class StartNode implements IParsable{
+    private final ExpressionNode expressionNode;
+	private StartNode startNode;
 
     /**
      * Default Constructor
