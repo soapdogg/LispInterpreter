@@ -28,8 +28,7 @@ public class AtomNode implements IParsable, IExpressionChild{
 	
 	private static void assertTokenIsAtom(IToken token){
 		TokenKind tokenKind = token.getTokenKind();
-		if(tokenKind == TokenKind.NUMERIC_TOKEN ||
-			tokenKind == TokenKind.LITERAL_TOKEN) return;
+		if(tokenKind == TokenKind.NUMERIC_TOKEN) return;
 		System.out.println("Expected NUMERIC or LITERAL token, Actual Token:" + 
 			tokenKind.toString() +"\tValue: " + token.toString());
 	}

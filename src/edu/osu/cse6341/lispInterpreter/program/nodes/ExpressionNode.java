@@ -17,7 +17,6 @@ public class ExpressionNode implements IParsable{
     {
         tokenExpressionChildMap = new HashMap<>();
         tokenExpressionChildMap.put(TokenKind.NUMERIC_TOKEN, new AtomNode());
-        tokenExpressionChildMap.put(TokenKind.LITERAL_TOKEN, new AtomNode());
         tokenExpressionChildMap.put(TokenKind.OPEN_TOKEN, new ListNode());
     }
 
