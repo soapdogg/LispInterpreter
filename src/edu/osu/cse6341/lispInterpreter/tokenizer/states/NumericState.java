@@ -1,6 +1,5 @@
 package edu.osu.cse6341.lispInterpreter.tokenizer.states;
 
-import edu.osu.cse6341.lispInterpreter.tokenizer.ITokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.NumericToken;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
@@ -28,7 +27,7 @@ public class NumericState implements IState{
         String fragment = line.substring(startingPos, pos);
 		int value = Integer.parseInt(fragment);
 		IToken token = new NumericToken(value);
-        ITokenizer tokenizer = Tokenizer.getTokenizer();
+        Tokenizer tokenizer = Tokenizer.getTokenizer();
         tokenizer.addToTokens(token);
         IState nextState = new StartingState();
         startingPos = pos;

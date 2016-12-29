@@ -5,9 +5,8 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.StartNode;
 /**
  * Class that represents a lisp Program
  */
-public class Program implements IProgram
-{
-    private static IProgram singletonProgram;       //singleton instance of the lisp program
+public class Program{
+    private static Program singletonProgram;       //singleton instance of the lisp program
     private final StartNode startNode;               //the root node of the parse tree associated with the program
     private boolean hasEncounteredError;            //true iff the program has encountered an error while executing.
 
@@ -24,7 +23,7 @@ public class Program implements IProgram
      * @return
      *      the singleton instance of the program
      */
-    public static IProgram getProgram()
+    public static Program getProgram()
     {
         if(singletonProgram == null) singletonProgram = new Program();
         return singletonProgram;
@@ -33,7 +32,6 @@ public class Program implements IProgram
     /**
      * interprets the program
      */
-    @Override
     public void parse()
     {
         startNode.parse();
@@ -44,7 +42,6 @@ public class Program implements IProgram
      * @return
      *      true iff the program has encountered an error, false otherwise
      */
-    @Override
     public boolean hasEncounteredAnError()
     {
         return hasEncounteredError;
@@ -54,7 +51,6 @@ public class Program implements IProgram
      * @return
      *      a string representation of the program
      */
-    @Override
     public String toString()
     {
         return startNode.toString(); 

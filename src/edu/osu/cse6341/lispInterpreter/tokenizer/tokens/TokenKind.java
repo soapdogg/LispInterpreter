@@ -1,6 +1,7 @@
 package edu.osu.cse6341.lispInterpreter.tokenizer.tokens;
 
 public enum TokenKind {
+	LITERAL_TOKEN,
 	CLOSE_TOKEN,
 	EOF_TOKEN,
 	ERROR_TOKEN,

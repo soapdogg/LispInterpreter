@@ -1,6 +1,5 @@
 package edu.osu.cse6341.lispInterpreter.tokenizer.states;
 
-import edu.osu.cse6341.lispInterpreter.tokenizer.ITokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.LiteralToken;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
@@ -40,13 +39,11 @@ public class LiteralState implements IState{
 	private static IState processReservedWord(String reservedWord)
 	{
 		boolean containsWord = reservedWordTokenMap.containsKey(reservedWord);
-		if(containsWord)
-		{
-			ITokenizer tokenizer = Tokenizer.getTokenizer();
-			IToken token = new LiteralToken(reservedWord, reservedWordTokenMap.get(reservedWord));
-			tokenizer.addToTokens(token);
-		}
-		return containsWord ? new StartingState() : new ErrorState();
+		Tokenizer tokenizer = Tokenizer.getTokenizer();
+		TokenKind tokenKind = containsWord ? reservedWordTokenMap.get(reservedWord) : TokenKind.LITERAL_TOKEN;
+		IToken token = new LiteralToken(reservedWord, tokenKind);
+		tokenizer.addToTokens(token);
+		return new StartingState(); 
 	}
 
 	@Override

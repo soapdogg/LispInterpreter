@@ -9,7 +9,7 @@ import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.EndOfFileToken;
 import edu.osu.cse6341.lispInterpreter.tokenizer.states.IState;
 import edu.osu.cse6341.lispInterpreter.tokenizer.states.StartingState;
 
-public class Tokenizer implements ITokenizer{
+public class Tokenizer{
 
 	private static Tokenizer singletonTokenizer;
 	private Queue<IToken> tokens;	
@@ -23,7 +23,6 @@ public class Tokenizer implements ITokenizer{
 		return singletonTokenizer;
 	}
 
-	@Override
 	public void tokenize(Scanner in){
 		tokens = new LinkedList<>();
         boolean continueParsing = true;
@@ -38,22 +37,18 @@ public class Tokenizer implements ITokenizer{
 		else reportError();
 	}
 
-	@Override
 	public IToken getNextToken(){
 		return tokens.remove();	
 	}
 
-	@Override
 	public void addToTokens(IToken token){
 		tokens.add(token);
 	}
 
-	@Override
 	public boolean hasNext(){
 		return !tokens.isEmpty();
 	}
 
-	@Override
 	public IToken getCurrent(){
 		return tokens.peek();
 	}
