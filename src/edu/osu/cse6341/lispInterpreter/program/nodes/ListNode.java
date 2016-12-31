@@ -1,12 +1,13 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes;
 
+import edu.osu.cse6341.lispInterpreter.program.IParsable;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 
-public class ListNode implements IListNode{
+public class ListNode implements IExpressionChild{
 	
-	private IExpressionNode expressionNode;
-	private IListNode listNode;
+	private ExpressionNode expressionNode;
+	private ListNode listNode;
 	private boolean isEmpty;
 
 	@Override

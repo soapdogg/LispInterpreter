@@ -3,10 +3,11 @@ package edu.osu.cse6341.lispInterpreter.program.nodes;
 import java.util.Map;
 import java.util.HashMap;
 
+import edu.osu.cse6341.lispInterpreter.program.IParsable;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.*;
 
-public class ExpressionNode implements IExpressionNode{
+public class ExpressionNode implements IParsable{
 	
 	private static final Map<TokenKind, IExpressionChild> tokenExpressionChildMap;
 	private IExpressionChild expressionChild;
