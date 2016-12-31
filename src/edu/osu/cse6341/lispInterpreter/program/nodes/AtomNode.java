@@ -8,12 +8,18 @@ import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 public class AtomNode implements IExpressionChild{
 	
 	private String value;
+	private boolean isNumeric;
 
 	@Override
 	public void parse(){
 		IToken token =  Tokenizer.getTokenizer().getNextToken();
 		assertTokenIsAtom(token);
 		value = token.toString();
+	}
+
+	@Override
+	public void evaluate(){
+		
 	}
 
 	@Override

@@ -21,6 +21,13 @@ public class ListNode implements IExpressionChild{
 	}
 
 	@Override
+	public void evaluate(){
+		if(isEmpty) return;
+		expressionNode.evaluate();
+		listNode.evaluate();
+	}
+
+	@Override
 	public String toString(){
 		return isEmpty ? "NIL" : "(" + expressionNode.toString() + " . " +  listNode.toString() + ")";
 	}
@@ -28,5 +35,9 @@ public class ListNode implements IExpressionChild{
 	@Override
 	public IExpressionChild newInstance(){
 		return new ListNode();
+	}
+
+	public int getLength(){
+		return listNode == null ? 0 : listNode.getLength() + 1;
 	}
 }

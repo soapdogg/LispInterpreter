@@ -1,10 +1,11 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes;
 
+import edu.osu.cse6341.lispInterpreter.program.IEvaluatable;
 import edu.osu.cse6341.lispInterpreter.program.IParsable;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.EndOfFileToken;
 
-public class StartNode implements IParsable{
+public class StartNode implements IParsable, IEvaluatable{
     private final ExpressionNode expressionNode;
 	private StartNode startNode;
 
@@ -21,6 +22,12 @@ public class StartNode implements IParsable{
 		startNode = new StartNode();
 		startNode.parse();
     }
+
+	@Override
+	public void evaluate(){
+		expressionNode.evaluate();
+		if(startNode != null) startNode.evaluate();
+	}
 
     @Override
     public String toString()

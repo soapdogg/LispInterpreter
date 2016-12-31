@@ -4,10 +4,11 @@ import java.util.Map;
 import java.util.HashMap;
 
 import edu.osu.cse6341.lispInterpreter.program.IParsable;
+import edu.osu.cse6341.lispInterpreter.program.IEvaluatable;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.*;
 
-public class ExpressionNode implements IParsable{
+public class ExpressionNode implements IParsable, IEvaluatable{
 	
 	private static final Map<TokenKind, IExpressionChild> tokenExpressionChildMap;
 	private IExpressionChild expressionChild;
@@ -33,6 +34,11 @@ public class ExpressionNode implements IParsable{
 		if(isList) assertTokenIsClose(Tokenizer.getTokenizer().getNextToken());
 	}
 
+	@Override
+	public void evaluate(){
+		expressionChild.evaluate();
+	}
+	
 	@Override
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
