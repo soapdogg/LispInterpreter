@@ -1,14 +1,23 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes;
 
+import java.util.Map;
+import java.util.HashMap;
+
 import edu.osu.cse6341.lispInterpreter.program.IParsable;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
+import edu.osu.cse6341.lispInterpreter.program.nodes.functions.*;
 
 public class ListNode implements IExpressionChild{
 	
 	private ExpressionNode expressionNode;
 	private ListNode listNode;
-	private boolean isEmpty;
+	private boolean isEmpty, isNumeric, isUndefined, isLiteral;
+	private static Map<String, IFunction> functionMap;
+
+	static{
+		functionMap = new HashMap<>();
+	}
 
 	@Override
 	public void parse(){
@@ -25,6 +34,22 @@ public class ListNode implements IExpressionChild{
 		if(isEmpty) return;
 		expressionNode.evaluate();
 		listNode.evaluate();
+		if(expressionNode.isLiteral()){} 
+	}
+
+	@Override
+	public boolean isUndefined(){
+		return isUndefined;
+	}
+
+	@Override
+	public boolean isNumeric(){
+		return isNumeric; 
+	}
+	
+	@Override
+	public boolean isLiteral(){
+		return isLiteral;
 	}
 
 	@Override

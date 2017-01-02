@@ -14,8 +14,7 @@ public class ExpressionNode implements IParsable, IEvaluatable{
 	private IExpressionChild expressionChild;
 	private boolean isList;
 
-    static
-    {
+    static{
         tokenExpressionChildMap = new HashMap<>();
         tokenExpressionChildMap.put(TokenKind.NUMERIC_TOKEN, new AtomNode());
         tokenExpressionChildMap.put(TokenKind.LITERAL_TOKEN, new AtomNode());
@@ -38,6 +37,10 @@ public class ExpressionNode implements IParsable, IEvaluatable{
 	public void evaluate(){
 		expressionChild.evaluate();
 	}
+
+	public boolean isLiteral(){
+		return expressionChild.isLiteral();
+	}
 	
 	@Override
 	public String toString(){
@@ -46,6 +49,10 @@ public class ExpressionNode implements IParsable, IEvaluatable{
 		sb.append(expressionChild.toString());
 		if(isList) sb.append(')');
 		return sb.toString();
+	}
+
+	public boolean isList(){
+		return isList;
 	}
 
 	private static void assertTokenIsAtomOrOpen(IToken token){

@@ -65,6 +65,10 @@ public class AtomNode implements IExpressionChild{
 		return isUndefined;
 	}
 
+	public boolean isLiteral(){
+		return !(isUndefined ||  isNumeric);
+	}
+
 	private void assertTokenIsAtom(IToken token){
 		TokenKind tokenKind = token.getTokenKind();
 		isNumeric = tokenKind == tokenKind.NUMERIC_TOKEN;
