@@ -2,32 +2,33 @@ package edu.osu.cse6341.lispInterpreter.program;
 
 import edu.osu.cse6341.lispInterpreter.program.nodes.StartNode;
 
-public class Program implements IParsable{
+public class Program implements IParsable, IEvaluatable{
 	private static Program singletonProgram;       
 	private final StartNode rootNode;             
 	private boolean hasEncounteredError;         
 
-	private Program()
-	{
+	private Program(){
 		rootNode = new StartNode();
 		hasEncounteredError = false;
 	}
 
-	public static Program getProgram()
-	{
+	public static Program getProgram(){
 		if(singletonProgram == null) singletonProgram = new Program();
 		return singletonProgram;
 	}
 
 	@Override
-	public void parse()
-	{
+	public void parse(){
 		rootNode.parse();
 	}
 
 	@Override
-	public String toString()
-	{
+	public void evaluate(){
+		rootNode.evaluate();
+	}
+
+	@Override
+	public String toString(){
 		return rootNode.toString(); 
 	}
 }

@@ -38,6 +38,6 @@ public class ListNode implements IExpressionChild{
 	}
 
 	public int getLength(){
-		return listNode == null ? 0 : listNode.getLength() + 1;
+		return isEmpty ? 0 : listNode.getLength() + 1;
 	}
 }

@@ -27,6 +27,7 @@ public final class Interpreter{
 	public void interpret(){
 		tokenize();
 		program.parse();
+		program.evaluate();
 	}
 
 	private void tokenize(){
