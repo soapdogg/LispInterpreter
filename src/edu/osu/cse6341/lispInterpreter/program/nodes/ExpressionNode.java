@@ -42,7 +42,9 @@ public class ExpressionNode implements IParsable, IEvaluatable{
 	@Override
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
+		if(isList) sb.append('(');
 		sb.append(expressionChild.toString());
+		if(isList) sb.append(')');
 		return sb.toString();
 	}
 

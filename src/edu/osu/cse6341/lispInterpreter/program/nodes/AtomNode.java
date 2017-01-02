@@ -37,17 +37,14 @@ public class AtomNode implements IExpressionChild{
 	public void parse(){
 		IToken token =  Tokenizer.getTokenizer().getNextToken();
 		assertTokenIsAtom(token);
-		value = isNumeric || builtinKeywords.contains(token.toString()) 
-			? token.toString()
-			: "Undefined";
+		isUndefined = !(isNumeric || builtinKeywords.contains(token.toString()));
+		value = isUndefined 
+			? "Undefined"
+			: token.toString();
 	}
 
 	@Override
 	public void evaluate(){
-		if(isUndefined){
-			value = "undefined";
-			return;
-		}
 	}
 
 	@Override

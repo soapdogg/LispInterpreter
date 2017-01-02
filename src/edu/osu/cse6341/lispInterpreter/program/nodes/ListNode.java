@@ -29,7 +29,9 @@ public class ListNode implements IExpressionChild{
 
 	@Override
 	public String toString(){
-		return isEmpty ? "NIL" : "(" + expressionNode.toString() + " . " +  listNode.toString() + ")";
+		return listNode.isEmpty() 
+			? expressionNode.toString() 
+			: expressionNode.toString() + " " +  listNode.toString(); 
 	}
 
 	@Override
@@ -39,5 +41,9 @@ public class ListNode implements IExpressionChild{
 
 	public int getLength(){
 		return isEmpty ? 0 : listNode.getLength() + 1;
+	}
+
+	public boolean isEmpty(){
+		return isEmpty;
 	}
 }
