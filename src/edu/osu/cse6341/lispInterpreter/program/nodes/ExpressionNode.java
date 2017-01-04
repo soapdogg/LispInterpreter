@@ -55,6 +55,10 @@ public class ExpressionNode implements IParsable, IEvaluatable{
 		return isList;
 	}
 
+	public String getValue(){
+		return expressionChild.getValue();
+	}
+
 	private static void assertTokenIsAtomOrOpen(IToken token){
 		if(tokenExpressionChildMap.containsKey(token.getTokenKind())) return;
 		System.out.println("Expected either an ATOM or OPEN token. Actual: " 

@@ -5,6 +5,7 @@ import edu.osu.cse6341.lispInterpreter.program.IEvaluatable;
 import edu.osu.cse6341.lispInterpreter.program.ICanBeUndefinable;
 
 public interface IExpressionChild extends IParsable, IEvaluatable, ICanBeUndefinable{
+	String getValue();
 
 	IExpressionChild newInstance();
 }

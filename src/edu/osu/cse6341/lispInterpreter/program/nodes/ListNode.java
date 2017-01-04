@@ -14,9 +14,24 @@ public class ListNode implements IExpressionChild{
 	private ListNode listNode;
 	private boolean isEmpty, isNumeric, isUndefined, isLiteral;
 	private static Map<String, IFunction> functionMap;
+	private String value;
 
 	static{
 		functionMap = new HashMap<>();
+		functionMap.put("ATOM", new AtomFunction());
+		functionMap.put("CAR", new CarFunction());
+		functionMap.put("CDR", new CdrFunction());
+		functionMap.put("COND", new CondFunction());
+		functionMap.put("CONS", new ConsFunction());
+		functionMap.put("EQ", new EqFunction());
+		functionMap.put("GREATER", new GreaterFunction());
+		functionMap.put("INT", new IntFunction());
+		functionMap.put("LESS", new LessFunction());
+		functionMap.put("MINUS", new MinusFunction());
+		functionMap.put("NULL", new NullFunction());
+		functionMap.put("PLUS", new PlusFunction());
+		functionMap.put("QUOTE", new QuoteFunction());
+		functionMap.put("TIMES", new TimesFunction());
 	}
 
 	@Override
@@ -33,8 +48,12 @@ public class ListNode implements IExpressionChild{
 	public void evaluate(){
 		if(isEmpty) return;
 		expressionNode.evaluate();
-		listNode.evaluate();
-		if(expressionNode.isLiteral()){} 
+		if(expressionNode.isLiteral()){
+			IFunction function = functionMap.get(expressionNode.getValue());
+			function = function.newInstance(this);
+			isUndefined = !function.isDefinedCorrectly();
+			if(!isUndefined) value = function.evaluate();
+		} 
 	}
 
 	@Override
@@ -70,5 +89,9 @@ public class ListNode implements IExpressionChild{
 
 	public boolean isEmpty(){
 		return isEmpty;
+	}
+
+	public String getValue(){
+		return value;
 	}
 }
