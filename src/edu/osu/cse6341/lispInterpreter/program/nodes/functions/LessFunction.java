@@ -5,18 +5,31 @@ import edu.osu.cse6341.lispInterpreter.program.ExpressionKind;
 
 public class LessFunction implements IFunction{
 
+	private int length;
+	private ListNode leftSide, rightSide;
+
 	public LessFunction(){}
 
-	private LessFunction(ListNode listNode){}
+	private LessFunction(ListNode listNode){
+		length = listNode.getLength();
+		leftSide = listNode.getListNode();
+		if(leftSide != null) rightSide = leftSide.getListNode();
+	}
 
 	@Override
 	public boolean isDefinedCorrectly(){
-		return false;
+		leftSide.evaluate();
+		rightSide.evaluate();
+		return length == 3 
+			&& leftSide.getExpressionKind() == ExpressionKind.NUMERIC_EXPRESSION  
+			&& rightSide.getExpressionKind() == ExpressionKind.NUMERIC_EXPRESSION;
 	}  
 
 	@Override
 	public String evaluate(){
-		return "";
+		int left = Integer.parseInt(leftSide.toString());
+		int right = Integer.parseInt(rightSide.toString());
+		return left < right ? "T" : "NIL"; 
 	}
 
 	@Override
@@ -26,6 +39,6 @@ public class LessFunction implements IFunction{
 
 	@Override
 	public ExpressionKind getExpressionKind(){
-		return ExpressionKind.NUMERIC_EXPRESSION;
+		return ExpressionKind.LITERAL_EXPRESSION;
 	}
 }
