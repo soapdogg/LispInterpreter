@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.HashSet;
 
 import edu.osu.cse6341.lispInterpreter.program.IParsable;
+import edu.osu.cse6341.lispInterpreter.program.ExpressionKind;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
@@ -11,8 +12,7 @@ import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 public class AtomNode implements IExpressionChild{
 	
 	private String value;
-	private boolean isNumeric;
-	private boolean isUndefined;
+	private ExpressionKind expressionKind;
 	private static Set<String> builtinKeywords;
 
 	static{
@@ -37,10 +37,10 @@ public class AtomNode implements IExpressionChild{
 	public void parse(){
 		IToken token =  Tokenizer.getTokenizer().getNextToken();
 		assertTokenIsAtom(token);
-		isUndefined = !(isNumeric || builtinKeywords.contains(token.toString()));
-		value = isUndefined 
-			? "Undefined"
-			: token.toString();
+		if(token.getTokenKind() == TokenKind.NUMERIC_TOKEN) expressionKind = ExpressionKind.NUMERIC_EXPRESSION;
+		else if (builtinKeywords.contains(token.toString())) expressionKind = ExpressionKind.LITERAL_EXPRESSION;
+		else expressionKind = ExpressionKind.UNDEFINED_EXPRESSION;
+		value = token.toString();
 	}
 
 	@Override
@@ -53,29 +53,17 @@ public class AtomNode implements IExpressionChild{
 	}
 
 	@Override
+	public ExpressionKind getExpressionKind(){
+		return expressionKind;
+	}
+
+	@Override
 	public IExpressionChild newInstance(){
 		return new AtomNode();
 	}
 	
-	public boolean isNumeric(){
-		return isNumeric;
-	}
-
-	public boolean isUndefined(){
-		return isUndefined;
-	}
-
-	public boolean isLiteral(){
-		return !(isUndefined ||  isNumeric);
-	}
-
-	public String getValue(){
-		return value;
-	}
-
 	private void assertTokenIsAtom(IToken token){
 		TokenKind tokenKind = token.getTokenKind();
-		isNumeric = tokenKind == tokenKind.NUMERIC_TOKEN;
 		if(tokenKind == TokenKind.NUMERIC_TOKEN ||
 			tokenKind == TokenKind.LITERAL_TOKEN) return;
 		System.out.println("Expected NUMERIC or LITERAL token, Actual Token:" + 

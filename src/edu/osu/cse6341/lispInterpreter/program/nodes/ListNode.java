@@ -3,6 +3,7 @@ package edu.osu.cse6341.lispInterpreter.program.nodes;
 import java.util.Map;
 import java.util.HashMap;
 
+import edu.osu.cse6341.lispInterpreter.program.ExpressionKind;
 import edu.osu.cse6341.lispInterpreter.program.IParsable;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
@@ -12,9 +13,10 @@ public class ListNode implements IExpressionChild{
 	
 	private ExpressionNode expressionNode;
 	private ListNode listNode;
-	private boolean isEmpty, isNumeric, isUndefined, isLiteral;
+	private boolean isEmpty; 
 	private static Map<String, IFunction> functionMap;
 	private String value;
+	private ExpressionKind expressionKind;
 
 	static{
 		functionMap = new HashMap<>();
@@ -48,34 +50,24 @@ public class ListNode implements IExpressionChild{
 	public void evaluate(){
 		if(isEmpty) return;
 		expressionNode.evaluate();
-		if(expressionNode.isLiteral()){
-			IFunction function = functionMap.get(expressionNode.getValue());
+		if(expressionNode.getExpressionKind() == ExpressionKind.LITERAL_EXPRESSION){
+			IFunction function = functionMap.get(expressionNode.toString());
 			function = function.newInstance(this);
-			isUndefined = !function.isDefinedCorrectly();
-			if(!isUndefined) value = function.evaluate();
+			boolean isUndefined = !function.isDefinedCorrectly();
+			if(isUndefined) {
+				expressionKind = ExpressionKind.UNDEFINED_EXPRESSION;
+			}else{
+				value = function.evaluate();
+			}
+		}else if(expressionNode.getExpressionKind() == ExpressionKind.NUMERIC_EXPRESSION){
+			value = expressionNode.toString();
+			expressionKind = ExpressionKind.NUMERIC_EXPRESSION;
 		} 
 	}
 
 	@Override
-	public boolean isUndefined(){
-		return isUndefined;
-	}
-
-	@Override
-	public boolean isNumeric(){
-		return isNumeric; 
-	}
-	
-	@Override
-	public boolean isLiteral(){
-		return isLiteral;
-	}
-
-	@Override
 	public String toString(){
-		return listNode.isEmpty() 
-			? expressionNode.toString() 
-			: expressionNode.toString() + " " +  listNode.toString(); 
+		return value;
 	}
 
 	@Override
@@ -91,7 +83,11 @@ public class ListNode implements IExpressionChild{
 		return isEmpty;
 	}
 
-	public String getValue(){
-		return value;
+	public ListNode getListNode(){
+		return listNode;
+	}
+
+	public ExpressionKind getExpressionKind(){
+		return expressionKind;
 	}
 }

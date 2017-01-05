@@ -7,6 +7,7 @@ import edu.osu.cse6341.lispInterpreter.program.IParsable;
 import edu.osu.cse6341.lispInterpreter.program.IEvaluatable;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.*;
+import edu.osu.cse6341.lispInterpreter.program.ExpressionKind;
 
 public class ExpressionNode implements IParsable, IEvaluatable{
 	
@@ -38,25 +39,17 @@ public class ExpressionNode implements IParsable, IEvaluatable{
 		expressionChild.evaluate();
 	}
 
-	public boolean isLiteral(){
-		return expressionChild.isLiteral();
-	}
-	
 	@Override
 	public String toString(){
-		StringBuilder sb = new StringBuilder();
-		if(isList) sb.append('(');
-		sb.append(expressionChild.toString());
-		if(isList) sb.append(')');
-		return sb.toString();
+		return expressionChild.toString();
 	}
 
 	public boolean isList(){
 		return isList;
 	}
 
-	public String getValue(){
-		return expressionChild.getValue();
+	public ExpressionKind getExpressionKind(){
+		return expressionChild.getExpressionKind();
 	}
 
 	private static void assertTokenIsAtomOrOpen(IToken token){
