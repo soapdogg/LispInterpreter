@@ -50,7 +50,8 @@ public class ListNode implements IExpressionChild{
 	public void evaluate(){
 		if(isEmpty) return;
 		expressionNode.evaluate();
-		if(expressionNode.getExpressionKind() == ExpressionKind.LITERAL_EXPRESSION){
+		if(expressionNode.getExpressionKind() == ExpressionKind.LITERAL_EXPRESSION
+			&& functionMap.containsKey(expressionNode.toString())){
 			IFunction function = functionMap.get(expressionNode.toString());
 			function = function.newInstance(this);
 			boolean isUndefined = !function.isDefinedCorrectly();
@@ -63,7 +64,10 @@ public class ListNode implements IExpressionChild{
 		}else if(expressionNode.getExpressionKind() == ExpressionKind.NUMERIC_EXPRESSION){
 			value = expressionNode.toString();
 			expressionKind = ExpressionKind.NUMERIC_EXPRESSION;
-		} 
+		}else if(expressionNode.getExpressionKind() == ExpressionKind.LITERAL_EXPRESSION){
+			value = expressionNode.toString();
+			expressionKind = ExpressionKind.LITERAL_EXPRESSION;
+		}
 	}
 
 	@Override
