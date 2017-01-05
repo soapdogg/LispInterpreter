@@ -5,18 +5,28 @@ import edu.osu.cse6341.lispInterpreter.program.ExpressionKind;
 
 public class NullFunction implements IFunction{
 
+	private int length;
+	private ListNode child;
+
 	public NullFunction(){}
 
-	private NullFunction(ListNode listNode){}
+	private NullFunction(ListNode listNode){
+		length = listNode.getLength();
+		child  = listNode.getListNode();
+	}
 
 	@Override
 	public boolean isDefinedCorrectly(){
-		return false;
+		child.evaluate();
+		return length == 2 
+			&& child.getExpressionKind() != ExpressionKind.UNDEFINED_EXPRESSION; 
 	}  
 
 	@Override
 	public String evaluate(){
-		return "";
+		return child.toString().equals("NIL")
+			? "T"
+			: "NIL";
 	}
 
 	@Override
@@ -26,6 +36,6 @@ public class NullFunction implements IFunction{
 
 	@Override
 	public ExpressionKind getExpressionKind(){
-		return ExpressionKind.NUMERIC_EXPRESSION;
+		return ExpressionKind.LITERAL_EXPRESSION;
 	}
 }
