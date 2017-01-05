@@ -1,6 +1,3 @@
-T
-NIL
-45
 ERIC
 (PLUS 8 4)
 (MINUS 1 13)
@@ -25,5 +22,5 @@ ERIC
 (EQ T NIL)
 (EQ T 45)
 (EQ (INT 3) (ATOM 5))
-(CONS (PLUS 2 3)(CONS 8 (NULL 5)))
-(CONS 2 (CONS 3 (CONS 4 5)))
+(CAR (CONS 2 45))
+
