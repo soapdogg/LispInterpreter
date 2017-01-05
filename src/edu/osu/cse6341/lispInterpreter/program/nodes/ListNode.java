@@ -58,6 +58,7 @@ public class ListNode implements IExpressionChild{
 				expressionKind = ExpressionKind.UNDEFINED_EXPRESSION;
 			}else{
 				value = function.evaluate();
+				expressionKind = function.getExpressionKind();
 			}
 		}else if(expressionNode.getExpressionKind() == ExpressionKind.NUMERIC_EXPRESSION){
 			value = expressionNode.toString();

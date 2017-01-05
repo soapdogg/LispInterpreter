@@ -36,4 +36,9 @@ public class PlusFunction implements IFunction{
 	public IFunction newInstance(ListNode listNode){
 		return new PlusFunction(listNode);
 	}
+
+	@Override
+	public ExpressionKind getExpressionKind(){
+		return ExpressionKind.NUMERIC_EXPRESSION;
+	}
 }

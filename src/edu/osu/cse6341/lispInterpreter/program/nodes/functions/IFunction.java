@@ -1,6 +1,7 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
 import edu.osu.cse6341.lispInterpreter.program.nodes.ListNode;
+import edu.osu.cse6341.lispInterpreter.program.ExpressionKind;
 
 public interface IFunction{
 
@@ -9,4 +10,6 @@ public interface IFunction{
 	String evaluate();
 
 	IFunction newInstance(ListNode node);
+
+	ExpressionKind getExpressionKind();
 }
