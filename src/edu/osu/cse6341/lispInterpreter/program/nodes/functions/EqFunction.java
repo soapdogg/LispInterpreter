@@ -5,18 +5,31 @@ import edu.osu.cse6341.lispInterpreter.program.ExpressionKind;
 
 public class EqFunction implements IFunction{
 
+	private int length;
+	private ListNode leftSide, rightSide;
+
 	public EqFunction(){}
 
-	private EqFunction(ListNode listNode){}
+	private EqFunction(ListNode listNode){
+		length = listNode.getLength();
+		leftSide = listNode.getListNode();
+		if(leftSide != null) rightSide = leftSide.getListNode();
+	}
 
 	@Override
 	public boolean isDefinedCorrectly(){
-		return false;
+		leftSide.evaluate();
+		rightSide.evaluate();
+		return length == 3 
+			&& leftSide.getExpressionKind() != ExpressionKind.UNDEFINED_EXPRESSION
+			&& rightSide.getExpressionKind() != ExpressionKind.UNDEFINED_EXPRESSION;
 	}  
 
 	@Override
 	public String evaluate(){
-		return "";
+		return leftSide.toString().equals(rightSide.toString())
+			? "T"
+			: "NIL";
 	}
 
 	@Override
@@ -26,6 +39,6 @@ public class EqFunction implements IFunction{
 
 	@Override
 	public ExpressionKind getExpressionKind(){
-		return ExpressionKind.NUMERIC_EXPRESSION;
+		return ExpressionKind.LITERAL_EXPRESSION;
 	}
 }
