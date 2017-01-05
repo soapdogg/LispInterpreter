@@ -9,14 +9,12 @@ public class StartNode implements IParsable, IEvaluatable{
     private final ExpressionNode expressionNode;
 	private StartNode startNode;
 
-    public StartNode()
-    {
+    public StartNode(){
         expressionNode = new ExpressionNode();
     }
 
     @Override
-    public void parse()
-    {
+    public void parse(){
         expressionNode.parse();
 		if(Tokenizer.getTokenizer().getCurrent() instanceof EndOfFileToken) return;
 		startNode = new StartNode();
@@ -30,8 +28,7 @@ public class StartNode implements IParsable, IEvaluatable{
 	}
 
     @Override
-    public String toString()
-    {
+    public String toString(){
 		StringBuilder sb = new StringBuilder();
 		sb.append(expressionNode.toString());
 		sb.append('\n');

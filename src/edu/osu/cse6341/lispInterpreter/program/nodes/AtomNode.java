@@ -31,6 +31,8 @@ public class AtomNode implements IExpressionChild{
 		builtinKeywords.add("GREATER");
 		builtinKeywords.add("QUOTE");
 		builtinKeywords.add("COND");
+		builtinKeywords.add("T");
+		builtinKeywords.add("NIL");
 	}
 
 	@Override
@@ -45,6 +47,7 @@ public class AtomNode implements IExpressionChild{
 
 	@Override
 	public void evaluate(){
+		if(expressionKind == ExpressionKind.UNDEFINED_EXPRESSION) value = "undefined";
 	}
 
 	@Override

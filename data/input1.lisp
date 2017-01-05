@@ -1,3 +1,7 @@
+T
+NIL
+45
+ERIC
 (PLUS 8 4)
 (MINUS 1 13)
 (TIMES 3 34)
