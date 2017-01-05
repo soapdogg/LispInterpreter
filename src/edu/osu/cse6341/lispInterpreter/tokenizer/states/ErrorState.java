@@ -3,7 +3,6 @@ package edu.osu.cse6341.lispInterpreter.tokenizer.states;
 import java.util.Set;
 import java.util.HashSet;
 
-import edu.osu.cse6341.lispInterpreter.tokenizer.ITokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.ErrorToken;
 

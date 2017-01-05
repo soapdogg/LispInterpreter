@@ -1,43 +1,34 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes;
 
+import edu.osu.cse6341.lispInterpreter.program.IEvaluatable;
+import edu.osu.cse6341.lispInterpreter.program.IParsable;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.EndOfFileToken;
-/**
- * Node that represents the start node in the BNF for lisp
- */
-public class StartNode implements IStartNode
-{
-    private final IExpressionNode expressionNode;
-	private IStartNode startNode;
 
-    /**
-     * Default Constructor
-     */
-    public StartNode()
-    {
+public class StartNode implements IParsable, IEvaluatable{
+    private final ExpressionNode expressionNode;
+	private StartNode startNode;
+
+    public StartNode(){
         expressionNode = new ExpressionNode();
     }
 
-    /**
-     * Parses the given instance of the class that corresponds to part of the program.
-     */
     @Override
-    public void parse()
-    {
+    public void parse(){
         expressionNode.parse();
 		if(Tokenizer.getTokenizer().getCurrent() instanceof EndOfFileToken) return;
 		startNode = new StartNode();
 		startNode.parse();
     }
 
-    /**
-     * Prints the instance of the class in a pretty fashion.
-     * @return
-     *      a string that represents a pretty version of the string.
-     */
+	@Override
+	public void evaluate(){
+		expressionNode.evaluate();
+		if(startNode != null) startNode.evaluate();
+	}
+
     @Override
-    public String toString()
-    {
+    public String toString(){
 		StringBuilder sb = new StringBuilder();
 		sb.append(expressionNode.toString());
 		sb.append('\n');
