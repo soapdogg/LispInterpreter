@@ -80,12 +80,13 @@ public class ListNode implements IExpressionChild{
 		return new ListNode();
 	}
 
+	@Override
+    public String getValue(){
+	    return value;
+    }
+
 	public int getLength(){
 		return isEmpty ? 0 : listNode.getLength() + 1;
-	}
-
-	public boolean isEmpty(){
-		return isEmpty;
 	}
 
 	public ListNode getListNode(){

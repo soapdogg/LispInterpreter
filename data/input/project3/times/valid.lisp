@@ -1,0 +1,2 @@
+(TIMES 3 34)
+(TIMES (TIMES 3 2) (MINUS 3 1))

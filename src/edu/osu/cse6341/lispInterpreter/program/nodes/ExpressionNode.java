@@ -13,7 +13,6 @@ public class ExpressionNode implements IParsable, IEvaluatable{
 	
 	private static final Map<TokenKind, IExpressionChild> tokenExpressionChildMap;
 	private IExpressionChild expressionChild;
-	private boolean isList;
 
     static{
         tokenExpressionChildMap = new HashMap<>();
@@ -28,7 +27,7 @@ public class ExpressionNode implements IParsable, IEvaluatable{
 		assertTokenIsAtomOrOpen(token);
 		expressionChild = tokenExpressionChildMap.get(token.getTokenKind());
 		expressionChild = expressionChild.newInstance();
-		isList = expressionChild instanceof ListNode;
+        boolean isList = expressionChild instanceof ListNode;
 		if(isList) Tokenizer.getTokenizer().getNextToken();
 		expressionChild.parse();
 		if(isList) assertTokenIsClose(Tokenizer.getTokenizer().getNextToken());
@@ -44,12 +43,12 @@ public class ExpressionNode implements IParsable, IEvaluatable{
 		return expressionChild.toString();
 	}
 
-	public boolean isList(){
-		return isList;
-	}
-
 	public ExpressionKind getExpressionKind(){
 		return expressionChild.getExpressionKind();
+	}
+
+	public String getValue(){
+		return expressionChild.getValue();
 	}
 
 	private static void assertTokenIsAtomOrOpen(IToken token){

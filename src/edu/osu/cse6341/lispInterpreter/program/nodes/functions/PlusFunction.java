@@ -27,8 +27,8 @@ public class PlusFunction implements IFunction{
 
 	@Override
 	public String evaluate(){
-		int left = Integer.parseInt(leftSide.toString());
-		int right = Integer.parseInt(rightSide.toString());
+		int left = Integer.parseInt(leftSide.getValue());
+		int right = Integer.parseInt(rightSide.getValue());
 		return Integer.toString(left + right);
 	}
 

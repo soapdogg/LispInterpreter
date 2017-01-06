@@ -1,0 +1,6 @@
+(EQ 4 5)
+(EQ 23 23)
+(EQ T T)
+(EQ T NIL)
+(EQ T 45)
+(EQ (INT 3) (ATOM 5))

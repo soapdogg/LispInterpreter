@@ -9,4 +9,6 @@ public interface IExpressionChild extends IParsable, IEvaluatable{
 	ExpressionKind getExpressionKind();
 
 	IExpressionChild newInstance();
+
+	String getValue();
 }

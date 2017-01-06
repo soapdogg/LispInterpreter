@@ -24,7 +24,7 @@ public class NullFunction implements IFunction{
 
 	@Override
 	public String evaluate(){
-		return child.toString().equals("NIL")
+		return child.getValue().equals("NIL")
 			? "T"
 			: "NIL";
 	}

@@ -11,3 +11,6 @@
 
 #Sources .txt 
 sources.txt
+.idea/
+LispInterpreter.iml
+out/

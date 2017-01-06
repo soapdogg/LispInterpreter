@@ -3,7 +3,6 @@ package edu.osu.cse6341.lispInterpreter.program.nodes;
 import java.util.Set;
 import java.util.HashSet;
 
-import edu.osu.cse6341.lispInterpreter.program.IParsable;
 import edu.osu.cse6341.lispInterpreter.program.ExpressionKind;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
@@ -52,6 +51,10 @@ public class AtomNode implements IExpressionChild{
 
 	@Override
 	public String toString(){
+		return value;
+	}
+
+	public String getValue(){
 		return value;
 	}
 

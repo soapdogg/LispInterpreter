@@ -1,0 +1,3 @@
+(INT 3)
+(INT (PLUS 3 4))
+(INT T)

@@ -27,7 +27,7 @@ public class EqFunction implements IFunction{
 
 	@Override
 	public String evaluate(){
-		return leftSide.toString().equals(rightSide.toString())
+		return leftSide.getValue().equals(rightSide.getValue())
 			? "T"
 			: "NIL";
 	}

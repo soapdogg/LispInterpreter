@@ -4,12 +4,10 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.StartNode;
 
 public class Program implements IParsable, IEvaluatable{
 	private static Program singletonProgram;       
-	private final StartNode rootNode;             
-	private boolean hasEncounteredError;         
+	private StartNode rootNode;
 
 	private Program(){
-		rootNode = new StartNode();
-		hasEncounteredError = false;
+	    reset();
 	}
 
 	public static Program getProgram(){
@@ -30,5 +28,9 @@ public class Program implements IParsable, IEvaluatable{
 	@Override
 	public String toString(){
 		return rootNode.toString(); 
+	}
+
+	public void reset(){
+		rootNode = new StartNode();
 	}
 }
