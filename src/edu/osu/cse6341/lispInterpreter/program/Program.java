@@ -25,10 +25,9 @@ public class Program implements IParsable, IEvaluatable{
 		rootNode.evaluate();
 	}
 
-	@Override
-	public String toString(){
-		return rootNode.toString(); 
-	}
+	public String getValue(){
+	    return rootNode.getValue();
+    }
 
 	public void reset(){
 		rootNode = new StartNode();

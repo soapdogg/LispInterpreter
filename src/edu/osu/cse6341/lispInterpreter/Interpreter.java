@@ -52,14 +52,12 @@ public final class Interpreter{
             System.exit(-10);
         }
 	    interpret(in);
-		Program program = Program.getProgram();
-		return program.toString();
+		return getValue();
 	}
 
-	@Override
-	public String toString(){
-		return program.toString(); 
-	}
+	String getValue(){
+	    return program.getValue();
+    }
 }
 
  

@@ -38,11 +38,6 @@ public class ExpressionNode implements IParsable, IEvaluatable{
 		expressionChild.evaluate();
 	}
 
-	@Override
-	public String toString(){
-		return expressionChild.toString();
-	}
-
 	public ExpressionKind getExpressionKind(){
 		return expressionChild.getExpressionKind();
 	}

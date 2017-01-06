@@ -27,12 +27,11 @@ public class StartNode implements IParsable, IEvaluatable{
 		if(startNode != null) startNode.evaluate();
 	}
 
-    @Override
-    public String toString(){
+    public String getValue(){
 		StringBuilder sb = new StringBuilder();
-		sb.append(expressionNode.toString());
+		sb.append(expressionNode.getValue());
 		sb.append('\n');
-		if(startNode != null) sb.append(startNode.toString());
+		if(startNode != null) sb.append(startNode.getValue());
 		return sb.toString();
     }
 }

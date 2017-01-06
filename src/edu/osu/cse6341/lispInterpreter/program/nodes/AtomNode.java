@@ -49,11 +49,6 @@ public class AtomNode implements IExpressionChild{
 		if(expressionKind == ExpressionKind.UNDEFINED_EXPRESSION) value = "undefined";
 	}
 
-	@Override
-	public String toString(){
-		return value;
-	}
-
 	public String getValue(){
 		return value;
 	}
