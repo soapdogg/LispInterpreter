@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.HashMap;
 
 import edu.osu.cse6341.lispInterpreter.program.ExpressionKind;
-import edu.osu.cse6341.lispInterpreter.program.IParsable;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 import edu.osu.cse6341.lispInterpreter.program.nodes.functions.*;
@@ -37,13 +36,13 @@ public class ListNode implements IExpressionChild{
 	}
 
 	@Override
-	public void parse(){
-		isEmpty = Tokenizer.getTokenizer().getCurrent().getTokenKind() == TokenKind.CLOSE_TOKEN;
+	public void parse(Tokenizer tokenizer){
+		isEmpty = tokenizer.getCurrent().getTokenKind() == TokenKind.CLOSE_TOKEN;
 		if(isEmpty) return;
 		expressionNode = new ExpressionNode();
 		listNode = new ListNode();
-		expressionNode.parse();
-		listNode.parse();
+		expressionNode.parse(tokenizer);
+		listNode.parse(tokenizer);
 	}
 
 	@Override

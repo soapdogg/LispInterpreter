@@ -1,8 +1,6 @@
 package edu.osu.cse6341.lispInterpreter;
 
-import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import org.junit.Assert;
-import edu.osu.cse6341.lispInterpreter.program.Program;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -11,28 +9,63 @@ import java.util.Scanner;
 
 public class InterpreterTest {
 
-    private void setUp() {
-        Program.getProgram().reset();
-    }
 
-   /* @org.junit.Test
+    @org.junit.Test
     public void project1ValidTest(){
-        setUp();
         tokenizerTest("data/input/project1/valid.lisp", "data/expected/project1/valid.txt");
     }
 
     @org.junit.Test
+    public void project1Valid2Test(){
+        tokenizerTest("data/input/project1/valid2.lisp", "data/expected/project1/valid2.txt");
+    }
+
+    @org.junit.Test
+    public void project1Valid3Test(){
+        tokenizerTest("data/input/project1/valid3.lisp", "data/expected/project1/valid3.txt");
+    }
+
+    @org.junit.Test
+    public void project1Valid4Test(){
+        tokenizerTest("data/input/project1/valid4.lisp", "data/expected/project1/valid4.txt");
+    }
+
+    @org.junit.Test
+    public void project1Valid5Test(){
+        tokenizerTest("data/input/project1/valid5.lisp", "data/expected/project1/valid5.txt");
+    }
+
+    @org.junit.Test
+    public void project1Valid6Test(){
+        tokenizerTest("data/input/project1/valid6.lisp", "data/expected/project1/valid6.txt");
+    }
+
+    @org.junit.Test
+    public void project1Valid7Test(){
+        tokenizerTest("data/input/project1/valid7.lisp", "data/expected/project1/valid7.txt");
+    }
+
+    @org.junit.Test
+    public void project1Valid8Test(){
+        tokenizerTest("data/input/project1/valid8.lisp", "data/expected/project1/valid8.txt");
+    }
+
+    @org.junit.Test
     public void project1Invalid1Test() {
-        setUp();
         tokenizerTest("data/input/project1/invalid1.lisp", "data/expected/project1/invalid1.txt");
     }
 
     @org.junit.Test
     public void project1Invalid2Test(){
-        setUp();
         tokenizerTest("data/input/project1/invalid2.lisp", "data/expected/project1/invalid2.txt");
     }
 
+    @org.junit.Test
+    public void project1Invalid3Test(){
+        tokenizerTest("data/input/project1/invalid3.lisp", "data/expected/project1/invalid3.txt");
+    }
+
+    /*
     @org.junit.Test
     public void project2ValidTest(){
         setUp();
@@ -50,7 +83,7 @@ public class InterpreterTest {
         setUp();
         parserTest("data/input/project2/invalid2.lisp", "data/expected/project2/invalid1.txt");
     }
-    */
+
 
     @org.junit.Test
     public void project3AtomValidTest(){
@@ -80,102 +113,89 @@ public class InterpreterTest {
 
     @org.junit.Test
     public void project3AtomicValidTest(){
-        setUp();
         interpreterTest("data/input/project3/atomic/valid.lisp", "data/expected/project3/atomic/valid.txt");
     }
 
     @org.junit.Test
     public void project3AtomicInvalid1Test() {
-        setUp();
         interpreterTest("data/input/project3/atomic/invalid1.lisp", "data/expected/project3/atomic/invalid1.txt");
     }
 
     //CAR TESTS
     @org.junit.Test
     public void project3CarValidTest(){
-        setUp();
         interpreterTest("data/input/project3/car/valid.lisp", "data/expected/project3/car/valid.txt");
     }
 
     //CDR TESTS
     @org.junit.Test
     public void project3CdrValidTest(){
-        setUp();
         interpreterTest("data/input/project3/cdr/valid.lisp", "data/expected/project3/cdr/valid.txt");
     }
 
     //CONS TESTS
     @org.junit.Test
     public void project3ConsValidTest(){
-        setUp();
         interpreterTest("data/input/project3/cons/valid.lisp", "data/expected/project3/cons/valid.txt");
     }
 
     //EQ TESTS
     @org.junit.Test
     public void project3EqValidTest(){
-        setUp();
         interpreterTest("data/input/project3/eq/valid.lisp", "data/expected/project3/eq/valid.txt");
     }
 
     //GREATER TESTS
     @org.junit.Test
     public void project3GreaterValidTest(){
-        setUp();
         interpreterTest("data/input/project3/greater/valid.lisp", "data/expected/project3/greater/valid.txt");
     }
 
     //INT TESTS
     @org.junit.Test
     public void project3IntValidTest(){
-        setUp();
         interpreterTest("data/input/project3/int/valid.lisp", "data/expected/project3/int/valid.txt");
     }
 
     //LESS TESTS
     @org.junit.Test
     public void project3LessValidTest(){
-        setUp();
         interpreterTest("data/input/project3/less/valid.lisp", "data/expected/project3/less/valid.txt");
     }
 
     //MINUS TESTS
     @org.junit.Test
     public void project3MinusValidTest(){
-        setUp();
         interpreterTest("data/input/project3/minus/valid.lisp", "data/expected/project3/minus/valid.txt");
     }
 
     //NULL TESTS
     @org.junit.Test
     public void project3NullValidTest(){
-        setUp();
         interpreterTest("data/input/project3/null/valid.lisp", "data/expected/project3/null/valid.txt");
     }
 
     //PLUS TESTS
     @org.junit.Test
     public void project3PlusValidTest(){
-        setUp();
         interpreterTest("data/input/project3/plus/valid.lisp", "data/expected/project3/plus/valid.txt");
     }
 
     //TIMES TESTS
     @org.junit.Test
     public void project3TimesValidTest(){
-        setUp();
         interpreterTest("data/input/project3/times/valid.lisp", "data/expected/project3/times/valid.txt");
     }
 
 
-    /*
     private static void tokenizerTest(String programFile, String expectedFile){
-        Tokenizer tokenizer = Tokenizer.getTokenizer();
-        String actual = tokenizer.testTokenizer(programFile);
+        Interpreter interpreter = new Interpreter();
+        String actual = interpreter.testTokenizer(programFile);
         String expected = scanExpected(expectedFile);
         Assert.assertEquals(expected, actual);
     }
 
+    /*
     private static void parserTest(String programFile, String expectedFile){
         Interpreter interpreter = Interpreter.getInterpreter();
         String actual = interpreter.testParser(programFile);
@@ -185,7 +205,7 @@ public class InterpreterTest {
     */
 
     private static void interpreterTest(String programFile, String expectedFile){
-        Interpreter interpreter = Interpreter.getInterpreter();
+        Interpreter interpreter = new Interpreter();
         String actual = interpreter.testInterpreter(programFile);
         String expected = scanExpected(expectedFile);
         Assert.assertEquals(expected, actual);

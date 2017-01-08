@@ -35,8 +35,8 @@ public class AtomNode implements IExpressionChild{
 	}
 
 	@Override
-	public void parse(){
-		IToken token =  Tokenizer.getTokenizer().getNextToken();
+	public void parse(Tokenizer tokenizer){
+		IToken token = tokenizer.getNextToken();
 		assertTokenIsAtom(token);
 		if(token.getTokenKind() == TokenKind.NUMERIC_TOKEN) expressionKind = ExpressionKind.NUMERIC_EXPRESSION;
 		else if (builtinKeywords.contains(token.toString())) expressionKind = ExpressionKind.LITERAL_EXPRESSION;

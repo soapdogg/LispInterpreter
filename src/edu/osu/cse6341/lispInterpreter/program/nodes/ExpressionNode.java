@@ -22,15 +22,15 @@ public class ExpressionNode implements IParsable, IEvaluatable{
     }
 
 	@Override 
-	public void parse(){
-		IToken token = Tokenizer.getTokenizer().getCurrent();
+	public void parse(Tokenizer tokenizer){
+		IToken token = tokenizer.getCurrent();
 		assertTokenIsAtomOrOpen(token);
 		expressionChild = tokenExpressionChildMap.get(token.getTokenKind());
 		expressionChild = expressionChild.newInstance();
         boolean isList = expressionChild instanceof ListNode;
-		if(isList) Tokenizer.getTokenizer().getNextToken();
-		expressionChild.parse();
-		if(isList) assertTokenIsClose(Tokenizer.getTokenizer().getNextToken());
+		if(isList) tokenizer.getNextToken();
+		expressionChild.parse(tokenizer);
+		if(isList) assertTokenIsClose(tokenizer.getNextToken());
 	}
 
 	@Override

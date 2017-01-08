@@ -11,16 +11,10 @@ import edu.osu.cse6341.lispInterpreter.tokenizer.states.StartingState;
 
 public class Tokenizer {
 
-	private static Tokenizer singletonTokenizer;
-	private Queue<IToken> tokens;	
+	private Queue<IToken> tokens;
 
-	private Tokenizer(){
+	public Tokenizer(){
 		tokens = new LinkedList<>();
-	}
-	
-	public static Tokenizer getTokenizer(){
-		if(singletonTokenizer == null) singletonTokenizer = new Tokenizer();
-		return singletonTokenizer;
 	}
 
 	public void tokenize(Scanner in){
@@ -31,10 +25,9 @@ public class Tokenizer {
         while(in.hasNextLine() && continueParsing)
         {
             line = in.nextLine().trim();
-            continueParsing = state.processState(line, 0, 0);
+            continueParsing = state.processState(this, line, 0, 0);
         }
 		if(continueParsing) tokens.add(new EndOfFileToken());
-		else reportError();
 	}
 
 	public IToken getNextToken(){
@@ -53,10 +46,5 @@ public class Tokenizer {
 		return tokens.peek();
 	}
 
-	private void reportError(){
-		IToken token = null;
-		while(!tokens.isEmpty()) token = tokens.remove();
-		System.out.println("Error! Invalid token: " + token.toString());
-		System.exit(-4);
-	}
+
 }

@@ -1,23 +1,19 @@
 package edu.osu.cse6341.lispInterpreter.program;
 
 import edu.osu.cse6341.lispInterpreter.program.nodes.StartNode;
+import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 
 public class Program implements IParsable, IEvaluatable{
-	private static Program singletonProgram;       
+
 	private StartNode rootNode;
 
-	private Program(){
-	    reset();
-	}
-
-	public static Program getProgram(){
-		if(singletonProgram == null) singletonProgram = new Program();
-		return singletonProgram;
+	public Program(){
+        rootNode = new StartNode();
 	}
 
 	@Override
-	public void parse(){
-		rootNode.parse();
+	public void parse(Tokenizer tokenizer){
+		rootNode.parse(tokenizer);
 	}
 
 	@Override
@@ -29,7 +25,5 @@ public class Program implements IParsable, IEvaluatable{
 	    return rootNode.getValue();
     }
 
-	public void reset(){
-		rootNode = new StartNode();
-	}
+
 }

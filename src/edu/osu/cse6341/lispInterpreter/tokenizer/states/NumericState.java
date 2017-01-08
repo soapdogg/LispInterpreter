@@ -15,23 +15,22 @@ public class NumericState implements IState{
 	}
 
 	@Override
-	public boolean processState(String line, int pos, int startingPos){
-		if(++pos >= line.length()) return finishState(line, pos, startingPos);
+	public boolean processState(Tokenizer tokenizer, String line, int pos, int startingPos){
+		if(++pos >= line.length()) return finishState(tokenizer, line, pos, startingPos);
 		char currentChar = line.charAt(pos);
-		if(nextStateArray[currentChar] == null) return finishState(line, pos, startingPos);
-		return nextStateArray[currentChar].processState(line, pos, startingPos);
+		if(nextStateArray[currentChar] == null) return finishState(tokenizer, line, pos, startingPos);
+		return nextStateArray[currentChar].processState(tokenizer, line, pos, startingPos);
 	}
 
-	static boolean finishState(String line, int pos, int startingPos)
+	private static boolean finishState(Tokenizer tokenizer, String line, int pos, int startingPos)
 	{
         String fragment = line.substring(startingPos, pos);
 		int value = Integer.parseInt(fragment);
 		IToken token = new NumericToken(value);
-        Tokenizer tokenizer = Tokenizer.getTokenizer();
         tokenizer.addToTokens(token);
         IState nextState = new StartingState();
         startingPos = pos;
-        return nextState.processState(line, pos, startingPos );
+        return nextState.processState(tokenizer, line, pos, startingPos);
 	}	
 
 }

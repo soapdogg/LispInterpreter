@@ -1,6 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.tokenizer.tokens;
 
-import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
+import edu.osu.cse6341.lispInterpreter.Interpreter;
 
 public class ErrorToken implements IToken{
 
@@ -9,8 +9,13 @@ public class ErrorToken implements IToken{
 	public ErrorToken(String atomValue){
 		this.atomValue = atomValue;
 	}
-	
-	public TokenKind getTokenKind(){
+
+    @Override
+    public void process(Interpreter interpreter) {
+        interpreter.setErrorMessage("Error! Invalid token: " + atomValue + "\n");
+    }
+
+    public TokenKind getTokenKind(){
 		return TokenKind.ERROR_TOKEN;
 	}
 

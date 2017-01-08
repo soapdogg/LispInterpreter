@@ -1,5 +1,7 @@
 package edu.osu.cse6341.lispInterpreter.tokenizer.states;
 
+import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
+
 public class StartingState implements IState{
 	private static final IState [] nextStateArray;
 
@@ -15,10 +17,10 @@ public class StartingState implements IState{
 	}
 
 	@Override
-	public boolean processState(String line, int pos, int startingPos){
+	public boolean processState(Tokenizer tokenizer, String line, int pos, int startingPos){
 		if(line.length() <= pos) return true;
 		char currentChar = line.charAt(pos);
 		IState nextState = nextStateArray[currentChar];
-		return nextState.processState(line, pos, startingPos);
+		return nextState.processState(tokenizer, line, pos, startingPos);
 	}
 }

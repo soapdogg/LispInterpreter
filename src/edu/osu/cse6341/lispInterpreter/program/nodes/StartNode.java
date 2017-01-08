@@ -14,11 +14,11 @@ public class StartNode implements IParsable, IEvaluatable{
     }
 
     @Override
-    public void parse(){
-        expressionNode.parse();
-		if(Tokenizer.getTokenizer().getCurrent() instanceof EndOfFileToken) return;
+    public void parse(Tokenizer tokenizer){
+        expressionNode.parse(tokenizer);
+		if(tokenizer.getCurrent() instanceof EndOfFileToken) return;
 		startNode = new StartNode();
-		startNode.parse();
+		startNode.parse(tokenizer);
     }
 
 	@Override

@@ -20,10 +20,9 @@ public class ErrorState implements IState{
 	}
 
 	@Override
-	public boolean processState(String line, int pos, int startingPos){
+	public boolean processState(Tokenizer tokenizer, String line, int pos, int startingPos){
 		while(++pos < line.length() && !endOfTokenCharacters.contains(line.charAt(pos))); 
 		String fragment = line.substring(startingPos, pos);
-		Tokenizer tokenizer = Tokenizer.getTokenizer();
 		tokenizer.addToTokens(new ErrorToken(fragment));
 		return false;
 	}

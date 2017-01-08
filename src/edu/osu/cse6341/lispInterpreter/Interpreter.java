@@ -2,47 +2,57 @@ package edu.osu.cse6341.lispInterpreter;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.program.*;
+import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
 
 public final class Interpreter{
 
-	private static Interpreter singletonInterpreter;
 	private Program program;
+	private Queue<String> literalAtoms;
+	private int numericAtomsCount, numericAtomsSum, openCount, closingCount;
 	private Tokenizer tokenizer;
+	private String errorMessage;
+	private boolean hasError;
 
-	private Interpreter(){
-		tokenizer = Tokenizer.getTokenizer();
-		program = Program.getProgram();
+	public Interpreter(){
+		tokenizer = new Tokenizer();
+		program = new Program();
+		literalAtoms = new LinkedList<>();
+		hasError = false;
 	}
 
-	static Interpreter getInterpreter(){
-		if(singletonInterpreter == null) singletonInterpreter = new Interpreter();
-		return singletonInterpreter;
-	}
-
-	void interpret(){
+    void interpret(){
 		Scanner scanner = new Scanner(System.in);
-	    tokenize(scanner);
-		program.parse();
-		program.evaluate();
+		interpret(scanner, false);
 	}
 
-	private void interpret(Scanner in){
+	private void interpret(Scanner in, boolean shouldBeProcessed){
 	    tokenize(in);
-	    program.parse();
-	    program.evaluate();
+	    if(shouldBeProcessed) processTokens();
+	    else{
+			program.parse(tokenizer);
+			program.evaluate();
+		}
     }
 
 	private void tokenize(Scanner in){
-		tokenizer = Tokenizer.getTokenizer();
 		tokenizer.tokenize(in);
 		in.close();
 	}
 
-	String testInterpreter(String programFilePath) {
+	private void processTokens(){
+		while(tokenizer.hasNext()){
+			IToken token = tokenizer.getNextToken();
+			token.process(this);
+		}
+	}
+
+	private Scanner getScannerFromFilePath(String programFilePath){
         Scanner in = null;
 	    try {
             in = new Scanner(Paths.get(programFilePath));
@@ -51,13 +61,74 @@ public final class Interpreter{
             System.out.println(programFilePath);
             System.exit(-10);
         }
-	    interpret(in);
+        return in;
+    }
+
+	String testInterpreter(String programFilePath) {
+        Scanner in = getScannerFromFilePath(programFilePath);
+	    interpret(in, false);
 		return getValue();
 	}
+
+	String testTokenizer(String programFilePath){
+        Scanner in = getScannerFromFilePath(programFilePath);
+        interpret(in, true);
+        return getTokenizedResults();
+    }
 
 	String getValue(){
 	    return program.getValue();
     }
+
+    public void incrementOpenCount(){
+		++openCount;
+	}
+
+	public void incrementClosingCount(){
+    	++closingCount;
+	}
+
+	public void incrementNumericAtomCount(){
+		++numericAtomsCount;
+	}
+
+	public void addToNumericAtomSum(int value){
+		numericAtomsSum += value;
+	}
+
+	public void addToLiteralAtoms(String atomValue){
+		literalAtoms.add(atomValue);
+	}
+
+	public void setErrorMessage(String errorMessage){
+	    this.errorMessage = errorMessage;
+	    hasError = true;
+    }
+
+    private String getTokenizedResults(){
+		if(hasError) return errorMessage;
+	    StringBuilder sb = new StringBuilder();
+		sb.append("LITERAL ATOMS: ");
+		sb.append(literalAtoms.size());
+		for(String s : literalAtoms){
+			sb.append(',');
+			sb.append(' ');
+			sb.append(s);
+		}
+		sb.append('\n');
+		sb.append("NUMERIC ATOMS: ");
+		sb.append(numericAtomsCount);
+		sb.append(',');
+		sb.append(numericAtomsSum);
+		sb.append('\n');
+		sb.append("OPEN PARENTHESES: ");
+		sb.append(openCount);
+		sb.append('\n');
+		sb.append("CLOSING PARENTHESES: ");
+		sb.append(closingCount);
+		sb.append('\n');
+		return sb.toString();
+	}
 }
 
  

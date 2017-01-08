@@ -1,5 +1,7 @@
 package edu.osu.cse6341.lispInterpreter.tokenizer.tokens;
 
+import edu.osu.cse6341.lispInterpreter.Interpreter;
+
 public class LiteralToken implements IToken{
 
 	private String atomValue;
@@ -9,8 +11,13 @@ public class LiteralToken implements IToken{
 	public LiteralToken(String atomValue){
 		this.atomValue = atomValue;
 	}
-	
-	public TokenKind getTokenKind(){
+
+    @Override
+    public void process(Interpreter interpreter) {
+        interpreter.addToLiteralAtoms(atomValue);
+    }
+
+    public TokenKind getTokenKind(){
 		return TokenKind.LITERAL_TOKEN;
 	}
 	
