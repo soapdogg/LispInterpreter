@@ -1,12 +1,13 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
 import edu.osu.cse6341.lispInterpreter.program.nodes.ListNode;
-import edu.osu.cse6341.lispInterpreter.program.ExpressionKind;
 
 public class AtomFunction implements IFunction{
 
 	private int length;
 	private ListNode child;
+    private String value;
+    private boolean isDefinedCorrectly;
 
 	public AtomFunction(){}
 
@@ -18,22 +19,23 @@ public class AtomFunction implements IFunction{
 	@Override
 	public boolean isDefinedCorrectly(){
 		child.evaluate();
-		return length == 2 
-			&& child.getExpressionKind() != ExpressionKind.UNDEFINED_EXPRESSION; 
+		return length == 2;
+			// && child.isDefinedCorrectly();
 	}  
 
 	@Override
-	public String evaluate(){
-		return child.getLength() == 1 ? "T" : "NIL";
+	public void evaluate(){
+		value = child.getLength() == 1 ? "T" : "NIL";
 	}
 
-	@Override
+    @Override
+    public String getValue() {
+        return value;
+    }
+
+    @Override
 	public IFunction newInstance(ListNode listNode){
 		return new AtomFunction(listNode);
 	}
 
-	@Override
-	public ExpressionKind getExpressionKind(){
-		return ExpressionKind.LITERAL_EXPRESSION;
-	}
 }

@@ -1,12 +1,12 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
-import edu.osu.cse6341.lispInterpreter.program.ExpressionKind;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ListNode;
 
 public class PlusFunction implements IFunction{
 
 	private int length;
 	private ListNode leftSide, rightSide;
+	private String value;
 	
 	public PlusFunction(){}
 
@@ -20,25 +20,24 @@ public class PlusFunction implements IFunction{
 	public boolean isDefinedCorrectly(){
 		leftSide.evaluate();
 		rightSide.evaluate();
-		return length == 3 
-			&& leftSide.getExpressionKind() == ExpressionKind.NUMERIC_EXPRESSION  
-			&& rightSide.getExpressionKind() == ExpressionKind.NUMERIC_EXPRESSION;
+		return length == 3;
+			//&& leftSide.getExpressionKind() == ExpressionKind.NUMERIC_EXPRESSION
+			//&& rightSide.getExpressionKind() == ExpressionKind.NUMERIC_EXPRESSION;
 	}  
 
 	@Override
-	public String evaluate(){
+	public void evaluate(){
 		int left = Integer.parseInt(leftSide.getValue());
 		int right = Integer.parseInt(rightSide.getValue());
-		return Integer.toString(left + right);
+		value = Integer.toString(left + right);
 	}
-
+    @Override
+    public String getValue() {
+        return value;
+    }
 	@Override
 	public IFunction newInstance(ListNode listNode){
 		return new PlusFunction(listNode);
 	}
 
-	@Override
-	public ExpressionKind getExpressionKind(){
-		return ExpressionKind.NUMERIC_EXPRESSION;
-	}
 }

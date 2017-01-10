@@ -3,7 +3,6 @@ package edu.osu.cse6341.lispInterpreter.program.nodes;
 import java.util.Map;
 import java.util.HashMap;
 
-import edu.osu.cse6341.lispInterpreter.program.ExpressionKind;
 import edu.osu.cse6341.lispInterpreter.program.Program;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
@@ -16,7 +15,6 @@ public class ListNode implements IExpressionChild{
 	private boolean isEmpty; 
 	private static Map<String, IFunction> functionMap;
 	private String value;
-	private ExpressionKind expressionKind;
 
 	static{
 		functionMap = new HashMap<>();
@@ -56,23 +54,16 @@ public class ListNode implements IExpressionChild{
 	public void evaluate(){
 		if(isEmpty) return;
 		expressionNode.evaluate();
-		if(expressionNode.getExpressionKind() == ExpressionKind.LITERAL_EXPRESSION
-			&& functionMap.containsKey(expressionNode.getValue())){
+		if(functionMap.containsKey(expressionNode.getValue())){
 			IFunction function = functionMap.get(expressionNode.getValue());
 			function = function.newInstance(this);
 			boolean isUndefined = !function.isDefinedCorrectly();
 			if(isUndefined) {
-				expressionKind = ExpressionKind.UNDEFINED_EXPRESSION;
 			}else{
-				value = function.evaluate();
-				expressionKind = function.getExpressionKind();
+				value = function.getValue();
 			}
-		}else if(expressionNode.getExpressionKind() == ExpressionKind.NUMERIC_EXPRESSION){
+		}else {
 			value = expressionNode.getValue();
-			expressionKind = ExpressionKind.NUMERIC_EXPRESSION;
-		}else if(expressionNode.getExpressionKind() == ExpressionKind.LITERAL_EXPRESSION){
-			value = expressionNode.getValue();
-			expressionKind = ExpressionKind.LITERAL_EXPRESSION;
 		}
 	}
 
@@ -99,7 +90,4 @@ public class ListNode implements IExpressionChild{
 		return listNode;
 	}
 
-	public ExpressionKind getExpressionKind(){
-		return expressionKind;
-	}
 }

@@ -1,12 +1,12 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
 import edu.osu.cse6341.lispInterpreter.program.nodes.ListNode;
-import edu.osu.cse6341.lispInterpreter.program.ExpressionKind;
 
 public class EqFunction implements IFunction{
 
 	private int length;
 	private ListNode leftSide, rightSide;
+    private String value;
 
 	public EqFunction(){}
 
@@ -20,25 +20,24 @@ public class EqFunction implements IFunction{
 	public boolean isDefinedCorrectly(){
 		leftSide.evaluate();
 		rightSide.evaluate();
-		return length == 3 
-			&& leftSide.getExpressionKind() != ExpressionKind.UNDEFINED_EXPRESSION
-			&& rightSide.getExpressionKind() != ExpressionKind.UNDEFINED_EXPRESSION;
+		return length == 3;
+			//&& leftSide.getExpressionKind() != ExpressionKind.UNDEFINED_EXPRESSION
+			//&& rightSide.getExpressionKind() != ExpressionKind.UNDEFINED_EXPRESSION;
 	}  
 
 	@Override
-	public String evaluate(){
-		return leftSide.getValue().equals(rightSide.getValue())
+	public void evaluate(){
+		value = leftSide.getValue().equals(rightSide.getValue())
 			? "T"
 			: "NIL";
 	}
-
+    @Override
+    public String getValue() {
+        return value;
+    }
 	@Override
 	public IFunction newInstance(ListNode listNode){
 		return new EqFunction(listNode);
 	}
 
-	@Override
-	public ExpressionKind getExpressionKind(){
-		return ExpressionKind.LITERAL_EXPRESSION;
-	}
 }

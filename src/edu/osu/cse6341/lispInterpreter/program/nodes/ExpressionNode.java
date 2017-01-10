@@ -37,10 +37,6 @@ public class ExpressionNode implements IParsable, IEvaluatable, IPrettyPrintable
 		expressionChild.evaluate();
 	}
 
-	public ExpressionKind getExpressionKind(){
-		return expressionChild.getExpressionKind();
-	}
-
 	@Override
 	public String getValue(){
 		return expressionChild.getValue();
