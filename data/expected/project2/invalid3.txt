@@ -1,2 +1,2 @@
 Expected either an ATOM or OPEN token.
-Actual: ERROR_TOKEN    Value: 4541W
+Actual: ERROR_TOKEN    Value: [][=

@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 import edu.osu.cse6341.lispInterpreter.program.ExpressionKind;
+import edu.osu.cse6341.lispInterpreter.program.Program;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 import edu.osu.cse6341.lispInterpreter.program.nodes.functions.*;
@@ -35,14 +36,20 @@ public class ListNode implements IExpressionChild{
 		functionMap.put("TIMES", new TimesFunction());
 	}
 
+	public ListNode(){
+	    value = "NIL";
+	}
+
 	@Override
-	public void parse(Tokenizer tokenizer){
-		isEmpty = tokenizer.getCurrent().getTokenKind() == TokenKind.CLOSE_TOKEN;
+	public void parse(Tokenizer tokenizer, Program program){
+		TokenKind tokenKind = tokenizer.getCurrent().getTokenKind();
+	    isEmpty = tokenKind == TokenKind.CLOSE_TOKEN;
 		if(isEmpty) return;
 		expressionNode = new ExpressionNode();
 		listNode = new ListNode();
-		expressionNode.parse(tokenizer);
-		listNode.parse(tokenizer);
+		expressionNode.parse(tokenizer, program);
+		if(program.hasError()) return;
+		listNode.parse(tokenizer, program);
 	}
 
 	@Override
@@ -79,7 +86,12 @@ public class ListNode implements IExpressionChild{
 	    return value;
     }
 
-	public int getLength(){
+    @Override
+    public String getDotNotation() {
+        return isEmpty ? "NIL" : "(" + expressionNode.getDotNotation() + " . " + listNode.getDotNotation() + ")";
+    }
+
+    public int getLength(){
 		return isEmpty ? 0 : listNode.getLength() + 1;
 	}
 

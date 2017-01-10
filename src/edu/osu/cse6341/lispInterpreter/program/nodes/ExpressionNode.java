@@ -3,13 +3,11 @@ package edu.osu.cse6341.lispInterpreter.program.nodes;
 import java.util.Map;
 import java.util.HashMap;
 
-import edu.osu.cse6341.lispInterpreter.program.IParsable;
-import edu.osu.cse6341.lispInterpreter.program.IEvaluatable;
+import edu.osu.cse6341.lispInterpreter.program.*;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.*;
-import edu.osu.cse6341.lispInterpreter.program.ExpressionKind;
 
-public class ExpressionNode implements IParsable, IEvaluatable{
+public class ExpressionNode implements IParsable, IEvaluatable, IPrettyPrintable{
 	
 	private static final Map<TokenKind, IExpressionChild> tokenExpressionChildMap;
 	private IExpressionChild expressionChild;
@@ -22,15 +20,16 @@ public class ExpressionNode implements IParsable, IEvaluatable{
     }
 
 	@Override 
-	public void parse(Tokenizer tokenizer){
+	public void parse(Tokenizer tokenizer, Program program){
 		IToken token = tokenizer.getCurrent();
-		assertTokenIsAtomOrOpen(token);
+		if(!assertTokenIsAtomOrOpen(token, program)) return;
 		expressionChild = tokenExpressionChildMap.get(token.getTokenKind());
 		expressionChild = expressionChild.newInstance();
         boolean isList = expressionChild instanceof ListNode;
 		if(isList) tokenizer.getNextToken();
-		expressionChild.parse(tokenizer);
-		if(isList) assertTokenIsClose(tokenizer.getNextToken());
+		expressionChild.parse(tokenizer, program);
+		if(program.hasError()) return;
+		if(isList) assertTokenIsClose(tokenizer.getNextToken(), program);
 	}
 
 	@Override
@@ -42,21 +41,36 @@ public class ExpressionNode implements IParsable, IEvaluatable{
 		return expressionChild.getExpressionKind();
 	}
 
+	@Override
 	public String getValue(){
 		return expressionChild.getValue();
 	}
 
-	private static void assertTokenIsAtomOrOpen(IToken token){
-		if(tokenExpressionChildMap.containsKey(token.getTokenKind())) return;
-		System.out.println("Expected either an ATOM or OPEN token. Actual: " 
-			+ token.getTokenKind().toString() + "\tValue: " + token.toString());
-		System.exit(-5);
+    @Override
+    public String getDotNotation(){
+        if(expressionChild == null) return "NIL";
+	    return expressionChild.getDotNotation();
+    }
+
+    private static boolean assertTokenIsAtomOrOpen(IToken token, Program program){
+		boolean result = tokenExpressionChildMap.containsKey(token.getTokenKind());
+		if(!result) {
+		    program.markErrorPresent();
+		    String errorMessage = "Expected either an ATOM or OPEN token.\n" +
+                    "Actual: " + token.getTokenKind().toString() + "    Value: " + token.toString() + "\n";
+		    program.setErrorMessage(errorMessage);
+        }
+        return result;
 	}
 	
-	private static void assertTokenIsClose(IToken token){
-		if(token.getTokenKind() == TokenKind.CLOSE_TOKEN) return;
-		System.out.println("Expected CLOSE token. Actual: " 
-			+ token.getTokenKind().toString() + "\tValue: " + token.toString());
-		System.exit(-6);
+	private static boolean assertTokenIsClose(IToken token, Program program){
+        boolean result = token.getTokenKind() == TokenKind.CLOSE_TOKEN;
+        if(!result){
+            program.markErrorPresent();
+            String errorMessage = "Expected CLOSE token.\n" +
+                    "Actual: " + token.getTokenKind().toString() + "    Value: " + token.toString() + "\n";
+            program.setErrorMessage(errorMessage);
+        }
+        return result;
 	}
 }

@@ -28,16 +28,18 @@ public final class Interpreter{
 
     void interpret(){
 		Scanner scanner = new Scanner(System.in);
-		interpret(scanner, false);
+		interpret(scanner, false, true);
 	}
 
-	private void interpret(Scanner in, boolean shouldBeProcessed){
+	private void interpret(Scanner in, boolean shouldBeProcessed, boolean shouldBeEvaluated){
 	    tokenize(in);
 	    if(shouldBeProcessed) processTokens();
-	    else{
-			program.parse(tokenizer);
-			program.evaluate();
-		}
+	    else {
+	        program.parse(tokenizer);
+	        hasError = program.hasError();
+	        if(hasError) errorMessage = program.getErrorMessage();
+        }
+        if (shouldBeEvaluated && !hasError) program.evaluate();
     }
 
 	private void tokenize(Scanner in){
@@ -66,18 +68,29 @@ public final class Interpreter{
 
 	String testInterpreter(String programFilePath) {
         Scanner in = getScannerFromFilePath(programFilePath);
-	    interpret(in, false);
+	    interpret(in, false, true);
 		return getValue();
 	}
 
+	String testParser(String programFilePath){
+	    Scanner in = getScannerFromFilePath(programFilePath);
+	    interpret(in, false, false);
+	    return getDotNotation();
+    }
+
 	String testTokenizer(String programFilePath){
         Scanner in = getScannerFromFilePath(programFilePath);
-        interpret(in, true);
+        interpret(in, true, false);
         return getTokenizedResults();
     }
 
 	String getValue(){
 	    return program.getValue();
+    }
+
+    String getDotNotation() {
+	    if(hasError) return program.getErrorMessage();
+	    return program.getDotNotation();
     }
 
     public void incrementOpenCount(){

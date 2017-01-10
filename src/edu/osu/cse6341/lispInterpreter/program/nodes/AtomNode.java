@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.HashSet;
 
 import edu.osu.cse6341.lispInterpreter.program.ExpressionKind;
+import edu.osu.cse6341.lispInterpreter.program.Program;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
@@ -34,10 +35,14 @@ public class AtomNode implements IExpressionChild{
 		builtinKeywords.add("NIL");
 	}
 
+	public AtomNode(){
+	    value = "NIL";
+    }
+
 	@Override
-	public void parse(Tokenizer tokenizer){
+	public void parse(Tokenizer tokenizer, Program program){
 		IToken token = tokenizer.getNextToken();
-		assertTokenIsAtom(token);
+		if(!assertTokenIsAtom(token, program)) return;
 		if(token.getTokenKind() == TokenKind.NUMERIC_TOKEN) expressionKind = ExpressionKind.NUMERIC_EXPRESSION;
 		else if (builtinKeywords.contains(token.toString())) expressionKind = ExpressionKind.LITERAL_EXPRESSION;
 		else expressionKind = ExpressionKind.UNDEFINED_EXPRESSION;
@@ -49,11 +54,17 @@ public class AtomNode implements IExpressionChild{
 		if(expressionKind == ExpressionKind.UNDEFINED_EXPRESSION) value = "undefined";
 	}
 
+	@Override
 	public String getValue(){
 		return value;
 	}
 
-	@Override
+    @Override
+    public String getDotNotation() {
+        return value;
+    }
+
+    @Override
 	public ExpressionKind getExpressionKind(){
 		return expressionKind;
 	}
@@ -63,11 +74,16 @@ public class AtomNode implements IExpressionChild{
 		return new AtomNode();
 	}
 	
-	private void assertTokenIsAtom(IToken token){
+	private static boolean assertTokenIsAtom(IToken token, Program program){
 		TokenKind tokenKind = token.getTokenKind();
-		if(tokenKind == TokenKind.NUMERIC_TOKEN ||
-			tokenKind == TokenKind.LITERAL_TOKEN) return;
-		System.out.println("Expected NUMERIC or LITERAL token, Actual Token:" + 
-			tokenKind.toString() +"\tValue: " + token.toString());
+		boolean result = (tokenKind == TokenKind.NUMERIC_TOKEN ||
+			tokenKind == TokenKind.LITERAL_TOKEN);
+		if(!result){
+		    program.markErrorPresent();
+		    String errorMessage = "Expected NUMERIC or LITERAL token.\n"
+                    + "Actual: " + token.getTokenKind() + "\tValue: " + token.toString();
+		    program.setErrorMessage(errorMessage);
+        }
+        return result;
 	}
 }

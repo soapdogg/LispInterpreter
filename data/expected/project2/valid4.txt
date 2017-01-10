@@ -1,0 +1,1 @@
+(DEFUN . (TRIPLE . ((X . NIL) . ((3 . (X . (Y . NIL))) . NIL))))
