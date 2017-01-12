@@ -147,6 +147,7 @@ public class InterpreterTest {
     }
     */
 
+    /*
     @org.junit.Test
     public void project3AtomicValidTest(){
         interpreterTest("data/input/project3/atomic/valid.lisp", "data/expected/project3/atomic/valid.txt");
@@ -222,7 +223,7 @@ public class InterpreterTest {
     public void project3TimesValidTest(){
         interpreterTest("data/input/project3/times/valid.lisp", "data/expected/project3/times/valid.txt");
     }
-
+    */
 
     private static void tokenizerTest(String programFile, String expectedFile){
         Interpreter interpreter = new Interpreter();
