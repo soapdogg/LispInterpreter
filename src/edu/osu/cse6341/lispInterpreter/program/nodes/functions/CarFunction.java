@@ -1,10 +1,9 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
 import edu.osu.cse6341.lispInterpreter.program.nodes.ListNode;
+import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
-public class CarFunction implements IFunction{
-
-    private String value;
+public class CarFunction extends BaseFunction {
 
 	public CarFunction(){}
 
@@ -13,20 +12,17 @@ public class CarFunction implements IFunction{
 	}
 
 	@Override
-	public boolean isDefinedCorrectly(){
+	public boolean hasError(){
 		return false;
 	}  
 
 	@Override
-	public void evaluate(){
-
+	public Node evaluate(){
+        return null;
 	}
+
     @Override
-    public String getValue() {
-        return value;
-    }
-	@Override
-	public IFunction newInstance(ListNode listNode){
+	public BaseFunction newInstance(ListNode listNode){
 		return new CarFunction(listNode);
 	}
 

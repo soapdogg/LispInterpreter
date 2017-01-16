@@ -1,41 +1,35 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
+import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ListNode;
+import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
-public class AtomFunction implements IFunction{
+public class AtomFunction extends BaseFunction {
 
 	private int length;
-	private ListNode child;
-    private String value;
-    private boolean isDefinedCorrectly;
+	private ListNode params;
 
 	public AtomFunction(){}
 
-	private AtomFunction(ListNode listNode){
-		length = listNode.getLength();
-		child  = listNode.getListNode();
+	private AtomFunction(ListNode params){
+		length = params.getLength();
+		this.params = params;
 	}
 
 	@Override
-	public boolean isDefinedCorrectly(){
-		child.evaluate();
+	public boolean hasError(){
+		params.evaluate();
 		return length == 2;
-			// && child.isDefinedCorrectly();
-	}  
+	}
 
 	@Override
-	public void evaluate(){
-		value = child.getLength() == 1 ? "T" : "NIL";
+	public Node evaluate(){
+	    return new AtomNode(!params.evaluate().isList());
 	}
 
     @Override
-    public String getValue() {
-        return value;
-    }
-
-    @Override
-	public IFunction newInstance(ListNode listNode){
-		return new AtomFunction(listNode);
+	public BaseFunction newInstance(ListNode params){
+		return new AtomFunction(params);
 	}
 
 }

@@ -1,40 +1,35 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
+import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ListNode;
+import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
-public class IntFunction implements IFunction{
+public class IntFunction extends BaseFunction {
 
 	private int length;
-	private ListNode child;
-	private String value;
+	private ListNode params;
 
 	public IntFunction(){}
 
-	private IntFunction(ListNode listNode){
-		length = listNode.getLength();
-		child  = listNode.getListNode();
+	private IntFunction(ListNode params){
+		length = params.getLength();
+		this.params  = params;
 	}
 
 	@Override
-	public boolean isDefinedCorrectly(){
-		child.evaluate();
+	public boolean hasError(){
+		params.evaluate();
 		return length == 2;
-			//&& child.getExpressionKind() != ExpressionKind.UNDEFINED_EXPRESSION;
-	}  
+	}
 
 	@Override
-	public void evaluate(){
-		//value = child.getExpressionKind() == ExpressionKind.NUMERIC_EXPRESSION
-		//	? "T"
-		//	: "NIL";
+	public Node evaluate(){
+        return new AtomNode(params.evaluate().isNumeric());
 	}
+
     @Override
-    public String getValue() {
-        return value;
-    }
-	@Override
-	public IFunction newInstance(ListNode listNode){
-		return new IntFunction(listNode);
+	public BaseFunction newInstance(ListNode params){
+		return new IntFunction(params);
 	}
 
 }

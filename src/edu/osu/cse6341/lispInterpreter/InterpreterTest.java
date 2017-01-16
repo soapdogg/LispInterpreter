@@ -121,43 +121,18 @@ public class InterpreterTest {
         parserTest("data/input/project2/invalid5.lisp", "data/expected/project2/invalid5.txt");
     }
 
-    /*
+
     @org.junit.Test
     public void project3AtomValidTest(){
         interpreterTest("data/input/project3/atom/valid.lisp", "data/expected/project3/atom/valid.txt");
     }
 
-    /*
-    @org.junit.Test
-    public void project3AtomInvalid1Test() {
-        setUp();
-        interpreterTest("data/input/project3/atom/invalid1.lisp", "data/expected/project3/atom/invalid1.txt");
-    }
-
-    @org.junit.Test
-    public void project3AtomInvalid2Test() {
-        setUp();
-        interpreterTest("data/input/project3/atom/invalid2.lisp","data/expected/project3/atom/invalid2.txt");
-    }
-
-    @org.junit.Test
-    public void project3AtomInvalid3Test() {
-        setUp();
-        interpreterTest("data/input/project3/atom/invalid3.lisp","data/expected/project3/atom/invalid3.txt");
-    }
-    */
-
-    /*
     @org.junit.Test
     public void project3AtomicValidTest(){
         interpreterTest("data/input/project3/atomic/valid.lisp", "data/expected/project3/atomic/valid.txt");
     }
 
-    @org.junit.Test
-    public void project3AtomicInvalid1Test() {
-        interpreterTest("data/input/project3/atomic/invalid1.lisp", "data/expected/project3/atomic/invalid1.txt");
-    }
-
+    /*
     //CAR TESTS
     @org.junit.Test
     public void project3CarValidTest(){
@@ -176,11 +151,14 @@ public class InterpreterTest {
         interpreterTest("data/input/project3/cons/valid.lisp", "data/expected/project3/cons/valid.txt");
     }
 
+    */
+
     //EQ TESTS
     @org.junit.Test
     public void project3EqValidTest(){
         interpreterTest("data/input/project3/eq/valid.lisp", "data/expected/project3/eq/valid.txt");
     }
+
 
     //GREATER TESTS
     @org.junit.Test
@@ -200,11 +178,13 @@ public class InterpreterTest {
         interpreterTest("data/input/project3/less/valid.lisp", "data/expected/project3/less/valid.txt");
     }
 
+
     //MINUS TESTS
     @org.junit.Test
     public void project3MinusValidTest(){
         interpreterTest("data/input/project3/minus/valid.lisp", "data/expected/project3/minus/valid.txt");
     }
+
 
     //NULL TESTS
     @org.junit.Test
@@ -212,18 +192,19 @@ public class InterpreterTest {
         interpreterTest("data/input/project3/null/valid.lisp", "data/expected/project3/null/valid.txt");
     }
 
+
     //PLUS TESTS
     @org.junit.Test
     public void project3PlusValidTest(){
         interpreterTest("data/input/project3/plus/valid.lisp", "data/expected/project3/plus/valid.txt");
     }
 
+
     //TIMES TESTS
     @org.junit.Test
     public void project3TimesValidTest(){
         interpreterTest("data/input/project3/times/valid.lisp", "data/expected/project3/times/valid.txt");
     }
-    */
 
     private static void tokenizerTest(String programFile, String expectedFile){
         Interpreter interpreter = new Interpreter();

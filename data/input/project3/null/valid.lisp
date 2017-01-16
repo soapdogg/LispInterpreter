@@ -1,3 +1,1 @@
 (NULL NIL)
-(NULL 4)
-(NULL (INT T))

@@ -1,14 +1,10 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes;
 
-import edu.osu.cse6341.lispInterpreter.program.IEvaluatable;
-import edu.osu.cse6341.lispInterpreter.program.IParsable;
-import edu.osu.cse6341.lispInterpreter.program.IPrettyPrintable;
 import edu.osu.cse6341.lispInterpreter.program.Program;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
-import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.EndOfFileToken;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 
-public class StartNode implements IParsable, IEvaluatable, IPrettyPrintable{
+public class StartNode extends Node{
     private final ExpressionNode expressionNode;
 	private StartNode startNode;
 
@@ -27,25 +23,46 @@ public class StartNode implements IParsable, IEvaluatable, IPrettyPrintable{
     }
 
 	@Override
-	public void evaluate(){
+	public Node evaluate(){
 		expressionNode.evaluate();
 		if(startNode != null) startNode.evaluate();
+		return null;
 	}
 
 	@Override
-    public String getValue(){
+    public String getValueToString(){
 		StringBuilder sb = new StringBuilder();
-		sb.append(expressionNode.getValue());
+		sb.append(expressionNode.getValueToString());
 		sb.append('\n');
-		if(startNode != null) sb.append(startNode.getValue());
+		if(startNode != null) sb.append(startNode.getValueToString());
 		return sb.toString();
     }
 
     @Override
-    public String getDotNotation()
-    {
-        String result = expressionNode.getDotNotation() + "\n";
-        if(startNode != null) result += startNode.getDotNotation();
+    public String getDotNotationToString(){
+        String result = expressionNode.getDotNotationToString() + "\n";
+        if(startNode != null) result += startNode.getDotNotationToString();
         return result;
     }
+
+    @Override
+    public Node newInstance(){
+        return new StartNode();
+    }
+
+    @Override
+    public boolean isList(){
+        return expressionNode.isList();
+    }
+
+    @Override
+    public boolean isNumeric(){
+        return expressionNode.isNumeric();
+    }
+
+    @Override
+    public boolean isLiteral(){
+        return expressionNode.isLiteral();
+    }
+
 }

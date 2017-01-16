@@ -1,43 +1,40 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
+import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ListNode;
+import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
-public class PlusFunction implements IFunction{
+public class PlusFunction extends BaseFunction {
 
 	private int length;
 	private ListNode leftSide, rightSide;
-	private String value;
 	
 	public PlusFunction(){}
 
-	private PlusFunction(ListNode listNode){
-		length = listNode.getLength();
-		leftSide = listNode.getListNode();
-		if(leftSide != null) rightSide = leftSide.getListNode();
+	private PlusFunction(ListNode params){
+		length = params.getLength();
+		leftSide = params;
+		rightSide = leftSide.getData();
 	}
 
 	@Override
-	public boolean isDefinedCorrectly(){
+	public boolean hasError(){
 		leftSide.evaluate();
 		rightSide.evaluate();
 		return length == 3;
-			//&& leftSide.getExpressionKind() == ExpressionKind.NUMERIC_EXPRESSION
-			//&& rightSide.getExpressionKind() == ExpressionKind.NUMERIC_EXPRESSION;
-	}  
+	}
 
 	@Override
-	public void evaluate(){
-		int left = Integer.parseInt(leftSide.getValue());
-		int right = Integer.parseInt(rightSide.getValue());
-		value = Integer.toString(left + right);
+	public Node evaluate(){
+		return new AtomNode(
+                Integer.parseInt(leftSide.evaluate().getValueToString())
+                        + Integer.parseInt(rightSide.evaluate().getValueToString())
+        );
 	}
+
     @Override
-    public String getValue() {
-        return value;
-    }
-	@Override
-	public IFunction newInstance(ListNode listNode){
-		return new PlusFunction(listNode);
+	public BaseFunction newInstance(ListNode params){
+		return new PlusFunction(params);
 	}
 
 }

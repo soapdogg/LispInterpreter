@@ -1,5 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.program;
 
+import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.nodes.StartNode;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 
@@ -19,18 +20,18 @@ public class Program implements IEvaluatable, IPrettyPrintable{
 	}
 
 	@Override
-	public void evaluate(){
-		rootNode.evaluate();
+	public Node evaluate(){
+		return rootNode.evaluate();
 	}
 
 	@Override
-	public String getValue(){
-	    return rootNode.getValue();
+	public String getValueToString(){
+	    return rootNode.getValueToString();
     }
 
     @Override
-    public String getDotNotation(){
-	    return rootNode.getDotNotation();
+    public String getDotNotationToString(){
+	    return rootNode.getDotNotationToString();
     }
 
     public boolean hasError(){

@@ -1,40 +1,28 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes;
 
-import java.util.Set;
-import java.util.HashSet;
-
 import edu.osu.cse6341.lispInterpreter.program.Program;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 
-public class AtomNode implements IExpressionChild{
+public class AtomNode extends Node{
 	
 	private String value;
-	private static Set<String> builtinKeywords;
-
-	static{
-		builtinKeywords = new HashSet<>();
-		builtinKeywords.add("CAR");
-		builtinKeywords.add("CDR");
-		builtinKeywords.add("CONS");
-		builtinKeywords.add("ATOM");
-		builtinKeywords.add("INT");
-		builtinKeywords.add("NULL");
-		builtinKeywords.add("EQ");
-		builtinKeywords.add("PLUS");
-		builtinKeywords.add("MINUS");
-		builtinKeywords.add("TIMES");
-		builtinKeywords.add("LESS");
-		builtinKeywords.add("GREATER");
-		builtinKeywords.add("QUOTE");
-		builtinKeywords.add("COND");
-		builtinKeywords.add("T");
-		builtinKeywords.add("NIL");
-	}
 
 	public AtomNode(){
 	    value = "NIL";
+    }
+
+    public AtomNode(boolean value){
+	    this.value = value ? "T" : "NIL";
+    }
+
+    public AtomNode(int value){
+        this.value = Integer.toString(value);
+    }
+
+    public AtomNode(String value){
+	    this.value = value;
     }
 
 	@Override
@@ -45,24 +33,37 @@ public class AtomNode implements IExpressionChild{
 	}
 
 	@Override
-	public void evaluate(){
+	public Node evaluate(){
+	    return this;
 	}
 
 	@Override
-	public String getValue(){
+	public String getValueToString(){
 		return value;
 	}
 
     @Override
-    public String getDotNotation() {
+    public String getDotNotationToString() {
         return value;
     }
 
 	@Override
-	public IExpressionChild newInstance(){
+	public Node newInstance(){
 		return new AtomNode();
 	}
-	
+
+	public boolean isNumeric(){
+        return value.matches("[\\d+\\-]?[\\d]");
+    }
+
+    public boolean isLiteral(){
+	    return value.matches("[A-Z][A-Z0-9]*");
+    }
+
+    public boolean isList(){
+        return false;
+    }
+
 	private static boolean assertTokenIsAtom(IToken token, Program program){
 		TokenKind tokenKind = token.getTokenKind();
 		boolean result = (tokenKind == TokenKind.NUMERIC_TOKEN ||

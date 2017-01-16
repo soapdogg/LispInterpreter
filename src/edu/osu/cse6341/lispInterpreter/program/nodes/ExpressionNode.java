@@ -7,10 +7,10 @@ import edu.osu.cse6341.lispInterpreter.program.*;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.*;
 
-public class ExpressionNode implements IParsable, IEvaluatable, IPrettyPrintable{
+public class ExpressionNode extends Node{
 	
-	private static final Map<TokenKind, IExpressionChild> tokenExpressionChildMap;
-	private IExpressionChild expressionChild;
+	private static final Map<TokenKind, Node> tokenExpressionChildMap;
+	private Node expressionChild;
 
     static{
         tokenExpressionChildMap = new HashMap<>();
@@ -33,19 +33,39 @@ public class ExpressionNode implements IParsable, IEvaluatable, IPrettyPrintable
 	}
 
 	@Override
-	public void evaluate(){
-		expressionChild.evaluate();
+	public Node evaluate(){
+		return expressionChild.evaluate();
 	}
 
 	@Override
-	public String getValue(){
-		return expressionChild.getValue();
+	public String getValueToString(){
+		return expressionChild.getValueToString();
 	}
 
     @Override
-    public String getDotNotation(){
+    public String getDotNotationToString(){
         if(expressionChild == null) return "NIL";
-	    return expressionChild.getDotNotation();
+	    return expressionChild.getDotNotationToString();
+    }
+
+    @Override
+    public Node newInstance(){
+        return new ExpressionNode();
+    }
+
+    @Override
+    public boolean isList() {
+        return expressionChild.isList();
+    }
+
+    @Override
+    public boolean isNumeric() {
+        return expressionChild.isNumeric();
+    }
+
+    @Override
+    public boolean isLiteral(){
+        return expressionChild.isLiteral();
     }
 
     private static boolean assertTokenIsAtomOrOpen(IToken token, Program program){

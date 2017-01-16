@@ -1,30 +1,26 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
 import edu.osu.cse6341.lispInterpreter.program.nodes.ListNode;
+import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
-public class CdrFunction implements IFunction{
-
-    private String value;
+public class CdrFunction extends BaseFunction {
 
 	public CdrFunction(){}
 
 	private CdrFunction(ListNode listNode){}
 
 	@Override
-	public boolean isDefinedCorrectly(){
+	public boolean hasError(){
 		return false;
 	}  
 
 	@Override
-	public void evaluate(){
-
+	public Node evaluate(){
+        return null;
 	}
+
     @Override
-    public String getValue() {
-        return value;
-    }
-	@Override
-	public IFunction newInstance(ListNode listNode){
+	public BaseFunction newInstance(ListNode listNode){
 		return new CdrFunction(listNode);
 	}
 

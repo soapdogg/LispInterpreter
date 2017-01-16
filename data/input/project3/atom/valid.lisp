@@ -1,2 +1,1 @@
 (ATOM 4)
-(ATOM (PLUS (MINUS 3 4) 4))

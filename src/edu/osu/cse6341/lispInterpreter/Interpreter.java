@@ -85,12 +85,12 @@ public final class Interpreter{
     }
 
 	String getValue(){
-	    return program.getValue();
+	    return program.getValueToString();
     }
 
     String getDotNotation() {
 	    if(hasError) return program.getErrorMessage();
-	    return program.getDotNotation();
+	    return program.getDotNotationToString();
     }
 
     public void incrementOpenCount(){

@@ -8,13 +8,13 @@ import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 import edu.osu.cse6341.lispInterpreter.program.nodes.functions.*;
 
-public class ListNode implements IExpressionChild{
+public class ListNode extends Node{
 	
-	private ExpressionNode expressionNode;
-	private ListNode listNode;
-	private boolean isEmpty; 
-	private static Map<String, IFunction> functionMap;
+	private ExpressionNode address;
+	private ListNode data;
+	private static Map<String, BaseFunction> functionMap;
 	private String value;
+	private boolean isList;
 
 	static{
 		functionMap = new HashMap<>();
@@ -41,53 +41,73 @@ public class ListNode implements IExpressionChild{
 	@Override
 	public void parse(Tokenizer tokenizer, Program program){
 		TokenKind tokenKind = tokenizer.getCurrent().getTokenKind();
-	    isEmpty = tokenKind == TokenKind.CLOSE_TOKEN;
-		if(isEmpty) return;
-		expressionNode = new ExpressionNode();
-		listNode = new ListNode();
-		expressionNode.parse(tokenizer, program);
+	    isList = tokenKind != TokenKind.CLOSE_TOKEN;
+		if(!isList()) return;
+		address = new ExpressionNode();
+		data = new ListNode();
+		address.parse(tokenizer, program);
 		if(program.hasError()) return;
-		listNode.parse(tokenizer, program);
+		data.parse(tokenizer, program);
 	}
 
 	@Override
-	public void evaluate(){
-		if(isEmpty) return;
-		expressionNode.evaluate();
-		if(functionMap.containsKey(expressionNode.getValue())){
-			IFunction function = functionMap.get(expressionNode.getValue());
-			function = function.newInstance(this);
-			boolean isUndefined = !function.isDefinedCorrectly();
-			if(isUndefined) {
-			}else{
-				value = function.getValue();
-			}
-		}else {
-			value = expressionNode.getValue();
-		}
+	public Node evaluate(){
+		if(!isList()) return null;
+		String a = address.evaluate().getValueToString();
+		ListNode params;
+
+		if(address.isNumeric()) return address.evaluate();
+		else if (a.matches("NIL")) return new AtomNode("NIL");
+		else if (a.matches("T")) return new AtomNode("T");
+		else if(a.matches("CAR") || a.matches("CDR")){
+		    ListNode s;
+        }
+        else if(functionMap.containsKey(a)){
+		    BaseFunction function = functionMap.get(a);
+		    function = function.newInstance(data);
+		    Node result = function.evaluate();
+		    value = result.getValueToString();
+		    return result;
+        }
+        return null;
 	}
 
 	@Override
-	public IExpressionChild newInstance(){
+	public Node newInstance(){
 		return new ListNode();
 	}
 
-	@Override
-    public String getValue(){
+    @Override
+    public boolean isList(){
+        return isList;
+    }
+
+    @Override
+    public boolean isNumeric(){
+        return address.isNumeric();
+    }
+
+    @Override
+    public boolean isLiteral(){
+        return address.isLiteral();
+    }
+
+    @Override
+    public String getValueToString(){
 	    return value;
     }
 
     @Override
-    public String getDotNotation() {
-        return isEmpty ? "NIL" : "(" + expressionNode.getDotNotation() + " . " + listNode.getDotNotation() + ")";
+    public String getDotNotationToString() {
+        return isList() ? "(" + address.getDotNotationToString() + " . " + data.getDotNotationToString() + ")" : "NIL";
     }
 
     public int getLength(){
-		return isEmpty ? 0 : listNode.getLength() + 1;
+		return isList() ? data.getLength() + 1 : 0;
 	}
 
-	public ListNode getListNode(){
-		return listNode;
+	public ListNode getData(){
+		return data;
 	}
 
 }
