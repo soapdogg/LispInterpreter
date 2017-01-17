@@ -32,6 +32,14 @@ public class ExpressionNode extends Node{
 		if(isList) assertTokenIsClose(tokenizer.getNextToken(), program);
 	}
 
+	public ExpressionNode(){
+
+    }
+
+	public ExpressionNode(Node node){
+	    this.expressionChild = node;
+    }
+
 	@Override
 	public Node evaluate(){
 		return expressionChild.evaluate();
@@ -79,7 +87,7 @@ public class ExpressionNode extends Node{
         return result;
 	}
 	
-	private static boolean assertTokenIsClose(IToken token, Program program){
+	private static void assertTokenIsClose(IToken token, Program program){
         boolean result = token.getTokenKind() == TokenKind.CLOSE_TOKEN;
         if(!result){
             program.markErrorPresent();
@@ -87,6 +95,5 @@ public class ExpressionNode extends Node{
                     "Actual: " + token.getTokenKind().toString() + "    Value: " + token.toString() + "\n";
             program.setErrorMessage(errorMessage);
         }
-        return result;
 	}
 }

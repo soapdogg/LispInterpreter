@@ -6,7 +6,7 @@ import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 
 public class Program implements IEvaluatable, IPrettyPrintable{
 
-	private StartNode rootNode;
+	private final StartNode rootNode;
 	private boolean hasError;
 	private String errorMessage;
 

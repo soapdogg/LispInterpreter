@@ -5,9 +5,16 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
 public class ConsFunction extends BaseFunction {
 
+    private ListNode leftSide, rightSide;
+    private int length;
+
 	public ConsFunction(){}
 
-	private ConsFunction(ListNode listNode){}
+	private ConsFunction(ListNode params){
+        length = params.getLength();
+        leftSide = params;
+        rightSide = leftSide.getData();
+    }
 
 	@Override
 	public boolean hasError(){
@@ -16,12 +23,14 @@ public class ConsFunction extends BaseFunction {
 
 	@Override
 	public Node evaluate(){
-        return null;
+        Node leftResult = leftSide.evaluate();
+        Node rightResult = rightSide.evaluate();
+        return new ListNode(leftResult, rightResult);
 	}
 
     @Override
-	public BaseFunction newInstance(ListNode listNode){
-		return new ConsFunction(listNode);
+	public BaseFunction newInstance(ListNode params){
+		return new ConsFunction(params);
 	}
 
 }

@@ -6,5 +6,5 @@ public enum TokenKind {
 	ERROR_TOKEN,
 	LITERAL_TOKEN,
 	NUMERIC_TOKEN,
-	OPEN_TOKEN;
+	OPEN_TOKEN
 }

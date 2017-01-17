@@ -12,9 +12,9 @@ public class ListNode extends Node{
 	
 	private ExpressionNode address;
 	private ListNode data;
-	private static Map<String, BaseFunction> functionMap;
+	private static final Map<String, BaseFunction> functionMap;
 	private String value;
-	private boolean isList;
+	private boolean isList, isNumeric, isLiteral;
 
 	static{
 		functionMap = new HashMap<>();
@@ -36,7 +36,31 @@ public class ListNode extends Node{
 
 	public ListNode(){
 	    value = "NIL";
+	    address = null;
+	    data = null;
+	    isList = false;
 	}
+
+    public ListNode(AtomNode atomNode){
+	    address = new ExpressionNode(atomNode);
+	    value = address.getValueToString();
+	    isList = false;
+	    data = null;
+    }
+
+	public ListNode(Node address, Node data){
+	    this.address = new ExpressionNode(address);
+        this.data = data.isList() ? (ListNode) data : new ListNode((AtomNode) data);
+        value = this.address.getValueToString() + " ";
+	    if(!(data.isList() || this.data.getValueToString().equals("NIL"))) value += ". ";
+        value += data.isList() ? this.data.address.getValueToString() : this.data.getValueToString().equals("NIL")
+                ? "" : this.data.getValueToString();
+        value = value.trim();
+	    isList = true;
+        isNumeric = !(data.isList() || !this.data.getValueToString().equals("NIL") || !value.matches(
+                "-?[1-9][0-9]*|0"));
+        isLiteral = !isList && !isNumeric;
+    }
 
 	@Override
 	public void parse(Tokenizer tokenizer, Program program){
@@ -53,23 +77,27 @@ public class ListNode extends Node{
 	@Override
 	public Node evaluate(){
 		if(!isList()) return null;
-		String a = address.evaluate().getValueToString();
-		ListNode params;
+		Node node = address.evaluate();
+		String a = node.getValueToString();
 
-		if(address.isNumeric()) return address.evaluate();
+		if(node.isNumeric())
+		    return node;
 		else if (a.matches("NIL")) return new AtomNode("NIL");
 		else if (a.matches("T")) return new AtomNode("T");
 		else if(a.matches("CAR") || a.matches("CDR")){
-		    ListNode s;
         }
         else if(functionMap.containsKey(a)){
 		    BaseFunction function = functionMap.get(a);
 		    function = function.newInstance(data);
 		    Node result = function.evaluate();
 		    value = result.getValueToString();
+		    isList = result.isList();
+		    isNumeric = value.matches("-?[1-9][0-9]*|0");
+		    isLiteral = value.matches("[A-Z][A-Z0-9]*");
+
 		    return result;
         }
-        return null;
+        return this;
 	}
 
 	@Override
@@ -84,12 +112,12 @@ public class ListNode extends Node{
 
     @Override
     public boolean isNumeric(){
-        return address.isNumeric();
+        return isNumeric;
     }
 
     @Override
     public boolean isLiteral(){
-        return address.isLiteral();
+        return isLiteral;
     }
 
     @Override

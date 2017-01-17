@@ -12,10 +12,10 @@ import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
 
 public final class Interpreter{
 
-	private Program program;
-	private Queue<String> literalAtoms;
+	private final Program program;
+	private final Queue<String> literalAtoms;
 	private int numericAtomsCount, numericAtomsSum, openCount, closingCount;
-	private Tokenizer tokenizer;
+	private final Tokenizer tokenizer;
 	private String errorMessage;
 	private boolean hasError;
 

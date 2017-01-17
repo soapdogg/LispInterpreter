@@ -32,7 +32,9 @@ public class StartNode extends Node{
 	@Override
     public String getValueToString(){
 		StringBuilder sb = new StringBuilder();
+		if (expressionNode.isList()) sb.append('(');
 		sb.append(expressionNode.getValueToString());
+		if(expressionNode.isList()) sb.append(')');
 		sb.append('\n');
 		if(startNode != null) sb.append(startNode.getValueToString());
 		return sb.toString();

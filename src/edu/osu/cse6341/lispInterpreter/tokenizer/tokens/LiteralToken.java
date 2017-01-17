@@ -6,8 +6,6 @@ public class LiteralToken implements IToken{
 
 	private String atomValue;
 
-	public LiteralToken(){}
-
 	public LiteralToken(String atomValue){
 		this.atomValue = atomValue;
 	}
@@ -23,7 +21,7 @@ public class LiteralToken implements IToken{
 	
 	@Override
 	public int hashCode(){
-		return (int) getTokenKind().ordinal();
+		return getTokenKind().ordinal();
 	}
 	
 	@Override

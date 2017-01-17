@@ -6,8 +6,6 @@ public class NumericToken implements IToken{
 
 	private int atomValue;
 
-	public NumericToken(){}
-	
 	public NumericToken(int atomValue){
 		this.atomValue = atomValue;
 	}
@@ -24,7 +22,7 @@ public class NumericToken implements IToken{
 	
 	@Override
 	public int hashCode(){
-		return (int) getTokenKind().ordinal();
+		return getTokenKind().ordinal();
 	}
 	
 	@Override

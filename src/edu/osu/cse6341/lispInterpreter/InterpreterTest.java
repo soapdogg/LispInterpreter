@@ -145,13 +145,13 @@ public class InterpreterTest {
         interpreterTest("data/input/project3/cdr/valid.lisp", "data/expected/project3/cdr/valid.txt");
     }
 
+    */
     //CONS TESTS
     @org.junit.Test
     public void project3ConsValidTest(){
         interpreterTest("data/input/project3/cons/valid.lisp", "data/expected/project3/cons/valid.txt");
     }
 
-    */
 
     //EQ TESTS
     @org.junit.Test

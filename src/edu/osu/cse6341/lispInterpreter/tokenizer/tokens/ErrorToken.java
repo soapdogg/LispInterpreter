@@ -4,7 +4,7 @@ import edu.osu.cse6341.lispInterpreter.Interpreter;
 
 public class ErrorToken implements IToken{
 
-	private String atomValue;
+	private final String atomValue;
 
 	public ErrorToken(String atomValue){
 		this.atomValue = atomValue;
@@ -21,7 +21,7 @@ public class ErrorToken implements IToken{
 
 	@Override
 	public int hashCode(){
-		return (int) getTokenKind().ordinal();
+		return getTokenKind().ordinal();
 	}
 
 	@Override
