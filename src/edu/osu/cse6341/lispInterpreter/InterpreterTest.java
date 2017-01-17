@@ -132,12 +132,12 @@ public class InterpreterTest {
         interpreterTest("data/input/project3/atomic/valid.lisp", "data/expected/project3/atomic/valid.txt");
     }
 
-    /*
     //CAR TESTS
     @org.junit.Test
     public void project3CarValidTest(){
         interpreterTest("data/input/project3/car/valid.lisp", "data/expected/project3/car/valid.txt");
     }
+
 
     //CDR TESTS
     @org.junit.Test
@@ -145,7 +145,7 @@ public class InterpreterTest {
         interpreterTest("data/input/project3/cdr/valid.lisp", "data/expected/project3/cdr/valid.txt");
     }
 
-    */
+
     //CONS TESTS
     @org.junit.Test
     public void project3ConsValidTest(){

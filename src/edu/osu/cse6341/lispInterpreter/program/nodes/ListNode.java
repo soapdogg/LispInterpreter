@@ -84,8 +84,6 @@ public class ListNode extends Node{
 		    return node;
 		else if (a.matches("NIL")) return new AtomNode("NIL");
 		else if (a.matches("T")) return new AtomNode("T");
-		else if(a.matches("CAR") || a.matches("CDR")){
-        }
         else if(functionMap.containsKey(a)){
 		    BaseFunction function = functionMap.get(a);
 		    function = function.newInstance(data);
@@ -136,6 +134,10 @@ public class ListNode extends Node{
 
 	public ListNode getData(){
 		return data;
+	}
+
+	public ExpressionNode getAddress(){
+	    return address;
 	}
 
 }
