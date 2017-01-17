@@ -145,6 +145,10 @@ public class InterpreterTest {
         interpreterTest("data/input/project3/cdr/valid.lisp", "data/expected/project3/cdr/valid.txt");
     }
 
+    @org.junit.Test
+    public void project3CondValidTest(){
+        interpreterTest("data/input/project3/cond/valid.lisp", "data/expected/project3/cond/valid.txt");
+    }
 
     //CONS TESTS
     @org.junit.Test

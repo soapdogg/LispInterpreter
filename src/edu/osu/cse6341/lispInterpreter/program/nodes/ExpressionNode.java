@@ -56,6 +56,10 @@ public class ExpressionNode extends Node{
 	    return expressionChild.getDotNotationToString();
     }
 
+    public Node getExpressionChild(){
+        return expressionChild;
+    }
+
     @Override
     public Node newInstance(){
         return new ExpressionNode();
