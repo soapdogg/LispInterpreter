@@ -203,6 +203,11 @@ public class InterpreterTest {
         interpreterTest("data/input/project3/plus/valid.lisp", "data/expected/project3/plus/valid.txt");
     }
 
+    //QUOTE TESTS
+    @org.junit.Test
+    public void project3QuoteValidTest(){
+        interpreterTest("data/input/project3/quote/valid.lisp", "data/expected/project3/quote/valid.txt");
+    }
 
     //TIMES TESTS
     @org.junit.Test

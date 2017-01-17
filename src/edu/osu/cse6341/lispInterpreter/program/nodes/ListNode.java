@@ -72,6 +72,9 @@ public class ListNode extends Node{
 		address.parse(tokenizer, program);
 		if(program.hasError()) return;
 		data.parse(tokenizer, program);
+
+		value = address.getValueToString();
+        if(data.isList) value += " " + data.getValueToString();
 	}
 
 	@Override

@@ -5,9 +5,13 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
 public class QuoteFunction extends BaseFunction {
 
+    private ListNode params;
+
 	public QuoteFunction(){}
 
-	private QuoteFunction(ListNode listNode){}
+	private QuoteFunction(ListNode params){
+	    this.params = params;
+    }
 
 	@Override
 	public boolean hasError(){
@@ -16,12 +20,12 @@ public class QuoteFunction extends BaseFunction {
 
 	@Override
 	public Node evaluate(){
-        return null;
+        return params.getAddress();
 	}
 
     @Override
-	public BaseFunction newInstance(ListNode listNode){
-		return new QuoteFunction(listNode);
+	public BaseFunction newInstance(ListNode params){
+		return new QuoteFunction(params);
 	}
 
 }
