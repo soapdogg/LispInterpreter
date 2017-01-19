@@ -81,7 +81,7 @@ public final class Interpreter{
 	    return program.getValueToString();
     }
 
-    String getDotNotation() {
+    private String getDotNotation() {
 	    return program.getDotNotationToString();
     }
 

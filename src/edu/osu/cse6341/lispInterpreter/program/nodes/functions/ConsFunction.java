@@ -17,7 +17,7 @@ public class ConsFunction extends BaseFunction {
     }
 
     @Override
-	public Node evaluate(){
+	public Node evaluate() throws Exception{
         Node leftResult = leftSide.evaluate();
         Node rightResult = rightSide.evaluate();
         return new ExpressionNode(leftResult, rightResult);

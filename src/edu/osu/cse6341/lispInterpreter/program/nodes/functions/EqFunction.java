@@ -18,7 +18,7 @@ public class EqFunction extends BaseFunction {
 	}
 
     @Override
-	public Node evaluate(){
+	public Node evaluate() throws Exception{
 		return new AtomNode(leftSide.evaluate().getValueToString().equals(rightSide.evaluate().getValueToString()));
 	}
 

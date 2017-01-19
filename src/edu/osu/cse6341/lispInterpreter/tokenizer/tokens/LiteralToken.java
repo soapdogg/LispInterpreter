@@ -4,7 +4,7 @@ import edu.osu.cse6341.lispInterpreter.Interpreter;
 
 public class LiteralToken implements IToken{
 
-	private String atomValue;
+	private final String atomValue;
 
 	public LiteralToken(String atomValue){
 		this.atomValue = atomValue;

@@ -15,7 +15,7 @@ public class CondFunction extends BaseFunction {
     }
 
     @Override
-	public Node evaluate(){
+	public Node evaluate() throws Exception{
         Node temp = ((ExpressionNode)params).getAddress();
         if(!((ExpressionNode)temp).getAddress().evaluate().getValueToString().equals("NIL")){
             return ((ExpressionNode)temp).getData().evaluate();

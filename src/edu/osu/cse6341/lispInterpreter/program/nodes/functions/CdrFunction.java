@@ -14,7 +14,7 @@ public class CdrFunction extends BaseFunction {
     }
 
     @Override
-	public Node evaluate(){
+	public Node evaluate() throws Exception{
         return ((ExpressionNode)address.evaluate()).getData();
 	}
 

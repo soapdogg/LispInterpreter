@@ -3,7 +3,6 @@ package edu.osu.cse6341.lispInterpreter.program.nodes;
 import edu.osu.cse6341.lispInterpreter.program.IEvaluatable;
 import edu.osu.cse6341.lispInterpreter.program.IParsable;
 import edu.osu.cse6341.lispInterpreter.program.IPrettyPrintable;
-import edu.osu.cse6341.lispInterpreter.program.Program;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
@@ -22,20 +21,20 @@ public abstract class Node implements IParsable, IEvaluatable, IPrettyPrintable{
         tokenToNodeMap.put(TokenKind.LITERAL_TOKEN, new AtomNode());
     }
 
-    public abstract Node newInstance();
+    protected abstract Node newInstance();
     public abstract boolean isList();
     public abstract boolean isNumeric();
     public abstract boolean isLiteral();
     public abstract int getLength();
 
-    static Node parseIntoNode(Tokenizer tokenizer, Program program) throws Exception{
+    static Node parseIntoNode(Tokenizer tokenizer) throws Exception{
         IToken token = tokenizer.getCurrent();
         assertTokenIsAtomOrOpen(token);
         Node expressionChild = tokenToNodeMap.get(token.getTokenKind());
         expressionChild = expressionChild.newInstance();
         boolean isList = token.getTokenKind() == TokenKind.OPEN_TOKEN;
         if(isList) tokenizer.getNextToken();
-        expressionChild.parse(tokenizer, program);
+        expressionChild.parse(tokenizer);
         if(isList) assertTokenIsClose(tokenizer.getNextToken());
         return expressionChild;
     }

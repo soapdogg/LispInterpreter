@@ -1,6 +1,5 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes;
 
-import edu.osu.cse6341.lispInterpreter.program.Program;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 
@@ -12,16 +11,16 @@ public class StartNode extends Node{
     }
 
     @Override
-    public void parse(Tokenizer tokenizer, Program program) throws Exception{
+    public void parse(Tokenizer tokenizer) throws Exception{
         if(tokenizer.getCurrent().getTokenKind() == TokenKind.EOF_TOKEN) return;
-        node = Node.parseIntoNode(tokenizer, program);
+        node = Node.parseIntoNode(tokenizer);
 		if(tokenizer.getCurrent().getTokenKind() == TokenKind.EOF_TOKEN) return;
 		nextExpressionStartNode = new StartNode();
-		nextExpressionStartNode.parse(tokenizer, program);
+		nextExpressionStartNode.parse(tokenizer);
     }
 
 	@Override
-	public Node evaluate(){
+	public Node evaluate() throws Exception{
 		node.evaluate();
 		if(nextExpressionStartNode != null) nextExpressionStartNode.evaluate();
 		return null;

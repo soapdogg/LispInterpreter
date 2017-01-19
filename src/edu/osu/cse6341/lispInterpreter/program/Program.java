@@ -1,10 +1,9 @@
 package edu.osu.cse6341.lispInterpreter.program;
 
-import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.nodes.StartNode;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 
-public class Program implements IEvaluatable, IPrettyPrintable{
+public class Program implements IPrettyPrintable{
 
 	private final StartNode rootNode;
 
@@ -13,12 +12,11 @@ public class Program implements IEvaluatable, IPrettyPrintable{
 	}
 
 	public void parse(Tokenizer tokenizer) throws Exception{
-		rootNode.parse(tokenizer, this);
+		rootNode.parse(tokenizer);
 	}
 
-	@Override
-	public Node evaluate(){
-		return rootNode.evaluate();
+	public void evaluate() throws Exception{
+		rootNode.evaluate();
 	}
 
 	@Override

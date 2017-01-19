@@ -18,7 +18,7 @@ public class LessFunction extends BaseFunction {
 	}
 
     @Override
-    public Node evaluate(){
+    public Node evaluate() throws Exception{
         return new AtomNode(Integer.parseInt(leftSide.evaluate().getValueToString())
                 < Integer.parseInt(rightSide.evaluate().getValueToString()));
     }

@@ -4,7 +4,7 @@ import edu.osu.cse6341.lispInterpreter.Interpreter;
 
 public class NumericToken implements IToken{
 
-	private int atomValue;
+	private final int atomValue;
 
 	public NumericToken(int atomValue){
 		this.atomValue = atomValue;

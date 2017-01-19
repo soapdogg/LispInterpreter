@@ -3,7 +3,6 @@ package edu.osu.cse6341.lispInterpreter.program.nodes;
 import java.util.Map;
 import java.util.HashMap;
 
-import edu.osu.cse6341.lispInterpreter.program.Program;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 import edu.osu.cse6341.lispInterpreter.program.nodes.functions.*;
@@ -42,7 +41,7 @@ public class ExpressionNode extends Node{
 	    isList = false;
 	}
 
-    public ExpressionNode(AtomNode atomNode){
+    private ExpressionNode(AtomNode atomNode){
 	    address = atomNode;
 	    value = address.getValueToString();
 	    isList = false;
@@ -64,22 +63,22 @@ public class ExpressionNode extends Node{
     }
 
 	@Override
-	public void parse(Tokenizer tokenizer, Program program) throws Exception{
+	public void parse(Tokenizer tokenizer) throws Exception{
 		TokenKind tokenKind = tokenizer.getCurrent().getTokenKind();
 	    isList = tokenKind != TokenKind.CLOSE_TOKEN;
 		if(!isList()) return;
 
-		address = Node.parseIntoNode(tokenizer, program);
+		address = Node.parseIntoNode(tokenizer);
 
         data = new ExpressionNode();
-        data.parse(tokenizer, program);
+        data.parse(tokenizer);
 
 		value = address.getValueToString();
         if(data.isList()) value += " " + data.getValueToString();
 	}
 
 	@Override
-	public Node evaluate(){
+	public Node evaluate() throws Exception{
 		if(!isList()) return null;
 		Node node = address.evaluate();
 		String a = node.getValueToString();
