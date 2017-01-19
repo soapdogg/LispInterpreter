@@ -11,8 +11,9 @@ public class ErrorToken implements IToken{
 	}
 
     @Override
-    public void process(Interpreter interpreter) {
-        interpreter.setErrorMessage("Error! Invalid token: " + atomValue + "\n");
+    public void process(Interpreter interpreter) throws Exception{
+        String errorMessage = "Error! Invalid token: " + atomValue + "\n";
+        throw new Exception(errorMessage);
     }
 
     public TokenKind getTokenKind(){

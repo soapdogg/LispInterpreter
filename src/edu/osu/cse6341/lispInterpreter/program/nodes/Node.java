@@ -17,13 +17,10 @@ public abstract class Node implements IParsable, IEvaluatable, IPrettyPrintable{
 
     static{
         tokenToNodeMap = new HashMap<>();
-        tokenToNodeMap.put(TokenKind.OPEN_TOKEN, new ListNode());
+        tokenToNodeMap.put(TokenKind.OPEN_TOKEN, new ExpressionNode());
         tokenToNodeMap.put(TokenKind.NUMERIC_TOKEN, new AtomNode());
         tokenToNodeMap.put(TokenKind.LITERAL_TOKEN, new AtomNode());
     }
-
-    protected String errorMessage;
-    protected boolean hasError;
 
     public abstract Node newInstance();
     public abstract boolean isList();
@@ -31,53 +28,31 @@ public abstract class Node implements IParsable, IEvaluatable, IPrettyPrintable{
     public abstract boolean isLiteral();
     public abstract int getLength();
 
-    public static Node parseIntoNode(Tokenizer tokenizer, Program program){
+    static Node parseIntoNode(Tokenizer tokenizer, Program program) throws Exception{
         IToken token = tokenizer.getCurrent();
-        assertTokenIsAtomOrOpen(token, program);
-        if(program.hasError()) return null;
+        assertTokenIsAtomOrOpen(token);
         Node expressionChild = tokenToNodeMap.get(token.getTokenKind());
         expressionChild = expressionChild.newInstance();
-        boolean isList = expressionChild instanceof ListNode;
+        boolean isList = token.getTokenKind() == TokenKind.OPEN_TOKEN;
         if(isList) tokenizer.getNextToken();
         expressionChild.parse(tokenizer, program);
-        if(program.hasError()) return null;
-        if(isList) assertTokenIsClose(tokenizer.getNextToken(), program);
-        if(program.hasError()) return null;
+        if(isList) assertTokenIsClose(tokenizer.getNextToken());
         return expressionChild;
     }
 
-    public void setErrorMessage(String errorMessage){
-        this.errorMessage = errorMessage;
-    }
-
-    public String getErrorMessage(){
-        return errorMessage;
-    }
-
-    public void markErrorPresent(){
-        hasError = true;
-    }
-
-    public boolean hasError(){
-        return hasError;
-    }
-
-
-    private static void assertTokenIsAtomOrOpen(IToken token, Program program){
+    private static void assertTokenIsAtomOrOpen(IToken token) throws Exception{
         boolean result = tokenToNodeMap.containsKey(token.getTokenKind());
         if (result) return;
-        program.markErrorPresent();
         String errorMessage = "Expected either an ATOM or OPEN token.\n" +
                 "Actual: " + token.getTokenKind().toString() + "    Value: " + token.toString() + "\n";
-        program.setErrorMessage(errorMessage);
+        throw new Exception(errorMessage);
     }
 
-    private static void assertTokenIsClose(IToken token, Program program){
+    private static void assertTokenIsClose(IToken token) throws Exception{
         boolean result = token.getTokenKind() == TokenKind.CLOSE_TOKEN;
         if (result) return;
-        program.markErrorPresent();
         String errorMessage = "Expected CLOSE token.\n" +
                 "Actual: " + token.getTokenKind().toString() + "    Value: " + token.toString() + "\n";
-        program.setErrorMessage(errorMessage);
+        throw new Exception(errorMessage);
     }
 }

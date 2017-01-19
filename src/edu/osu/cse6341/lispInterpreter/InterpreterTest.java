@@ -217,7 +217,12 @@ public class InterpreterTest {
 
     private static void tokenizerTest(String programFile, String expectedFile){
         Interpreter interpreter = new Interpreter();
-        String actual = interpreter.testTokenizer(programFile);
+        String actual;
+        try {
+            actual = interpreter.testTokenizer(programFile);
+        }catch (Exception e){
+            actual = e.getMessage();
+        }
         String expected = scanExpected(expectedFile);
         Assert.assertEquals(expected, actual);
     }
@@ -225,14 +230,24 @@ public class InterpreterTest {
 
     private static void parserTest(String programFile, String expectedFile){
         Interpreter interpreter = new Interpreter();
-        String actual = interpreter.testParser(programFile);
+        String actual;
+        try{
+            actual = interpreter.testParser(programFile);
+        } catch (Exception e){
+            actual = e.getMessage();
+        }
         String expected = scanExpected(expectedFile);
         Assert.assertEquals(expected, actual);
     }
 
     private static void interpreterTest(String programFile, String expectedFile){
         Interpreter interpreter = new Interpreter();
-        String actual = interpreter.testInterpreter(programFile);
+        String actual;
+        try{
+            actual = interpreter.testInterpreter(programFile);
+        }catch (Exception e){
+            actual = e.getMessage();
+        }
         String expected = scanExpected(expectedFile);
         Assert.assertEquals(expected, actual);
     }

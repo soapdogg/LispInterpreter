@@ -16,30 +16,23 @@ public final class Interpreter{
 	private final Queue<String> literalAtoms;
 	private int numericAtomsCount, numericAtomsSum, openCount, closingCount;
 	private final Tokenizer tokenizer;
-	private String errorMessage;
-	private boolean hasError;
 
 	public Interpreter(){
 		tokenizer = new Tokenizer();
 		program = new Program();
 		literalAtoms = new LinkedList<>();
-		hasError = false;
 	}
 
-    void interpret(){
+    void interpret() throws Exception{
 		Scanner scanner = new Scanner(System.in);
 		interpret(scanner, false, true);
 	}
 
-	private void interpret(Scanner in, boolean shouldBeProcessed, boolean shouldBeEvaluated){
+	private void interpret(Scanner in, boolean shouldBeProcessed, boolean shouldBeEvaluated) throws Exception{
 	    tokenize(in);
 	    if(shouldBeProcessed) processTokens();
-	    else {
-	        program.parse(tokenizer);
-	        hasError = program.hasError();
-	        if(hasError) errorMessage = program.getErrorMessage();
-        }
-        if (shouldBeEvaluated && !hasError) program.evaluate();
+	    else program.parse(tokenizer);
+        if (shouldBeEvaluated) program.evaluate();
     }
 
 	private void tokenize(Scanner in){
@@ -47,7 +40,7 @@ public final class Interpreter{
 		in.close();
 	}
 
-	private void processTokens(){
+	private void processTokens() throws Exception{
 		while(tokenizer.hasNext()){
 			IToken token = tokenizer.getNextToken();
 			token.process(this);
@@ -66,19 +59,19 @@ public final class Interpreter{
         return in;
     }
 
-	String testInterpreter(String programFilePath) {
+	String testInterpreter(String programFilePath) throws Exception{
         Scanner in = getScannerFromFilePath(programFilePath);
 	    interpret(in, false, true);
 		return getValue();
 	}
 
-	String testParser(String programFilePath){
+	String testParser(String programFilePath) throws Exception{
 	    Scanner in = getScannerFromFilePath(programFilePath);
 	    interpret(in, false, false);
 	    return getDotNotation();
     }
 
-	String testTokenizer(String programFilePath){
+	String testTokenizer(String programFilePath) throws Exception{
         Scanner in = getScannerFromFilePath(programFilePath);
         interpret(in, true, false);
         return getTokenizedResults();
@@ -89,7 +82,6 @@ public final class Interpreter{
     }
 
     String getDotNotation() {
-	    if(hasError) return program.getErrorMessage();
 	    return program.getDotNotationToString();
     }
 
@@ -113,13 +105,8 @@ public final class Interpreter{
 		literalAtoms.add(atomValue);
 	}
 
-	public void setErrorMessage(String errorMessage){
-	    this.errorMessage = errorMessage;
-	    hasError = true;
-    }
 
     private String getTokenizedResults(){
-		if(hasError) return errorMessage;
 	    StringBuilder sb = new StringBuilder();
 		sb.append("LITERAL ATOMS: ");
 		sb.append(literalAtoms.size());

@@ -7,15 +7,12 @@ import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 public class Program implements IEvaluatable, IPrettyPrintable{
 
 	private final StartNode rootNode;
-	private boolean hasError;
-	private String errorMessage;
 
 	public Program(){
         rootNode = new StartNode();
 	}
 
-
-	public void parse(Tokenizer tokenizer){
+	public void parse(Tokenizer tokenizer) throws Exception{
 		rootNode.parse(tokenizer, this);
 	}
 
@@ -33,22 +30,5 @@ public class Program implements IEvaluatable, IPrettyPrintable{
     public String getDotNotationToString(){
 	    return rootNode.getDotNotationToString();
     }
-
-    public boolean hasError(){
-        return hasError;
-    }
-
-    public void markErrorPresent(){
-        hasError = true;
-    }
-
-    public String getErrorMessage(){
-        return errorMessage;
-    }
-
-    public void setErrorMessage(String errorMessage){
-        this.errorMessage = errorMessage;
-    }
-
 
 }

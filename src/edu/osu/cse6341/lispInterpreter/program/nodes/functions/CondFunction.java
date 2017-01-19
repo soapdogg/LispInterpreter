@@ -1,6 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
-import edu.osu.cse6341.lispInterpreter.program.nodes.ListNode;
+import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
 
@@ -14,18 +14,13 @@ public class CondFunction extends BaseFunction {
         this.params = params;
     }
 
-	@Override
-	public boolean hasError(){
-		return false;
-	}  
-
-	@Override
+    @Override
 	public Node evaluate(){
-        Node temp = ((ListNode)params).getAddress();
-        if(!((ListNode)temp).getAddress().evaluate().getValueToString().equals("NIL")){
-            return ((ListNode)temp).getData().evaluate();
+        Node temp = ((ExpressionNode)params).getAddress();
+        if(!((ExpressionNode)temp).getAddress().evaluate().getValueToString().equals("NIL")){
+            return ((ExpressionNode)temp).getData().evaluate();
         }else{
-            Node listNode = ((ListNode)params).getData();
+            Node listNode = ((ExpressionNode)params).getData();
             CondFunction function = new CondFunction(listNode);
             return function.evaluate();
         }

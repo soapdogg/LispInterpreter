@@ -29,7 +29,6 @@ public class AtomNode extends Node{
 	public void parse(Tokenizer tokenizer, Program program){
 		IToken token = tokenizer.getNextToken();
 		assertTokenIsAtom(token, program);
-	    if(program.hasError()) return;
 		value = token.toString();
 	}
 
@@ -78,9 +77,7 @@ public class AtomNode extends Node{
 		boolean result = (tokenKind == TokenKind.NUMERIC_TOKEN ||
 			tokenKind == TokenKind.LITERAL_TOKEN);
 		if(result) return;
-        program.markErrorPresent();
         String errorMessage = "Expected NUMERIC or LITERAL token.\n"
                 + "Actual: " + token.getTokenKind() + "\tValue: " + token.toString();
-        program.setErrorMessage(errorMessage);
 	}
 }

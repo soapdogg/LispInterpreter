@@ -1,6 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
-import edu.osu.cse6341.lispInterpreter.program.nodes.ListNode;
+import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
 public class CarFunction extends BaseFunction {
@@ -10,17 +10,12 @@ public class CarFunction extends BaseFunction {
 	public CarFunction(){}
 
 	private CarFunction(Node params){
-        address = ((ListNode)params).getAddress();
+        address = ((ExpressionNode)params).getAddress();
 	}
 
-	@Override
-	public boolean hasError(){
-		return false;
-	}  
-
-	@Override
+    @Override
 	public Node evaluate(){
-        return ((ListNode)address.evaluate()).getAddress();
+        return ((ExpressionNode)address.evaluate()).getAddress();
 	}
 
     @Override

@@ -1,6 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
-import edu.osu.cse6341.lispInterpreter.program.nodes.ListNode;
+import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
 public class ConsFunction extends BaseFunction {
@@ -13,19 +13,14 @@ public class ConsFunction extends BaseFunction {
 	private ConsFunction(Node params){
         length = params.getLength();
         leftSide = params;
-        rightSide = ((ListNode)leftSide).getData();
+        rightSide = ((ExpressionNode)leftSide).getData();
     }
 
-	@Override
-	public boolean hasError(){
-		return false;
-	}  
-
-	@Override
+    @Override
 	public Node evaluate(){
         Node leftResult = leftSide.evaluate();
         Node rightResult = rightSide.evaluate();
-        return new ListNode(leftResult, rightResult);
+        return new ExpressionNode(leftResult, rightResult);
 	}
 
     @Override

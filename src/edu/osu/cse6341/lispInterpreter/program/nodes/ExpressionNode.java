@@ -8,7 +8,7 @@ import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 import edu.osu.cse6341.lispInterpreter.program.nodes.functions.*;
 
-public class ListNode extends Node{
+public class ExpressionNode extends Node{
 
 	private static final Map<String, BaseFunction> functionMap;
 
@@ -35,26 +35,26 @@ public class ListNode extends Node{
 		functionMap.put("TIMES", new TimesFunction());
 	}
 
-	public ListNode(){
+	public ExpressionNode(){
 	    value = "NIL";
 	    address = null;
 	    data = null;
 	    isList = false;
 	}
 
-    public ListNode(AtomNode atomNode){
+    public ExpressionNode(AtomNode atomNode){
 	    address = atomNode;
 	    value = address.getValueToString();
 	    isList = false;
 	    data = null;
     }
 
-	public ListNode(Node address, Node data){
+	public ExpressionNode(Node address, Node data){
 	    this.address = address;
-        this.data = data.isList() ? (ListNode) data : new ListNode((AtomNode) data);
+        this.data = data.isList() ? (ExpressionNode) data : new ExpressionNode((AtomNode) data);
         value = this.address.getValueToString() + " ";
 	    if(!(data.isList() || this.data.getValueToString().equals("NIL"))) value += ". ";
-        value += data.isList() ? ((ListNode) this.data).address.getValueToString() : this.data.getValueToString().equals("NIL")
+        value += data.isList() ? ((ExpressionNode) this.data).address.getValueToString() : this.data.getValueToString().equals("NIL")
                 ? "" : this.data.getValueToString();
         value = value.trim();
 	    isList = true;
@@ -64,17 +64,15 @@ public class ListNode extends Node{
     }
 
 	@Override
-	public void parse(Tokenizer tokenizer, Program program){
+	public void parse(Tokenizer tokenizer, Program program) throws Exception{
 		TokenKind tokenKind = tokenizer.getCurrent().getTokenKind();
 	    isList = tokenKind != TokenKind.CLOSE_TOKEN;
 		if(!isList()) return;
 
 		address = Node.parseIntoNode(tokenizer, program);
-        if(program.hasError()) return;
 
-        data = new ListNode();
+        data = new ExpressionNode();
         data.parse(tokenizer, program);
-		if(program.hasError()) return;
 
 		value = address.getValueToString();
         if(data.isList()) value += " " + data.getValueToString();
@@ -106,7 +104,7 @@ public class ListNode extends Node{
 
 	@Override
 	public Node newInstance(){
-		return new ListNode();
+		return new ExpressionNode();
 	}
 
     @Override

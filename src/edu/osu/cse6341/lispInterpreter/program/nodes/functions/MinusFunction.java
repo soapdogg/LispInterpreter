@@ -1,7 +1,7 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
-import edu.osu.cse6341.lispInterpreter.program.nodes.ListNode;
+import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
 public class MinusFunction extends BaseFunction {
@@ -14,17 +14,10 @@ public class MinusFunction extends BaseFunction {
 	private MinusFunction(Node params){
 		length = params.getLength();
 		leftSide = params;
-		rightSide = ((ListNode)leftSide).getData();
+		rightSide = ((ExpressionNode)leftSide).getData();
 	}
 
-	@Override
-	public boolean hasError(){
-		leftSide.evaluate();
-		rightSide.evaluate();
-		return length == 3;
-	}
-
-	@Override
+    @Override
 	public Node evaluate(){
         return new AtomNode(
                 Integer.parseInt(leftSide.evaluate().getValueToString())

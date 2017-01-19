@@ -5,46 +5,45 @@ import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 
 public class StartNode extends Node{
-    private Node expressionNode;
-	private StartNode startNode;
+    private Node node;
+	private StartNode nextExpressionStartNode;
 
     public StartNode(){
     }
 
     @Override
-    public void parse(Tokenizer tokenizer, Program program){
+    public void parse(Tokenizer tokenizer, Program program) throws Exception{
         if(tokenizer.getCurrent().getTokenKind() == TokenKind.EOF_TOKEN) return;
-        expressionNode = Node.parseIntoNode(tokenizer, program);
-		if(tokenizer.getCurrent().getTokenKind() == TokenKind.EOF_TOKEN
-                || program.hasError()) return;
-		startNode = new StartNode();
-		startNode.parse(tokenizer, program);
+        node = Node.parseIntoNode(tokenizer, program);
+		if(tokenizer.getCurrent().getTokenKind() == TokenKind.EOF_TOKEN) return;
+		nextExpressionStartNode = new StartNode();
+		nextExpressionStartNode.parse(tokenizer, program);
     }
 
 	@Override
 	public Node evaluate(){
-		expressionNode.evaluate();
-		if(startNode != null) startNode.evaluate();
+		node.evaluate();
+		if(nextExpressionStartNode != null) nextExpressionStartNode.evaluate();
 		return null;
 	}
 
 	@Override
     public String getValueToString(){
-	    if (expressionNode == null) return "NIL\n";
+	    if (node == null) return "NIL\n";
 		StringBuilder sb = new StringBuilder();
-		if (expressionNode.isList()) sb.append('(');
-		sb.append(expressionNode.getValueToString());
-		if(expressionNode.isList()) sb.append(')');
+		if (node.isList()) sb.append('(');
+		sb.append(node.getValueToString());
+		if(node.isList()) sb.append(')');
 		sb.append('\n');
-		if(startNode != null) sb.append(startNode.getValueToString());
+		if(nextExpressionStartNode != null) sb.append(nextExpressionStartNode.getValueToString());
 		return sb.toString();
     }
 
     @Override
     public String getDotNotationToString(){
-        if(expressionNode == null) return "NIL\n";
-        String result = expressionNode.getDotNotationToString() + "\n";
-        if(startNode != null) result += startNode.getDotNotationToString();
+        if(node == null) return "NIL\n";
+        String result = node.getDotNotationToString() + "\n";
+        if(nextExpressionStartNode != null) result += nextExpressionStartNode.getDotNotationToString();
         return result;
     }
 
@@ -55,21 +54,21 @@ public class StartNode extends Node{
 
     @Override
     public boolean isList(){
-        return expressionNode.isList();
+        return node.isList();
     }
 
     @Override
     public boolean isNumeric(){
-        return expressionNode.isNumeric();
+        return node.isNumeric();
     }
 
     @Override
     public boolean isLiteral(){
-        return expressionNode.isLiteral();
+        return node.isLiteral();
     }
 
     @Override
     public int getLength(){
-        return expressionNode.getLength();
+        return node.getLength();
     }
 }

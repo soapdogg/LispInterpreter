@@ -15,13 +15,7 @@ public class NullFunction extends BaseFunction {
 		this.params = params;
 	}
 
-	@Override
-	public boolean hasError(){
-		params.evaluate();
-		return length == 2;
-	}
-
-	@Override
+    @Override
 	public Node evaluate(){
 		return new AtomNode(params.evaluate().getValueToString().equals("NIL"));
 	}

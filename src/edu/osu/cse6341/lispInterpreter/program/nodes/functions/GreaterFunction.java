@@ -1,7 +1,7 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
-import edu.osu.cse6341.lispInterpreter.program.nodes.ListNode;
+import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
 public class GreaterFunction extends BaseFunction {
@@ -14,14 +14,7 @@ public class GreaterFunction extends BaseFunction {
 	private GreaterFunction(Node params){
 		length = params.getLength();
 		leftSide = params;
-		rightSide = ((ListNode)leftSide).getData();
-	}
-
-	@Override
-	public boolean hasError(){
-		leftSide.evaluate();
-		rightSide.evaluate();
-		return length == 3;
+		rightSide = ((ExpressionNode)leftSide).getData();
 	}
 
     @Override
