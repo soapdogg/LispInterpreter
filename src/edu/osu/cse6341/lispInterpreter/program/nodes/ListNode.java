@@ -9,10 +9,11 @@ import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 import edu.osu.cse6341.lispInterpreter.program.nodes.functions.*;
 
 public class ListNode extends Node{
-	
-	private ExpressionNode address;
-	private ListNode data;
+
 	private static final Map<String, BaseFunction> functionMap;
+
+	private Node address;
+	private Node data;
 	private String value;
 	private boolean isList, isNumeric, isLiteral;
 
@@ -42,18 +43,18 @@ public class ListNode extends Node{
 	}
 
     public ListNode(AtomNode atomNode){
-	    address = new ExpressionNode(atomNode);
+	    address = atomNode;
 	    value = address.getValueToString();
 	    isList = false;
 	    data = null;
     }
 
 	public ListNode(Node address, Node data){
-	    this.address = new ExpressionNode(address);
+	    this.address = address;
         this.data = data.isList() ? (ListNode) data : new ListNode((AtomNode) data);
         value = this.address.getValueToString() + " ";
 	    if(!(data.isList() || this.data.getValueToString().equals("NIL"))) value += ". ";
-        value += data.isList() ? this.data.address.getValueToString() : this.data.getValueToString().equals("NIL")
+        value += data.isList() ? ((ListNode) this.data).address.getValueToString() : this.data.getValueToString().equals("NIL")
                 ? "" : this.data.getValueToString();
         value = value.trim();
 	    isList = true;
@@ -67,14 +68,16 @@ public class ListNode extends Node{
 		TokenKind tokenKind = tokenizer.getCurrent().getTokenKind();
 	    isList = tokenKind != TokenKind.CLOSE_TOKEN;
 		if(!isList()) return;
-		address = new ExpressionNode();
-		data = new ListNode();
-		address.parse(tokenizer, program);
+
+		address = Node.parseIntoNode(tokenizer, program);
+        if(program.hasError()) return;
+
+        data = new ListNode();
+        data.parse(tokenizer, program);
 		if(program.hasError()) return;
-		data.parse(tokenizer, program);
 
 		value = address.getValueToString();
-        if(data.isList) value += " " + data.getValueToString();
+        if(data.isList()) value += " " + data.getValueToString();
 	}
 
 	@Override
@@ -85,8 +88,8 @@ public class ListNode extends Node{
 
 		if(node.isNumeric())
 		    return node;
-		else if (a.matches("NIL")) return new AtomNode("NIL");
-		else if (a.matches("T")) return new AtomNode("T");
+		else if (a.equals("NIL")) return new AtomNode("NIL");
+		else if (a.equals("T")) return new AtomNode("T");
         else if(functionMap.containsKey(a)){
 		    BaseFunction function = functionMap.get(a);
 		    function = function.newInstance(data);
@@ -135,11 +138,11 @@ public class ListNode extends Node{
 		return isList() ? data.getLength() + 1 : 0;
 	}
 
-	public ListNode getData(){
+	public Node getData(){
 		return data;
 	}
 
-	public ExpressionNode getAddress(){
+	public Node getAddress(){
 	    return address;
 	}
 

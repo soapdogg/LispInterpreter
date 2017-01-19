@@ -1,17 +1,16 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
-import edu.osu.cse6341.lispInterpreter.program.nodes.ListNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
 public class AtomFunction extends BaseFunction {
 
 	private int length;
-	private ListNode params;
+	private Node params;
 
 	public AtomFunction(){}
 
-	private AtomFunction(ListNode params){
+	private AtomFunction(Node params){
 		length = params.getLength();
 		this.params = params;
 	}
@@ -28,7 +27,7 @@ public class AtomFunction extends BaseFunction {
 	}
 
     @Override
-	public BaseFunction newInstance(ListNode params){
+	public BaseFunction newInstance(Node params){
 		return new AtomFunction(params);
 	}
 

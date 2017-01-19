@@ -1,1 +1,2 @@
 (CAR (CONS 2 45))
+(CAR (CONS (CAR (CONS 56 43)) T))

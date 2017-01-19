@@ -7,14 +7,14 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 public class MinusFunction extends BaseFunction {
 
 	private int length;
-	private ListNode leftSide, rightSide;
+	private Node leftSide, rightSide;
 
 	public MinusFunction(){}
 
-	private MinusFunction(ListNode params){
+	private MinusFunction(Node params){
 		length = params.getLength();
 		leftSide = params;
-		rightSide = leftSide.getData();
+		rightSide = ((ListNode)leftSide).getData();
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class MinusFunction extends BaseFunction {
 	}
 
     @Override
-	public BaseFunction newInstance(ListNode params){
+	public BaseFunction newInstance(Node params){
 		return new MinusFunction(params);
 	}
 

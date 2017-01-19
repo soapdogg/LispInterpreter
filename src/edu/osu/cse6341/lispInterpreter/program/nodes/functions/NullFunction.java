@@ -1,17 +1,16 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
-import edu.osu.cse6341.lispInterpreter.program.nodes.ListNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
 public class NullFunction extends BaseFunction {
 
 	private int length;
-	private ListNode params;
+	private Node params;
 
 	public NullFunction(){}
 
-	private NullFunction(ListNode params){
+	private NullFunction(Node params){
 		length = params.getLength();
 		this.params = params;
 	}
@@ -28,7 +27,7 @@ public class NullFunction extends BaseFunction {
 	}
 
     @Override
-	public BaseFunction newInstance(ListNode params){
+	public BaseFunction newInstance(Node params){
 		return new NullFunction(params);
 	}
 

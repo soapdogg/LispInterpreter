@@ -5,11 +5,11 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
 public class QuoteFunction extends BaseFunction {
 
-    private ListNode params;
+    private Node params;
 
 	public QuoteFunction(){}
 
-	private QuoteFunction(ListNode params){
+	private QuoteFunction(Node params){
 	    this.params = params;
     }
 
@@ -20,11 +20,11 @@ public class QuoteFunction extends BaseFunction {
 
 	@Override
 	public Node evaluate(){
-        return params.getAddress();
+        return ((ListNode)params).getAddress();
 	}
 
     @Override
-	public BaseFunction newInstance(ListNode params){
+	public BaseFunction newInstance(Node params){
 		return new QuoteFunction(params);
 	}
 

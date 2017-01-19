@@ -8,14 +8,14 @@ public class TimesFunction extends BaseFunction
 {
 
 	private int length;
-	private ListNode leftSide, rightSide;
+	private Node leftSide, rightSide;
 
 	public TimesFunction(){}
 
-	private TimesFunction(ListNode params){
+	private TimesFunction(Node params){
 		length = params.getLength();
 		leftSide = params;
-		rightSide = leftSide.getData();
+		rightSide = ((ListNode)leftSide).getData();
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class TimesFunction extends BaseFunction
 	}
 
     @Override
-	public BaseFunction newInstance(ListNode params){
+	public BaseFunction newInstance(Node params){
 		return new TimesFunction(params);
 	}
 

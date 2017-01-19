@@ -7,14 +7,14 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 public class EqFunction extends BaseFunction {
 
 	private int length;
-	private ListNode leftSide, rightSide;
+	private Node leftSide, rightSide;
 
 	public EqFunction(){}
 
-	private EqFunction(ListNode params){
+	private EqFunction(Node params){
 		length = params.getLength();
 		leftSide = params;
-        rightSide = leftSide.getData();
+        rightSide = ((ListNode)leftSide).getData();
 	}
 
 	@Override
@@ -30,7 +30,7 @@ public class EqFunction extends BaseFunction {
 	}
 
     @Override
-	public BaseFunction newInstance(ListNode listNode){
+	public BaseFunction newInstance(Node listNode){
 		return new EqFunction(listNode);
 	}
 

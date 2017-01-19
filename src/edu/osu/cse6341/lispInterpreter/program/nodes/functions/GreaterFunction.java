@@ -7,14 +7,14 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 public class GreaterFunction extends BaseFunction {
 	
 	private int length;
-	private ListNode leftSide, rightSide;
+	private Node leftSide, rightSide;
 
 	public GreaterFunction(){}
 
-	private GreaterFunction(ListNode params){
+	private GreaterFunction(Node params){
 		length = params.getLength();
 		leftSide = params;
-		rightSide = leftSide.getData();
+		rightSide = ((ListNode)leftSide).getData();
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class GreaterFunction extends BaseFunction {
     }
 
     @Override
-	public BaseFunction newInstance(ListNode params){
+	public BaseFunction newInstance(Node params){
 		return new GreaterFunction(params);
 	}
 

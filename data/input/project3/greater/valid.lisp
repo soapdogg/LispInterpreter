@@ -1,1 +1,2 @@
 (GREATER 98 1)
+(GREATER (PLUS 3 2) 6)

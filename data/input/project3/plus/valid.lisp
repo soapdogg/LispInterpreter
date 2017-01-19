@@ -1,1 +1,2 @@
 (PLUS 8 4)
+(PLUS (PLUS 4 3) (PLUS (PLUS 1 2) 4))

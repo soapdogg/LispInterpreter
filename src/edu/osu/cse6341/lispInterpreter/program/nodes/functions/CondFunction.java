@@ -1,20 +1,16 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
-import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
-import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ListNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
-import java.util.List;
 
 public class CondFunction extends BaseFunction {
 
-    private ListNode params;
-
+    private Node params;
 
 	public CondFunction(){}
 
-	private CondFunction(ListNode params){
+	private CondFunction(Node params){
         this.params = params;
     }
 
@@ -25,18 +21,18 @@ public class CondFunction extends BaseFunction {
 
 	@Override
 	public Node evaluate(){
-        ExpressionNode temp = params.getAddress();
-        ListNode bool = (ListNode) temp.getExpressionChild();
-        if(!bool.getAddress().evaluate().getValueToString().equals("NIL")){
-            return bool.getData().evaluate();
+        Node temp = ((ListNode)params).getAddress();
+        if(!((ListNode)temp).getAddress().evaluate().getValueToString().equals("NIL")){
+            return ((ListNode)temp).getData().evaluate();
         }else{
-            CondFunction function = new CondFunction(params.getData());
+            Node listNode = ((ListNode)params).getData();
+            CondFunction function = new CondFunction(listNode);
             return function.evaluate();
         }
 	}
 
     @Override
-	public BaseFunction newInstance(ListNode params){
+	public BaseFunction newInstance(Node params){
 		return new CondFunction(params);
 	}
 

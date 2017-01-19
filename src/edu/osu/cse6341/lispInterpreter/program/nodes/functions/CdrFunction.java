@@ -1,17 +1,16 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
-import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ListNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
 public class CdrFunction extends BaseFunction {
 
-    ExpressionNode address;
+    private Node address;
 
 	public CdrFunction(){}
 
-	private CdrFunction(ListNode params){
-	    address = params.getAddress();
+	private CdrFunction(Node params){
+	    address = ((ListNode) params).getAddress();
     }
 
 	@Override
@@ -25,7 +24,7 @@ public class CdrFunction extends BaseFunction {
 	}
 
     @Override
-	public BaseFunction newInstance(ListNode params){
+	public BaseFunction newInstance(Node params){
 		return new CdrFunction(params);
 	}
 

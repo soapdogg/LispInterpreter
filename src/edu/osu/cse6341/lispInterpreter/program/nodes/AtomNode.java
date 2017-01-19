@@ -28,7 +28,8 @@ public class AtomNode extends Node{
 	@Override
 	public void parse(Tokenizer tokenizer, Program program){
 		IToken token = tokenizer.getNextToken();
-		if(!assertTokenIsAtom(token, program)) return;
+		assertTokenIsAtom(token, program);
+	    if(program.hasError()) return;
 		value = token.toString();
 	}
 
@@ -52,28 +53,34 @@ public class AtomNode extends Node{
 		return new AtomNode();
 	}
 
+	@Override
 	public boolean isNumeric(){
         return value.matches("[\\d+\\-]?[\\d]");
     }
 
+    @Override
     public boolean isLiteral(){
 	    return value.matches("[A-Z][A-Z0-9]*");
     }
 
-    public boolean isList(){
+    @Override
+    public boolean isList() {
         return false;
     }
 
-	private static boolean assertTokenIsAtom(IToken token, Program program){
+    @Override
+    public int getLength(){
+        return 1;
+    }
+
+	private static void assertTokenIsAtom(IToken token, Program program){
 		TokenKind tokenKind = token.getTokenKind();
 		boolean result = (tokenKind == TokenKind.NUMERIC_TOKEN ||
 			tokenKind == TokenKind.LITERAL_TOKEN);
-		if(!result){
-		    program.markErrorPresent();
-		    String errorMessage = "Expected NUMERIC or LITERAL token.\n"
-                    + "Actual: " + token.getTokenKind() + "\tValue: " + token.toString();
-		    program.setErrorMessage(errorMessage);
-        }
-        return result;
+		if(result) return;
+        program.markErrorPresent();
+        String errorMessage = "Expected NUMERIC or LITERAL token.\n"
+                + "Actual: " + token.getTokenKind() + "\tValue: " + token.toString();
+        program.setErrorMessage(errorMessage);
 	}
 }
