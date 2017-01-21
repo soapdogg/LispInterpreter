@@ -9,7 +9,9 @@ public class QuoteFunction extends BaseFunction {
 
 	public QuoteFunction(){}
 
-	private QuoteFunction(Node params){
+	private QuoteFunction(Node params) throws Exception{
+	    assertParametersAreNotEmpty(params);
+	    assertLengthIsAsExpected(params.getLength());
 	    this.params = params;
     }
 
@@ -19,8 +21,18 @@ public class QuoteFunction extends BaseFunction {
 	}
 
     @Override
-	public BaseFunction newInstance(Node params){
+	public BaseFunction newInstance(Node params) throws Exception{
 		return new QuoteFunction(params);
 	}
+
+    @Override
+    String getFunctionName() {
+        return "QUOTE";
+    }
+
+    @Override
+    int getExpectedLength() {
+        return 2;
+    }
 
 }

@@ -10,9 +10,8 @@ public class AtomFunction extends BaseFunction {
 	public AtomFunction(){}
 
 	private AtomFunction(Node params) throws Exception{
-		if(params == null) throw new Exception("Error! No parameters for the ATOM Function");
-        if(params.getLength() != 1) throw new Exception("Error! Expected length of ATOM list is: 2    Actual" + params.getLength() + 1);
-
+	    assertParametersAreNotEmpty(params);
+	    assertLengthIsAsExpected(params.getLength());
 		Node evaluatedResult = params.evaluate();
 		result = !evaluatedResult.isList();
 	}
@@ -26,5 +25,15 @@ public class AtomFunction extends BaseFunction {
 	public BaseFunction newInstance(Node params) throws Exception{
 		return new AtomFunction(params);
 	}
+
+    @Override
+    String getFunctionName() {
+        return "ATOM";
+    }
+
+    @Override
+    int getExpectedLength() {
+        return 2;
+    }
 
 }

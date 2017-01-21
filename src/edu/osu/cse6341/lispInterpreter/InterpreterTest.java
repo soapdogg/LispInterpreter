@@ -128,6 +128,16 @@ public class InterpreterTest {
     }
 
     @org.junit.Test
+    public void project3AtomInvalid1Test(){
+        interpreterTest("data/input/project3/atom/invalid1.lisp", "data/expected/project3/atom/invalid1.txt");
+    }
+
+    @org.junit.Test
+    public void project3AtomInvalid2Test(){
+        interpreterTest("data/input/project3/atom/invalid2.lisp", "data/expected/project3/atom/invalid2.txt");
+    }
+
+    @org.junit.Test
     public void project3AtomicValidTest(){
         interpreterTest("data/input/project3/atomic/valid.lisp", "data/expected/project3/atomic/valid.txt");
     }
@@ -176,6 +186,16 @@ public class InterpreterTest {
         interpreterTest("data/input/project3/int/valid.lisp", "data/expected/project3/int/valid.txt");
     }
 
+    @org.junit.Test
+    public void project3IntInvalid1Test(){
+        interpreterTest("data/input/project3/int/invalid1.lisp", "data/expected/project3/int/invalid1.txt");
+    }
+
+    @org.junit.Test
+    public void project3IntInvalid2Test(){
+        interpreterTest("data/input/project3/int/invalid2.lisp", "data/expected/project3/int/invalid2.txt");
+    }
+
     //LESS TESTS
     @org.junit.Test
     public void project3LessValidTest(){
@@ -196,6 +216,15 @@ public class InterpreterTest {
         interpreterTest("data/input/project3/null/valid.lisp", "data/expected/project3/null/valid.txt");
     }
 
+    @org.junit.Test
+    public void project3NullInvalid1Test(){
+        interpreterTest("data/input/project3/null/invalid1.lisp", "data/expected/project3/null/invalid1.txt");
+    }
+
+    @org.junit.Test
+    public void project3NullInvalid2Test(){
+        interpreterTest("data/input/project3/null/invalid2.lisp", "data/expected/project3/null/invalid2.txt");
+    }
 
     //PLUS TESTS
     @org.junit.Test

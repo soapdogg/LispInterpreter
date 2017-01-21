@@ -1,9 +1,12 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes;
 
+import edu.osu.cse6341.lispInterpreter.program.IEvaluatable;
+import edu.osu.cse6341.lispInterpreter.program.IParsable;
+import edu.osu.cse6341.lispInterpreter.program.IPrettyPrintable;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 
-public class StartNode extends Node{
+public class StartNode implements IParsable, IEvaluatable, IPrettyPrintable{
     private Node node;
 	private StartNode nextExpressionStartNode;
 
@@ -46,28 +49,4 @@ public class StartNode extends Node{
         return result;
     }
 
-    @Override
-    public Node newInstance(){
-        return new StartNode();
-    }
-
-    @Override
-    public boolean isList(){
-        return node.isList();
-    }
-
-    @Override
-    public boolean isNumeric(){
-        return node.isNumeric();
-    }
-
-    @Override
-    public boolean isLiteral(){
-        return node.isLiteral();
-    }
-
-    @Override
-    public int getLength(){
-        return node.getLength();
-    }
 }

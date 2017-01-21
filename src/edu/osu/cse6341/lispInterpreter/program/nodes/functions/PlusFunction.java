@@ -6,28 +6,37 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
 public class PlusFunction extends BaseFunction {
 
-	private int length;
-	private Node leftSide, rightSide;
+	private int result;
 	
 	public PlusFunction(){}
 
-	private PlusFunction(Node params){
-		length = params.getLength();
-		leftSide = params;
-		rightSide = ((ExpressionNode)leftSide).getData();
+	private PlusFunction(Node params) throws Exception{
+	    assertParametersAreNotEmpty(params);
+	    assertLengthIsAsExpected(params.getLength());
+	    Node right = ((ExpressionNode)params).getData();
+	    int leftValue = getNumericValue(params.evaluate(), true);
+	    int rightValue = getNumericValue(right.evaluate(), false);
+		result = leftValue + rightValue;
 	}
 
     @Override
 	public Node evaluate() throws Exception{
-		return new AtomNode(
-                Integer.parseInt(leftSide.evaluate().getValueToString())
-                        + Integer.parseInt(rightSide.evaluate().getValueToString())
-        );
+		return new AtomNode(result);
 	}
 
     @Override
-	public BaseFunction newInstance(Node params){
+	public BaseFunction newInstance(Node params) throws Exception{
 		return new PlusFunction(params);
 	}
+
+    @Override
+    String getFunctionName() {
+        return "PLUS";
+    }
+
+    @Override
+    int getExpectedLength() {
+        return 3;
+    }
 
 }

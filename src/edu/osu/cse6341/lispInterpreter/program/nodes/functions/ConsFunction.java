@@ -5,27 +5,35 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
 public class ConsFunction extends BaseFunction {
 
-    private Node leftSide, rightSide;
-    private int length;
+    private Node result;
 
 	public ConsFunction(){}
 
-	private ConsFunction(Node params){
-        length = params.getLength();
-        leftSide = params;
-        rightSide = ((ExpressionNode)leftSide).getData();
+	private ConsFunction(Node params) throws Exception{
+	    assertParametersAreNotEmpty(params);
+	    assertLengthIsAsExpected(params.getLength());
+	    Node rightSide = ((ExpressionNode)params).getData();
+	    result = new ExpressionNode(params.evaluate(), rightSide.evaluate());
     }
 
     @Override
 	public Node evaluate() throws Exception{
-        Node leftResult = leftSide.evaluate();
-        Node rightResult = rightSide.evaluate();
-        return new ExpressionNode(leftResult, rightResult);
+        return result;
 	}
 
     @Override
-	public BaseFunction newInstance(Node params){
+	public BaseFunction newInstance(Node params) throws Exception{
 		return new ConsFunction(params);
 	}
+
+    @Override
+    String getFunctionName() {
+        return "CONS";
+    }
+
+    @Override
+    int getExpectedLength() {
+        return 3;
+    }
 
 }

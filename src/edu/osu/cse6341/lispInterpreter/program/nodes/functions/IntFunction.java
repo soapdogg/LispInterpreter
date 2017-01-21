@@ -10,9 +10,8 @@ public class IntFunction extends BaseFunction {
 	public IntFunction(){}
 
 	private IntFunction(Node params) throws Exception{
-        if(params == null) throw new Exception("Error! No parameters for the INT Function");
-        if(params.getLength() != 1) throw new Exception("Error! Expected length of INT list is: 2    Actual" + params.getLength() + 1);
-
+        assertParametersAreNotEmpty(params);
+        assertLengthIsAsExpected(params.getLength());
         Node evaluatedResult = params.evaluate();
 		result = evaluatedResult.isNumeric();
 	}
@@ -26,5 +25,15 @@ public class IntFunction extends BaseFunction {
 	public BaseFunction newInstance(Node params) throws Exception{
 		return new IntFunction(params);
 	}
+
+    @Override
+    String getFunctionName() {
+        return "INT";
+    }
+
+    @Override
+    int getExpectedLength() {
+        return 2;
+    }
 
 }

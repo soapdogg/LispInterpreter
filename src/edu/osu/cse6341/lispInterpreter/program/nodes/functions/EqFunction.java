@@ -6,25 +6,37 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
 public class EqFunction extends BaseFunction {
 
-	private int length;
-	private Node leftSide, rightSide;
+	private boolean result;
 
 	public EqFunction(){}
 
-	private EqFunction(Node params){
-		length = params.getLength();
-		leftSide = params;
-        rightSide = ((ExpressionNode)leftSide).getData();
+	private EqFunction(Node params) throws Exception{
+	    assertParametersAreNotEmpty(params);
+	    assertLengthIsAsExpected(params.getLength());
+		Node right = ((ExpressionNode)params).getData();
+		String leftValue = getAtomicValue(params.evaluate(), true);
+		String rightValue = getAtomicValue(right.evaluate(), false);
+		result = leftValue.equals(rightValue);
 	}
 
     @Override
 	public Node evaluate() throws Exception{
-		return new AtomNode(leftSide.evaluate().getValueToString().equals(rightSide.evaluate().getValueToString()));
+		return new AtomNode(result);
 	}
 
     @Override
-	public BaseFunction newInstance(Node listNode){
+	public BaseFunction newInstance(Node listNode) throws Exception{
 		return new EqFunction(listNode);
 	}
+
+    @Override
+    String getFunctionName() {
+        return "EQ";
+    }
+
+    @Override
+    int getExpectedLength() {
+        return 3;
+    }
 
 }

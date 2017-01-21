@@ -9,18 +9,31 @@ public class CarFunction extends BaseFunction {
 
 	public CarFunction(){}
 
-	private CarFunction(Node params){
-        address = ((ExpressionNode)params).getAddress();
+	private CarFunction(Node params) throws Exception{
+	    assertParametersAreNotEmpty(params);
+	    assertLengthIsAsExpected(params.getLength());
+	    ExpressionNode node = getListValue(((ExpressionNode)params).getAddress().evaluate());
+        address = node.getAddress();
 	}
 
     @Override
 	public Node evaluate() throws Exception{
-        return ((ExpressionNode)address.evaluate()).getAddress();
+        return address;
 	}
 
     @Override
-	public BaseFunction newInstance(Node params){
+	public BaseFunction newInstance(Node params) throws Exception{
 		return new CarFunction(params);
 	}
+
+    @Override
+    String getFunctionName() {
+        return "CAR";
+    }
+
+    @Override
+    int getExpectedLength() {
+        return 2;
+    }
 
 }

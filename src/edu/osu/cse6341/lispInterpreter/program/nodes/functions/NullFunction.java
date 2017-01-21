@@ -10,9 +10,8 @@ public class NullFunction extends BaseFunction {
 	public NullFunction(){}
 
 	private NullFunction(Node params) throws Exception{
-        if(params == null) throw new Exception("Error! No parameters for the NULL Function");
-        if(params.getLength() != 1) throw new Exception("Error! Expected length of NULL list is: 2    Actual" + params.getLength() + 1);
-
+	    assertParametersAreNotEmpty(params);
+        assertLengthIsAsExpected(params.getLength());
         Node evaluatedResult = params.evaluate();
 		result = evaluatedResult.getValueToString().equals("NIL");
 	}
@@ -26,5 +25,15 @@ public class NullFunction extends BaseFunction {
 	public BaseFunction newInstance(Node params) throws Exception{
 		return new NullFunction(params);
 	}
+
+    @Override
+    String getFunctionName() {
+        return "NULL";
+    }
+
+    @Override
+    int getExpectedLength() {
+        return 2;
+    }
 
 }
