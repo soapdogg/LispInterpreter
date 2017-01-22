@@ -14,7 +14,6 @@ public class CdrFunction extends BaseFunction {
 	    assertLengthIsAsExpected(params.getLength());
 	    ExpressionNode node = getListValue(((ExpressionNode)params).getAddress().evaluate());
 	    data = node.getData();
-	    if(!data.isList()) data = ((ExpressionNode)data).getAddress();
     }
 
     @Override

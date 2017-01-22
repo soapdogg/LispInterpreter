@@ -41,24 +41,22 @@ public class ExpressionNode extends Node{
 	    isList = false;
 	}
 
-    private ExpressionNode(AtomNode atomNode){
-	    address = atomNode;
-	    value = address.getValueToString();
-	    isList = false;
-	    data = null;
-    }
-
 	public ExpressionNode(Node address, Node data){
 	    this.address = address;
-        this.data = data.isList() ? (ExpressionNode) data : new ExpressionNode((AtomNode) data);
-        value = this.address.getValueToString() + " ";
-	    if(!(data.isList() || this.data.getValueToString().equals("NIL"))) value += ". ";
-        value += data.isList() ? ((ExpressionNode) this.data).address.getValueToString() : this.data.getValueToString().equals("NIL")
-                ? "" : this.data.getValueToString();
+        this.data = data;
+        value = this.address.getValueToString();
+        value += " ";
+
+        if(!data.isList() && !data.getValueToString().equals("NIL")) value += ". ";
+
+        if(data.isList()){
+            value += ((ExpressionNode)this.data).address.getValueToString();
+        }else if(!this.data.getValueToString().equals("NIL")){
+            value += this.data.getValueToString();
+        }
         value = value.trim();
 	    isList = true;
-        isNumeric = !(data.isList() || !this.data.getValueToString().equals("NIL") || !value.matches(
-                "-?[1-9][0-9]*|0"));
+        isNumeric = value.matches("-?[1-9][0-9]*|0");
     }
 
 	@Override
