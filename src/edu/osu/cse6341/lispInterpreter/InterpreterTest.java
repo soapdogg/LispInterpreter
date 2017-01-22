@@ -121,7 +121,6 @@ public class InterpreterTest {
         parserTest("data/input/project2/invalid5.lisp", "data/expected/project2/invalid5.txt");
     }
 
-
     @org.junit.Test
     public void project3AtomValidTest(){
         interpreterTest("data/input/project3/atom/valid.lisp", "data/expected/project3/atom/valid.txt");

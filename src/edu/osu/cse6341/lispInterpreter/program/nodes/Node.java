@@ -24,7 +24,6 @@ public abstract class Node implements IParsable, IEvaluatable, IPrettyPrintable{
     protected abstract Node newInstance();
     public abstract boolean isList();
     public abstract boolean isNumeric();
-    public abstract boolean isLiteral();
     public abstract int getLength();
 
     static Node parseIntoNode(Tokenizer tokenizer) throws Exception{
@@ -35,7 +34,7 @@ public abstract class Node implements IParsable, IEvaluatable, IPrettyPrintable{
         boolean isList = token.getTokenKind() == TokenKind.OPEN_TOKEN;
         if(isList) tokenizer.getNextToken();
         expressionChild.parse(tokenizer);
-        if(isList) assertTokenIsClose(tokenizer.getNextToken());
+        if(isList) tokenizer.getNextToken();
         return expressionChild;
     }
 
@@ -47,11 +46,5 @@ public abstract class Node implements IParsable, IEvaluatable, IPrettyPrintable{
         throw new Exception(errorMessage);
     }
 
-    private static void assertTokenIsClose(IToken token) throws Exception{
-        boolean result = token.getTokenKind() == TokenKind.CLOSE_TOKEN;
-        if (result) return;
-        String errorMessage = "Expected CLOSE token.\n" +
-                "Actual: " + token.getTokenKind().toString() + "    Value: " + token.toString() + "\n";
-        throw new Exception(errorMessage);
-    }
+
 }

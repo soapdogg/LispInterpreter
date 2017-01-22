@@ -21,11 +21,6 @@ public class NumericToken implements IToken{
 	}
 	
 	@Override
-	public int hashCode(){
-		return getTokenKind().ordinal();
-	}
-	
-	@Override
 	public String toString(){
 		return String.valueOf(atomValue);
 	}

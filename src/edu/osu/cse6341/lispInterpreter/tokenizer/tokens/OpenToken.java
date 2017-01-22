@@ -14,11 +14,6 @@ public class OpenToken implements IToken{
 	}
 
 	@Override
-	public int hashCode(){
-		return getTokenKind().ordinal();
-	}
-
-	@Override
 	public String toString(){
 		return "(";
 	}

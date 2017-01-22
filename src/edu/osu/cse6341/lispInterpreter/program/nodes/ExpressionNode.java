@@ -14,7 +14,7 @@ public class ExpressionNode extends Node{
 	private Node address;
 	private Node data;
 	private String value;
-	private boolean isList, isNumeric, isLiteral;
+	private boolean isList, isNumeric;
 
 	static{
 		functionMap = new HashMap<>();
@@ -59,7 +59,6 @@ public class ExpressionNode extends Node{
 	    isList = true;
         isNumeric = !(data.isList() || !this.data.getValueToString().equals("NIL") || !value.matches(
                 "-?[1-9][0-9]*|0"));
-        isLiteral = !isList && !isNumeric;
     }
 
 	@Override
@@ -83,18 +82,14 @@ public class ExpressionNode extends Node{
 		Node node = address.evaluate();
 		String a = node.getValueToString();
 
-		if(node.isNumeric())
-		    return node;
-		else if (a.equals("NIL")) return new AtomNode("NIL");
-		else if (a.equals("T")) return new AtomNode("T");
+		if(node.isNumeric() || a.equals("NIL") || a.equals("T")) return node;
         else if(functionMap.containsKey(a)){
 		    BaseFunction function = functionMap.get(a);
 		    function = function.newInstance(data);
 		    Node result = function.evaluate();
 		    value = result.getValueToString();
 		    isList = result.isList();
-		    isNumeric = value.matches("-?[1-9][0-9]*|0");
-		    isLiteral = value.matches("[A-Z][A-Z0-9]*");
+		    isNumeric = result.isNumeric();
 
 		    return result;
         }
@@ -117,11 +112,6 @@ public class ExpressionNode extends Node{
     @Override
     public boolean isNumeric(){
         return isNumeric;
-    }
-
-    @Override
-    public boolean isLiteral(){
-        return isLiteral;
     }
 
     @Override
