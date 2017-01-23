@@ -213,6 +213,15 @@ public class InterpreterTest {
         interpreterTest("data/input/project3/cons/valid.lisp", "data/expected/project3/cons/valid.txt");
     }
 
+    @org.junit.Test
+    public void project3ConsInvalid1Test(){
+        interpreterTest("data/input/project3/cons/invalid1.lisp", "data/expected/project3/cons/invalid1.txt");
+    }
+
+    @org.junit.Test
+    public void project3ConsInvalid2Test(){
+        interpreterTest("data/input/project3/cons/invalid2.lisp", "data/expected/project3/cons/invalid2.txt");
+    }
 
 
 
