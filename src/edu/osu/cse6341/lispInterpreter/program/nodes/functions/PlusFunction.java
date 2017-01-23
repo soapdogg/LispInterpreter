@@ -11,7 +11,6 @@ public class PlusFunction extends BaseFunction {
 	public PlusFunction(){}
 
 	private PlusFunction(Node params) throws Exception{
-	    assertParametersAreNotEmpty(params);
 	    assertLengthIsAsExpected(params.getLength());
 	    Node right = ((ExpressionNode)params).getData();
 	    int leftValue = getNumericValue(params.evaluate(), true);

@@ -10,7 +10,6 @@ public class CarFunction extends BaseFunction {
 	public CarFunction(){}
 
 	private CarFunction(Node params) throws Exception{
-	    assertParametersAreNotEmpty(params);
 	    assertLengthIsAsExpected(params.getLength());
 	    ExpressionNode node = getListValue(((ExpressionNode)params).getAddress().evaluate());
         address = node.getAddress();

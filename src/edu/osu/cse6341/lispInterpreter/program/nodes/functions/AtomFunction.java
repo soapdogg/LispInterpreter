@@ -10,7 +10,6 @@ public class AtomFunction extends BaseFunction {
 	public AtomFunction(){}
 
 	private AtomFunction(Node params) throws Exception{
-	    assertParametersAreNotEmpty(params);
 	    assertLengthIsAsExpected(params.getLength());
 		Node evaluatedResult = params.evaluate();
 		result = !evaluatedResult.isList();

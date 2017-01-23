@@ -10,7 +10,6 @@ public class ConsFunction extends BaseFunction {
 	public ConsFunction(){}
 
 	private ConsFunction(Node params) throws Exception{
-	    assertParametersAreNotEmpty(params);
 	    assertLengthIsAsExpected(params.getLength());
 	    Node rightSide = ((ExpressionNode)params).getData();
 	    result = new ExpressionNode(params.evaluate(), rightSide.evaluate());

@@ -10,7 +10,6 @@ public class QuoteFunction extends BaseFunction {
 	public QuoteFunction(){}
 
 	private QuoteFunction(Node params) throws Exception{
-	    assertParametersAreNotEmpty(params);
 	    assertLengthIsAsExpected(params.getLength());
 	    this.params = params;
     }

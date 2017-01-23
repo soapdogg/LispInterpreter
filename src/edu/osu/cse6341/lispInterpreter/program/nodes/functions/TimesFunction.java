@@ -11,7 +11,6 @@ public class TimesFunction extends BaseFunction
 	public TimesFunction(){}
 
 	private TimesFunction(Node params) throws Exception{
-	    assertParametersAreNotEmpty(params);
 	    assertLengthIsAsExpected(params.getLength());
 		Node right = ((ExpressionNode)params).getData();
 		int leftValue = getNumericValue(params.evaluate(), true);

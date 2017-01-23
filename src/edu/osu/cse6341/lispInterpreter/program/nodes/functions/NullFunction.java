@@ -10,7 +10,6 @@ public class NullFunction extends BaseFunction {
 	public NullFunction(){}
 
 	private NullFunction(Node params) throws Exception{
-	    assertParametersAreNotEmpty(params);
         assertLengthIsAsExpected(params.getLength());
         Node evaluatedResult = params.evaluate();
 		result = evaluatedResult.getValueToString().equals("NIL");

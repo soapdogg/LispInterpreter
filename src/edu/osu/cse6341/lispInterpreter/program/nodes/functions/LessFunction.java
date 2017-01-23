@@ -11,7 +11,6 @@ public class LessFunction extends BaseFunction {
 	public LessFunction(){}
 
 	private LessFunction(Node params) throws Exception{
-	    assertParametersAreNotEmpty(params);
 	    assertLengthIsAsExpected(params.getLength());
 		Node right = ((ExpressionNode)params).getData();
 		int leftValue = getNumericValue(params.evaluate(), true);

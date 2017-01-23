@@ -32,12 +32,8 @@ public abstract class BaseFunction {
     }
 
     ExpressionNode getListValue(Node node) throws Exception{
-        if(!node.isList()) throw new Exception("Error! Parameter of " + getFunctionName() + " is not a list.    Actual: " + node.getValueToString());
+        if(!node.isList()) throw new Exception("Error! Parameter of " + getFunctionName() + " is not a list.    Actual: " + node.getValueToString() + "\n");
         return (ExpressionNode)node;
-    }
-
-    void assertParametersAreNotEmpty(Node params) throws Exception{
-        if(params == null) throw new Exception("Error! No parameters for the " + getFunctionName() + " function!");
     }
 
     void assertLengthIsAsExpected(int actual) throws Exception{

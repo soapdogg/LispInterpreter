@@ -11,7 +11,6 @@ public class EqFunction extends BaseFunction {
 	public EqFunction(){}
 
 	private EqFunction(Node params) throws Exception{
-	    assertParametersAreNotEmpty(params);
 	    assertLengthIsAsExpected(params.getLength());
 		Node right = ((ExpressionNode)params).getData();
 		String leftValue = getAtomicValue(params.evaluate(), true);

@@ -14,13 +14,11 @@ public class CondFunction extends BaseFunction {
 	public CondFunction(){}
 
 	private CondFunction(Node params)throws Exception{
-	    assertParametersAreNotEmpty(params);
 	    parameters = new ArrayList<>();
 	    while(params.isList()){
 	        ExpressionNode expressionParams = (ExpressionNode)params;
 	        Node tempParameter = expressionParams.getAddress();
 	        ExpressionNode parameter = getListValue(tempParameter);
-	        assertParametersAreNotEmpty(parameter);
 	        assertLengthIsAsExpected(parameter.getData().getLength());
 	        parameters.add(parameter);
 	        params = expressionParams.getData();

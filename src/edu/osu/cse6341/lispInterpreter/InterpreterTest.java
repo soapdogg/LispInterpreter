@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class InterpreterTest {
 
-
+    //Tokenizer Tests
     @org.junit.Test
     public void project1ValidTest(){
         tokenizerTest("data/input/project1/valid.lisp", "data/expected/project1/valid.txt");
@@ -66,6 +66,8 @@ public class InterpreterTest {
     }
 
 
+
+    //Parser Tests
     @org.junit.Test
     public void project2ValidTest(){
         parserTest("data/input/project2/valid.lisp", "data/expected/project2/valid.txt");
@@ -121,6 +123,9 @@ public class InterpreterTest {
         parserTest("data/input/project2/invalid5.lisp", "data/expected/project2/invalid5.txt");
     }
 
+
+    //Evaluator Tests
+    //ATOM TESTS
     @org.junit.Test
     public void project3AtomValidTest(){
         interpreterTest("data/input/project3/atom/valid.lisp", "data/expected/project3/atom/valid.txt");
@@ -136,16 +141,38 @@ public class InterpreterTest {
         interpreterTest("data/input/project3/atom/invalid2.lisp", "data/expected/project3/atom/invalid2.txt");
     }
 
+
+
     @org.junit.Test
     public void project3AtomicValidTest(){
         interpreterTest("data/input/project3/atomic/valid.lisp", "data/expected/project3/atomic/valid.txt");
     }
+
+
+
 
     //CAR TESTS
     @org.junit.Test
     public void project3CarValidTest(){
         interpreterTest("data/input/project3/car/valid.lisp", "data/expected/project3/car/valid.txt");
     }
+
+    @org.junit.Test
+    public void project3CarInvalid1Test(){
+        interpreterTest("data/input/project3/car/invalid1.lisp", "data/expected/project3/car/invalid1.txt");
+    }
+
+    @org.junit.Test
+    public void project3CarInvalid2Test(){
+        interpreterTest("data/input/project3/car/invalid2.lisp", "data/expected/project3/car/invalid2.txt");
+    }
+
+    @org.junit.Test
+    public void project3CarInvalid3Test(){
+        interpreterTest("data/input/project3/car/invalid3.lisp", "data/expected/project3/car/invalid3.txt");
+    }
+
+
 
 
     //CDR TESTS
@@ -155,15 +182,38 @@ public class InterpreterTest {
     }
 
     @org.junit.Test
+    public void project3CdrInvalid1Test(){
+        interpreterTest("data/input/project3/cdr/invalid1.lisp", "data/expected/project3/cdr/invalid1.txt");
+    }
+
+    @org.junit.Test
+    public void project3CdrInvalid2Test(){
+        interpreterTest("data/input/project3/cdr/invalid2.lisp", "data/expected/project3/cdr/invalid2.txt");
+    }
+
+    @org.junit.Test
+    public void project3CdrInvalid3Test(){
+        interpreterTest("data/input/project3/cdr/invalid3.lisp", "data/expected/project3/cdr/invalid3.txt");
+    }
+
+
+
+    //COND TESTS
+    @org.junit.Test
     public void project3CondValidTest(){
         interpreterTest("data/input/project3/cond/valid.lisp", "data/expected/project3/cond/valid.txt");
     }
+
+
+
 
     //CONS TESTS
     @org.junit.Test
     public void project3ConsValidTest(){
         interpreterTest("data/input/project3/cons/valid.lisp", "data/expected/project3/cons/valid.txt");
     }
+
+
 
 
     //EQ TESTS
@@ -188,6 +238,7 @@ public class InterpreterTest {
     }
 
 
+
     //GREATER TESTS
     @org.junit.Test
     public void project3GreaterValidTest(){
@@ -208,6 +259,7 @@ public class InterpreterTest {
     public void project3GreaterInvalid3Test(){
         interpreterTest("data/input/project3/greater/invalid3.lisp", "data/expected/project3/greater/invalid3.txt");
     }
+
 
 
 
@@ -296,6 +348,7 @@ public class InterpreterTest {
 
 
 
+
     //PLUS TESTS
     @org.junit.Test
     public void project3PlusValidTest(){
@@ -319,11 +372,13 @@ public class InterpreterTest {
 
 
 
+
     //QUOTE TESTS
     @org.junit.Test
     public void project3QuoteValidTest(){
         interpreterTest("data/input/project3/quote/valid.lisp", "data/expected/project3/quote/valid.txt");
     }
+
 
 
 
@@ -347,6 +402,7 @@ public class InterpreterTest {
     public void project3TimesInvalid3Test(){
         interpreterTest("data/input/project3/times/invalid3.lisp", "data/expected/project3/times/invalid3.txt");
     }
+
 
 
 

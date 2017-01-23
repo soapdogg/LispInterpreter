@@ -10,7 +10,6 @@ public class IntFunction extends BaseFunction {
 	public IntFunction(){}
 
 	private IntFunction(Node params) throws Exception{
-        assertParametersAreNotEmpty(params);
         assertLengthIsAsExpected(params.getLength());
         Node evaluatedResult = params.evaluate();
 		result = evaluatedResult.isNumeric();

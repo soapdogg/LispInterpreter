@@ -10,7 +10,6 @@ public class CdrFunction extends BaseFunction {
 	public CdrFunction(){}
 
 	private CdrFunction(Node params) throws Exception{
-	    assertParametersAreNotEmpty(params);
 	    assertLengthIsAsExpected(params.getLength());
 	    ExpressionNode node = getListValue(((ExpressionNode)params).getAddress().evaluate());
 	    data = node.getData();
