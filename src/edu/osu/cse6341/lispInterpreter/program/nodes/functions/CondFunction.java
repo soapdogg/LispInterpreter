@@ -31,7 +31,7 @@ public class CondFunction extends BaseFunction {
             if(!parameter.getAddress().evaluate().getValueToString().equals("NIL"))
                 return parameter.getData().evaluate();
         }
-        throw new Exception("Error! None of the conditions in the COND function evaluated to true.");
+        throw new Exception("Error! None of the conditions in the COND function evaluated to true.\n");
 	}
 
     @Override

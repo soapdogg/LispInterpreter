@@ -1,0 +1,1 @@
+(COND ((INT T) 34) ((NULL T) 12) ((NIL 1) 4))

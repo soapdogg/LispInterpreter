@@ -204,6 +204,25 @@ public class InterpreterTest {
         interpreterTest("data/input/project3/cond/valid.lisp", "data/expected/project3/cond/valid.txt");
     }
 
+    @org.junit.Test
+    public void project3CondInvalid1Test(){
+        interpreterTest("data/input/project3/cond/invalid1.lisp", "data/expected/project3/cond/invalid1.txt");
+    }
+
+    @org.junit.Test
+    public void project3CondInvalid2Test(){
+        interpreterTest("data/input/project3/cond/invalid2.lisp", "data/expected/project3/cond/invalid2.txt");
+    }
+
+    @org.junit.Test
+    public void project3CondInvalid3Test(){
+        interpreterTest("data/input/project3/cond/invalid3.lisp", "data/expected/project3/cond/invalid3.txt");
+    }
+
+    @org.junit.Test
+    public void project3CondInvalid4Test(){
+        interpreterTest("data/input/project3/cond/invalid4.lisp", "data/expected/project3/cond/invalid4.txt");
+    }
 
 
 
