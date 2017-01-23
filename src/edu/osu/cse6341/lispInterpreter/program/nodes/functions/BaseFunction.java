@@ -15,7 +15,10 @@ public abstract class BaseFunction {
 
     int getNumericValue(Node node, boolean isLeft) throws Exception{
         String leftOrRight = isLeft ? "Left" : "Right";
-        if(!node.isNumeric()) throw new Exception("Error! " + leftOrRight + " side of " + getFunctionName() + " is not numeric!    Actual: " + node.getValueToString());
+        if(!node.isNumeric()) {
+            String actual = node.isList() ? ((ExpressionNode)node).getAddress().getValueToString() : node.getValueToString();
+            throw new Exception("Error! " + leftOrRight + " side of " + getFunctionName() + " is not numeric!    Actual: " + actual + "\n");
+        }
         return Integer.parseInt(node.getValueToString());
     }
 
