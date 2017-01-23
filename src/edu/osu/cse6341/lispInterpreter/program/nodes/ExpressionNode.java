@@ -99,7 +99,7 @@ public class ExpressionNode extends Node{
 		    return result;
         }
         else if(!node.isNumeric() && !node.isList() && !functionMap.containsKey(a)){
-            throw new Exception("Error! Invalid CAR value: " + a);
+            throw new Exception("Error! Invalid CAR value: " + a + "\n");
         }
         return this;
 	}

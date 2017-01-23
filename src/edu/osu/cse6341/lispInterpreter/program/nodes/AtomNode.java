@@ -19,10 +19,6 @@ public class AtomNode extends Node{
         this.value = Integer.toString(value);
     }
 
-    public AtomNode(String value){
-	    this.value = value;
-    }
-
 	@Override
 	public void parse(Tokenizer tokenizer) throws Exception{
 		IToken token = tokenizer.getNextToken();
@@ -51,7 +47,7 @@ public class AtomNode extends Node{
 
 	@Override
 	public boolean isNumeric(){
-        return value.matches("[\\d+\\-]?[\\d]");
+        return value.matches("-?[1-9][0-9]*|0");
     }
 
     @Override
