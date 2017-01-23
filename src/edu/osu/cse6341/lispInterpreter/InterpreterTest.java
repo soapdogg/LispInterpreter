@@ -388,7 +388,15 @@ public class InterpreterTest {
         interpreterTest("data/input/project3/quote/valid.lisp", "data/expected/project3/quote/valid.txt");
     }
 
+    @org.junit.Test
+    public void project3QuoteInvalid1Test(){
+        interpreterTest("data/input/project3/quote/invalid1.lisp", "data/expected/project3/quote/invalid1.txt");
+    }
 
+    @org.junit.Test
+    public void project3QuoteInvalid2Test(){
+        interpreterTest("data/input/project3/quote/invalid2.lisp", "data/expected/project3/quote/invalid2.txt");
+    }
 
 
     //TIMES TESTS
