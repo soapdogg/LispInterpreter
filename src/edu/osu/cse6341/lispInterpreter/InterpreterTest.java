@@ -172,6 +172,20 @@ public class InterpreterTest {
         interpreterTest("data/input/project3/eq/valid.lisp", "data/expected/project3/eq/valid.txt");
     }
 
+    @org.junit.Test
+    public void project3EqInvalid1Test(){
+        interpreterTest("data/input/project3/eq/invalid1.lisp", "data/expected/project3/eq/invalid1.txt");
+    }
+
+    @org.junit.Test
+    public void project3EqInvalid2Test(){
+        interpreterTest("data/input/project3/eq/invalid2.lisp", "data/expected/project3/eq/invalid2.txt");
+    }
+
+    @org.junit.Test
+    public void project3EqInvalid3Test(){
+        interpreterTest("data/input/project3/eq/invalid3.lisp", "data/expected/project3/eq/invalid3.txt");
+    }
 
 
     //GREATER TESTS

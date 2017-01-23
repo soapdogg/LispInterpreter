@@ -24,7 +24,10 @@ public abstract class BaseFunction {
 
     String getAtomicValue(Node node, boolean isLeft) throws Exception{
         String leftOrRight = isLeft ? "Left" : "Right";
-        if(node.isList()) throw new Exception("Error! " + leftOrRight + " side of " + getFunctionName() + " is not atomic!    Actual: " + node.getValueToString());
+        if(node.isList()) {
+            String actual = node.isList() ? ((ExpressionNode)node).getAddress().getValueToString() : node.getValueToString();
+            throw new Exception("Error! " + leftOrRight + " side of " + getFunctionName() + " is not atomic!    Actual: " + actual + "\n");
+        }
         return node.getValueToString();
     }
 
