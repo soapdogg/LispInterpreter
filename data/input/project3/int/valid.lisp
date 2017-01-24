@@ -1,2 +1,3 @@
 (INT 3)
 (INT (INT 45))
+(NULL (INT (INT (PLUS 23 23))))

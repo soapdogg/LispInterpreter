@@ -1,2 +1,5 @@
 (EQ 23 23)
 (EQ (EQ 34 34) (EQ (EQ 23 23) NIL))
+(EQ T T)
+(EQ (INT NIL) (NULL T))
+(INT (EQ 34 34))

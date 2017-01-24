@@ -38,7 +38,9 @@ public class StartNode implements IParsable, IEvaluatable, IPrettyPrintable{
     public String getValueToString(){
 	    if (node == null) return "NIL\n";
 		StringBuilder sb = new StringBuilder();
+		if(node.isList()) sb.append('(');
 		sb.append(node.getValueToString());
+		if(node.isList()) sb.append(')');
 		sb.append('\n');
 		if(nextExpressionStartNode != null) sb.append(nextExpressionStartNode.getValueToString());
 		return sb.toString();

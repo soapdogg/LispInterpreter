@@ -1,2 +1,3 @@
 (PLUS 8 4)
 (PLUS (PLUS 4 3) (PLUS (PLUS 1 2) 4))
+(PLUS (COND ((GREATER 3 45) 1) (T 2)) 2854)

@@ -44,23 +44,31 @@ public class ExpressionNode extends Node{
 	public ExpressionNode(Node address, Node data){
 	    this.address = address;
         this.data = data;
-        value = "(" + this.address.getValueToString();
-        value += " ";
+
+        value = "";
+		if(address.isList()) {
+
+			value += "(" + ((ExpressionNode)this.address).address.getValueToString() + ")";
+		}
+		else {
+			value += this.address.getValueToString();
+		}
+			value += " ";
 
         if(!data.isList() && !data.getValueToString().equals("NIL")) value += ". ";
 
         String dataValue = "";
+
         if(data.isList()){
             dataValue = ((ExpressionNode)this.data).address.getValueToString();
         }else if(!this.data.getValueToString().equals("NIL")){
             dataValue = this.data.getValueToString();
         }
 
-        if(dataValue.startsWith("(")) dataValue = dataValue.replace("(", "");
         value += dataValue;
         value = value.trim();
-        if(!value.endsWith(")")) value += ")";
-	    isList = true;
+
+        isList = true;
         isNumeric = value.matches("-?[1-9][0-9]*|0");
     }
 
@@ -75,10 +83,9 @@ public class ExpressionNode extends Node{
         data = new ExpressionNode();
         data.parse(tokenizer);
 
-
-		value = "(" + address.getValueToString();
-        if(data.isList()) value += " " + data.getValueToString().replace("(", "");
-        if(data.isList() && !value.endsWith(")")) value += ")";
+		value = "";
+		value += address.getValueToString();
+        if(data.isList()) value += " " + data.getValueToString();
 	}
 
 	@Override

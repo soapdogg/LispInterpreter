@@ -124,6 +124,7 @@ public class InterpreterTest {
     }
 
 
+
     //Evaluator Tests
     //ATOM TESTS
     @org.junit.Test
@@ -142,6 +143,7 @@ public class InterpreterTest {
     }
 
 
+
     //ATOMIC TESTS
     @org.junit.Test
     public void project3AtomicValidTest(){
@@ -157,6 +159,12 @@ public class InterpreterTest {
     public void project3AtomicInvalid2Test(){
         interpreterTest("data/input/project3/atomic/invalid2.lisp", "data/expected/project3/atomic/invalid2.txt");
     }
+
+    @org.junit.Test
+    public void project3AtomicInvalid3Test(){
+        interpreterTest("data/input/project3/atomic/invalid3.lisp", "data/expected/project3/atomic/invalid3.txt");
+    }
+
 
 
     //CAR TESTS
@@ -179,7 +187,6 @@ public class InterpreterTest {
     public void project3CarInvalid3Test(){
         interpreterTest("data/input/project3/car/invalid3.lisp", "data/expected/project3/car/invalid3.txt");
     }
-
 
 
 
@@ -298,7 +305,6 @@ public class InterpreterTest {
 
 
 
-
     //INT TESTS
     @org.junit.Test
     public void project3IntValidTest(){
@@ -314,7 +320,6 @@ public class InterpreterTest {
     public void project3IntInvalid2Test(){
         interpreterTest("data/input/project3/int/invalid2.lisp", "data/expected/project3/int/invalid2.txt");
     }
-
 
 
 
@@ -341,7 +346,6 @@ public class InterpreterTest {
 
 
 
-
     //MINUS TESTS
     @org.junit.Test
     public void project3MinusValidTest(){
@@ -365,7 +369,6 @@ public class InterpreterTest {
 
 
 
-
     //NULL TESTS
     @org.junit.Test
     public void project3NullValidTest(){
@@ -381,7 +384,6 @@ public class InterpreterTest {
     public void project3NullInvalid2Test(){
         interpreterTest("data/input/project3/null/invalid2.lisp", "data/expected/project3/null/invalid2.txt");
     }
-
 
 
 
@@ -408,7 +410,6 @@ public class InterpreterTest {
 
 
 
-
     //QUOTE TESTS
     @org.junit.Test
     public void project3QuoteValidTest(){
@@ -424,6 +425,7 @@ public class InterpreterTest {
     public void project3QuoteInvalid2Test(){
         interpreterTest("data/input/project3/quote/invalid2.lisp", "data/expected/project3/quote/invalid2.txt");
     }
+
 
 
     //TIMES TESTS
@@ -446,7 +448,6 @@ public class InterpreterTest {
     public void project3TimesInvalid3Test(){
         interpreterTest("data/input/project3/times/invalid3.lisp", "data/expected/project3/times/invalid3.txt");
     }
-
 
 
 
