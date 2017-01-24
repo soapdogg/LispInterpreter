@@ -12,6 +12,7 @@ public class StartingState implements IState{
 		for(char i = '0'; i <= '9'; ++i) nextStateArray[i] = new NumericState();
 		nextStateArray['\t'] = new WhitespaceState();
 		nextStateArray[' '] = new WhitespaceState();
+		nextStateArray['\r'] = new WhitespaceState();
 		nextStateArray['('] = new OpenState();
 		nextStateArray[')'] = new CloseState();
 	}
