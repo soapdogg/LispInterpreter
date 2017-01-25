@@ -25,14 +25,13 @@ public final class Interpreter{
 
     void interpret() throws Exception{
 		Scanner scanner = new Scanner(System.in);
-		interpret(scanner, false, true);
+		interpret(scanner, false);
 	}
 
-	private void interpret(Scanner in, boolean shouldBeProcessed, boolean shouldBeEvaluated) throws Exception{
+	private void interpret(Scanner in, boolean shouldBeProcessed) throws Exception{
 	    tokenize(in);
 	    if(shouldBeProcessed) processTokens();
 	    else program.parse(tokenizer);
-        if (shouldBeEvaluated) program.evaluate();
     }
 
 	private void tokenize(Scanner in){
@@ -59,29 +58,19 @@ public final class Interpreter{
         return in;
     }
 
-	String testInterpreter(String programFilePath) throws Exception{
-        Scanner in = getScannerFromFilePath(programFilePath);
-	    interpret(in, false, true);
-		return getValue();
-	}
-
 	String testParser(String programFilePath) throws Exception{
 	    Scanner in = getScannerFromFilePath(programFilePath);
-	    interpret(in, false, false);
+	    interpret(in, false);
 	    return getDotNotation();
     }
 
 	String testTokenizer(String programFilePath) throws Exception{
         Scanner in = getScannerFromFilePath(programFilePath);
-        interpret(in, true, false);
+        interpret(in, true);
         return getTokenizedResults();
     }
 
-	String getValue(){
-	    return program.getValueToString();
-    }
-
-    private String getDotNotation() {
+    String getDotNotation() {
 	    return program.getDotNotationToString();
     }
 

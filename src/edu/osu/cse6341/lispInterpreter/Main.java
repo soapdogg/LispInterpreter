@@ -6,7 +6,7 @@ public class Main{
 		try {
             Interpreter interpreter = new Interpreter();
             interpreter.interpret();
-            System.out.println(interpreter.getValue());
+            System.out.println(interpreter.getDotNotation());
         }catch (Exception e){
 		    System.out.println(e.getMessage());
         }
