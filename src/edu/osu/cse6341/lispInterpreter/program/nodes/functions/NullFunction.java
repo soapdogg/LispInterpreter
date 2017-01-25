@@ -12,7 +12,7 @@ public class NullFunction extends BaseFunction {
 	private NullFunction(Node params) throws Exception{
         assertLengthIsAsExpected(params.getLength());
         Node evaluatedResult = params.evaluate();
-		result = evaluatedResult.getValueToString().equals("NIL");
+		result = Node.equalsNil(evaluatedResult.getValueToString());
 	}
 
     @Override

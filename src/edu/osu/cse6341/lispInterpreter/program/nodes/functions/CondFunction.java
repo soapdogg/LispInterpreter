@@ -28,7 +28,9 @@ public class CondFunction extends BaseFunction {
     @Override
 	public Node evaluate() throws Exception{
         for(ExpressionNode parameter: parameters){
-            if(!parameter.getAddress().evaluate().getValueToString().equals("NIL"))
+            Node booleanResult = parameter.getAddress().evaluate();
+
+            if(!Node.equalsNil(booleanResult.getValueToString()))
                 return parameter.getData().evaluate();
         }
         throw new Exception("Error! None of the conditions in the COND function evaluated to true.\n");

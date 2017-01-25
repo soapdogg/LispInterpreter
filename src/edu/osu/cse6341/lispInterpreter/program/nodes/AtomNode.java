@@ -8,11 +8,11 @@ public class AtomNode extends Node{
 	private String value;
 
 	public AtomNode(){
-	    value = "NIL";
+	    value = Node.NIL;
     }
 
     public AtomNode(boolean value){
-	    this.value = value ? "T" : "NIL";
+	    this.value = value ? Node.T : Node.NIL;
     }
 
     public AtomNode(int value){

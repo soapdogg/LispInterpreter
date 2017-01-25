@@ -13,12 +13,16 @@ import java.util.Map;
 public abstract class Node implements IParsable, IEvaluatable, IPrettyPrintable{
 
     private static final Map<TokenKind, Node> tokenToNodeMap;
+    static final String NIL;
+    static final String T;
 
     static{
         tokenToNodeMap = new HashMap<>();
         tokenToNodeMap.put(TokenKind.OPEN_TOKEN, new ExpressionNode());
         tokenToNodeMap.put(TokenKind.NUMERIC_TOKEN, new AtomNode());
         tokenToNodeMap.put(TokenKind.LITERAL_TOKEN, new AtomNode());
+        NIL = "NIL";
+        T = "T";
     }
 
     protected abstract Node newInstance();
@@ -41,10 +45,19 @@ public abstract class Node implements IParsable, IEvaluatable, IPrettyPrintable{
     private static void assertTokenIsAtomOrOpen(IToken token) throws Exception{
         boolean result = tokenToNodeMap.containsKey(token.getTokenKind());
         if (result) return;
-        String errorMessage = "Expected either an ATOM or OPEN token.\n" +
-                "Actual: " + token.getTokenKind().toString() + "    Value: " + token.toString() + "\n";
-        throw new Exception(errorMessage);
+        StringBuilder errorMessage = new StringBuilder("Expected either an ATOM or OPEN token.\nActual: ");
+        errorMessage.append(token.getTokenKind().toString());
+        errorMessage.append("    Value: ");
+        errorMessage.append(token.toString());
+        errorMessage.append('\n');
+        throw new Exception(errorMessage.toString());
     }
 
+    public static boolean equalsNil(String value){
+        return NIL.equals(value);
+    }
 
+    static boolean equalsT(String value){
+        return T.equals(value);
+    }
 }

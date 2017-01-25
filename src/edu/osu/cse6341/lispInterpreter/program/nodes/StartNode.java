@@ -24,11 +24,11 @@ public class StartNode implements IParsable, IEvaluatable, IPrettyPrintable{
 
 	@Override
 	public Node evaluate() throws Exception{
-        boolean isAtom = !node.isList();
+        boolean isNotList = !node.isList();
         boolean isNotNumeric = !node.isNumeric();
         boolean isNotT = !node.getValueToString().equals("T");
         boolean isNotNil = !node.getValueToString().equals("NIL");
-        if(isAtom && isNotNumeric && isNotT && isNotNil) throw new Exception("Error! " + node.getValueToString() + " is not a valid atomic value!\n");
+        if(isNotList && isNotNumeric && isNotT && isNotNil) throw new Exception("Error! " + node.getValueToString() + " is not a valid atomic value!\n");
 		node.evaluate();
 		if(nextExpressionStartNode != null) nextExpressionStartNode.evaluate();
 		return null;
@@ -49,9 +49,10 @@ public class StartNode implements IParsable, IEvaluatable, IPrettyPrintable{
     @Override
     public String getDotNotationToString(){
         if(node == null) return "NIL\n";
-        String result = node.getDotNotationToString() + "\n";
-        if(nextExpressionStartNode != null) result += nextExpressionStartNode.getDotNotationToString();
-        return result;
+        StringBuilder result = new StringBuilder(node.getDotNotationToString());
+        result.append('\n');
+        if(nextExpressionStartNode != null) result.append(nextExpressionStartNode.getDotNotationToString());
+        return result.toString();
     }
 
 }

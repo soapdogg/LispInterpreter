@@ -35,7 +35,7 @@ public class ExpressionNode extends Node{
 	}
 
 	public ExpressionNode(){
-	    value = "NIL";
+	    value = Node.NIL;
 	    address = null;
 	    data = null;
 	    isList = false;
@@ -45,27 +45,28 @@ public class ExpressionNode extends Node{
 	    this.address = address;
         this.data = data;
 
-        value = "";
-		if(address.isList()) {
+        StringBuilder valueStringBuilder = new StringBuilder();
 
-			value += "(" + ((ExpressionNode)this.address).address.getValueToString() + ")";
+		if(address.isList()) {
+			valueStringBuilder.append('(');
+			valueStringBuilder.append(((ExpressionNode)this.address).address.getValueToString());
+			valueStringBuilder.append(')');
 		}
 		else {
-			value += this.address.getValueToString();
+			valueStringBuilder.append(this.address.getValueToString());
 		}
-			value += " ";
+        valueStringBuilder.append(' ');
 
-        if(!data.isList() && !data.getValueToString().equals("NIL")) value += ". ";
+        if(!data.isList() && ! equalsNil(data.getValueToString())) valueStringBuilder.append(". ");
 
-        String dataValue = "";
 
         if(data.isList()){
-            dataValue = ((ExpressionNode)this.data).address.getValueToString();
-        }else if(!this.data.getValueToString().equals("NIL")){
-            dataValue = this.data.getValueToString();
+            valueStringBuilder.append(((ExpressionNode)this.data).address.getValueToString());
+        }else if(!equalsNil(this.data.getValueToString())){
+            valueStringBuilder.append(this.data.getValueToString());
         }
 
-        value += dataValue;
+        value = valueStringBuilder.toString();
         value = value.trim();
 
         isList = true;
@@ -83,9 +84,13 @@ public class ExpressionNode extends Node{
         data = new ExpressionNode();
         data.parse(tokenizer);
 
-		value = "";
-		value += address.getValueToString();
-        if(data.isList()) value += " " + data.getValueToString();
+
+		StringBuilder valueStringBuilder = new StringBuilder(address.getValueToString());
+        if(data.isList()){
+            valueStringBuilder.append(' ');
+            valueStringBuilder.append(data.getValueToString());
+        }
+        value = valueStringBuilder.toString();
 	}
 
 	@Override
@@ -94,7 +99,7 @@ public class ExpressionNode extends Node{
 		Node node = address.evaluate();
 		String a = node.getValueToString();
 
-		if(node.isNumeric() || a.equals("NIL") || a.equals("T")) return node;
+		if(node.isNumeric() || equalsNil(a) || equalsT(a)) return node;
         else if(functionMap.containsKey(a)){
 		    BaseFunction function = functionMap.get(a);
 		    function = function.newInstance(data);
@@ -106,7 +111,10 @@ public class ExpressionNode extends Node{
 		    return result;
         }
         else if(!node.isNumeric() && !node.isList() && !functionMap.containsKey(a)){
-            throw new Exception("Error! Invalid CAR value: " + a + "\n");
+            StringBuilder sb = new StringBuilder("Error! Invalid CAR value: ");
+            sb.append(a);
+            sb.append('\n');
+            throw new Exception(sb.toString());
         }
         return this;
 	}
@@ -133,7 +141,16 @@ public class ExpressionNode extends Node{
 
     @Override
     public String getDotNotationToString() {
-        return isList() ? "(" + address.getDotNotationToString() + " . " + data.getDotNotationToString() + ")" : "NIL";
+        if(isList()){
+            StringBuilder sb = new StringBuilder();
+            sb.append('(');
+            sb.append(address.getDotNotationToString());
+            sb.append(" . ");
+            sb.append(data.getDotNotationToString());
+            sb.append(')');
+            return sb.toString();
+        }
+        return Node.NIL;
     }
 
     public int getLength(){
