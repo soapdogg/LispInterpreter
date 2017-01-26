@@ -99,6 +99,11 @@ public class InterpreterTest {
     }
 
     @org.junit.Test
+    public void project2Valid7Test(){
+        parserTest("data/input/project2/valid7.lisp", "data/expected/project2/valid7.txt");
+    }
+
+    @org.junit.Test
     public void project2Invalid1Test(){
         parserTest("data/input/project2/invalid1.lisp", "data/expected/project2/invalid1.txt");
     }
