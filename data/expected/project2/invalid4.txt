@@ -1,2 +1,2 @@
-Expected either an ATOM or OPEN token.
+Expected either an ATOM or OPEN or CLOSE token.
 Actual: EOF_TOKEN    Value: EOF

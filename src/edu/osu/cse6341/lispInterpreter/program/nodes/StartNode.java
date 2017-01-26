@@ -12,7 +12,7 @@ public class StartNode implements IParsable, IPrettyPrintable{
 
     @Override
     public void parse(Tokenizer tokenizer) throws Exception{
-        if(tokenizer.getCurrent().getTokenKind() == TokenKind.EOF_TOKEN) return;
+        if(tokenizer.getCurrent().getTokenKind() == TokenKind.EOF_TOKEN) throw new Exception("Error! Empty input not allowed!\n");
         node = Node.parseIntoNode(tokenizer);
 		if(tokenizer.getCurrent().getTokenKind() == TokenKind.EOF_TOKEN) return;
 		nextExpressionStartNode = new StartNode();
@@ -21,7 +21,6 @@ public class StartNode implements IParsable, IPrettyPrintable{
 
     @Override
     public String getDotNotationToString(){
-        if(node == null) return Node.NIL + "\n";
         StringBuilder result = new StringBuilder(node.getDotNotationToString());
         result.append('\n');
         if(nextExpressionStartNode != null) result.append(nextExpressionStartNode.getDotNotationToString());

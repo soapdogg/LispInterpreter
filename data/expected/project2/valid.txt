@@ -1,1 +1,1 @@
-NIL
+Error! Empty input not allowed!

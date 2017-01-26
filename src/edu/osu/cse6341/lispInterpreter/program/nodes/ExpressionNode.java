@@ -1,6 +1,7 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes;
 
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
+import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 
 public class ExpressionNode extends Node{
@@ -17,8 +18,10 @@ public class ExpressionNode extends Node{
 
 	@Override
 	public void parse(Tokenizer tokenizer) throws Exception{
-		TokenKind tokenKind = tokenizer.getCurrent().getTokenKind();
-	    isList = tokenKind != TokenKind.CLOSE_TOKEN;
+		IToken token = tokenizer.getCurrent();
+		assertTokenKindIsExpected(token);
+	    TokenKind tokenKind = token.getTokenKind();
+		isList = tokenKind != TokenKind.CLOSE_TOKEN;
 		if(!isList) return;
 
 		address = Node.parseIntoNode(tokenizer);
@@ -46,4 +49,14 @@ public class ExpressionNode extends Node{
         return Node.NIL;
     }
 
+    private static void assertTokenKindIsExpected(IToken token) throws Exception{
+        boolean result = token.getTokenKind() != TokenKind.EOF_TOKEN && token.getTokenKind() != TokenKind.ERROR_TOKEN;
+        if (result) return;
+        StringBuilder errorMessage = new StringBuilder("Expected either an ATOM or OPEN or CLOSE token.\nActual: ");
+        errorMessage.append(token.getTokenKind().toString());
+        errorMessage.append("    Value: ");
+        errorMessage.append(token.toString());
+        errorMessage.append('\n');
+        throw new Exception(errorMessage.toString());
+    }
 }
