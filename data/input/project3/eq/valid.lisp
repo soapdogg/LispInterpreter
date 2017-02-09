@@ -3,3 +3,4 @@
 (EQ T T)
 (EQ (INT NIL) (NULL T))
 (INT (EQ 34 34))
+(EQ 2 (PLUS 1 1))
