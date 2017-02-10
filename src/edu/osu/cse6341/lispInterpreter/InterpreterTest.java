@@ -170,6 +170,11 @@ public class InterpreterTest {
         interpreterTest("data/input/project3/atomic/invalid3.lisp", "data/expected/project3/atomic/invalid3.txt");
     }
 
+    @org.junit.Test
+    public void project3AtomicInvalid4Test(){
+        interpreterTest("data/input/project3/atomic/invalid4.lisp", "data/expected/project3/atomic/invalid4.txt");
+    }
+
 
 
     //CAR TESTS
@@ -191,6 +196,11 @@ public class InterpreterTest {
     @org.junit.Test
     public void project3CarInvalid3Test(){
         interpreterTest("data/input/project3/car/invalid3.lisp", "data/expected/project3/car/invalid3.txt");
+    }
+
+    @org.junit.Test
+    public void project3CarInvalid4Test(){
+        interpreterTest("data/input/project3/car/invalid4.lisp", "data/expected/project3/car/invalid4.txt");
     }
 
 

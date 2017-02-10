@@ -29,7 +29,7 @@ public class StartNode implements IParsable, IEvaluatable, IPrettyPrintable{
         boolean isNotT = !node.getValueToString().equals("T");
         boolean isNotNil = !node.getValueToString().equals("NIL");
         if(isNotList && isNotNumeric && isNotT && isNotNil) throw new Exception("Error! " + node.getValueToString() + " is not a valid atomic value!\n");
-		node.evaluate();
+        node = node.evaluate();
 		if(nextExpressionStartNode != null) nextExpressionStartNode.evaluate();
 		return null;
 	}
