@@ -26,6 +26,7 @@ public abstract class Node implements IParsable, IEvaluatable, IPrettyPrintable{
     }
 
     protected abstract Node newInstance();
+    public abstract String getValue();
     public abstract boolean isList();
     public abstract boolean isNumeric();
     public abstract int getLength();

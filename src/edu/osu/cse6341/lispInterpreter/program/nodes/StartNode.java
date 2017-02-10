@@ -23,26 +23,24 @@ public class StartNode implements IParsable, IEvaluatable, IPrettyPrintable{
     }
 
 	@Override
-	public Node evaluate() throws Exception{
+	public Node evaluate(boolean areNumbersAllowed) throws Exception{
         boolean isNotList = !node.isList();
         boolean isNotNumeric = !node.isNumeric();
-        boolean isNotT = !node.getValueToString().equals("T");
-        boolean isNotNil = !node.getValueToString().equals("NIL");
-        if(isNotList && isNotNumeric && isNotT && isNotNil) throw new Exception("Error! " + node.getValueToString() + " is not a valid atomic value!\n");
-        node = node.evaluate();
-		if(nextExpressionStartNode != null) nextExpressionStartNode.evaluate();
+        boolean isNotT = !node.getValue().equals("T");
+        boolean isNotNil = !node.getValue().equals("NIL");
+        if(isNotList && isNotNumeric && isNotT && isNotNil) throw new Exception("Error! " + node.getValue() + " is not a valid atomic value!\n");
+        node = node.evaluate(false);
+		if(nextExpressionStartNode != null) nextExpressionStartNode.evaluate(true);
 		return null;
 	}
 
 	@Override
-    public String getValueToString(){
+    public String getListNotationToString(boolean isFirst){
 	    if (node == null) return "NIL\n";
 		StringBuilder sb = new StringBuilder();
-		if(node.isList()) sb.append('(');
-		sb.append(node.getValueToString());
-		if(node.isList()) sb.append(')');
+		sb.append(node.getListNotationToString(node.isList()));
 		sb.append('\n');
-		if(nextExpressionStartNode != null) sb.append(nextExpressionStartNode.getValueToString());
+		if(nextExpressionStartNode != null) sb.append(nextExpressionStartNode.getListNotationToString(isFirst));
 		return sb.toString();
     }
 

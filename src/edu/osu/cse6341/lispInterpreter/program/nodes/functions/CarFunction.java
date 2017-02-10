@@ -5,23 +5,21 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
 public class CarFunction extends BaseFunction {
 
-    private Node address;
-
 	public CarFunction(){}
 
-	private CarFunction(Node params) throws Exception{
-	    assertLengthIsAsExpected(params.getLength());
-	    ExpressionNode node = getListValue(((ExpressionNode)params).getAddress().evaluate());
-        address = node.getAddress();
+	private CarFunction(Node params){
+	    super(params);
 	}
 
     @Override
 	public Node evaluate() throws Exception{
-        return address;
+        assertLengthIsAsExpected(params.getLength());
+        ExpressionNode node = getListValue(((ExpressionNode)params).getAddress().evaluate(false));
+        return node.getAddress();
 	}
 
     @Override
-	public BaseFunction newInstance(Node params) throws Exception{
+	public BaseFunction newInstance(Node params){
 		return new CarFunction(params);
 	}
 

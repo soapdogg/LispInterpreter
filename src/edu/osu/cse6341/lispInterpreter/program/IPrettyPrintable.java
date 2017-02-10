@@ -2,7 +2,7 @@ package edu.osu.cse6341.lispInterpreter.program;
 
 public interface IPrettyPrintable
 {
-    String getValueToString();
+    String getListNotationToString(boolean isFirst);
 
     String getDotNotationToString();
 }

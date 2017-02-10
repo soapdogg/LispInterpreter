@@ -5,23 +5,22 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
 public class NullFunction extends BaseFunction {
 
-	private boolean result;
-
 	public NullFunction(){}
 
-	private NullFunction(Node params) throws Exception{
-        assertLengthIsAsExpected(params.getLength());
-        Node evaluatedResult = params.evaluate();
-		result = Node.equalsNil(evaluatedResult.getValueToString());
+	private NullFunction(Node params) {
+	    super(params);
 	}
 
     @Override
 	public Node evaluate() throws Exception{
+        assertLengthIsAsExpected(params.getLength());
+        Node evaluatedResult = params.evaluate(true);
+        boolean result = Node.equalsNil(evaluatedResult.getValue());
 		return new AtomNode(result);
 	}
 
     @Override
-	public BaseFunction newInstance(Node params) throws Exception{
+	public BaseFunction newInstance(Node params){
 		return new NullFunction(params);
 	}
 

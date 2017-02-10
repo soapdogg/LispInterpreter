@@ -9,35 +9,34 @@ import java.util.List;
 
 public class CondFunction extends BaseFunction {
 
-    private List<ExpressionNode> parameters;
-
 	public CondFunction(){}
 
-	private CondFunction(Node params)throws Exception{
-	    parameters = new ArrayList<>();
-	    while(params.isList()){
-	        ExpressionNode expressionParams = (ExpressionNode)params;
-	        Node tempParameter = expressionParams.getAddress();
-	        ExpressionNode parameter = getListValue(tempParameter);
-	        assertLengthIsAsExpected(parameter.getData().getLength());
-	        parameters.add(parameter);
-	        params = expressionParams.getData();
-        }
+	private CondFunction(Node params){
+        super(params);
     }
 
     @Override
 	public Node evaluate() throws Exception{
-        for(ExpressionNode parameter: parameters){
-            Node booleanResult = parameter.getAddress().evaluate();
+        List<ExpressionNode> parameters = new ArrayList<>();
+        while(params.isList()){
+            ExpressionNode expressionParams = (ExpressionNode)params;
+            Node tempParameter = expressionParams.getAddress();
+            ExpressionNode parameter = getListValue(tempParameter);
+            assertLengthIsAsExpected(parameter.getData().getLength());
+            parameters.add(parameter);
+            params = expressionParams.getData();
+        }
+	    for(ExpressionNode parameter: parameters){
+            Node booleanResult = parameter.getAddress().evaluate(true);
 
-            if(!Node.equalsNil(booleanResult.getValueToString()))
-                return parameter.getData().evaluate();
+            if(!Node.equalsNil(booleanResult.getValue()))
+                return parameter.getData().evaluate(true);
         }
         throw new Exception("Error! None of the conditions in the COND function evaluated to true.\n");
 	}
 
     @Override
-	public BaseFunction newInstance(Node params) throws Exception{
+	public BaseFunction newInstance(Node params){
 		return new CondFunction(params);
 	}
 

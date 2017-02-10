@@ -16,12 +16,12 @@ public class Program implements IPrettyPrintable{
 	}
 
 	public void evaluate() throws Exception{
-		rootNode.evaluate();
+		rootNode.evaluate(true);
 	}
 
 	@Override
-	public String getValueToString(){
-	    return rootNode.getValueToString();
+	public String getListNotationToString(boolean isFirst){
+	    return rootNode.getListNotationToString(isFirst);
     }
 
     @Override

@@ -5,23 +5,21 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
 public class CdrFunction extends BaseFunction {
 
-    private Node data;
-
 	public CdrFunction(){}
 
-	private CdrFunction(Node params) throws Exception{
-	    assertLengthIsAsExpected(params.getLength());
-	    ExpressionNode node = getListValue(((ExpressionNode)params).getAddress().evaluate());
-	    data = node.getData();
+	private CdrFunction(Node params){
+        super(params);
     }
 
     @Override
 	public Node evaluate() throws Exception{
-        return data;
+        assertLengthIsAsExpected(params.getLength());
+        ExpressionNode node = getListValue(((ExpressionNode)params).getAddress().evaluate(false));
+        return node.getData();
 	}
 
     @Override
-	public BaseFunction newInstance(Node params) throws Exception{
+	public BaseFunction newInstance(Node params){
 		return new CdrFunction(params);
 	}
 

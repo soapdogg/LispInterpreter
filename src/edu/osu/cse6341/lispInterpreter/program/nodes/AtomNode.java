@@ -26,12 +26,12 @@ public class AtomNode extends Node{
 	}
 
 	@Override
-	public Node evaluate(){
+	public Node evaluate(boolean areNumbersAllowed){
 	    return this;
 	}
 
 	@Override
-	public String getValueToString(){
+	public String getListNotationToString(boolean isFirst){
 		return value;
 	}
 
@@ -45,7 +45,12 @@ public class AtomNode extends Node{
 		return new AtomNode();
 	}
 
-	@Override
+    @Override
+    public String getValue(){
+        return value;
+    }
+
+    @Override
 	public boolean isNumeric(){
         return value.matches("-?[1-9][0-9]*|0");
     }

@@ -6,25 +6,24 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
 public class MinusFunction extends BaseFunction {
 
-	private int result;
-
 	public MinusFunction(){}
 
-	private MinusFunction(Node params)throws Exception{
-	    assertLengthIsAsExpected(params.getLength());
-	    Node right = ((ExpressionNode)params).getData();
-		int leftValue = getNumericValue(params.evaluate(), true);
-		int rightValue = getNumericValue(right.evaluate(), false);
-		result = leftValue - rightValue;
+	private MinusFunction(Node params){
+        super(params);
 	}
 
     @Override
 	public Node evaluate() throws Exception{
+        assertLengthIsAsExpected(params.getLength());
+        Node right = ((ExpressionNode)params).getData();
+        int leftValue = getNumericValue(params.evaluate(true), true);
+        int rightValue = getNumericValue(right.evaluate(true), false);
+        int result = leftValue - rightValue;
         return new AtomNode(result);
 	}
 
     @Override
-	public BaseFunction newInstance(Node params) throws Exception{
+	public BaseFunction newInstance(Node params){
 		return new MinusFunction(params);
 	}
 

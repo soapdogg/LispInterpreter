@@ -5,23 +5,22 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
 public class AtomFunction extends BaseFunction {
 
-	private boolean result;
-
 	public AtomFunction(){}
 
-	private AtomFunction(Node params) throws Exception{
-	    assertLengthIsAsExpected(params.getLength());
-		Node evaluatedResult = params.evaluate();
-		result = !evaluatedResult.isList();
+	private AtomFunction(Node params){
+        super(params);
 	}
 
     @Override
 	public Node evaluate() throws Exception{
+        assertLengthIsAsExpected(params.getLength());
+	    Node evaluatedResult = params.evaluate(true);
+	    boolean result = !evaluatedResult.isList();
 	    return new AtomNode(result);
 	}
 
     @Override
-	public BaseFunction newInstance(Node params) throws Exception{
+	public BaseFunction newInstance(Node params){
 		return new AtomFunction(params);
 	}
 

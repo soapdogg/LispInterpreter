@@ -5,12 +5,17 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
 public abstract class BaseFunction {
 
+    protected Node params;
+
+    protected BaseFunction(){}
+
+    protected BaseFunction(Node params){
+        this.params = params;
+    }
+
     public abstract Node evaluate() throws Exception;
-
-    public abstract BaseFunction newInstance(Node node) throws Exception;
-
+    public abstract BaseFunction newInstance(Node node);
     abstract String getFunctionName();
-
     abstract int getExpectedLength();
 
     int getNumericValue(Node node, boolean isLeft) throws Exception{
@@ -24,7 +29,7 @@ public abstract class BaseFunction {
             sb.append('\n');
             throw new Exception(sb.toString());
         }
-        return Integer.parseInt(node.getValueToString());
+        return Integer.parseInt(node.getValue());
     }
 
     String getAtomicValue(Node node, boolean isLeft) throws Exception{
@@ -38,7 +43,7 @@ public abstract class BaseFunction {
             sb.append('\n');
             throw new Exception(sb.toString());
         }
-        return node.getValueToString();
+        return node.getValue();
     }
 
     ExpressionNode getListValue(Node node) throws Exception{
@@ -46,7 +51,7 @@ public abstract class BaseFunction {
             StringBuilder sb = new StringBuilder("Error! Parameter of ");
             sb.append(getFunctionName());
             sb.append(" is not a list.    Actual: ");
-            sb.append(node.getValueToString());
+            sb.append(node.getValue());
             sb.append('\n');
             throw new Exception(sb.toString());
         }
@@ -70,14 +75,13 @@ public abstract class BaseFunction {
         return isLeft ? "Left" : "Right";
     }
 
-    private String getActualValue(Node node){
+    private String getActualValue(Node node) throws Exception
+    {
         StringBuilder sb = new StringBuilder();
         if(node.isList()) {
-            sb.append('(');
-            sb.append(((ExpressionNode)node).getAddress().getValueToString());
-            sb.append(')');
+            sb.append(((ExpressionNode)node).getAddress().evaluate(true).getListNotationToString(true));
         }
-        else sb.append(node.getValueToString());
+        else sb.append(node.getValue());
         return sb.toString();
     }
 }
