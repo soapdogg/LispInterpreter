@@ -46,12 +46,11 @@ public abstract class Node implements IParsable, IEvaluatable, IPrettyPrintable{
     private static void assertTokenIsAtomOrOpen(IToken token) throws Exception{
         boolean result = tokenToNodeMap.containsKey(token.getTokenKind());
         if (result) return;
-        StringBuilder errorMessage = new StringBuilder("Expected either an ATOM or OPEN token.\nActual: ");
-        errorMessage.append(token.getTokenKind().toString());
-        errorMessage.append("    Value: ");
-        errorMessage.append(token.toString());
-        errorMessage.append('\n');
-        throw new Exception(errorMessage.toString());
+        String errorMessage = "Expected either an ATOM or OPEN token.\nActual: " + token.getTokenKind().toString() +
+                "    Value: " +
+                token.toString() +
+                '\n';
+        throw new Exception(errorMessage);
     }
 
     public static boolean equalsNil(String value){

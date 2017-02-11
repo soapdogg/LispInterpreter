@@ -33,18 +33,12 @@ public class ExpressionNode extends Node{
 		functionMap.put("TIMES", new TimesFunction());
 	}
 
-	public ExpressionNode(){
-	    address = null;
-	    data = null;
-	    isList = false;
-	    isNumeric = false;
-	}
+	public ExpressionNode(){}
 
 	public ExpressionNode(Node address, Node data){
 	    this.address = address;
         this.data = data;
         this.isList = true;
-        isNumeric = false;
     }
 
 	@Override
@@ -55,33 +49,16 @@ public class ExpressionNode extends Node{
 		address = Node.parseIntoNode(tokenizer);
         data = new ExpressionNode();
         data.parse(tokenizer);
-        isNumeric = address.isNumeric() && !data.isList();
 	}
 
 	@Override
 	public Node evaluate(boolean areNumbersAllowed) throws Exception{
         if (isList) {
-            Node node = address.evaluate(true);
-            String a = node.getValue();
-
-            if ((node.isNumeric() && areNumbersAllowed) || equalsNil(a) || equalsT(a)) return node;
-            else if (functionMap.containsKey(a))
-            {
-                BaseFunction function = functionMap.get(a);
-                function = function.newInstance(data);
-                Node result = function.evaluate();
-                isList = result.isList();
-                isNumeric = result.isNumeric();
-
-                return result;
-            }
-            else if (!node.isList() && !functionMap.containsKey(a))
-            {
-                StringBuilder sb = new StringBuilder("Error! Invalid CAR value: ");
-                sb.append(a);
-                sb.append('\n');
-                throw new Exception(sb.toString());
-            }
+            Node node = this.address.evaluate(true);
+            String addressEvaluatedValue = node.getValue();
+            if ((node.isNumeric() && areNumbersAllowed) || equalsNil(addressEvaluatedValue) || equalsT(addressEvaluatedValue)) return node;
+            else if (functionMap.containsKey(addressEvaluatedValue)) return executeBuiltInFunction(addressEvaluatedValue);
+            else if (!node.isList() && !functionMap.containsKey(addressEvaluatedValue)) throw new Exception("Error! Invalid CAR value: " + addressEvaluatedValue + '\n');
         }
         return this;
 	}
@@ -93,15 +70,7 @@ public class ExpressionNode extends Node{
 
     @Override
     public String getValue() {
-	    if(address == null) return "NIL";
-        StringBuilder sb = new StringBuilder();
-        sb.append(address.getValue());
-        if(data != null) {
-            sb.append(' ');
-            sb.append(data.getValue());
-        }
-
-        return sb.toString();
+        return address == null ? "NIL" : address.getValue() + ' ' + data.getValue();
     }
 
     @Override
@@ -118,36 +87,14 @@ public class ExpressionNode extends Node{
     public String getListNotationToString(boolean isFirst){
         StringBuilder sb = new StringBuilder();
         if(isFirst) sb.append('(');
-        if(address != null) {
-            sb.append(address.getListNotationToString(address.isList()));
-        }
-        if(data != null) {
-            if(!data.isList()) {
-                if(data.isNumeric() || equalsT(data.getValue())) {
-                    sb.append(" . ");
-                    sb.append(data.getListNotationToString(false));
-                    sb.append(')');
-                }
-                else sb.append(')');
-            }
-            else{
-                sb.append(' ');
-                sb.append(data.getListNotationToString(false));
-            }
-        }
+        sb.append(address.getListNotationToString(address.isList()));
+        sb.append(getDataListNotationAsString());
         return sb.toString();
     }
 
     @Override
     public String getDotNotationToString() {
-        if(isList()){
-            return "(" +
-                    address.getDotNotationToString() +
-                    " . " +
-                    data.getDotNotationToString() +
-                    ')';
-        }
-        return Node.NIL;
+        return isList() ? '(' + address.getDotNotationToString() + " . " + data.getDotNotationToString() + ')' : Node.NIL;
     }
 
     public int getLength(){
@@ -162,4 +109,19 @@ public class ExpressionNode extends Node{
 	    return address;
 	}
 
+	private Node executeBuiltInFunction(String functionName) throws Exception{
+        BaseFunction function = functionMap.get(functionName);
+        function = function.newInstance(data);
+        return function.evaluate();
+    }
+
+    private String getDataListNotationAsString(){
+        if(!data.isList()) {
+            String dataString = (data.isNumeric() || equalsT(data.getValue()))
+                    ? (" . " + data.getListNotationToString(false))
+                    : "";
+            return dataString + ')';
+        }
+        else return ' ' + data.getListNotationToString(false);
+    }
 }
