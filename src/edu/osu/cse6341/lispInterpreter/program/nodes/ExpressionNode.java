@@ -3,6 +3,7 @@ package edu.osu.cse6341.lispInterpreter.program.nodes;
 import java.util.Map;
 import java.util.HashMap;
 
+import edu.osu.cse6341.lispInterpreter.program.Environment;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 import edu.osu.cse6341.lispInterpreter.program.nodes.functions.*;
@@ -13,7 +14,7 @@ public class ExpressionNode extends Node{
 
 	private Node address;
 	private Node data;
-	private boolean isList, isNumeric;
+	private boolean isList;
 
 	static{
 		functionMap = new HashMap<>();
@@ -22,6 +23,7 @@ public class ExpressionNode extends Node{
 		functionMap.put("CDR", new CdrFunction());
 		functionMap.put("COND", new CondFunction());
 		functionMap.put("CONS", new ConsFunction());
+		functionMap.put("DEFUN", new DefunFunction());
 		functionMap.put("EQ", new EqFunction());
 		functionMap.put("GREATER", new GreaterFunction());
 		functionMap.put("INT", new IntFunction());
@@ -58,6 +60,9 @@ public class ExpressionNode extends Node{
             String addressEvaluatedValue = node.getValue();
             if ((node.isNumeric() && areNumbersAllowed) || equalsNil(addressEvaluatedValue) || equalsT(addressEvaluatedValue)) return node;
             else if (functionMap.containsKey(addressEvaluatedValue)) return executeBuiltInFunction(addressEvaluatedValue);
+            else if (Environment.isFunctionName(addressEvaluatedValue)){
+
+            }
             else if (!node.isList() && !functionMap.containsKey(addressEvaluatedValue)) throw new Exception("Error! Invalid CAR value: " + addressEvaluatedValue + '\n');
         }
         return this;
@@ -80,7 +85,7 @@ public class ExpressionNode extends Node{
 
     @Override
     public boolean isNumeric(){
-        return isNumeric;
+        return false;
     }
 
     @Override
