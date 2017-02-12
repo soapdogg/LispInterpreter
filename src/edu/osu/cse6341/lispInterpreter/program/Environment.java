@@ -7,25 +7,51 @@ import java.util.Map;
 
 
 public class Environment {
-    private static Map<String, UserDefinedFunction> functions;
-    private static Map<String, Node> variables;
+    private Map<String, UserDefinedFunction> functions;
+    private Map<String, Node> variables;
 
-    static{
+    private static Environment singletonEnvironment;
+
+    private Environment(){
         functions = new HashMap<>();
         variables = new HashMap<>();
     }
 
-    private Environment(){}
+    public static Environment getEnvironment(){
+        if(singletonEnvironment == null) singletonEnvironment = new Environment();
+        return singletonEnvironment;
+    }
 
-    public static boolean isFunctionName(String functionName){
+    public boolean isFunctionName(String functionName){
         return functions.containsKey(functionName);
     }
 
-    public static boolean isVariableName(String variableName){
+    public boolean isVariableName(String variableName){
         return variables.containsKey(variableName);
     }
 
-    public static void addToFunctions(String functionName, UserDefinedFunction userDefinedFunction){
+    public void addToFunctions(String functionName, UserDefinedFunction userDefinedFunction){
         functions.put(functionName, userDefinedFunction);
+    }
+
+    public Node evaluateFunction(String functionName, Node params) throws Exception{
+        UserDefinedFunction function = functions.get(functionName);
+        return function.evaluate(params);
+    }
+
+    public Map<String, Node> getVariables(){
+        return new HashMap<>(variables);
+    }
+
+    public void unionVariables(Map<String, Node> newVariables){
+        variables.putAll(newVariables);
+    }
+
+    public void setVariables(Map<String, Node> newVariables){
+        variables = newVariables;
+    }
+
+    public Node getVariableValue(String variableName){
+        return variables.get(variableName);
     }
 }

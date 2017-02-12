@@ -16,6 +16,11 @@ public class UserDefinedTest {
         interpreterTest("data/input/project4/diff/valid.lisp", "data/expected/project4/diff/valid.txt");
     }
 
+    @Test
+    public void project4DynamicValidTest(){
+        interpreterTest("data/input/project4/dynamicscoping/valid.lisp", "data/expected/project4/dynamicscoping/valid.txt");
+    }
+
     private static void interpreterTest(String programFile, String expectedFile){
         Interpreter interpreter = new Interpreter();
         String actual;

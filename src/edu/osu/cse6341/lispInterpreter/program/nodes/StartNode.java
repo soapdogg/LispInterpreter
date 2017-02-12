@@ -36,10 +36,11 @@ public class StartNode implements IParsable, IEvaluatable, IPrettyPrintable{
 
 	@Override
     public String getListNotationToString(boolean isFirst){
-	    if (node == null) return "NIL\n";
 		StringBuilder sb = new StringBuilder();
-		if(node != null) sb.append(node.getListNotationToString(node.isList()));
-		sb.append('\n');
+		if(node != null) {
+		    sb.append(node.getListNotationToString(node.isList()));
+		    sb.append('\n');
+		}
 		if(nextExpressionStartNode != null) sb.append(nextExpressionStartNode.getListNotationToString(isFirst));
 		return sb.toString();
     }

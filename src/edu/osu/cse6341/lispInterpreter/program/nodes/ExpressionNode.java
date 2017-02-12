@@ -60,9 +60,8 @@ public class ExpressionNode extends Node{
             String addressEvaluatedValue = node.getValue();
             if ((node.isNumeric() && areNumbersAllowed) || equalsNil(addressEvaluatedValue) || equalsT(addressEvaluatedValue)) return node;
             else if (functionMap.containsKey(addressEvaluatedValue)) return executeBuiltInFunction(addressEvaluatedValue);
-            else if (Environment.isFunctionName(addressEvaluatedValue)){
-
-            }
+            else if (Environment.getEnvironment().isFunctionName(addressEvaluatedValue)) return Environment.getEnvironment().evaluateFunction(addressEvaluatedValue, data);
+            else if (Environment.getEnvironment().isVariableName(addressEvaluatedValue)) return Environment.getEnvironment().getVariableValue(addressEvaluatedValue);
             else if (!node.isList() && !functionMap.containsKey(addressEvaluatedValue)) throw new Exception("Error! Invalid CAR value: " + addressEvaluatedValue + '\n');
         }
         return this;
