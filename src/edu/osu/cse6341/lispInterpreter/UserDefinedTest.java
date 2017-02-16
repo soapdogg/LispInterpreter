@@ -27,6 +27,12 @@ public class UserDefinedTest {
     }
 
 
+    @Test
+    public void project4UniTest(){
+        interpreterTest("data/input/project4/uni.lisp", "data/expected/project4/uni.txt");
+    }
+
+
     private static void interpreterTest(String programFile, String expectedFile){
         Interpreter interpreter = new Interpreter();
         String actual;

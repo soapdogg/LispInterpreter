@@ -26,7 +26,7 @@ public abstract class BaseFunction {
             sb.append(" side of ");
             sb.append(getFunctionName());
             sb.append(" is not numeric!    Actual: ");
-            sb.append(getActualValue(node));
+            sb.append(node.getListNotationToString(true));
             sb.append('\n');
             throw new Exception(sb.toString());
         }
@@ -40,7 +40,7 @@ public abstract class BaseFunction {
             sb.append(" side of ");
             sb.append(getFunctionName());
             sb.append(" is not atomic!    Actual: ");
-            sb.append(getActualValue(node));
+            sb.append(node.getListNotationToString(true));
             sb.append('\n');
             throw new Exception(sb.toString());
         }
@@ -82,13 +82,4 @@ public abstract class BaseFunction {
         return isLeft ? "Left" : "Right";
     }
 
-    private String getActualValue(Node node) throws Exception
-    {
-        StringBuilder sb = new StringBuilder();
-        if(node.isList()) {
-            sb.append(((ExpressionNode)node).getAddress().evaluate(true).getListNotationToString(true));
-        }
-        else sb.append(node.getValue());
-        return sb.toString();
-    }
 }

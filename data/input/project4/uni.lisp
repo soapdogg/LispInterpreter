@@ -1,0 +1,28 @@
+(DEFUN UNI (S1 S2)
+    (COND   ((NULL S1) S2)
+            ((NULL S2) S1)
+            (T (COND
+                ((MEM (CAR S1) S2)
+                    (UNI (CDR S1) S2))
+                (T
+                    (CONS (CAR S1) (UNI (CDR S1) S2))
+                )
+            ))
+    )
+)
+
+(DEFUN MEM (X LIST)
+    (COND   ((NULL LIST) NIL)
+            (T (COND    ((EQ X (CAR LIST)) T)
+                        (T (MEM X (CDR LIST)))
+               )
+            )
+    )
+)
+
+(UNI () ())
+(UNI (QUOTE (1)) ())
+(UNI () (QUOTE (1 2)))
+(UNI (QUOTE (1 2 3)) ())
+(UNI () (QUOTE (4 5 6)))
+(UNI (QUOTE (1 56 34 23 459 3934 454854 9239 34934 845498 3434 9595)) (QUOTE (1 3 4 45 23 9595 67 69 0 343)))

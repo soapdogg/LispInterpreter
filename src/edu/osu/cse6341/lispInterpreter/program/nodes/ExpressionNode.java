@@ -55,16 +55,21 @@ public class ExpressionNode extends Node{
 
 	@Override
 	public Node evaluate(boolean areNumbersAllowed) throws Exception{
-        if (isList) {
-            Node node = this.address.evaluate(true);
-            String addressEvaluatedValue = node.getValue();
-            if ((node.isNumeric() && areNumbersAllowed) || equalsNil(addressEvaluatedValue) || equalsT(addressEvaluatedValue)) return node;
-            else if (functionMap.containsKey(addressEvaluatedValue)) return executeBuiltInFunction(addressEvaluatedValue);
-            else if (Environment.getEnvironment().isFunctionName(addressEvaluatedValue)) return Environment.getEnvironment().evaluateFunction(addressEvaluatedValue, data);
-            else if (Environment.getEnvironment().isVariableName(addressEvaluatedValue)) return Environment.getEnvironment().getVariableValue(addressEvaluatedValue);
-            else if (!node.isList() && !functionMap.containsKey(addressEvaluatedValue)) throw new Exception("Error! Invalid CAR value: " + addressEvaluatedValue + '\n');
-        }
-        return this;
+	    if(this.address == null) return new AtomNode(false);
+
+	    String addressValue = this.address.getValue();
+	    Environment e = Environment.getEnvironment();
+        if(e.isVariableName(addressValue)) return e.getVariableValue(addressValue);
+        if(e.isFunctionName(addressValue)) return e.evaluateFunction(addressValue, this.data);
+        if(functionMap.containsKey(addressValue)) return executeBuiltInFunction(addressValue);
+
+        Node addressEvaluatedNode = this.address.evaluate(true);
+        String addressEvaluatedValue = addressEvaluatedNode.getValue();
+
+        if ((addressEvaluatedNode.isNumeric() && areNumbersAllowed) || equalsNil(addressEvaluatedValue) || equalsT(addressEvaluatedValue)) return addressEvaluatedNode;
+        else if (!addressEvaluatedNode.isList()) throw new Exception("Error! Invalid CAR value: " + addressEvaluatedValue + '\n');
+
+        return addressEvaluatedNode;
 	}
 
 	@Override
