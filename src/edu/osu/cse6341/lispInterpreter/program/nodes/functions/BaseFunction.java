@@ -6,11 +6,11 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
 public abstract class BaseFunction {
 
-    protected Node params;
+    Node params;
 
-    protected BaseFunction(){}
+    BaseFunction(){}
 
-    protected BaseFunction(Node params){
+    BaseFunction(Node params){
         this.params = params;
     }
 
@@ -19,30 +19,28 @@ public abstract class BaseFunction {
     abstract String getFunctionName();
     abstract int getExpectedLength();
 
-    int getNumericValue(Node node, boolean isLeft) throws Exception{
+    int getNumericValue(Node node, int position) throws Exception{
         if(!node.isNumeric()) {
-            StringBuilder sb = new StringBuilder("Error! ");
-            sb.append(leftOrRight(isLeft));
-            sb.append(" side of ");
-            sb.append(getFunctionName());
-            sb.append(" is not numeric!    Actual: ");
-            sb.append(node.getListNotationToString(true));
-            sb.append('\n');
-            throw new Exception(sb.toString());
+            String sb = "Error! Parameter at position: " + position +
+                    " of function " +
+                    getFunctionName() +
+                    " is not numeric!    Actual: " +
+                    node.getListNotationToString(true) +
+                    '\n';
+            throw new Exception(sb);
         }
         return Integer.parseInt(node.getValue());
     }
 
-    String getAtomicValue(Node node, boolean isLeft) throws Exception{
+    String getAtomicValue(Node node, int position) throws Exception{
         if(node.isList()) {
-            StringBuilder sb = new StringBuilder("Error! ");
-            sb.append(leftOrRight(isLeft));
-            sb.append(" side of ");
-            sb.append(getFunctionName());
-            sb.append(" is not atomic!    Actual: ");
-            sb.append(node.getListNotationToString(true));
-            sb.append('\n');
-            throw new Exception(sb.toString());
+            String sb = "Error! Parameter at position: " + position +
+                    " of function " +
+                    getFunctionName() +
+                    " is not atomic!    Actual: " +
+                    node.getListNotationToString(true) +
+                    '\n';
+            throw new Exception(sb);
         }
         return node.getValue();
     }
@@ -54,12 +52,11 @@ public abstract class BaseFunction {
         boolean isVariable = e.isVariableName(temp);
         if(isVariable) isVariableList = e.getVariableValue(temp).isList();
         if((!isVariable && !node.isList()) || (isVariable && !isVariableList)) {
-            StringBuilder sb = new StringBuilder("Error! Parameter of ");
-            sb.append(getFunctionName());
-            sb.append(" is not a list.    Actual: ");
-            sb.append(node.getValue());
-            sb.append('\n');
-            throw new Exception(sb.toString());
+            String sb = "Error! Parameter of " + getFunctionName() +
+                    " is not a list.    Actual: " +
+                    node.getValue() +
+                    '\n';
+            throw new Exception(sb);
         }
         Node result = isVariableList ? e.getVariableValue(temp) : node;
         return (ExpressionNode)result;
@@ -67,19 +64,13 @@ public abstract class BaseFunction {
 
     void assertLengthIsAsExpected(int actual) throws Exception{
         if(actual != getExpectedLength() -1){
-            StringBuilder sb = new StringBuilder("Error! Expected length of ");
-            sb.append(getFunctionName());
-            sb.append(" list is ");
-            sb.append(getExpectedLength());
-            sb.append("!    Actual: ");
-            sb.append((actual + 1));
-            sb.append('\n');
-            throw new Exception(sb.toString());
+            String sb = "Error! Expected length of " + getFunctionName() +
+                    " list is " +
+                    getExpectedLength() +
+                    "!    Actual: " +
+                    (actual + 1) +
+                    '\n';
+            throw new Exception(sb);
         }
     }
-
-    private String leftOrRight(boolean isLeft){
-        return isLeft ? "Left" : "Right";
-    }
-
 }

@@ -46,7 +46,7 @@ public class DefunFunction extends BaseFunction {
         assertLengthIsAsExpected(params.getLength());
 
         ExpressionNode functionNameNode = getListValue(params);
-        String functionName = getAtomicValue(functionNameNode.getAddress(), true);
+        String functionName = getAtomicValue(functionNameNode.getAddress(), 1);
         assertFunctionNameIsValid(functionName);
 
         Node functionNameNodeData = functionNameNode.getData();
@@ -85,21 +85,23 @@ public class DefunFunction extends BaseFunction {
     private List<String> getFormalParameters(Node formalParametersNode) throws Exception{
         List<String> formalParameters = new ArrayList<>();
         boolean hasNext = true;
+        int counter = 1;
         while(hasNext){
             if(formalParametersNode.isList()){
                 ExpressionNode temp = getListValue(formalParametersNode);
                 Node formalNode = temp.getAddress();
-                String formalId = getAtomicValue(formalNode, true);
+                String formalId = getAtomicValue(formalNode, counter);
                 formalParameters.add(formalId);
                 formalParametersNode = temp.getData();
             }
             else{
                 if (formalParametersNode.getLength() != 0) {
-                    String formalId = getAtomicValue(formalParametersNode, true);
+                    String formalId = getAtomicValue(formalParametersNode, counter);
                     formalParameters.add(formalId);
                 }
                 hasNext = false;
             }
+            ++counter;
         }
         return formalParameters;
     }

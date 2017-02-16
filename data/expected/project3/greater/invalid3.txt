@@ -1,1 +1,1 @@
-Error! Left side of GREATER is not numeric!    Actual: NIL
+Error! Parameter at position: 1 of function GREATER is not numeric!    Actual: NIL

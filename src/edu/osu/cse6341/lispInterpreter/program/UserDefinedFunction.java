@@ -9,9 +9,9 @@ import java.util.Map;
 
 public class UserDefinedFunction {
 
-    private List<String> formalParameters;
-    private Node body;
-    private String functionName;
+    private final List<String> formalParameters;
+    private final Node body;
+    private final String functionName;
 
     public UserDefinedFunction(String functionName, List<String> formalParameters, Node body){
         this.functionName = functionName;

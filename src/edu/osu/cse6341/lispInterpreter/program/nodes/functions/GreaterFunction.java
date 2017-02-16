@@ -16,8 +16,8 @@ public class GreaterFunction extends BaseFunction {
     public Node evaluate() throws Exception{
         assertLengthIsAsExpected(params.getLength());
         Node right = ((ExpressionNode)params).getData();
-        int leftValue = getNumericValue(params.evaluate(true), true);
-        int rightValue = getNumericValue(right.evaluate(true), false);
+        int leftValue = getNumericValue(params.evaluate(true), 1);
+        int rightValue = getNumericValue(right.evaluate(true), 2);
         boolean result = leftValue > rightValue;
         return new AtomNode(result);
     }
