@@ -1,5 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes;
 
+import edu.osu.cse6341.lispInterpreter.program.Environment;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
 
@@ -27,7 +28,8 @@ public class AtomNode extends Node{
 
 	@Override
 	public Node evaluate(boolean areNumbersAllowed){
-	    return this;
+	    if(Environment.getEnvironment().isVariableName(value)) return Environment.getEnvironment().getVariableValue(value);
+        return this;
 	}
 
 	@Override

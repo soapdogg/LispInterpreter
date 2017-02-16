@@ -12,14 +12,20 @@ public class UserDefinedTest {
 
 
     @Test
-    public void project4DiffValidTest(){
-        interpreterTest("data/input/project4/diff/valid.lisp", "data/expected/project4/diff/valid.txt");
+    public void project4DiffTest(){
+        interpreterTest("data/input/project4/diff.lisp", "data/expected/project4/diff.txt");
     }
 
     @Test
-    public void project4DynamicValidTest(){
-        interpreterTest("data/input/project4/dynamicscoping/valid.lisp", "data/expected/project4/dynamicscoping/valid.txt");
+    public void project4DynamicTest(){
+        interpreterTest("data/input/project4/dynamicscoping.lisp", "data/expected/project4/dynamicscoping.txt");
     }
+
+    @Test
+    public void project4MemTest(){
+        interpreterTest("data/input/project4/mem.lisp", "data/expected/project4/mem.txt");
+    }
+
 
     private static void interpreterTest(String programFile, String expectedFile){
         Interpreter interpreter = new Interpreter();

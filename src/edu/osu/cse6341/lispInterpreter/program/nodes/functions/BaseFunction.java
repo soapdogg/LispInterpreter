@@ -1,5 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
+import edu.osu.cse6341.lispInterpreter.program.Environment;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
@@ -47,7 +48,12 @@ public abstract class BaseFunction {
     }
 
     ExpressionNode getListValue(Node node) throws Exception{
-        if(!node.isList()) {
+        boolean isVariableList = false;
+        String temp = node.getValue();
+        Environment e = Environment.getEnvironment();
+        boolean isVariable = e.isVariableName(temp);
+        if(isVariable) isVariableList = e.getVariableValue(temp).isList();
+        if((!isVariable && !node.isList()) || (isVariable && !isVariableList)) {
             StringBuilder sb = new StringBuilder("Error! Parameter of ");
             sb.append(getFunctionName());
             sb.append(" is not a list.    Actual: ");
@@ -55,7 +61,8 @@ public abstract class BaseFunction {
             sb.append('\n');
             throw new Exception(sb.toString());
         }
-        return (ExpressionNode)node;
+        Node result = isVariableList ? e.getVariableValue(temp) : node;
+        return (ExpressionNode)result;
     }
 
     void assertLengthIsAsExpected(int actual) throws Exception{

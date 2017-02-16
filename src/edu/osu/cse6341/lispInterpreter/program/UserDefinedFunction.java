@@ -20,11 +20,12 @@ public class UserDefinedFunction {
     }
 
     public Node evaluate(Node params) throws Exception{
-        Map<String, Node> oldVariables = Environment.getEnvironment().getVariables();
+        Environment e = Environment.getEnvironment();
+        Map<String, Node> oldVariables = e.getVariables();
         Map<String, Node> newVariables = bindVariablesToParameters(params);
-        Environment.getEnvironment().unionVariables(newVariables);
+        e.unionVariables(newVariables);
         Node result = body.evaluate(true);
-        Environment.getEnvironment().setVariables(oldVariables);
+        e.setVariables(oldVariables);
         return result;
     }
 
@@ -32,13 +33,9 @@ public class UserDefinedFunction {
         if(formalParameters.size() != params.getLength()) throw new Exception("Length of actual parameters does not match length of formal parameters for function: " + functionName);
         Map<String, Node> newVariables = new HashMap<>();
         for (String formal: formalParameters) {
-            if(params.isList()){
-                ExpressionNode temp = (ExpressionNode)params;
-                newVariables.put(formal, temp.getAddress().evaluate(true));
-                params = temp.getData();
-            }else{
-                newVariables.put(formal, params);
-            }
+            ExpressionNode temp = (ExpressionNode)params;
+            newVariables.put(formal, temp.getAddress().evaluate(true));
+            params = temp.getData();
         }
         return newVariables;
     }
