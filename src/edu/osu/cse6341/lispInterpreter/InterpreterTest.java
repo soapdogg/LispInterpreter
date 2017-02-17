@@ -25,8 +25,6 @@ public class InterpreterTest {
         interpreterTest("data/input/project3/atom/invalid2.lisp", "data/expected/project3/atom/invalid2.txt");
     }
 
-
-
     //ATOMIC TESTS
     @org.junit.Test
     public void project3AtomicValidTest(){

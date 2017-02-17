@@ -30,7 +30,7 @@ public class UserDefinedFunction {
     }
 
     private Map<String, Node> bindVariablesToParameters(Node params) throws Exception{
-        if(formalParameters.size() != params.getLength()) throw new Exception("Length of actual parameters does not match length of formal parameters for function: " + functionName);
+        assertActualsLengthSameAsFormalsLength(params);
         Map<String, Node> newVariables = new HashMap<>();
         for (String formal: formalParameters) {
             ExpressionNode temp = (ExpressionNode)params;
@@ -38,5 +38,13 @@ public class UserDefinedFunction {
             params = temp.getData();
         }
         return newVariables;
+    }
+
+    private void assertActualsLengthSameAsFormalsLength(Node params) throws Exception{
+         if(formalParameters.size() != params.getLength())
+            throw new Exception("Length of actual parameters does not match length of formal parameters for function: "
+                    + functionName
+                    + "\nExpected: " + formalParameters.size()
+                    + "    Actual: " + params.getLength() + "\n");
     }
 }

@@ -79,30 +79,36 @@ public class DefunFunction extends BaseFunction {
 
 
     private void assertFunctionNameIsValid(String functionName) throws Exception{
-
+        if(isInvalidName(functionName))
+            throw new Exception("Error! Invalid function name: " + functionName + "\n");
     }
 
     private List<String> getFormalParameters(Node formalParametersNode) throws Exception{
         List<String> formalParameters = new ArrayList<>();
-        boolean hasNext = true;
+        boolean hasNext = formalParametersNode.isList();
         int counter = 1;
         while(hasNext){
-            if(formalParametersNode.isList()){
-                ExpressionNode temp = getListValue(formalParametersNode);
-                Node formalNode = temp.getAddress();
-                String formalId = getAtomicValue(formalNode, counter);
-                formalParameters.add(formalId);
-                formalParametersNode = temp.getData();
-            }
-            else{
-                if (formalParametersNode.getLength() != 0) {
-                    String formalId = getAtomicValue(formalParametersNode, counter);
-                    formalParameters.add(formalId);
-                }
-                hasNext = false;
-            }
+            ExpressionNode temp = getListValue(formalParametersNode);
+            Node formalNode = temp.getAddress();
+            String formalId = getAtomicValue(formalNode, counter);
+            assertFormalNameIsValid(formalParameters, formalId);
+            formalParameters.add(formalId);
+            formalParametersNode = temp.getData();
             ++counter;
+            hasNext = formalParametersNode.isList();
         }
         return formalParameters;
+    }
+
+    private static void assertFormalNameIsValid(List<String> formalParameters, String formalId) throws Exception{
+        if(isInvalidName(formalId))
+            throw new Exception("Error! Invalid formal id: " + formalId + "\n");
+        if(formalParameters.contains(formalId))
+            throw new Exception("Error! Duplicate formal id: " + formalId +"\n");
+
+    }
+
+    private static boolean isInvalidName(String name){
+        return invalidFunctionNames.contains(name) || name.matches("-?[1-9][0-9]*|0");
     }
 }

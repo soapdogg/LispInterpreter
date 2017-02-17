@@ -47,6 +47,46 @@ public class UserDefinedTest {
         interpreterTest("data/input/project4/increment.lisp", "data/expected/project4/increment.txt");
     }
 
+    @Test
+    public void project4DefunIncorrectNumberParamsTest(){
+        interpreterTest("data/input/project4/defun_incorrect_number_params.lisp", "data/expected/project4/defun_incorrect_number_params.txt");
+    }
+
+    @Test
+    public void project4DefunInvalidMethodNameTest(){
+        interpreterTest("data/input/project4/defun_invalid_method_name.lisp", "data/expected/project4/defun_invalid_method_name.txt");
+    }
+
+    @Test
+    public void project4formalsActualsDifferentLengthTest(){
+        interpreterTest("data/input/project4/formals_actuals_different.lisp", "data/expected/project4/formals_actuals_different.txt");
+    }
+
+    @Test
+    public void project4invalidFormalTest(){
+        interpreterTest("data/input/project4/invalid_formal.lisp", "data/expected/project4/invalid_formal.txt");
+    }
+
+     @Test
+    public void project4duplicateFormalTest(){
+        interpreterTest("data/input/project4/duplicate_formal.lisp", "data/expected/project4/duplicate_formal.txt");
+    }
+
+     @Test
+    public void project4OneTest(){
+        interpreterTest("data/input/project4/one.lisp", "data/expected/project4/one.txt");
+    }
+
+    @Test
+    public void project4UndefinedFunctionTest(){
+        interpreterTest("data/input/project4/undefined_function.lisp", "data/expected/project4/undefined_function.txt");
+    }
+
+    @Test
+    public void project4UndefinedVariableTest(){
+        interpreterTest("data/input/project4/undefined_variable.lisp", "data/expected/project4/undefined_variable.txt");
+    }
+
     private static void interpreterTest(String programFile, String expectedFile){
         Interpreter interpreter = new Interpreter();
         String actual;

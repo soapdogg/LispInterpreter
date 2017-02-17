@@ -1,0 +1,4 @@
+(DEFUN ONE () 1)
+
+(ONE)
+(PLUS (ONE) (ONE))

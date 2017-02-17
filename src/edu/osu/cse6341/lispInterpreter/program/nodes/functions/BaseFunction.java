@@ -51,7 +51,7 @@ public abstract class BaseFunction {
         Environment e = Environment.getEnvironment();
         boolean isVariable = e.isVariableName(temp);
         if(isVariable) isVariableList = e.getVariableValue(temp).isList();
-        if((!isVariable && !node.isList()) || (isVariable && !isVariableList)) {
+        if((!isVariable && !node.isList() && node.getLength() == 1) || (isVariable && !isVariableList) || (!node.isList() && !Node.equalsNil(node.getValue()))) {
             String sb = "Error! Parameter of " + getFunctionName() +
                     " is not a list.    Actual: " +
                     node.getValue() +
