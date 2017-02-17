@@ -32,6 +32,20 @@ public class UserDefinedTest {
         interpreterTest("data/input/project4/uni.lisp", "data/expected/project4/uni.txt");
     }
 
+    @Test
+    public void project4FactorialTest(){
+        interpreterTest("data/input/project4/factorial.lisp", "data/expected/project4/factorial.txt");
+    }
+
+    @Test
+    public void project4NegateTest(){
+        interpreterTest("data/input/project4/negate.lisp", "data/expected/project4/negate.txt");
+    }
+
+    @Test
+    public void project4IncrementTest(){
+        interpreterTest("data/input/project4/increment.lisp", "data/expected/project4/increment.txt");
+    }
 
     private static void interpreterTest(String programFile, String expectedFile){
         Interpreter interpreter = new Interpreter();

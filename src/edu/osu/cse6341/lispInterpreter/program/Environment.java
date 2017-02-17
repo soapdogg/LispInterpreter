@@ -39,15 +39,15 @@ public class Environment {
         return function.evaluate(params);
     }
 
-    public Map<String, Node> getVariables(){
+    Map<String, Node> getVariables(){
         return new HashMap<>(variables);
     }
 
-    public void unionVariables(Map<String, Node> newVariables){
+    void unionVariables(Map<String, Node> newVariables){
         variables.putAll(newVariables);
     }
 
-    public void setVariables(Map<String, Node> newVariables){
+    void setVariables(Map<String, Node> newVariables){
         variables = newVariables;
     }
 
