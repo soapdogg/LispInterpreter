@@ -1,14 +1,23 @@
 package edu.osu.cse6341.lispInterpreter.tokenizer.states;
 
-
-import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
+import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
 
 public class WhitespaceState implements IState{
 
+    private int startingPos;
+
 	@Override
-	public boolean processState(Tokenizer tokenizer, String line, int pos, int startingPos){
-		IState nextState = new StartingState();
-		return nextState.processState(tokenizer, line, ++pos, ++startingPos);
+	public boolean processState(String line, int startingPos){
+		this.startingPos = ++startingPos;
+	    return true;
 	}
 
+	public int getStartingPos(){
+	    return this.startingPos;
+    }
+
+    @Override
+    public IToken getToken(){
+	    return null;
+    }
 }

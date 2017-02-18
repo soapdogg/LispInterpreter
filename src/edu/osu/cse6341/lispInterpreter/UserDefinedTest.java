@@ -87,6 +87,11 @@ public class UserDefinedTest {
         interpreterTest("data/input/project4/undefined_variable.lisp", "data/expected/project4/undefined_variable.txt");
     }
 
+    @Test
+    public void project4MemLargeTest(){
+        interpreterTest("data/input/project4/mem_large.lisp", "data/expected/project4/mem_large.txt");
+    }
+
     private static void interpreterTest(String programFile, String expectedFile){
         Interpreter interpreter = new Interpreter();
         String actual;

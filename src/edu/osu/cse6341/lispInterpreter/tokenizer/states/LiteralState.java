@@ -1,34 +1,40 @@
 package edu.osu.cse6341.lispInterpreter.tokenizer.states;
 
-import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.LiteralToken;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
 
 public class LiteralState implements IState{
 
-	private static final IState [] nextStateArray;
+	private static final boolean [] nextStateArray;
+
+	private int startingPos;
+	private IToken token;
 
 	static {
-		nextStateArray = new IState [256];
-		for(char i = 'A'; i <= 'Z'; ++i) nextStateArray[i] = new LiteralState();
-		for(char i = '0'; i <= '9'; ++i) nextStateArray[i] = new LiteralState();
+		nextStateArray = new boolean [256];
+		for(char i = 'A'; i <= 'Z'; ++i) nextStateArray[i] = true;
+		for(char i = '0'; i <= '9'; ++i) nextStateArray[i] = true;
 	}
 
 	@Override
-	public boolean processState(Tokenizer tokenizer, String line, int pos, int startingPos){
-		if(++pos >= line.length()) return finishState(tokenizer, line, pos, startingPos);
-		char currentChar = line.charAt(pos);
-		if(nextStateArray[currentChar] == null) return finishState(tokenizer, line, pos, startingPos);
-		return nextStateArray[currentChar].processState(tokenizer, line, pos, startingPos);
+	public boolean processState(String line, int startingPos){
+		int pos = startingPos;
+	    while(pos < line.length() && nextStateArray[line.charAt(pos)]){
+	        ++pos;
+        }
+        String fragment = line.substring(startingPos, pos);
+        token = new LiteralToken(fragment);
+        this.startingPos = pos;
+        return true;
 	}
 
-	private static boolean finishState(Tokenizer tokenizer, String line, int pos, int startingPos)
-	{
-        String fragment = line.substring(startingPos, pos);
-		IToken token = new LiteralToken(fragment);
-        tokenizer.addToTokens(token);
-        IState nextState = new StartingState();
-        startingPos = pos;
-        return nextState.processState(tokenizer, line, pos, startingPos);
-	}
+	@Override
+    public int getStartingPos(){
+	    return this.startingPos;
+    }
+
+    @Override
+    public IToken getToken(){
+        return token;
+    }
 }

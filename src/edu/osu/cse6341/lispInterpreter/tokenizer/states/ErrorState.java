@@ -1,29 +1,40 @@
 package edu.osu.cse6341.lispInterpreter.tokenizer.states;
 
-import java.util.Set;
-import java.util.HashSet;
-
-import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.ErrorToken;
+import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
 
 
 public class ErrorState implements IState{
 
-	private static final Set<Character> endOfTokenCharacters;
+    private IToken token;
+
+	private static final boolean [] endOfToken;
 
 	static{
-		endOfTokenCharacters = new HashSet<>();
-		endOfTokenCharacters.add(' ');
-		endOfTokenCharacters.add('\t');
-		endOfTokenCharacters.add('(');
-		endOfTokenCharacters.add(')');
+	    endOfToken = new boolean[256];
+	    endOfToken[' '] = true;
+	    endOfToken['\t'] = true;
+	    endOfToken['\r'] = true;
+	    endOfToken['('] = true;
+	    endOfToken[')'] =true;
 	}
 
 	@Override
-	public boolean processState(Tokenizer tokenizer, String line, int pos, int startingPos){
-		while(++pos < line.length() && !endOfTokenCharacters.contains(line.charAt(pos))); 
+	public boolean processState(String line, int startingPos){
+		int pos = startingPos;
+	    while(++pos < line.length() && !endOfToken[line.charAt(pos)]);
 		String fragment = line.substring(startingPos, pos);
-		tokenizer.addToTokens(new ErrorToken(fragment));
-		return false;
+		token = new ErrorToken(fragment);
+	    return false;
 	}
+
+	@Override
+    public int getStartingPos(){
+	    return -1;
+    }
+
+    @Override
+    public IToken getToken(){
+        return token;
+    }
 }
