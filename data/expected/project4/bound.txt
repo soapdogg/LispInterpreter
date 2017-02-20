@@ -1,0 +1,6 @@
+NIL
+NIL
+NIL
+T
+NIL
+T

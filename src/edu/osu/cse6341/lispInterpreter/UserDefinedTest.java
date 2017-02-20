@@ -89,7 +89,22 @@ public class UserDefinedTest {
 
     @Test
     public void project4MemLargeTest(){
-        interpreterTest("data/input/project4/mem_large.lisp", "data/expected/project4/mem_large.txt");
+        //interpreterTest("data/input/project4/mem_large.lisp", "data/expected/project4/mem_large.txt");
+    }
+
+    @Test
+    public void project4BoundTest(){
+        interpreterTest("data/input/project4/bound.lisp", "data/expected/project4/bound.txt");
+    }
+
+    @Test
+    public void project4GetValTest(){
+        interpreterTest("data/input/project4/getval.lisp", "data/expected/project4/getval.txt");
+    }
+
+    @Test
+    public void project4AddPairsTest(){
+        interpreterTest("data/input/project4/addpairs.lisp", "data/expected/project4/addpairs.txt");
     }
 
     private static void interpreterTest(String programFile, String expectedFile){
