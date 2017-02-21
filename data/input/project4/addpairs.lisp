@@ -1,7 +1,13 @@
 (DEFUN ADDPAIRS (X Y Z)
     (COND
+        ((NULL Y)
+            Z
+        )
         ((ATOM X)
             Z
+        )
+        ((NULL(ATOM(CAR X)))
+                    Z
         )
         ((ATOM Y)
             Z
@@ -13,15 +19,7 @@
             (CONS
                 (CONS
                     (CAR X)
-
-                    (COND
-                        ((ATOM (CAR Y))
-                            (CAR Y)
-                        )
-                        (T
-                            (CONS (CAR Y) NIL)
-                        )
-                    )
+                    (CAR Y)
                 )
                 (ADDPAIRS (CDR X) (CDR Y) Z)
             )
@@ -44,5 +42,5 @@
 (ADDPAIRS (CONS 45 NIL) (CONS 56 NIL) (QUOTE ()))
 (ADDPAIRS
     (CONS 45 (CONS 89 (CONS 34 NIL)))
-    (CONS (QUOTE (23 44 45)) (CONS 45 (CONS (QUOTE (56 34)) NIL)))
+    (CONS (QUOTE (23 44 45)) (CONS NIL (CONS (QUOTE (56 34)) NIL)))
     (CONS (CONS 34 34) (CONS (CONS 67 12) NIL)))
