@@ -27,7 +27,7 @@ public class AtomNode extends Node{
 	}
 
 	@Override
-	public Node evaluate(boolean areNumbersAllowed){
+	public Node evaluate(boolean areLiteralsAllowed){
 	    if(Environment.getEnvironment().isVariableName(value)) return Environment.getEnvironment().getVariableValue(value);
         return this;
 	}

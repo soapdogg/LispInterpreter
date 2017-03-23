@@ -54,7 +54,7 @@ public class ExpressionNode extends Node{
 	}
 
 	@Override
-	public Node evaluate(boolean areNumbersAllowed) throws Exception{
+	public Node evaluate(boolean areLiteralsAllowed) throws Exception{
 	    if(this.address == null) return new AtomNode(false);
 
 	    String addressValue = this.address.getValue();
@@ -62,14 +62,8 @@ public class ExpressionNode extends Node{
         if(e.isVariableName(addressValue)) return e.getVariableValue(addressValue);
         if(e.isFunctionName(addressValue)) return e.evaluateFunction(addressValue, this.data);
         if(functionMap.containsKey(addressValue)) return executeBuiltInFunction(addressValue);
-
-        Node addressEvaluatedNode = this.address.evaluate(true);
-        String addressEvaluatedValue = addressEvaluatedNode.getValue();
-
-        if ((addressEvaluatedNode.isNumeric() && areNumbersAllowed) || equalsNil(addressEvaluatedValue) || equalsT(addressEvaluatedValue)) return addressEvaluatedNode;
-        else if (!addressEvaluatedNode.isList()) throw new Exception("Error! Invalid CAR value: " + addressEvaluatedValue + '\n');
-
-        return addressEvaluatedNode;
+        if(!areLiteralsAllowed) throw new Exception("Error! Invalid CAR value: " + addressValue + '\n');
+        return this.address.evaluate(true);
 	}
 
 	@Override

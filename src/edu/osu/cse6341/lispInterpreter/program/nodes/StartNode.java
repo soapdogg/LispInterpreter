@@ -23,12 +23,12 @@ public class StartNode implements IParsable, IEvaluatable, IPrettyPrintable{
     }
 
 	@Override
-	public Node evaluate(boolean areNumbersAllowed) throws Exception{
+	public Node evaluate(boolean areLiteralsAllowed) throws Exception{
         boolean isNotList = !node.isList();
         boolean isNotNumeric = !node.isNumeric();
         boolean isNotT = !node.getValue().equals("T");
         boolean isNotNil = !node.getValue().equals("NIL");
-        if(isNotList && isNotNumeric && isNotT && isNotNil) throw new Exception("Error! " + node.getValue() + " is not a valid atomic value!\n");
+        //if(isNotList && isNotNumeric && isNotT && isNotNil) throw new Exception("Error! " + node.getValue() + " is not a valid atomic value!\n");
         node = node.evaluate(false);
 		if(nextExpressionStartNode != null) nextExpressionStartNode.evaluate(true);
 		return null;

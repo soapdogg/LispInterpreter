@@ -1,1 +1,1 @@
-Error! Invalid CAR value: E
+Error! Parameter at position: 1 of function TIMES is not numeric!    Actual: E
