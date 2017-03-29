@@ -45,6 +45,7 @@ public abstract class BaseFunction {
     }
 
     ExpressionNode getListValue(Node node) throws Exception{
+        if (Node.equalsNil(node.getValue())) return new ExpressionNode();
         if((!node.isList() && node.getLength() == 1) || (!node.isList() && !Node.equalsNil(node.getValue()))) {
             String sb = "Error! Parameter of " + getFunctionName() +
                     " is not a list.    Actual: " +

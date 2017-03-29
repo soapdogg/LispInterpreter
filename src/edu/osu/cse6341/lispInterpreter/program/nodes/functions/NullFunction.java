@@ -1,6 +1,7 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
+import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
 public class NullFunction extends BaseFunction {
@@ -14,7 +15,7 @@ public class NullFunction extends BaseFunction {
     @Override
 	public Node evaluate() throws Exception{
         assertLengthIsAsExpected(params.getLength());
-        Node evaluatedResult = params.evaluate(true);
+        ExpressionNode evaluatedResult = getListValue(params.evaluate(true));
         boolean result = Node.equalsNil(evaluatedResult.getValue());
 		return new AtomNode(result);
 	}

@@ -1,1 +1,1 @@
-(COND ((INT T) 34) ((NULL T) 12) ((NULL 1) 4))
+(COND ((INT T) 34) ((NULL (CONS T F)) 12) ((NULL (CONS 1 3)) 4))
