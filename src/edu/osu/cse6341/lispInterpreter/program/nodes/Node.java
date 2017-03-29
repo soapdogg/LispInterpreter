@@ -15,6 +15,7 @@ public abstract class Node implements IParsable, IEvaluatable, IPrettyPrintable{
     private static final Map<TokenKind, Node> tokenToNodeMap;
     static final String NIL;
     static final String T;
+    static final String F;
 
     static{
         tokenToNodeMap = new HashMap<>();
@@ -23,6 +24,7 @@ public abstract class Node implements IParsable, IEvaluatable, IPrettyPrintable{
         tokenToNodeMap.put(TokenKind.LITERAL_TOKEN, new AtomNode());
         NIL = "NIL";
         T = "T";
+        F = "F";
     }
 
     protected abstract Node newInstance();
@@ -59,5 +61,9 @@ public abstract class Node implements IParsable, IEvaluatable, IPrettyPrintable{
 
     static boolean equalsT(String value){
         return T.equals(value);
+    }
+
+    public static boolean equalsF(String value){
+        return F.equals(value);
     }
 }

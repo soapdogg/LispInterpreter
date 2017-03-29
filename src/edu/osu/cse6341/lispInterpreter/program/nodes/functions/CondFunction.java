@@ -29,7 +29,7 @@ public class CondFunction extends BaseFunction {
 	    for(ExpressionNode parameter: parameters){
             Node booleanResult = parameter.getAddress().evaluate(true);
 
-            if(!Node.equalsNil(booleanResult.getValue()))
+            if(!Node.equalsF(booleanResult.getValue()))
                 return parameter.getData().evaluate(true);
         }
         throw new Exception("Error! None of the conditions in the COND function evaluated to true.\n");

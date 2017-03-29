@@ -1,5 +1,5 @@
 T
-NIL
+F
 T
-NIL
-NIL
+F
+F

@@ -3,7 +3,6 @@ package edu.osu.cse6341.lispInterpreter.program.nodes;
 import java.util.Map;
 import java.util.HashMap;
 
-import edu.osu.cse6341.lispInterpreter.program.Environment;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 import edu.osu.cse6341.lispInterpreter.program.nodes.functions.*;
@@ -50,12 +49,9 @@ public class ExpressionNode extends Node{
 
 	@Override
 	public Node evaluate(boolean areLiteralsAllowed) throws Exception{
-	    if(this.address == null) return new AtomNode(false);
+	    if(this.address == null) return new AtomNode();
 
 	    String addressValue = this.address.getValue();
-	    Environment e = Environment.getEnvironment();
-        if(e.isVariableName(addressValue)) return e.getVariableValue(addressValue);
-        if(e.isFunctionName(addressValue)) return e.evaluateFunction(addressValue, this.data);
         if(functionMap.containsKey(addressValue)) return executeBuiltInFunction(addressValue);
         if(!areLiteralsAllowed) throw new Exception("Error! Invalid CAR value: " + addressValue + '\n');
         return this.address.evaluate(true);

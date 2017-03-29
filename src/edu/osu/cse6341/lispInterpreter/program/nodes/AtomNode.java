@@ -1,6 +1,5 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes;
 
-import edu.osu.cse6341.lispInterpreter.program.Environment;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
 
@@ -13,7 +12,7 @@ public class AtomNode extends Node{
     }
 
     public AtomNode(boolean value){
-	    this.value = value ? Node.T : Node.NIL;
+	    this.value = value ? Node.T : Node.F;
     }
 
     public AtomNode(int value){
@@ -28,7 +27,6 @@ public class AtomNode extends Node{
 
 	@Override
 	public Node evaluate(boolean areLiteralsAllowed){
-	    if(Environment.getEnvironment().isVariableName(value)) return Environment.getEnvironment().getVariableValue(value);
         return this;
 	}
 
