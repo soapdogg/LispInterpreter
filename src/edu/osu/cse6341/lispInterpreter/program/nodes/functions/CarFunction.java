@@ -14,7 +14,7 @@ public class CarFunction extends BaseFunction {
     @Override
 	public Node evaluate() throws Exception{
         assertLengthIsAsExpected(params.getLength());
-        ExpressionNode node = getListValue(((ExpressionNode)params).getAddress().evaluate(false));
+        ExpressionNode node = getListValue(((ExpressionNode)params).getAddress().evaluate(false), false);
         return node.getAddress();
 	}
 

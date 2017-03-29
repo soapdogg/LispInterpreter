@@ -79,6 +79,11 @@ public class InterpreterTest {
         interpreterTest("data/input/project3/car/invalid4.lisp", "data/expected/project3/car/invalid4.txt");
     }
 
+    @org.junit.Test
+    public void project3CarInvalid5Test(){
+        interpreterTest("data/input/project3/car/invalid5.lisp", "data/expected/project3/car/invalid5.txt");
+    }
+
 
 
     //CDR TESTS
@@ -102,6 +107,10 @@ public class InterpreterTest {
         interpreterTest("data/input/project3/cdr/invalid3.lisp", "data/expected/project3/cdr/invalid3.txt");
     }
 
+    @org.junit.Test
+    public void project3CdrInvalid4Test(){
+        interpreterTest("data/input/project3/cdr/invalid4.lisp", "data/expected/project3/cdr/invalid4.txt");
+    }
 
 
     //COND TESTS

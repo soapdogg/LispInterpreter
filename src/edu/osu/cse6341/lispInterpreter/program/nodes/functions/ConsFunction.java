@@ -18,7 +18,7 @@ public class ConsFunction extends BaseFunction {
         int leftValue = getNumericValue(params.evaluate(true), 1);
         AtomNode leftSide = new AtomNode(leftValue);
         ExpressionNode rightSide = (ExpressionNode) ((ExpressionNode)params).getData();
-        rightSide = getListValue(rightSide.getAddress().evaluate(false));
+        rightSide = getListValue(rightSide.getAddress().evaluate(false), true);
         return new ExpressionNode(leftSide,rightSide);
 	}
 

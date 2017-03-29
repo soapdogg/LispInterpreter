@@ -31,21 +31,12 @@ public abstract class BaseFunction {
         return Integer.parseInt(node.getValue());
     }
 
-    String getAtomicValue(Node node, int position) throws Exception{
-        if(node.isList()) {
-            String sb = "Error! Parameter at position: " + position +
-                    " of function " +
-                    getFunctionName() +
-                    " is not atomic!    Actual: " +
-                    node.getListNotationToString(true) +
-                    '\n';
+    ExpressionNode getListValue(Node node, boolean isEmptyAllowed) throws Exception{
+        if (Node.equalsNil(node.getValue()) && isEmptyAllowed) return new ExpressionNode();
+        if(Node.equalsNil(node.getValue()) && !isEmptyAllowed){
+            String sb = "Error! Empty list not allowed as parameter of " +getFunctionName() + '\n';
             throw new Exception(sb);
         }
-        return node.getValue();
-    }
-
-    ExpressionNode getListValue(Node node) throws Exception{
-        if (Node.equalsNil(node.getValue())) return new ExpressionNode();
         if((!node.isList() && node.getLength() == 1) || (!node.isList() && !Node.equalsNil(node.getValue()))) {
             String sb = "Error! Parameter of " + getFunctionName() +
                     " is not a list.    Actual: " +

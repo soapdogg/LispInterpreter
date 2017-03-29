@@ -21,7 +21,7 @@ public class CondFunction extends BaseFunction {
         while(params.isList()){
             ExpressionNode expressionParams = (ExpressionNode)params;
             Node tempParameter = expressionParams.getAddress();
-            ExpressionNode parameter = getListValue(tempParameter);
+            ExpressionNode parameter = getListValue(tempParameter, true);
             assertLengthIsAsExpected(parameter.getData().getLength());
             parameters.add(parameter);
             params = expressionParams.getData();
