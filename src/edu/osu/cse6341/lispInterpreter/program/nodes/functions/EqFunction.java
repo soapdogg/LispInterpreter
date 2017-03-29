@@ -16,9 +16,9 @@ public class EqFunction extends BaseFunction {
 	public Node evaluate() throws Exception{
         assertLengthIsAsExpected(params.getLength());
         Node right = ((ExpressionNode)params).getData();
-        String leftValue = getAtomicValue(params.evaluate(true), 1);
-        String rightValue = getAtomicValue(right.evaluate(true), 2);
-        boolean result = leftValue.equals(rightValue);
+        int leftValue = getNumericValue(params.evaluate(true), 1);
+        int rightValue = getNumericValue(right.evaluate(true), 2);
+        boolean result = leftValue == rightValue;
 		return new AtomNode(result);
 	}
 
