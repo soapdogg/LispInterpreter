@@ -31,7 +31,7 @@ public class ExpressionNode extends Node{
 
 	public ExpressionNode(){}
 
-	public ExpressionNode(Node address, Node data){
+	public ExpressionNode(AtomNode address, ExpressionNode data){
 	    this.address = address;
         this.data = data;
         this.isList = true;

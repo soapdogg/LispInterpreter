@@ -1,4 +1,4 @@
 (INT 3)
 (INT (INT 45))
 (INT (PLUS 4 5))
-(INT (CONS 4 5))
+(INT (CONS 4 NIL))

@@ -1,4 +1,4 @@
 (ATOM 4)
 (ATOM (ATOM 45))
-(ATOM (CONS 2 9))
+(ATOM (CONS 2 NIL))
 (ATOM (ATOM (ATOM T)))
