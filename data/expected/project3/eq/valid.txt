@@ -4,5 +4,3 @@ T
 T
 NIL
 T
-T
-NIL

@@ -173,29 +173,6 @@ public class InterpreterTest {
 
 
 
-    //GREATER TESTS
-    @org.junit.Test
-    public void project3GreaterValidTest(){
-        interpreterTest("data/input/project3/greater/valid.lisp", "data/expected/project3/greater/valid.txt");
-    }
-
-    @org.junit.Test
-    public void project3GreaterInvalid1Test(){
-        interpreterTest("data/input/project3/greater/invalid1.lisp", "data/expected/project3/greater/invalid1.txt");
-    }
-
-    @org.junit.Test
-    public void project3GreaterInvalid2Test(){
-        interpreterTest("data/input/project3/greater/invalid2.lisp", "data/expected/project3/greater/invalid2.txt");
-    }
-
-    @org.junit.Test
-    public void project3GreaterInvalid3Test(){
-        interpreterTest("data/input/project3/greater/invalid3.lisp", "data/expected/project3/greater/invalid3.txt");
-    }
-
-
-
     //INT TESTS
     @org.junit.Test
     public void project3IntValidTest(){
@@ -234,30 +211,6 @@ public class InterpreterTest {
     public void project3LessInvalid3Test(){
         interpreterTest("data/input/project3/less/invalid3.lisp", "data/expected/project3/less/invalid3.txt");
     }
-
-
-
-    //MINUS TESTS
-    @org.junit.Test
-    public void project3MinusValidTest(){
-        interpreterTest("data/input/project3/minus/valid.lisp", "data/expected/project3/minus/valid.txt");
-    }
-
-    @org.junit.Test
-    public void project3MinusInvalid1Test(){
-        interpreterTest("data/input/project3/minus/invalid1.lisp", "data/expected/project3/minus/invalid1.txt");
-    }
-
-    @org.junit.Test
-    public void project3MinusInvalid2Test(){
-        interpreterTest("data/input/project3/minus/invalid2.lisp", "data/expected/project3/minus/invalid2.txt");
-    }
-
-    @org.junit.Test
-    public void project3MinusInvalid3Test(){
-        interpreterTest("data/input/project3/minus/invalid3.lisp", "data/expected/project3/minus/invalid3.txt");
-    }
-
 
 
     //NULL TESTS
@@ -299,46 +252,6 @@ public class InterpreterTest {
         interpreterTest("data/input/project3/plus/invalid3.lisp", "data/expected/project3/plus/invalid3.txt");
     }
 
-
-
-    //QUOTE TESTS
-    @org.junit.Test
-    public void project3QuoteValidTest(){
-        interpreterTest("data/input/project3/quote/valid.lisp", "data/expected/project3/quote/valid.txt");
-    }
-
-    @org.junit.Test
-    public void project3QuoteInvalid1Test(){
-        interpreterTest("data/input/project3/quote/invalid1.lisp", "data/expected/project3/quote/invalid1.txt");
-    }
-
-    @org.junit.Test
-    public void project3QuoteInvalid2Test(){
-        interpreterTest("data/input/project3/quote/invalid2.lisp", "data/expected/project3/quote/invalid2.txt");
-    }
-
-
-
-    //TIMES TESTS
-    @org.junit.Test
-    public void project3TimesValidTest(){
-        interpreterTest("data/input/project3/times/valid.lisp", "data/expected/project3/times/valid.txt");
-    }
-
-    @org.junit.Test
-    public void project3TimesInvalid1Test(){
-        interpreterTest("data/input/project3/times/invalid1.lisp", "data/expected/project3/times/invalid1.txt");
-    }
-
-    @org.junit.Test
-    public void project3TimesInvalid2Test(){
-        interpreterTest("data/input/project3/times/invalid2.lisp", "data/expected/project3/times/invalid2.txt");
-    }
-
-    @org.junit.Test
-    public void project3TimesInvalid3Test(){
-        interpreterTest("data/input/project3/times/invalid3.lisp", "data/expected/project3/times/invalid3.txt");
-    }
 
 
 

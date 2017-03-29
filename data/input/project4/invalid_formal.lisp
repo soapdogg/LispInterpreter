@@ -1,2 +1,0 @@
-(DEFUN DIFF (X Y NIL)
-    12)

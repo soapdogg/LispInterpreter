@@ -1,1 +1,0 @@
-(GREATER NIL 23)

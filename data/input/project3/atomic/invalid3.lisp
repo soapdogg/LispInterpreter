@@ -1,1 +1,1 @@
-(GREATER 33 (PLUS (TIM 0) 0))
+(LESS 33 (PLUS (TIM 0) 0))

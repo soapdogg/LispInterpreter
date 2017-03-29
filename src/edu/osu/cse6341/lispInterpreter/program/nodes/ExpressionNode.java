@@ -23,16 +23,11 @@ public class ExpressionNode extends Node{
 		functionMap.put("CDR", new CdrFunction());
 		functionMap.put("COND", new CondFunction());
 		functionMap.put("CONS", new ConsFunction());
-		functionMap.put("DEFUN", new DefunFunction());
 		functionMap.put("EQ", new EqFunction());
-		functionMap.put("GREATER", new GreaterFunction());
 		functionMap.put("INT", new IntFunction());
 		functionMap.put("LESS", new LessFunction());
-		functionMap.put("MINUS", new MinusFunction());
 		functionMap.put("NULL", new NullFunction());
 		functionMap.put("PLUS", new PlusFunction());
-		functionMap.put("QUOTE", new QuoteFunction());
-		functionMap.put("TIMES", new TimesFunction());
 	}
 
 	public ExpressionNode(){}
