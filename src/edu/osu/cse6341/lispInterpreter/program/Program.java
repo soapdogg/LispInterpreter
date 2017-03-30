@@ -11,9 +11,14 @@ public class Program implements IPrettyPrintable{
         rootNode = new StartNode();
 	}
 
-	public void parse(Tokenizer tokenizer) throws Exception{
-		rootNode.parse(tokenizer);
-	}
+	public void parse(Tokenizer tokenizer) throws Exception {
+        rootNode.parse(tokenizer);
+    }
+
+    /*
+    public void typeCheck() throws Exception{
+	    rootNode.typeCheck();
+    }*/
 
 	public void evaluate() throws Exception{
 		rootNode.evaluate(true);
@@ -29,4 +34,8 @@ public class Program implements IPrettyPrintable{
 	    return rootNode.getDotNotationToString();
     }
 
+    @Override
+    public String getTypeToString(){
+        return rootNode.getTypeToString();
+    }
 }

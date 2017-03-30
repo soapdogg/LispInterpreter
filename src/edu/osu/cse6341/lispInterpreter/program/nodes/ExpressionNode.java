@@ -91,6 +91,11 @@ public class ExpressionNode extends Node{
         return isList() ? '(' + address.getDotNotationToString() + " . " + data.getDotNotationToString() + ')' : Node.NIL;
     }
 
+    @Override
+    public String getTypeToString(){
+        return type.toString();
+    }
+
     public int getLength(){
 		return isList() ? data.getLength() + 1 : 0;
 	}

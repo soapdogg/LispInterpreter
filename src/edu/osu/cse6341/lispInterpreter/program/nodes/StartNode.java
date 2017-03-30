@@ -28,7 +28,8 @@ public class StartNode implements IParsable, IEvaluatable, IPrettyPrintable{
         boolean isNotNumeric = !node.isNumeric();
         boolean isNotT = !node.getValue().equals("T");
         boolean isNotNil = !node.getValue().equals("NIL");
-        if(isNotList && isNotNumeric && isNotT && isNotNil) throw new Exception("Error! " + node.getValue() + " is not a valid atomic value!\n");
+        boolean isNotF = !Node.equalsF(node.getValue());
+        if(isNotList && isNotNumeric && isNotT && isNotNil && isNotF) throw new Exception("Error! " + node.getValue() + " is not a valid atomic value!\n");
         node = node.evaluate(false);
 		if(nextExpressionStartNode != null) nextExpressionStartNode.evaluate(true);
 		return null;
@@ -52,6 +53,17 @@ public class StartNode implements IParsable, IEvaluatable, IPrettyPrintable{
         result.append('\n');
         if(nextExpressionStartNode != null) result.append(nextExpressionStartNode.getDotNotationToString());
         return result.toString();
+    }
+
+    @Override
+    public String getTypeToString() {
+        StringBuilder sb = new StringBuilder();
+        if(node != null){
+            sb.append(node.getTypeToString());
+            sb.append('\n');
+        }
+        if(nextExpressionStartNode != null) sb.append(nextExpressionStartNode.getTypeToString());
+        return sb.toString();
     }
 
 }

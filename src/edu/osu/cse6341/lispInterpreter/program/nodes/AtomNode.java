@@ -40,6 +40,11 @@ public class AtomNode extends Node{
         return value;
     }
 
+    @Override
+    public String getTypeToString(){
+	    return type.toString();
+    }
+
 	@Override
 	public Node newInstance(){
 		return new AtomNode();
