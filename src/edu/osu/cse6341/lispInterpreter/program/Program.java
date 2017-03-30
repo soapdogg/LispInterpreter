@@ -15,10 +15,9 @@ public class Program implements IPrettyPrintable{
         rootNode.parse(tokenizer);
     }
 
-    /*
     public void typeCheck() throws Exception{
-	    rootNode.typeCheck();
-    }*/
+	    rootNode.typeCheck(false);
+    }
 
 	public void evaluate() throws Exception{
 		rootNode.evaluate(true);

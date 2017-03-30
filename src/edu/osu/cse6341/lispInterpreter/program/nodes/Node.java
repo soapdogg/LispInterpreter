@@ -3,6 +3,7 @@ package edu.osu.cse6341.lispInterpreter.program.nodes;
 import edu.osu.cse6341.lispInterpreter.program.IEvaluatable;
 import edu.osu.cse6341.lispInterpreter.program.IParsable;
 import edu.osu.cse6341.lispInterpreter.program.IPrettyPrintable;
+import edu.osu.cse6341.lispInterpreter.program.ITypeCheckable;
 import edu.osu.cse6341.lispInterpreter.program.types.IType;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
@@ -11,7 +12,7 @@ import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Node implements IParsable, IEvaluatable, IPrettyPrintable{
+public abstract class Node implements IParsable, IEvaluatable, IPrettyPrintable, ITypeCheckable{
 
     private static final Map<TokenKind, Node> tokenToNodeMap;
     static final String NIL;

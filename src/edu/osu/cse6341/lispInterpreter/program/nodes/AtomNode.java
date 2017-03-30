@@ -1,5 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes;
 
+import edu.osu.cse6341.lispInterpreter.program.types.*;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
 
@@ -24,6 +25,27 @@ public class AtomNode extends Node{
 		IToken token = tokenizer.getNextToken();
 		value = token.toString();
 	}
+
+	@Override
+    public IType typeCheck(boolean areLiteralsAllowed) throws Exception{
+        if(Node.equalsNil(value)) {
+            type = new ListType(0);
+            return type;
+        }
+        if(Node.equalsT(value)){
+            type = new TrueType();
+            return type;
+        }
+        if(Node.equalsF(value)) {
+            type = new FalseType();
+            return type;
+        }
+        if(isNumeric()){
+            type = new AnyNatType();
+            return type;
+        }
+        throw new Exception("ATOM TYPE CHECK: " + value );
+    }
 
 	@Override
 	public Node evaluate(boolean areLiteralsAllowed){

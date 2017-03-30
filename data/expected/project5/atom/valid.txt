@@ -1,4 +1,4 @@
-T
-T
-F
-T
+True
+True
+False
+True

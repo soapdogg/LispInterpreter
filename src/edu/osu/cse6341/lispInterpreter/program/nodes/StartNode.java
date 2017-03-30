@@ -3,10 +3,12 @@ package edu.osu.cse6341.lispInterpreter.program.nodes;
 import edu.osu.cse6341.lispInterpreter.program.IEvaluatable;
 import edu.osu.cse6341.lispInterpreter.program.IParsable;
 import edu.osu.cse6341.lispInterpreter.program.IPrettyPrintable;
+import edu.osu.cse6341.lispInterpreter.program.ITypeCheckable;
+import edu.osu.cse6341.lispInterpreter.program.types.IType;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 
-public class StartNode implements IParsable, IEvaluatable, IPrettyPrintable{
+public class StartNode implements IParsable, IEvaluatable, IPrettyPrintable, ITypeCheckable{
     private Node node;
 	private StartNode nextExpressionStartNode;
 
@@ -20,6 +22,20 @@ public class StartNode implements IParsable, IEvaluatable, IPrettyPrintable{
 		if(tokenizer.getCurrent().getTokenKind() == TokenKind.EOF_TOKEN) return;
 		nextExpressionStartNode = new StartNode();
 		nextExpressionStartNode.parse(tokenizer);
+    }
+
+    @Override
+    public IType typeCheck(boolean areLiteralsAllowed) throws Exception{
+        boolean isNotList = !node.isList();
+        boolean isNotNumeric = !node.isNumeric();
+        boolean isNotT = !Node.equalsT(node.getValue());
+        boolean isNotNil = !Node.equalsNil(node.getValue());
+        boolean isNotF = !Node.equalsF(node.getValue());
+        if(isNotList && isNotNumeric && isNotT && isNotNil && isNotF) throw new Exception("Error! " + node.getValue() + " is not a valid atomic value!\n");
+        IType type  = node.typeCheck(areLiteralsAllowed);
+        System.out.println(type.toString());
+        if(nextExpressionStartNode != null) nextExpressionStartNode.typeCheck(areLiteralsAllowed);
+        return null;
     }
 
 	@Override

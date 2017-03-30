@@ -3,6 +3,7 @@ package edu.osu.cse6341.lispInterpreter.program.nodes;
 import java.util.Map;
 import java.util.HashMap;
 
+import edu.osu.cse6341.lispInterpreter.program.types.IType;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 import edu.osu.cse6341.lispInterpreter.program.nodes.functions.*;
@@ -46,6 +47,11 @@ public class ExpressionNode extends Node{
         data = new ExpressionNode();
         data.parse(tokenizer);
 	}
+
+	@Override
+    public IType typeCheck(boolean areLiteralsAllowed) {
+        return null;
+    }
 
 	@Override
 	public Node evaluate(boolean areLiteralsAllowed) throws Exception{
