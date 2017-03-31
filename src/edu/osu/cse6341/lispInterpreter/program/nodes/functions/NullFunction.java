@@ -3,6 +3,7 @@ package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
+import edu.osu.cse6341.lispInterpreter.program.types.IType;
 
 public class NullFunction extends BaseFunction {
 
@@ -19,6 +20,11 @@ public class NullFunction extends BaseFunction {
         boolean result = Node.equalsNil(evaluatedResult.getValue());
 		return new AtomNode(result);
 	}
+
+    @Override
+    public IType typeCheck() throws Exception {
+        return null;
+    }
 
     @Override
 	public BaseFunction newInstance(Node params){

@@ -2,6 +2,7 @@ package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
+import edu.osu.cse6341.lispInterpreter.program.types.IType;
 
 public abstract class BaseFunction {
 
@@ -14,6 +15,7 @@ public abstract class BaseFunction {
     }
 
     public abstract Node evaluate() throws Exception;
+    public abstract IType typeCheck() throws Exception;
     public abstract BaseFunction newInstance(Node node);
     abstract String getFunctionName();
     abstract int getExpectedLength();

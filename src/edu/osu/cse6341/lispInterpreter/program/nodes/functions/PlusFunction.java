@@ -3,6 +3,7 @@ package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
+import edu.osu.cse6341.lispInterpreter.program.types.IType;
 
 public class PlusFunction extends BaseFunction {
 
@@ -21,6 +22,11 @@ public class PlusFunction extends BaseFunction {
         int result = leftValue + rightValue;
 		return new AtomNode(result);
 	}
+
+    @Override
+    public IType typeCheck() throws Exception {
+        return null;
+    }
 
     @Override
 	public BaseFunction newInstance(Node params){

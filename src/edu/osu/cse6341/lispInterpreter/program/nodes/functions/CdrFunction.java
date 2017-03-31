@@ -2,6 +2,7 @@ package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
+import edu.osu.cse6341.lispInterpreter.program.types.IType;
 
 public class CdrFunction extends BaseFunction {
 
@@ -17,6 +18,11 @@ public class CdrFunction extends BaseFunction {
         ExpressionNode node = getListValue(((ExpressionNode)params).getAddress().evaluate(false), false);
         return node.getData();
 	}
+
+    @Override
+    public IType typeCheck() throws Exception {
+        return null;
+    }
 
     @Override
 	public BaseFunction newInstance(Node params){

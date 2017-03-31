@@ -2,6 +2,7 @@ package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
+import edu.osu.cse6341.lispInterpreter.program.types.IType;
 
 public class IntFunction extends BaseFunction {
 
@@ -18,6 +19,11 @@ public class IntFunction extends BaseFunction {
 		boolean result = evaluatedResult.isNumeric();
 		return new AtomNode(result);
 	}
+
+    @Override
+    public IType typeCheck() throws Exception {
+        return null;
+    }
 
     @Override
 	public BaseFunction newInstance(Node params){

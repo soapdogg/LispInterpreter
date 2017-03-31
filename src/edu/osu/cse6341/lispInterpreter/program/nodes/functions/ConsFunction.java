@@ -3,6 +3,7 @@ package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
+import edu.osu.cse6341.lispInterpreter.program.types.IType;
 
 public class ConsFunction extends BaseFunction {
 
@@ -21,6 +22,11 @@ public class ConsFunction extends BaseFunction {
         rightSide = getListValue(rightSide.getAddress().evaluate(false), true);
         return new ExpressionNode(leftSide,rightSide);
 	}
+
+    @Override
+    public IType typeCheck() throws Exception {
+        return null;
+    }
 
     @Override
 	public BaseFunction newInstance(Node params){
