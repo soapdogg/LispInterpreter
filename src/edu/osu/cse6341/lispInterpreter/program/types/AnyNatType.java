@@ -7,6 +7,17 @@ public class AnyNatType implements IType{
         return "AnyNat";
     }
 
+
+    @Override
+    public boolean equals(Object o){
+        return o instanceof AnyNatType;
+    }
+
+    @Override
+    public int hashCode(){
+        return 2;
+    }
+
     @Override
     public int getLength() {
         return 0;

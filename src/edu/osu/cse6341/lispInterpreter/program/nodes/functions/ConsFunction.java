@@ -3,7 +3,9 @@ package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
+import edu.osu.cse6341.lispInterpreter.program.types.AnyNatType;
 import edu.osu.cse6341.lispInterpreter.program.types.IType;
+import edu.osu.cse6341.lispInterpreter.program.types.ListType;
 
 public class ConsFunction extends BaseFunction {
 
@@ -25,7 +27,13 @@ public class ConsFunction extends BaseFunction {
 
     @Override
     public IType typeCheck() throws Exception {
-        return null;
+        assertLengthIsAsExpected(params.getLength());
+        IType paramsType = params.typeCheck();
+        assertTypeIsCorrectError(1, new AnyNatType(), paramsType);
+        ExpressionNode rightParams = (ExpressionNode) ((ExpressionNode)params).getData();
+        IType rightParamType = rightParams.typeCheck();
+        assertTypeIsCorrectError(2, new ListType(0), rightParamType);
+        return new ListType(rightParamType.getLength()+1);
     }
 
     @Override

@@ -4,4 +4,6 @@ public interface IType {
     String toString();
 
     int getLength();
+
+    boolean equals(Object o);
 }

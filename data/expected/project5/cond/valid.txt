@@ -1,5 +1,3 @@
-78
-23
-2
-12
-34
+AnyNat
+AnyNat
+AnyNat

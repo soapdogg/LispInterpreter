@@ -2,7 +2,10 @@ package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
+import edu.osu.cse6341.lispInterpreter.program.types.AnyNatType;
+import edu.osu.cse6341.lispInterpreter.program.types.FalseType;
 import edu.osu.cse6341.lispInterpreter.program.types.IType;
+import edu.osu.cse6341.lispInterpreter.program.types.TrueType;
 
 public class IntFunction extends BaseFunction {
 
@@ -22,7 +25,9 @@ public class IntFunction extends BaseFunction {
 
     @Override
     public IType typeCheck() throws Exception {
-        return null;
+        assertLengthIsAsExpected(params.getLength());
+        IType paramType = params.typeCheck();
+	    return paramType.equals(new AnyNatType()) ? new TrueType() : new FalseType();
     }
 
     @Override

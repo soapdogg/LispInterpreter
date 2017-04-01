@@ -25,16 +25,17 @@ public class StartNode implements IParsable, IEvaluatable, IPrettyPrintable, ITy
     }
 
     @Override
-    public IType typeCheck(boolean areLiteralsAllowed) throws Exception{
+    public IType typeCheck() throws Exception{
         boolean isNotList = !node.isList();
         boolean isNotNumeric = !node.isNumeric();
         boolean isNotT = !Node.equalsT(node.getValue());
         boolean isNotNil = !Node.equalsNil(node.getValue());
         boolean isNotF = !Node.equalsF(node.getValue());
-        if(isNotList && isNotNumeric && isNotT && isNotNil && isNotF) throw new Exception("Error! " + node.getValue() + " is not a valid atomic value!\n");
-        IType type  = node.typeCheck(areLiteralsAllowed);
-        System.out.println(type.toString());
-        if(nextExpressionStartNode != null) nextExpressionStartNode.typeCheck(areLiteralsAllowed);
+        if(!isNotList && ((ExpressionNode)node).getAddress().isNumeric()) throw new Exception("TYPE ERROR: Expected CAR of list to be function, not numeric.    Actual: "
+                + ((ExpressionNode)node).getAddress().getValue() +"\n");
+        if(isNotList && isNotNumeric && isNotT && isNotNil && isNotF) throw new Exception("TYPE ERROR: " + node.getValue() + " is not a valid atomic value!\n");
+        node.typeCheck();
+        if(nextExpressionStartNode != null) nextExpressionStartNode.typeCheck();
         return null;
     }
 

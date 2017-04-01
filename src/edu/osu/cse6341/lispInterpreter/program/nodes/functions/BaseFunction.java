@@ -3,6 +3,9 @@ package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.types.IType;
+import edu.osu.cse6341.lispInterpreter.program.types.ListType;
+
+import java.util.concurrent.ExecutionException;
 
 public abstract class BaseFunction {
 
@@ -59,5 +62,20 @@ public abstract class BaseFunction {
                     '\n';
             throw new Exception(sb);
         }
+    }
+
+    void assertTypeIsCorrectError(int position, IType expected, IType actual) throws Exception{
+        if(!expected.equals(actual)){
+            throw new Exception("TYPE ERROR: Expected type: " + expected.toString()
+                    + " at position [" + position
+                    +  "] of " + getFunctionName()
+                    + " function.    Actual: " + actual.toString() + "\n");
+        }
+    }
+
+    void assertListIsNotEmpty(int position, IType listType) throws Exception{
+        if(listType.getLength() == 0) throw new Exception("EMPTY LIST ERROR: Expected list at position [" + position
+                + "] of " + getFunctionName()
+                + " function to be non-empty\n");
     }
 }

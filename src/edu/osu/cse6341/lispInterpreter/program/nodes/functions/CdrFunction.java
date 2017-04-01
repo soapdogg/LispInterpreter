@@ -3,6 +3,7 @@ package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.types.IType;
+import edu.osu.cse6341.lispInterpreter.program.types.ListType;
 
 public class CdrFunction extends BaseFunction {
 
@@ -21,7 +22,11 @@ public class CdrFunction extends BaseFunction {
 
     @Override
     public IType typeCheck() throws Exception {
-        return null;
+        assertLengthIsAsExpected(params.getLength());
+        IType paramsType = params.typeCheck();
+        assertTypeIsCorrectError(1, new ListType(1), paramsType);
+        assertListIsNotEmpty(1, paramsType);
+        return new ListType(paramsType.getLength()-1);
     }
 
     @Override

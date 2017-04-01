@@ -16,7 +16,7 @@ public class Program implements IPrettyPrintable{
     }
 
     public void typeCheck() throws Exception{
-	    rootNode.typeCheck(false);
+	    rootNode.typeCheck();
     }
 
 	public void evaluate() throws Exception{

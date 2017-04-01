@@ -27,7 +27,7 @@ public class AtomNode extends Node{
 	}
 
 	@Override
-    public IType typeCheck(boolean areLiteralsAllowed) throws Exception{
+    public IType typeCheck() throws Exception{
         if(Node.equalsNil(value)) {
             type = new ListType(0);
             return type;
@@ -44,7 +44,7 @@ public class AtomNode extends Node{
             type = new AnyNatType();
             return type;
         }
-        throw new Exception("ATOM TYPE CHECK: " + value );
+        throw new Exception("TYPE ERROR: " + value + " is not a valid atomic value!\n");
     }
 
 	@Override

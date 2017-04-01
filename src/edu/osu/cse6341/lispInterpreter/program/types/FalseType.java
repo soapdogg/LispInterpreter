@@ -8,6 +8,16 @@ public class FalseType implements IType{
     }
 
     @Override
+    public boolean equals(Object o){
+        return o instanceof FalseType;
+    }
+
+    @Override
+    public int hashCode(){
+        return 3;
+    }
+
+    @Override
     public int getLength() {
         return 0;
     }

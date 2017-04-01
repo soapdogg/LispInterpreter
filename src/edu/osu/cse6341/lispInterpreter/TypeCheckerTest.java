@@ -139,6 +139,11 @@ public class TypeCheckerTest {
         typeCheckerTest("data/input/project3/cond/invalid4.lisp", "data/expected/project5/cond/invalid4.txt");
     }
 
+    @org.junit.Test
+    public void project5CondInvalid5Test(){
+        typeCheckerTest("data/input/project3/cond/invalid5.lisp", "data/expected/project5/cond/invalid5.txt");
+    }
+
 
 
     //CONS TESTS

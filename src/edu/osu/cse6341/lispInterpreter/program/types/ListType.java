@@ -14,7 +14,17 @@ public class ListType implements IType {
     }
 
     @Override
+    public boolean equals(Object o){
+        return o instanceof ListType;
+    }
+
+    @Override
+    public int hashCode(){
+        return 4;
+    }
+
+    @Override
     public int getLength() {
-        return 0;
+        return length;
     }
 }

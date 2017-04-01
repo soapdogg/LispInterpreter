@@ -1,1 +1,1 @@
-Error! Parameter at position: 2 of function PLUS is not numeric!    Actual: (34)
+TYPE ERROR: Expected type: AnyNat at position [2] of PLUS function.    Actual: List[>=1]

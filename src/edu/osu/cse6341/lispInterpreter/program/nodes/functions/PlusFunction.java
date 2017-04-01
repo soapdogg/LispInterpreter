@@ -3,6 +3,7 @@ package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
+import edu.osu.cse6341.lispInterpreter.program.types.AnyNatType;
 import edu.osu.cse6341.lispInterpreter.program.types.IType;
 
 public class PlusFunction extends BaseFunction {
@@ -25,7 +26,13 @@ public class PlusFunction extends BaseFunction {
 
     @Override
     public IType typeCheck() throws Exception {
-        return null;
+        assertLengthIsAsExpected(params.getLength());
+        IType paramsType = params.typeCheck();
+        assertTypeIsCorrectError(1, new AnyNatType(), paramsType);
+        Node right = ((ExpressionNode)params).getData();
+        IType rightType = right.typeCheck();
+        assertTypeIsCorrectError(2, new AnyNatType(), rightType);
+        return new AnyNatType();
     }
 
     @Override

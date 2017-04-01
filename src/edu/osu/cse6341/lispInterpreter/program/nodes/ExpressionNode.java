@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 import edu.osu.cse6341.lispInterpreter.program.types.IType;
+import edu.osu.cse6341.lispInterpreter.program.types.ListType;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 import edu.osu.cse6341.lispInterpreter.program.nodes.functions.*;
@@ -49,14 +50,16 @@ public class ExpressionNode extends Node{
 	}
 
 	@Override
-    public IType typeCheck(boolean areLiteralsAllowed) {
-        return null;
+    public IType typeCheck() throws Exception{
+	    if(this.address == null) return new ListType(0);
+	    String addressValue = this.address.getValue();
+	    if(functionMap.containsKey(addressValue)) return typeCheckBuiltInFunction(addressValue);
+        return this.address.typeCheck();
     }
 
 	@Override
 	public Node evaluate(boolean areLiteralsAllowed) throws Exception{
 	    if(this.address == null) return new AtomNode();
-
 	    String addressValue = this.address.getValue();
         if(functionMap.containsKey(addressValue)) return executeBuiltInFunction(addressValue);
         if(!areLiteralsAllowed) throw new Exception("Error! Invalid CAR value: " + addressValue + '\n');
@@ -113,6 +116,13 @@ public class ExpressionNode extends Node{
 	public Node getAddress(){
 	    return address;
 	}
+
+	private IType typeCheckBuiltInFunction(String functionName) throws Exception{
+        BaseFunction function = functionMap.get(functionName);
+        function = function.newInstance(data);
+        type = function.typeCheck();
+        return type;
+    }
 
 	private Node executeBuiltInFunction(String functionName) throws Exception{
         BaseFunction function = functionMap.get(functionName);

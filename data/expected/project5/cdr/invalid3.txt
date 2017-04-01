@@ -1,1 +1,1 @@
-Error! Parameter of CDR is not a list.    Actual: T
+TYPE ERROR: Expected type: List[>=1] at position [1] of CDR function.    Actual: True

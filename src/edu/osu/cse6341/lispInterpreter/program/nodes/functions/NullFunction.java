@@ -3,7 +3,7 @@ package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
-import edu.osu.cse6341.lispInterpreter.program.types.IType;
+import edu.osu.cse6341.lispInterpreter.program.types.*;
 
 public class NullFunction extends BaseFunction {
 
@@ -23,7 +23,10 @@ public class NullFunction extends BaseFunction {
 
     @Override
     public IType typeCheck() throws Exception {
-        return null;
+        assertLengthIsAsExpected(params.getLength());
+        IType paramType = params.typeCheck();
+        assertTypeIsCorrectError(1, new ListType(0), paramType);
+        return paramType.getLength() == 0 ? new AnyBoolType() : new FalseType();
     }
 
     @Override

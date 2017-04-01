@@ -1,1 +1,1 @@
-Error! Invalid CAR value: BILL
+TYPE ERROR: BILL is not a valid atomic value!

@@ -8,6 +8,16 @@ public class TrueType implements IType {
     }
 
     @Override
+    public boolean equals(Object o){
+        return o instanceof TrueType;
+    }
+
+    @Override
+    public int hashCode(){
+        return 5;
+    }
+
+    @Override
     public int getLength(){
         return 0;
     }
