@@ -144,7 +144,15 @@ public class InterpreterTest {
         interpreterTest("data/input/project3/cond/invalid5.lisp", "data/expected/project3/cond/invalid5.txt");
     }
 
+    @org.junit.Test
+    public void project3CondInvalid6Test(){
+        interpreterTest("data/input/project3/cond/invalid6.lisp", "data/expected/project3/cond/invalid6.txt");
+    }
 
+    @org.junit.Test
+    public void project5CarInvalid6Test(){
+       interpreterTest("data/input/project3/car/invalid6.lisp", "data/expected/project3/car/invalid6.txt");
+    }
 
     //CONS TESTS
     @org.junit.Test

@@ -84,6 +84,11 @@ public class TypeCheckerTest {
         typeCheckerTest("data/input/project3/car/invalid5.lisp", "data/expected/project5/car/invalid5.txt");
     }
 
+    @org.junit.Test
+    public void project5CarInvalid6Test(){
+        typeCheckerTest("data/input/project3/car/invalid6.lisp", "data/expected/project5/car/invalid6.txt");
+    }
+
 
 
     //CDR TESTS
@@ -144,6 +149,10 @@ public class TypeCheckerTest {
         typeCheckerTest("data/input/project3/cond/invalid5.lisp", "data/expected/project5/cond/invalid5.txt");
     }
 
+    @org.junit.Test
+    public void project3CondInvalid6Test(){
+        typeCheckerTest("data/input/project3/cond/invalid6.lisp", "data/expected/project5/cond/invalid6.txt");
+    }
 
 
     //CONS TESTS
