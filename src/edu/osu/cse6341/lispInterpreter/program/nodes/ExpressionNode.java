@@ -58,12 +58,10 @@ public class ExpressionNode extends Node{
     }
 
 	@Override
-	public Node evaluate(boolean areLiteralsAllowed) throws Exception{
-	    if(this.address == null) return new AtomNode();
+	public Node evaluate() throws Exception{
 	    String addressValue = this.address.getValue();
         if(functionMap.containsKey(addressValue)) return executeBuiltInFunction(addressValue);
-        if(!areLiteralsAllowed) throw new Exception("Error! Invalid CAR value: " + addressValue + '\n');
-        return this.address.evaluate(true);
+        return this.address.evaluate();
 	}
 
 	@Override

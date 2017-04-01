@@ -17,8 +17,7 @@ public class IntFunction extends BaseFunction {
 
     @Override
 	public Node evaluate() throws Exception{
-        assertLengthIsAsExpected(params.getLength());
-        Node evaluatedResult = params.evaluate(true);
+        Node evaluatedResult = params.evaluate();
 		boolean result = evaluatedResult.isNumeric();
 		return new AtomNode(result);
 	}

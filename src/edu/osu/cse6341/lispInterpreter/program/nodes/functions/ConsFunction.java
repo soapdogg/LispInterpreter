@@ -17,11 +17,10 @@ public class ConsFunction extends BaseFunction {
 
     @Override
 	public Node evaluate() throws Exception{
-        assertLengthIsAsExpected(params.getLength());
-        int leftValue = getNumericValue(params.evaluate(true), 1);
+        int leftValue = getNumericValue(params.evaluate());
         AtomNode leftSide = new AtomNode(leftValue);
         ExpressionNode rightSide = (ExpressionNode) ((ExpressionNode)params).getData();
-        rightSide = getListValue(rightSide.getAddress().evaluate(false), true);
+        rightSide = getListValue(rightSide.getAddress().evaluate());
         return new ExpressionNode(leftSide,rightSide);
 	}
 

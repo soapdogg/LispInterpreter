@@ -14,8 +14,7 @@ public class AtomFunction extends BaseFunction {
 
     @Override
 	public Node evaluate() throws Exception{
-        assertLengthIsAsExpected(params.getLength());
-	    Node evaluatedResult = params.evaluate(true);
+	    Node evaluatedResult = params.evaluate();
 	    boolean result = !evaluatedResult.isList();
 	    return new AtomNode(result);
 	}

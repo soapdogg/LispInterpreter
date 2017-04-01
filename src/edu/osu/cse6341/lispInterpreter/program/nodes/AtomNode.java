@@ -48,7 +48,7 @@ public class AtomNode extends Node{
     }
 
 	@Override
-	public Node evaluate(boolean areLiteralsAllowed){
+	public Node evaluate(){
         return this;
 	}
 

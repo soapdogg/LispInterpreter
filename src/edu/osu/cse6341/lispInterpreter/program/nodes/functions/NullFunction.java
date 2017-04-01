@@ -15,8 +15,7 @@ public class NullFunction extends BaseFunction {
 
     @Override
 	public Node evaluate() throws Exception{
-        assertLengthIsAsExpected(params.getLength());
-        ExpressionNode evaluatedResult = getListValue(params.evaluate(true), true);
+        ExpressionNode evaluatedResult = getListValue(params.evaluate());
         boolean result = Node.equalsNil(evaluatedResult.getValue());
 		return new AtomNode(result);
 	}

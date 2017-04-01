@@ -20,7 +20,7 @@ public class Program implements IPrettyPrintable{
     }
 
 	public void evaluate() throws Exception{
-		rootNode.evaluate(true);
+		rootNode.evaluate();
 	}
 
 	@Override

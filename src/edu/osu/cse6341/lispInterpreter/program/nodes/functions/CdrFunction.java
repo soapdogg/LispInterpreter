@@ -15,8 +15,7 @@ public class CdrFunction extends BaseFunction {
 
     @Override
 	public Node evaluate() throws Exception{
-        assertLengthIsAsExpected(params.getLength());
-        ExpressionNode node = getListValue(((ExpressionNode)params).getAddress().evaluate(false), false);
+        ExpressionNode node = getListValue(((ExpressionNode)params).getAddress().evaluate());
         return node.getData();
 	}
 
@@ -25,7 +24,7 @@ public class CdrFunction extends BaseFunction {
         assertLengthIsAsExpected(params.getLength());
         IType paramsType = params.typeCheck();
         assertTypeIsCorrectError(1, new ListType(1), paramsType);
-        assertListIsNotEmpty(1, paramsType);
+        assertListIsNotEmpty(paramsType);
         return new ListType(paramsType.getLength()-1);
     }
 

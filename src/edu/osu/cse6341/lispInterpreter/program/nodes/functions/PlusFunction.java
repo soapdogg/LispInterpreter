@@ -16,10 +16,9 @@ public class PlusFunction extends BaseFunction {
 
     @Override
 	public Node evaluate() throws Exception{
-        assertLengthIsAsExpected(params.getLength());
         Node right = ((ExpressionNode)params).getData();
-        int leftValue = getNumericValue(params.evaluate(true), 1);
-        int rightValue = getNumericValue(right.evaluate(true), 2);
+        int leftValue = getNumericValue(params.evaluate());
+        int rightValue = getNumericValue(right.evaluate());
         int result = leftValue + rightValue;
 		return new AtomNode(result);
 	}
