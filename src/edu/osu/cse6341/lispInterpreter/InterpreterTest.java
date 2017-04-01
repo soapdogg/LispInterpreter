@@ -139,6 +139,11 @@ public class InterpreterTest {
         interpreterTest("data/input/project3/cond/invalid4.lisp", "data/expected/project3/cond/invalid4.txt");
     }
 
+    @org.junit.Test
+    public void project3CondInvalid5Test(){
+        interpreterTest("data/input/project3/cond/invalid5.lisp", "data/expected/project3/cond/invalid5.txt");
+    }
+
 
 
     //CONS TESTS

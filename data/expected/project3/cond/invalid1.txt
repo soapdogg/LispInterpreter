@@ -1,1 +1,1 @@
-Error! None of the conditions in the COND function evaluated to true.
+EMPTY LIST ERROR: Expected list of conditions of COND function to be non-empty.

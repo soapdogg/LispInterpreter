@@ -1,1 +1,1 @@
-Error! Parameter of CAR is not a list.    Actual: 23
+TYPE ERROR: Expected type: List[>=1] at position [1] of CAR function.    Actual: AnyNat

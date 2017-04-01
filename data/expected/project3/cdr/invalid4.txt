@@ -1,1 +1,1 @@
-Error! Empty list not allowed as parameter of CDR
+EMPTY LIST ERROR: Expected list at position [1] of CDR function to be non-empty

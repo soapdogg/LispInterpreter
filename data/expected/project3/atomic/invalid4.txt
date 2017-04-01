@@ -1,1 +1,1 @@
-Error! Invalid CAR value: 1
+TYPE ERROR: Expected CAR of list to be function, not numeric.    Actual: 1

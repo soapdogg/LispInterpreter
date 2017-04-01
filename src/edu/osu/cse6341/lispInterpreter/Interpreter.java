@@ -25,18 +25,15 @@ public final class Interpreter{
 
     void interpret() throws Exception{
 		Scanner scanner = new Scanner(System.in);
-		interpret(scanner, false, false, true, true);
+		interpret(scanner, false, true, true);
 	}
 
-	private void interpret(Scanner in, boolean shouldBeProcessed, boolean shouldStopAfterParsing, boolean shouldTypeCheck, boolean shouldBeEvaluated) throws Exception{
+	private void interpret(Scanner in, boolean shouldBeProcessed, boolean shouldTypeCheck, boolean shouldBeEvaluated) throws Exception{
 	    tokenize(in);
 	    if(shouldBeProcessed) processTokens();
 	    else program.parse(tokenizer);
-	    if(shouldStopAfterParsing) return;
 	    if (shouldTypeCheck) program.typeCheck();
-        if (shouldBeEvaluated) {
-            program.evaluate();
-        }
+        if (shouldBeEvaluated) program.evaluate();
     }
 
 	private void tokenize(Scanner in){
@@ -65,25 +62,25 @@ public final class Interpreter{
 
 	String testInterpreter(String programFilePath) throws Exception{
         Scanner in = getScannerFromFilePath(programFilePath);
-	    interpret(in, false, false, false, true);
+	    interpret(in, false, true, true);
 		return getValue();
 	}
 
 	String testParser(String programFilePath) throws Exception{
 	    Scanner in = getScannerFromFilePath(programFilePath);
-	    interpret(in, false, true, false, false);
+	    interpret(in, false, false, false);
 	    return getDotNotation();
     }
 
 	String testTokenizer(String programFilePath) throws Exception{
         Scanner in = getScannerFromFilePath(programFilePath);
-        interpret(in, true, true, false, false);
+        interpret(in, true, false, false);
         return getTokenizedResults();
     }
 
     String testTypeChecker(String programFilePath) throws Exception{
 	    Scanner in = getScannerFromFilePath(programFilePath);
-	    interpret(in, false, false, true, false);
+	    interpret(in, false, true, false);
 	    return getType();
     }
 
