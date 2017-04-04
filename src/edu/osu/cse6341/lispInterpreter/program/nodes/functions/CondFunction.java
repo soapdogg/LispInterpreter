@@ -38,7 +38,7 @@ public class CondFunction extends BaseFunction {
             if(!Node.equalsF(booleanResult.getValue()))
                 return parameter.getData().evaluate();
         }
-        throw new Exception("Error! None of the conditions in the COND function evaluated to true.\n");
+        throw new Exception("RUNTIME ERROR: None of the conditions in the COND function evaluated to true.\n");
 	}
 
     @Override
@@ -66,7 +66,7 @@ public class CondFunction extends BaseFunction {
 
     private void assertParameterIsBooleanType(IType type, int conditionNumber) throws Exception{
         if(type.equals(new ListType(0)) || type.equals(new AnyNatType()))
-            throw new Exception("Expected Bool type in COND function, condition number: " + conditionNumber + ".    Actual: " + type.toString() + "\n");
+            throw new Exception("TYPE ERROR: Expected Bool type in COND function, condition number: " + conditionNumber + ".    Actual: " + type.toString() + "\n");
     }
 
     @Override

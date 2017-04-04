@@ -1,1 +1,1 @@
-Expected Bool type in COND function, condition number: 1.    Actual: AnyNat
+TYPE ERROR: Expected Bool type in COND function, condition number: 1.    Actual: AnyNat
