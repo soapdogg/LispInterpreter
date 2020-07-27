@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CondFunction extends BaseFunction implements LispFunction {
+public class CondFunction implements LispFunction {
 
     private final FunctionLengthAsserter functionLengthAsserter;
     private final ListValueRetriever listValueRetriever;

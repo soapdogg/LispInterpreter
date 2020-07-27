@@ -6,7 +6,7 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.nodes.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.program.nodes.functions.valueretriver.AtomicValueRetriever;
 
-public class EqFunction extends BaseFunction implements LispFunction {
+public class EqFunction implements LispFunction {
 
     private final FunctionLengthAsserter functionLengthAsserter;
     private final AtomicValueRetriever atomicValueRetriever;

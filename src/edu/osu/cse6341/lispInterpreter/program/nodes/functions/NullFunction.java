@@ -4,7 +4,7 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.nodes.asserter.FunctionLengthAsserter;
 
-public class NullFunction extends BaseFunction implements LispFunction {
+public class NullFunction implements LispFunction {
 
     private final FunctionLengthAsserter functionLengthAsserter;
 

@@ -4,7 +4,7 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.nodes.asserter.FunctionLengthAsserter;
 
-public class QuoteFunction extends BaseFunction implements LispFunction {
+public class QuoteFunction implements LispFunction {
 
     private final FunctionLengthAsserter functionLengthAsserter;
 
