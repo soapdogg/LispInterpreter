@@ -18,25 +18,24 @@ public class ConsFunction extends BaseFunction implements LispFunction {
     }
 
     @Override
-	public Node evaluate() throws Exception{
-        functionLengthAsserter.assertLengthIsAsExpected(
-            getFunctionName(),
-            expectedParameterLength(),
-            params.getLength()
-        );
-        ExpressionNode rightSide = (ExpressionNode) ((ExpressionNode)params).getData();
-        return new ExpressionNode(((ExpressionNode) params).getAddress().evaluate(false), rightSide.getAddress().evaluate(
-                false));
-	}
-
-    @Override
     String getFunctionName() {
         return "CONS";
     }
 
     @Override
     public Node evaluateLispFunction() throws Exception {
-        return evaluate();
+        functionLengthAsserter.assertLengthIsAsExpected(
+            getFunctionName(),
+            expectedParameterLength(),
+            params.getLength()
+        );
+        ExpressionNode rightSide = (ExpressionNode) ((ExpressionNode)params).getData();
+        return new ExpressionNode(
+            ((ExpressionNode) params).getAddress().evaluate(false),
+            rightSide.getAddress().evaluate(
+            false
+            )
+        );
     }
 
     @Override

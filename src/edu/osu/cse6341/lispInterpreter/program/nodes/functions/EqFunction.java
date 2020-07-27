@@ -19,7 +19,12 @@ public class EqFunction extends BaseFunction implements LispFunction {
 	}
 
     @Override
-	public Node evaluate() throws Exception{
+    String getFunctionName() {
+        return "EQ";
+    }
+
+    @Override
+    public Node evaluateLispFunction() throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             getFunctionName(),
             expectedParameterLength(),
@@ -29,17 +34,7 @@ public class EqFunction extends BaseFunction implements LispFunction {
         String leftValue = getAtomicValue(params.evaluate(true), 1);
         String rightValue = getAtomicValue(right.evaluate(true), 2);
         boolean result = leftValue.equals(rightValue);
-		return new AtomNode(result);
-	}
-
-    @Override
-    String getFunctionName() {
-        return "EQ";
-    }
-
-    @Override
-    public Node evaluateLispFunction() throws Exception {
-        return evaluate();
+        return new AtomNode(result);
     }
 
     @Override

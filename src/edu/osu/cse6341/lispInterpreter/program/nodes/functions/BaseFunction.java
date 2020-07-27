@@ -14,7 +14,6 @@ public abstract class BaseFunction {
         this.params = params;
     }
 
-    public abstract Node evaluate() throws Exception;
     abstract String getFunctionName();
 
     int getNumericValue(Node node, int position) throws Exception{

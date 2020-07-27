@@ -18,25 +18,20 @@ public class IntFunction extends BaseFunction implements LispFunction {
 	}
 
     @Override
-	public Node evaluate() throws Exception{
-        functionLengthAsserter.assertLengthIsAsExpected(
-            getFunctionName(),
-            expectedParameterLength(),
-            params.getLength()
-        );
-        Node evaluatedResult = params.evaluate(true);
-		boolean result = evaluatedResult.isNumeric();
-		return new AtomNode(result);
-	}
-
-    @Override
     String getFunctionName() {
         return "INT";
     }
 
     @Override
     public Node evaluateLispFunction() throws Exception {
-        return evaluate();
+        functionLengthAsserter.assertLengthIsAsExpected(
+            getFunctionName(),
+            expectedParameterLength(),
+            params.getLength()
+        );
+        Node evaluatedResult = params.evaluate(true);
+        boolean result = evaluatedResult.isNumeric();
+        return new AtomNode(result);
     }
 
     @Override

@@ -22,7 +22,12 @@ public class CondFunction extends BaseFunction implements LispFunction {
     }
 
     @Override
-	public Node evaluate() throws Exception{
+    String getFunctionName() {
+        return "COND";
+    }
+
+    @Override
+    public Node evaluateLispFunction() throws Exception {
         List<ExpressionNode> parameters = new ArrayList<>();
         while(params.isList()){
             ExpressionNode expressionParams = (ExpressionNode)params;
@@ -36,23 +41,13 @@ public class CondFunction extends BaseFunction implements LispFunction {
             parameters.add(parameter);
             params = expressionParams.getData();
         }
-	    for(ExpressionNode parameter: parameters){
+        for(ExpressionNode parameter: parameters){
             Node booleanResult = parameter.getAddress().evaluate(true);
 
             if(!Node.equalsNil(booleanResult.getValue()))
                 return parameter.getData().evaluate(true);
         }
         throw new Exception("Error! None of the conditions in the COND function evaluated to true.\n");
-	}
-
-    @Override
-    String getFunctionName() {
-        return "COND";
-    }
-
-    @Override
-    public Node evaluateLispFunction() throws Exception {
-        return evaluate();
     }
 
     @Override

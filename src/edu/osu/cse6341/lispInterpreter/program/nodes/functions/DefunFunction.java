@@ -48,31 +48,6 @@ public class DefunFunction extends BaseFunction implements LispFunction {
     }
 
     @Override
-    public Node evaluate() throws Exception {
-        functionLengthAsserter.assertLengthIsAsExpected(
-            getFunctionName(),
-            expectedParameterLength(),
-            params.getLength()
-        );
-
-        ExpressionNode functionNameNode = getListValue(params);
-        String functionName = getAtomicValue(functionNameNode.getAddress(), 1);
-        assertFunctionNameIsValid(functionName);
-
-        Node functionNameNodeData = functionNameNode.getData();
-        ExpressionNode tempNode = getListValue(functionNameNodeData);
-        ExpressionNode formalParametersNode = getListValue(tempNode.getAddress());
-        List<String> formalParameters = getFormalParameters(formalParametersNode);
-        ExpressionNode temp = getListValue(functionNameNodeData);
-
-        Node body = temp.getData();
-
-        UserDefinedFunction userDefinedFunction = new UserDefinedFunction(functionName, formalParameters, body);
-        Environment.getEnvironment().addToFunctions(functionName, userDefinedFunction);
-        return null;
-    }
-
-    @Override
     String getFunctionName() {
         return "DEFUN";
     }
@@ -113,7 +88,27 @@ public class DefunFunction extends BaseFunction implements LispFunction {
 
     @Override
     public Node evaluateLispFunction() throws Exception {
-        return evaluate();
+        functionLengthAsserter.assertLengthIsAsExpected(
+            getFunctionName(),
+            expectedParameterLength(),
+            params.getLength()
+        );
+
+        ExpressionNode functionNameNode = getListValue(params);
+        String functionName = getAtomicValue(functionNameNode.getAddress(), 1);
+        assertFunctionNameIsValid(functionName);
+
+        Node functionNameNodeData = functionNameNode.getData();
+        ExpressionNode tempNode = getListValue(functionNameNodeData);
+        ExpressionNode formalParametersNode = getListValue(tempNode.getAddress());
+        List<String> formalParameters = getFormalParameters(formalParametersNode);
+        ExpressionNode temp = getListValue(functionNameNodeData);
+
+        Node body = temp.getData();
+
+        UserDefinedFunction userDefinedFunction = new UserDefinedFunction(functionName, formalParameters, body);
+        Environment.getEnvironment().addToFunctions(functionName, userDefinedFunction);
+        return null;
     }
 
     @Override

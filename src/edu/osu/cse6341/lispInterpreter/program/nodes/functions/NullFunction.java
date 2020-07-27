@@ -18,7 +18,12 @@ public class NullFunction extends BaseFunction implements LispFunction {
 	}
 
     @Override
-	public Node evaluate() throws Exception{
+    String getFunctionName() {
+        return "NULL";
+    }
+
+    @Override
+    public Node evaluateLispFunction() throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             getFunctionName(),
             expectedParameterLength(),
@@ -26,17 +31,7 @@ public class NullFunction extends BaseFunction implements LispFunction {
         );
         Node evaluatedResult = params.evaluate(true);
         boolean result = Node.equalsNil(evaluatedResult.getValue());
-		return new AtomNode(result);
-	}
-
-    @Override
-    String getFunctionName() {
-        return "NULL";
-    }
-
-    @Override
-    public Node evaluateLispFunction() throws Exception {
-        return evaluate();
+        return new AtomNode(result);
     }
 
     @Override

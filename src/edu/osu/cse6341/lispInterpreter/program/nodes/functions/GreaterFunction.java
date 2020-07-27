@@ -19,7 +19,12 @@ public class GreaterFunction extends BaseFunction implements LispFunction {
 	}
 
     @Override
-    public Node evaluate() throws Exception{
+    String getFunctionName() {
+        return "GREATER";
+    }
+
+    @Override
+    public Node evaluateLispFunction() throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             getFunctionName(),
             expectedParameterLength(),
@@ -30,16 +35,6 @@ public class GreaterFunction extends BaseFunction implements LispFunction {
         int rightValue = getNumericValue(right.evaluate(true), 2);
         boolean result = leftValue > rightValue;
         return new AtomNode(result);
-    }
-
-    @Override
-    String getFunctionName() {
-        return "GREATER";
-    }
-
-    @Override
-    public Node evaluateLispFunction() throws Exception {
-        return evaluate();
     }
 
     @Override

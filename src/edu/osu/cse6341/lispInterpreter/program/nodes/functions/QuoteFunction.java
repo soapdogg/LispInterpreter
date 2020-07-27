@@ -18,23 +18,18 @@ public class QuoteFunction extends BaseFunction implements LispFunction {
     }
 
     @Override
-	public Node evaluate() throws Exception{
-        functionLengthAsserter.assertLengthIsAsExpected(
-                getFunctionName(),
-                expectedParameterLength(),
-                params.getLength()
-        );
-        return ((ExpressionNode)params).getAddress();
-	}
-
-    @Override
     String getFunctionName() {
         return "QUOTE";
     }
 
     @Override
     public Node evaluateLispFunction() throws Exception {
-        return evaluate();
+        functionLengthAsserter.assertLengthIsAsExpected(
+            getFunctionName(),
+            expectedParameterLength(),
+            params.getLength()
+        );
+        return ((ExpressionNode)params).getAddress();
     }
 
     @Override
