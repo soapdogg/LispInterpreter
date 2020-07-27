@@ -33,11 +33,6 @@ public class PlusFunction extends BaseFunction implements LispFunction {
 	}
 
     @Override
-	public BaseFunction newInstance(Node params){
-		return new PlusFunction(params);
-	}
-
-    @Override
     String getFunctionName() {
         return "PLUS";
     }

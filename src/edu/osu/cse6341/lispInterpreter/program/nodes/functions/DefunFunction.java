@@ -73,11 +73,6 @@ public class DefunFunction extends BaseFunction implements LispFunction {
     }
 
     @Override
-    public BaseFunction newInstance(Node node) {
-        return new DefunFunction(node);
-    }
-
-    @Override
     String getFunctionName() {
         return "DEFUN";
     }

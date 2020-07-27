@@ -33,11 +33,6 @@ public class GreaterFunction extends BaseFunction implements LispFunction {
     }
 
     @Override
-	public BaseFunction newInstance(Node params){
-		return new GreaterFunction(params);
-	}
-
-    @Override
     String getFunctionName() {
         return "GREATER";
     }

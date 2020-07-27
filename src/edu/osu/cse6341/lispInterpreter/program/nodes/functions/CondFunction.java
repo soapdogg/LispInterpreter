@@ -46,11 +46,6 @@ public class CondFunction extends BaseFunction implements LispFunction {
 	}
 
     @Override
-	public BaseFunction newInstance(Node params){
-		return new CondFunction(params);
-	}
-
-    @Override
     String getFunctionName() {
         return "COND";
     }

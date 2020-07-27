@@ -29,11 +29,6 @@ public class CarFunction extends BaseFunction implements LispFunction {
 	}
 
     @Override
-	public BaseFunction newInstance(Node params){
-		return new CarFunction(params);
-	}
-
-    @Override
     String getFunctionName() {
         return "CAR";
     }

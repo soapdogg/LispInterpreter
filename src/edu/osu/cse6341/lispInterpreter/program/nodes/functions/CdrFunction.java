@@ -29,11 +29,6 @@ public class CdrFunction extends BaseFunction implements LispFunction {
 	}
 
     @Override
-	public BaseFunction newInstance(Node params){
-		return new CdrFunction(params);
-	}
-
-    @Override
     String getFunctionName() {
         return "CDR";
     }

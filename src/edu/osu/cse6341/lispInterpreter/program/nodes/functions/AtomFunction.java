@@ -29,11 +29,6 @@ public class AtomFunction extends BaseFunction implements LispFunction {
 	}
 
     @Override
-	public BaseFunction newInstance(Node params){
-		return new AtomFunction(params);
-	}
-
-    @Override
     String getFunctionName() {
         return "ATOM";
     }

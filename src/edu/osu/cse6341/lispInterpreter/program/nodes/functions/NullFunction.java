@@ -30,11 +30,6 @@ public class NullFunction extends BaseFunction implements LispFunction {
 	}
 
     @Override
-	public BaseFunction newInstance(Node params){
-		return new NullFunction(params);
-	}
-
-    @Override
     String getFunctionName() {
         return "NULL";
     }

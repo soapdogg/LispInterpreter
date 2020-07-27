@@ -30,11 +30,6 @@ public class IntFunction extends BaseFunction implements LispFunction {
 	}
 
     @Override
-	public BaseFunction newInstance(Node params){
-		return new IntFunction(params);
-	}
-
-    @Override
     String getFunctionName() {
         return "INT";
     }

@@ -28,11 +28,6 @@ public class QuoteFunction extends BaseFunction implements LispFunction {
 	}
 
     @Override
-	public BaseFunction newInstance(Node params){
-		return new QuoteFunction(params);
-	}
-
-    @Override
     String getFunctionName() {
         return "QUOTE";
     }

@@ -33,11 +33,6 @@ public class EqFunction extends BaseFunction implements LispFunction {
 	}
 
     @Override
-	public BaseFunction newInstance(Node listNode){
-		return new EqFunction(listNode);
-	}
-
-    @Override
     String getFunctionName() {
         return "EQ";
     }

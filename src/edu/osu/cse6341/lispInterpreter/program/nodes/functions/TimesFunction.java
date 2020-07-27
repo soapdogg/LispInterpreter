@@ -33,11 +33,6 @@ public class TimesFunction extends BaseFunction implements LispFunction {
 	}
 
     @Override
-	public BaseFunction newInstance(Node params){
-		return new TimesFunction(params);
-	}
-
-    @Override
     String getFunctionName() {
         return "TIMES";
     }

@@ -33,11 +33,6 @@ public class LessFunction extends BaseFunction implements LispFunction {
     }
 
     @Override
-	public BaseFunction newInstance(Node params){
-		return new LessFunction(params);
-	}
-
-    @Override
     String getFunctionName() {
         return "LESS";
     }

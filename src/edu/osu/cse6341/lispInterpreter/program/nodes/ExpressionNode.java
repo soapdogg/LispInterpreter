@@ -10,7 +10,7 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.functions.*;
 
 public class ExpressionNode extends Node{
 
-	private static final Map<String, BaseFunction> functionMap;
+	private static final Map<String, LispFunction> functionMap;
 
 	private Node address;
 	private Node data;
@@ -113,9 +113,9 @@ public class ExpressionNode extends Node{
 	}
 
 	private Node executeBuiltInFunction(String functionName) throws Exception{
-        BaseFunction function = functionMap.get(functionName);
-        function = function.newInstance(data);
-        return function.evaluate();
+        LispFunction function = functionMap.get(functionName);
+        function = function.newFunctionInstance(data);
+        return function.evaluateLispFunction();
     }
 
     private String getDataListNotationAsString(){
