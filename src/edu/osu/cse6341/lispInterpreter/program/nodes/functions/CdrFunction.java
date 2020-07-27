@@ -2,18 +2,28 @@ package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
+import edu.osu.cse6341.lispInterpreter.program.nodes.asserter.FunctionLengthAsserter;
 
 public class CdrFunction extends BaseFunction implements LispFunction {
 
-	public CdrFunction(){}
+    private final FunctionLengthAsserter functionLengthAsserter;
+
+	public CdrFunction(){
+	    functionLengthAsserter = new FunctionLengthAsserter();
+    }
 
 	private CdrFunction(Node params){
         super(params);
+        functionLengthAsserter = new FunctionLengthAsserter();
     }
 
     @Override
 	public Node evaluate() throws Exception{
-        assertLengthIsAsExpected(params.getLength());
+        functionLengthAsserter.assertLengthIsAsExpected(
+            getFunctionName(),
+            expectedParameterLength(),
+            params.getLength()
+        );
         ExpressionNode node = getListValue(((ExpressionNode)params).getAddress().evaluate(false));
         return node.getData();
 	}
@@ -26,11 +36,6 @@ public class CdrFunction extends BaseFunction implements LispFunction {
     @Override
     String getFunctionName() {
         return "CDR";
-    }
-
-    @Override
-    int getExpectedLength() {
-        return 2;
     }
 
     @Override
@@ -50,6 +55,6 @@ public class CdrFunction extends BaseFunction implements LispFunction {
 
     @Override
     public int expectedParameterLength() {
-        return getExpectedLength();
+        return 2;
     }
 }

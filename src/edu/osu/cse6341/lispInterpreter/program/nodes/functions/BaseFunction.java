@@ -17,7 +17,6 @@ public abstract class BaseFunction {
     public abstract Node evaluate() throws Exception;
     public abstract BaseFunction newInstance(Node node);
     abstract String getFunctionName();
-    abstract int getExpectedLength();
 
     int getNumericValue(Node node, int position) throws Exception{
         if(!node.isNumeric()) {
@@ -60,17 +59,5 @@ public abstract class BaseFunction {
         }
         Node result = isVariableList ? e.getVariableValue(temp) : node;
         return (ExpressionNode)result;
-    }
-
-    void assertLengthIsAsExpected(int actual) throws Exception{
-        if(actual != getExpectedLength() -1){
-            String sb = "Error! Expected length of " + getFunctionName() +
-                    " list is " +
-                    getExpectedLength() +
-                    "!    Actual: " +
-                    (actual + 1) +
-                    '\n';
-            throw new Exception(sb);
-        }
     }
 }

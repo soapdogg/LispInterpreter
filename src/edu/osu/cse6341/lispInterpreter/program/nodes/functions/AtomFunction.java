@@ -2,17 +2,27 @@ package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
+import edu.osu.cse6341.lispInterpreter.program.nodes.asserter.FunctionLengthAsserter;
 
 public class AtomFunction extends BaseFunction implements LispFunction {
 
-	public AtomFunction(){}
+    private final FunctionLengthAsserter functionLengthAsserter;
+
+	public AtomFunction(){
+	    functionLengthAsserter = new FunctionLengthAsserter();
+    }
 
 	private AtomFunction(Node params){
         super(params);
+        functionLengthAsserter = new FunctionLengthAsserter();
 	}
 
 	public Node evaluate() throws Exception{
-        assertLengthIsAsExpected(params.getLength());
+        functionLengthAsserter.assertLengthIsAsExpected(
+            getFunctionName(),
+            expectedParameterLength(),
+            params.getLength()
+        );
 	    Node evaluatedResult = params.evaluate(true);
 	    boolean result = !evaluatedResult.isList();
 	    return new AtomNode(result);
@@ -26,10 +36,6 @@ public class AtomFunction extends BaseFunction implements LispFunction {
     @Override
     String getFunctionName() {
         return "ATOM";
-    }
-
-    int getExpectedLength() {
-        return 2;
     }
 
     @Override
@@ -49,6 +55,6 @@ public class AtomFunction extends BaseFunction implements LispFunction {
 
     @Override
     public int expectedParameterLength() {
-        return getExpectedLength();
+        return 2;
     }
 }

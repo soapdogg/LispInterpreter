@@ -3,18 +3,28 @@ package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
+import edu.osu.cse6341.lispInterpreter.program.nodes.asserter.FunctionLengthAsserter;
 
 public class GreaterFunction extends BaseFunction implements LispFunction {
 
-	public GreaterFunction(){}
+    private final FunctionLengthAsserter functionLengthAsserter;
+
+	public GreaterFunction(){
+	    functionLengthAsserter = new FunctionLengthAsserter();
+    }
 
 	private GreaterFunction(Node params){
 	    super(params);
+	    functionLengthAsserter = new FunctionLengthAsserter();
 	}
 
     @Override
     public Node evaluate() throws Exception{
-        assertLengthIsAsExpected(params.getLength());
+        functionLengthAsserter.assertLengthIsAsExpected(
+            getFunctionName(),
+            expectedParameterLength(),
+            params.getLength()
+        );
         Node right = ((ExpressionNode)params).getData();
         int leftValue = getNumericValue(params.evaluate(true), 1);
         int rightValue = getNumericValue(right.evaluate(true), 2);
@@ -33,27 +43,22 @@ public class GreaterFunction extends BaseFunction implements LispFunction {
     }
 
     @Override
-    int getExpectedLength() {
-        return 3;
-    }
-
-    @Override
     public Node evaluateLispFunction() throws Exception {
-        return null;
+        return evaluate();
     }
 
     @Override
     public LispFunction newFunctionInstance(Node node) {
-        return null;
+        return new GreaterFunction(node);
     }
 
     @Override
     public String getLispFunctionName() {
-        return null;
+        return getFunctionName();
     }
 
     @Override
     public int expectedParameterLength() {
-        return 0;
+        return 3;
     }
 }

@@ -2,6 +2,7 @@ package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
+import edu.osu.cse6341.lispInterpreter.program.nodes.asserter.FunctionLengthAsserter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +10,15 @@ import java.util.List;
 
 public class CondFunction extends BaseFunction implements LispFunction {
 
-	public CondFunction(){}
+    private final FunctionLengthAsserter functionLengthAsserter;
+
+	public CondFunction(){
+	    functionLengthAsserter = new FunctionLengthAsserter();
+    }
 
 	private CondFunction(Node params){
         super(params);
+        functionLengthAsserter = new FunctionLengthAsserter();
     }
 
     @Override
@@ -22,7 +28,11 @@ public class CondFunction extends BaseFunction implements LispFunction {
             ExpressionNode expressionParams = (ExpressionNode)params;
             Node tempParameter = expressionParams.getAddress();
             ExpressionNode parameter = getListValue(tempParameter);
-            assertLengthIsAsExpected(parameter.getData().getLength());
+            functionLengthAsserter.assertLengthIsAsExpected(
+                getFunctionName(),
+                expectedParameterLength(),
+                parameter.getData().getLength()
+            );
             parameters.add(parameter);
             params = expressionParams.getData();
         }
@@ -46,11 +56,6 @@ public class CondFunction extends BaseFunction implements LispFunction {
     }
 
     @Override
-    int getExpectedLength() {
-        return 2;
-    }
-
-    @Override
     public Node evaluateLispFunction() throws Exception {
         return evaluate();
     }
@@ -67,6 +72,6 @@ public class CondFunction extends BaseFunction implements LispFunction {
 
     @Override
     public int expectedParameterLength() {
-        return getExpectedLength();
+        return 2;
     }
 }

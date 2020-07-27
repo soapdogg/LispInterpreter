@@ -2,18 +2,28 @@ package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
+import edu.osu.cse6341.lispInterpreter.program.nodes.asserter.FunctionLengthAsserter;
 
 public class NullFunction extends BaseFunction implements LispFunction {
 
-	public NullFunction(){}
+    private final FunctionLengthAsserter functionLengthAsserter;
+
+	public NullFunction(){
+	    functionLengthAsserter = new FunctionLengthAsserter();
+    }
 
 	private NullFunction(Node params) {
 	    super(params);
+	    functionLengthAsserter = new FunctionLengthAsserter();
 	}
 
     @Override
 	public Node evaluate() throws Exception{
-        assertLengthIsAsExpected(params.getLength());
+        functionLengthAsserter.assertLengthIsAsExpected(
+            getFunctionName(),
+            expectedParameterLength(),
+            params.getLength()
+        );
         Node evaluatedResult = params.evaluate(true);
         boolean result = Node.equalsNil(evaluatedResult.getValue());
 		return new AtomNode(result);
@@ -27,11 +37,6 @@ public class NullFunction extends BaseFunction implements LispFunction {
     @Override
     String getFunctionName() {
         return "NULL";
-    }
-
-    @Override
-    int getExpectedLength() {
-        return 2;
     }
 
     @Override
@@ -51,6 +56,6 @@ public class NullFunction extends BaseFunction implements LispFunction {
 
     @Override
     public int expectedParameterLength() {
-        return getExpectedLength();
+        return 2;
     }
 }

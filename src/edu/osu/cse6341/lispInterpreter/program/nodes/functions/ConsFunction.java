@@ -2,18 +2,28 @@ package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
+import edu.osu.cse6341.lispInterpreter.program.nodes.asserter.FunctionLengthAsserter;
 
 public class ConsFunction extends BaseFunction implements LispFunction {
 
-	public ConsFunction(){}
+    private final FunctionLengthAsserter functionLengthAsserter;
+
+    public ConsFunction(){
+        functionLengthAsserter = new FunctionLengthAsserter();
+    }
 
 	private ConsFunction(Node params){
 	    super(params);
+	    functionLengthAsserter = new FunctionLengthAsserter();
     }
 
     @Override
 	public Node evaluate() throws Exception{
-        assertLengthIsAsExpected(params.getLength());
+        functionLengthAsserter.assertLengthIsAsExpected(
+                getFunctionName(),
+                expectedParameterLength(),
+                params.getLength()
+        );
         ExpressionNode rightSide = (ExpressionNode) ((ExpressionNode)params).getData();
         return new ExpressionNode(((ExpressionNode) params).getAddress().evaluate(false), rightSide.getAddress().evaluate(
                 false));
@@ -27,11 +37,6 @@ public class ConsFunction extends BaseFunction implements LispFunction {
     @Override
     String getFunctionName() {
         return "CONS";
-    }
-
-    @Override
-    int getExpectedLength() {
-        return 3;
     }
 
     @Override
@@ -51,6 +56,6 @@ public class ConsFunction extends BaseFunction implements LispFunction {
 
     @Override
     public int expectedParameterLength() {
-        return getExpectedLength();
+        return 3;
     }
 }

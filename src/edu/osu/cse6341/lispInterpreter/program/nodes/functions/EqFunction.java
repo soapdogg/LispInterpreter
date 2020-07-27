@@ -3,18 +3,28 @@ package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
+import edu.osu.cse6341.lispInterpreter.program.nodes.asserter.FunctionLengthAsserter;
 
 public class EqFunction extends BaseFunction implements LispFunction {
 
-	public EqFunction(){}
+    private final FunctionLengthAsserter functionLengthAsserter;
+
+	public EqFunction(){
+	    functionLengthAsserter = new FunctionLengthAsserter();
+    }
 
 	private EqFunction(Node params){
 	    super(params);
+	    functionLengthAsserter = new FunctionLengthAsserter();
 	}
 
     @Override
 	public Node evaluate() throws Exception{
-        assertLengthIsAsExpected(params.getLength());
+        functionLengthAsserter.assertLengthIsAsExpected(
+            getFunctionName(),
+            expectedParameterLength(),
+            params.getLength()
+        );
         Node right = ((ExpressionNode)params).getData();
         String leftValue = getAtomicValue(params.evaluate(true), 1);
         String rightValue = getAtomicValue(right.evaluate(true), 2);
@@ -30,11 +40,6 @@ public class EqFunction extends BaseFunction implements LispFunction {
     @Override
     String getFunctionName() {
         return "EQ";
-    }
-
-    @Override
-    int getExpectedLength() {
-        return 3;
     }
 
     @Override
@@ -54,6 +59,6 @@ public class EqFunction extends BaseFunction implements LispFunction {
 
     @Override
     public int expectedParameterLength() {
-        return getExpectedLength();
+        return 3;
     }
 }

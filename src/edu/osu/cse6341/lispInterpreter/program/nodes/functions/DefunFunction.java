@@ -4,6 +4,7 @@ import edu.osu.cse6341.lispInterpreter.program.Environment;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.UserDefinedFunction;
+import edu.osu.cse6341.lispInterpreter.program.nodes.asserter.FunctionLengthAsserter;
 
 import java.util.Set;
 import java.util.HashSet;
@@ -35,15 +36,24 @@ public class DefunFunction extends BaseFunction implements LispFunction {
         invalidFunctionNames.add("NIL");
     }
 
-    public DefunFunction(){}
+    private final FunctionLengthAsserter functionLengthAsserter;
+
+    public DefunFunction(){
+        functionLengthAsserter = new FunctionLengthAsserter();
+    }
 
     private DefunFunction(Node params){
         this.params = params;
+        functionLengthAsserter = new FunctionLengthAsserter();
     }
 
     @Override
     public Node evaluate() throws Exception {
-        assertLengthIsAsExpected(params.getLength());
+        functionLengthAsserter.assertLengthIsAsExpected(
+            getFunctionName(),
+            expectedParameterLength(),
+            params.getLength()
+        );
 
         ExpressionNode functionNameNode = getListValue(params);
         String functionName = getAtomicValue(functionNameNode.getAddress(), 1);
@@ -71,12 +81,6 @@ public class DefunFunction extends BaseFunction implements LispFunction {
     String getFunctionName() {
         return "DEFUN";
     }
-
-    @Override
-    int getExpectedLength() {
-        return 4;
-    }
-
 
     private void assertFunctionNameIsValid(String functionName) throws Exception{
         if(isInvalidName(functionName))
@@ -129,6 +133,6 @@ public class DefunFunction extends BaseFunction implements LispFunction {
 
     @Override
     public int expectedParameterLength() {
-        return getExpectedLength();
+        return 4;
     }
 }
