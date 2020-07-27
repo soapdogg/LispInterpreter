@@ -1,10 +1,13 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
+import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.nodes.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.program.nodes.functions.valueretriver.AtomicValueRetriever;
+
+import javax.swing.plaf.FontUIResource;
 
 public class EqFunction implements LispFunction {
 
@@ -19,7 +22,7 @@ public class EqFunction implements LispFunction {
     @Override
     public Node evaluateLispFunction(Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
-            getLispFunctionName(),
+            FunctionNameConstants.EQ,
             expectedParameterLength(),
             params.getLength()
         );
@@ -27,12 +30,12 @@ public class EqFunction implements LispFunction {
         String leftValue = atomicValueRetriever.retrieveAtomicValue(
             params.evaluate(true),
             1,
-            getLispFunctionName()
+            FunctionNameConstants.EQ
         );
         String rightValue = atomicValueRetriever.retrieveAtomicValue(
             right.evaluate(true),
             2,
-            getLispFunctionName()
+            FunctionNameConstants.EQ
         );
         boolean result = leftValue.equals(rightValue);
         return new AtomNode(result);
@@ -41,11 +44,6 @@ public class EqFunction implements LispFunction {
     @Override
     public LispFunction newFunctionInstance() {
         return new EqFunction();
-    }
-
-    @Override
-    public String getLispFunctionName() {
-        return "EQ";
     }
 
     @Override

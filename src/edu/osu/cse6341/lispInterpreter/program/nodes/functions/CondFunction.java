@@ -1,5 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
+import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.nodes.asserter.FunctionLengthAsserter;
@@ -27,10 +28,10 @@ public class CondFunction implements LispFunction {
             Node tempParameter = expressionParams.getAddress();
             ExpressionNode parameter = listValueRetriever.retrieveListValue(
                 tempParameter,
-                getLispFunctionName()
+                FunctionNameConstants.COND
             );
             functionLengthAsserter.assertLengthIsAsExpected(
-                getLispFunctionName(),
+                FunctionNameConstants.COND,
                 expectedParameterLength(),
                 parameter.getData().getLength()
             );
@@ -49,11 +50,6 @@ public class CondFunction implements LispFunction {
     @Override
     public LispFunction newFunctionInstance() {
         return new CondFunction();
-    }
-
-    @Override
-    public String getLispFunctionName() {
-        return "COND";
     }
 
     @Override

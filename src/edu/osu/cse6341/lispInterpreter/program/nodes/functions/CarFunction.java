@@ -1,5 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
+import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.nodes.asserter.FunctionLengthAsserter;
@@ -18,13 +19,13 @@ public class CarFunction implements LispFunction {
     @Override
     public Node evaluateLispFunction(Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
-            getLispFunctionName(),
+            FunctionNameConstants.CAR,
             expectedParameterLength(),
             params.getLength()
         );
         ExpressionNode node = listValueRetriever.retrieveListValue(
             ((ExpressionNode) params).getAddress().evaluate(false),
-            getLispFunctionName()
+            FunctionNameConstants.CAR
         );
         return node.getAddress();
     }
@@ -32,11 +33,6 @@ public class CarFunction implements LispFunction {
     @Override
     public LispFunction newFunctionInstance() {
         return new CarFunction();
-    }
-
-    @Override
-    public String getLispFunctionName() {
-        return "CAR";
     }
 
     @Override

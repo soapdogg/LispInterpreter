@@ -1,5 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
+import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.nodes.asserter.FunctionLengthAsserter;
@@ -15,7 +16,7 @@ public class IntFunction implements LispFunction {
     @Override
     public Node evaluateLispFunction(Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
-            getLispFunctionName(),
+            FunctionNameConstants.INT,
             expectedParameterLength(),
             params.getLength()
         );
@@ -27,11 +28,6 @@ public class IntFunction implements LispFunction {
     @Override
     public LispFunction newFunctionInstance() {
         return new IntFunction();
-    }
-
-    @Override
-    public String getLispFunctionName() {
-        return "INT";
     }
 
     @Override

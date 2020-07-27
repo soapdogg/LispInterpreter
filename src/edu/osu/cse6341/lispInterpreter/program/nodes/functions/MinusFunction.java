@@ -1,5 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
+import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
@@ -19,7 +20,7 @@ public class MinusFunction implements LispFunction {
     @Override
     public Node evaluateLispFunction(Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
-            getLispFunctionName(),
+            FunctionNameConstants.MINUS,
             expectedParameterLength(),
             params.getLength()
         );
@@ -27,12 +28,12 @@ public class MinusFunction implements LispFunction {
         int leftValue = numericValueRetriever.retrieveNumericValue(
             params.evaluate(true),
             1,
-            getLispFunctionName()
+            FunctionNameConstants.MINUS
         );
         int rightValue = numericValueRetriever.retrieveNumericValue(
             right.evaluate(true),
             2,
-            getLispFunctionName()
+            FunctionNameConstants.MINUS
         );
         int result = leftValue - rightValue;
         return new AtomNode(result);
@@ -41,11 +42,6 @@ public class MinusFunction implements LispFunction {
     @Override
     public LispFunction newFunctionInstance() {
         return new MinusFunction();
-    }
-
-    @Override
-    public String getLispFunctionName() {
-        return "MINUS";
     }
 
     @Override
