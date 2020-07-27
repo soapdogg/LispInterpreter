@@ -13,14 +13,9 @@ public class NullFunction extends BaseFunction implements LispFunction {
     }
 
     @Override
-    String getFunctionName() {
-        return "NULL";
-    }
-
-    @Override
     public Node evaluateLispFunction(Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
-            getFunctionName(),
+            getLispFunctionName(),
             expectedParameterLength(),
             params.getLength()
         );
@@ -36,7 +31,7 @@ public class NullFunction extends BaseFunction implements LispFunction {
 
     @Override
     public String getLispFunctionName() {
-        return getFunctionName();
+        return "NULL";
     }
 
     @Override

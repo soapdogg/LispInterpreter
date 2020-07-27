@@ -20,11 +20,6 @@ public class CondFunction extends BaseFunction implements LispFunction {
     }
 
     @Override
-    String getFunctionName() {
-        return "COND";
-    }
-
-    @Override
     public Node evaluateLispFunction(Node params) throws Exception {
         List<ExpressionNode> parameters = new ArrayList<>();
         while(params.isList()){
@@ -35,7 +30,7 @@ public class CondFunction extends BaseFunction implements LispFunction {
                 getLispFunctionName()
             );
             functionLengthAsserter.assertLengthIsAsExpected(
-                getFunctionName(),
+                getLispFunctionName(),
                 expectedParameterLength(),
                 parameter.getData().getLength()
             );
@@ -58,7 +53,7 @@ public class CondFunction extends BaseFunction implements LispFunction {
 
     @Override
     public String getLispFunctionName() {
-        return getFunctionName();
+        return "COND";
     }
 
     @Override

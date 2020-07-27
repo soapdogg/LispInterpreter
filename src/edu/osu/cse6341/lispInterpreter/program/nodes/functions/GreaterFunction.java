@@ -17,14 +17,9 @@ public class GreaterFunction extends BaseFunction implements LispFunction {
     }
 
     @Override
-    String getFunctionName() {
-        return "GREATER";
-    }
-
-    @Override
     public Node evaluateLispFunction(Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
-            getFunctionName(),
+            getLispFunctionName(),
             expectedParameterLength(),
             params.getLength()
         );
@@ -50,7 +45,7 @@ public class GreaterFunction extends BaseFunction implements LispFunction {
 
     @Override
     public String getLispFunctionName() {
-        return getFunctionName();
+        return "GREATER";
     }
 
     @Override

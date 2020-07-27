@@ -16,14 +16,9 @@ public class CdrFunction extends BaseFunction implements LispFunction {
     }
 
     @Override
-    String getFunctionName() {
-        return "CDR";
-    }
-
-    @Override
     public Node evaluateLispFunction(Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
-            getFunctionName(),
+            getLispFunctionName(),
             expectedParameterLength(),
             params.getLength()
         );
@@ -41,7 +36,7 @@ public class CdrFunction extends BaseFunction implements LispFunction {
 
     @Override
     public String getLispFunctionName() {
-        return getFunctionName();
+        return "CDR";
     }
 
     @Override

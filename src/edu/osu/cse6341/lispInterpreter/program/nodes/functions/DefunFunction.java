@@ -48,11 +48,6 @@ public class DefunFunction extends BaseFunction implements LispFunction {
         listValueRetriever = new ListValueRetriever();
     }
 
-    @Override
-    String getFunctionName() {
-        return "DEFUN";
-    }
-
     private void assertFunctionNameIsValid(String functionName) throws Exception{
         if(isInvalidName(functionName))
             throw new Exception("Error! Invalid function name: " + functionName + "\n");
@@ -97,7 +92,7 @@ public class DefunFunction extends BaseFunction implements LispFunction {
     @Override
     public Node evaluateLispFunction(Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
-            getFunctionName(),
+            getLispFunctionName(),
             expectedParameterLength(),
             params.getLength()
         );
@@ -142,7 +137,7 @@ public class DefunFunction extends BaseFunction implements LispFunction {
 
     @Override
     public String getLispFunctionName() {
-        return getFunctionName();
+        return "DEFUN";
     }
 
     @Override

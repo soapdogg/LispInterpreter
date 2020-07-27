@@ -13,14 +13,9 @@ public class ConsFunction extends BaseFunction implements LispFunction {
     }
 
     @Override
-    String getFunctionName() {
-        return "CONS";
-    }
-
-    @Override
     public Node evaluateLispFunction(Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
-            getFunctionName(),
+            getLispFunctionName(),
             expectedParameterLength(),
             params.getLength()
         );
@@ -40,7 +35,7 @@ public class ConsFunction extends BaseFunction implements LispFunction {
 
     @Override
     public String getLispFunctionName() {
-        return getFunctionName();
+        return "CONS";
     }
 
     @Override
