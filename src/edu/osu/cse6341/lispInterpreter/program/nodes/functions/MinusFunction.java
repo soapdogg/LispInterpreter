@@ -4,13 +4,16 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.nodes.asserter.FunctionLengthAsserter;
+import edu.osu.cse6341.lispInterpreter.program.nodes.functions.valueretriver.NumericValueRetriever;
 
 public class MinusFunction extends BaseFunction implements LispFunction {
 
     private final FunctionLengthAsserter functionLengthAsserter;
+    private final NumericValueRetriever numericValueRetriever;
 
 	public MinusFunction(){
 	    functionLengthAsserter = new FunctionLengthAsserter();
+	    numericValueRetriever = new NumericValueRetriever();
     }
 
     @Override
@@ -26,8 +29,16 @@ public class MinusFunction extends BaseFunction implements LispFunction {
             params.getLength()
         );
         Node right = ((ExpressionNode) params).getData();
-        int leftValue = getNumericValue(params.evaluate(true), 1);
-        int rightValue = getNumericValue(right.evaluate(true), 2);
+        int leftValue = numericValueRetriever.getNumericValue(
+            params.evaluate(true),
+            1,
+            getLispFunctionName()
+        );
+        int rightValue = numericValueRetriever.getNumericValue(
+            right.evaluate(true),
+            2,
+            getLispFunctionName()
+        );
         int result = leftValue - rightValue;
         return new AtomNode(result);
     }

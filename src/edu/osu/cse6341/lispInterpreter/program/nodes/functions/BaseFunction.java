@@ -6,22 +6,7 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
 public abstract class BaseFunction {
 
-    BaseFunction(){}
-
     abstract String getFunctionName();
-
-    int getNumericValue(Node node, int position) throws Exception{
-        if(!node.isNumeric()) {
-            String sb = "Error! Parameter at position: " + position +
-                    " of function " +
-                    getFunctionName() +
-                    " is not numeric!    Actual: " +
-                    node.getListNotationToString(true) +
-                    '\n';
-            throw new Exception(sb);
-        }
-        return Integer.parseInt(node.getValue());
-    }
 
     String getAtomicValue(Node node, int position) throws Exception{
         if(node.isList()) {
