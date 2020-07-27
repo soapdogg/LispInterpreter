@@ -1,15 +1,13 @@
 package edu.osu.cse6341.lispInterpreter;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
-
 public class UserDefinedTest {
-
 
     @Test
     public void project4DiffTest(){
@@ -116,7 +114,7 @@ public class UserDefinedTest {
             actual = e.getMessage();
         }
         String expected = scanExpected(expectedFile);
-        Assert.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual);
     }
 
 

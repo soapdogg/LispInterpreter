@@ -1,6 +1,5 @@
 package edu.osu.cse6341.lispInterpreter.tokenizer.states;
 
-import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
 
 public interface IState{

@@ -3,7 +3,6 @@ package edu.osu.cse6341.lispInterpreter.tokenizer.states;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.OpenToken;
 
-
 public class OpenState implements IState{
 
     private int startingPos;
