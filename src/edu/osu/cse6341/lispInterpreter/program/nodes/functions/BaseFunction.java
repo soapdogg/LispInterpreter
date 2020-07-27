@@ -8,19 +8,6 @@ public abstract class BaseFunction {
 
     abstract String getFunctionName();
 
-    String getAtomicValue(Node node, int position) throws Exception{
-        if(node.isList()) {
-            String sb = "Error! Parameter at position: " + position +
-                    " of function " +
-                    getFunctionName() +
-                    " is not atomic!    Actual: " +
-                    node.getListNotationToString(true) +
-                    '\n';
-            throw new Exception(sb);
-        }
-        return node.getValue();
-    }
-
     ExpressionNode getListValue(Node node) throws Exception{
         boolean isVariableList = false;
         String temp = node.getValue();

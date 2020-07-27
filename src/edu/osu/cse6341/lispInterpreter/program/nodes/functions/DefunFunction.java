@@ -5,6 +5,7 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.UserDefinedFunction;
 import edu.osu.cse6341.lispInterpreter.program.nodes.asserter.FunctionLengthAsserter;
+import edu.osu.cse6341.lispInterpreter.program.nodes.functions.valueretriver.AtomicValueRetriever;
 
 import java.util.Set;
 import java.util.HashSet;
@@ -37,9 +38,11 @@ public class DefunFunction extends BaseFunction implements LispFunction {
     }
 
     private final FunctionLengthAsserter functionLengthAsserter;
+    private final AtomicValueRetriever atomicValueRetriever;
 
     public DefunFunction(){
         functionLengthAsserter = new FunctionLengthAsserter();
+        atomicValueRetriever = new AtomicValueRetriever();
     }
 
     @Override
@@ -59,7 +62,11 @@ public class DefunFunction extends BaseFunction implements LispFunction {
         while(hasNext){
             ExpressionNode temp = getListValue(formalParametersNode);
             Node formalNode = temp.getAddress();
-            String formalId = getAtomicValue(formalNode, counter);
+            String formalId = atomicValueRetriever.retrieveAtomicValue(
+                formalNode,
+                counter,
+                getLispFunctionName()
+            );
             assertFormalNameIsValid(formalParameters, formalId);
             formalParameters.add(formalId);
             formalParametersNode = temp.getData();
@@ -90,7 +97,11 @@ public class DefunFunction extends BaseFunction implements LispFunction {
         );
 
         ExpressionNode functionNameNode = getListValue(params);
-        String functionName = getAtomicValue(functionNameNode.getAddress(), 1);
+        String functionName = atomicValueRetriever.retrieveAtomicValue(
+            functionNameNode.getAddress(),
+            1,
+            getLispFunctionName()
+        );
         assertFunctionNameIsValid(functionName);
 
         Node functionNameNodeData = functionNameNode.getData();

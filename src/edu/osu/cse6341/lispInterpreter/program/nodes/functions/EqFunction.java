@@ -4,13 +4,16 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.nodes.asserter.FunctionLengthAsserter;
+import edu.osu.cse6341.lispInterpreter.program.nodes.functions.valueretriver.AtomicValueRetriever;
 
 public class EqFunction extends BaseFunction implements LispFunction {
 
     private final FunctionLengthAsserter functionLengthAsserter;
+    private final AtomicValueRetriever atomicValueRetriever;
 
 	public EqFunction(){
 	    functionLengthAsserter = new FunctionLengthAsserter();
+	    atomicValueRetriever = new AtomicValueRetriever();
     }
 
     @Override
@@ -26,8 +29,16 @@ public class EqFunction extends BaseFunction implements LispFunction {
             params.getLength()
         );
         Node right = ((ExpressionNode) params).getData();
-        String leftValue = getAtomicValue(params.evaluate(true), 1);
-        String rightValue = getAtomicValue(right.evaluate(true), 2);
+        String leftValue = atomicValueRetriever.retrieveAtomicValue(
+            params.evaluate(true),
+            1,
+            getLispFunctionName()
+        );
+        String rightValue = atomicValueRetriever.retrieveAtomicValue(
+            right.evaluate(true),
+            2,
+            getLispFunctionName()
+        );
         boolean result = leftValue.equals(rightValue);
         return new AtomNode(result);
     }

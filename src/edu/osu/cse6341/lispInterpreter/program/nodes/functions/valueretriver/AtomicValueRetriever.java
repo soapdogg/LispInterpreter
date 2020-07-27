@@ -1,24 +1,24 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions.valueretriver;
 
-import edu.osu.cse6341.lispInterpreter.exceptions.NotNumericException;
+import edu.osu.cse6341.lispInterpreter.exceptions.NotAtomicException;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
-public class NumericValueRetriever {
+public class AtomicValueRetriever {
 
-    public int retrieveNumericValue(
+    public String retrieveAtomicValue(
         Node node,
         int position,
         String functionName
     ) throws Exception{
-        if(!node.isNumeric()) {
+        if(node.isList()) {
             String sb = "Error! Parameter at position: " + position +
                 " of function " +
                 functionName +
-                " is not numeric!    Actual: " +
+                " is not atomic!    Actual: " +
                 node.getListNotationToString(true) +
                 '\n';
-            throw new NotNumericException(sb);
+            throw new NotAtomicException(sb);
         }
-        return Integer.parseInt(node.getValue());
+        return node.getValue();
     }
 }

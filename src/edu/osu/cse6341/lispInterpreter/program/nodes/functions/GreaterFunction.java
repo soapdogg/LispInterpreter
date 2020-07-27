@@ -29,12 +29,12 @@ public class GreaterFunction extends BaseFunction implements LispFunction {
             params.getLength()
         );
         Node right = ((ExpressionNode) params).getData();
-        int leftValue = numericValueRetriever.getNumericValue(
+        int leftValue = numericValueRetriever.retrieveNumericValue(
             params.evaluate(true),
             1,
             getLispFunctionName()
         );
-        int rightValue = numericValueRetriever.getNumericValue(
+        int rightValue = numericValueRetriever.retrieveNumericValue(
             right.evaluate(true),
             2,
             getLispFunctionName()
