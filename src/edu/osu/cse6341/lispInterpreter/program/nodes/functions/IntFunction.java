@@ -12,18 +12,13 @@ public class IntFunction extends BaseFunction implements LispFunction {
 	    functionLengthAsserter = new FunctionLengthAsserter();
     }
 
-	private IntFunction(Node params){
-	    super(params);
-	    functionLengthAsserter = new FunctionLengthAsserter();
-	}
-
     @Override
     String getFunctionName() {
         return "INT";
     }
 
     @Override
-    public Node evaluateLispFunction() throws Exception {
+    public Node evaluateLispFunction(Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             getFunctionName(),
             expectedParameterLength(),
@@ -35,8 +30,8 @@ public class IntFunction extends BaseFunction implements LispFunction {
     }
 
     @Override
-    public LispFunction newFunctionInstance(Node node) {
-        return new IntFunction(node);
+    public LispFunction newFunctionInstance() {
+        return new IntFunction();
     }
 
     @Override

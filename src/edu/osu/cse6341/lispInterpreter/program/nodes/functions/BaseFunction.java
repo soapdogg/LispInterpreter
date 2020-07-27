@@ -6,13 +6,7 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
 public abstract class BaseFunction {
 
-    Node params;
-
     BaseFunction(){}
-
-    BaseFunction(Node params){
-        this.params = params;
-    }
 
     abstract String getFunctionName();
 

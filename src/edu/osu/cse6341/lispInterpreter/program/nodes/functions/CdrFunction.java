@@ -12,30 +12,25 @@ public class CdrFunction extends BaseFunction implements LispFunction {
 	    functionLengthAsserter = new FunctionLengthAsserter();
     }
 
-	private CdrFunction(Node params){
-        super(params);
-        functionLengthAsserter = new FunctionLengthAsserter();
-    }
-
     @Override
     String getFunctionName() {
         return "CDR";
     }
 
     @Override
-    public Node evaluateLispFunction() throws Exception {
+    public Node evaluateLispFunction(Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             getFunctionName(),
             expectedParameterLength(),
             params.getLength()
         );
-        ExpressionNode node = getListValue(((ExpressionNode)params).getAddress().evaluate(false));
+        ExpressionNode node = getListValue(((ExpressionNode) params).getAddress().evaluate(false));
         return node.getData();
     }
 
     @Override
-    public LispFunction newFunctionInstance(Node node) {
-        return new CdrFunction(node);
+    public LispFunction newFunctionInstance() {
+        return new CdrFunction();
     }
 
     @Override

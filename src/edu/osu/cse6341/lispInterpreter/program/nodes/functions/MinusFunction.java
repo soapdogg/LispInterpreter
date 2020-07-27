@@ -13,24 +13,19 @@ public class MinusFunction extends BaseFunction implements LispFunction {
 	    functionLengthAsserter = new FunctionLengthAsserter();
     }
 
-	private MinusFunction(Node params){
-        super(params);
-        functionLengthAsserter = new FunctionLengthAsserter();
-	}
-
     @Override
     String getFunctionName() {
         return "MINUS";
     }
 
     @Override
-    public Node evaluateLispFunction() throws Exception {
+    public Node evaluateLispFunction(Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             getFunctionName(),
             expectedParameterLength(),
             params.getLength()
         );
-        Node right = ((ExpressionNode)params).getData();
+        Node right = ((ExpressionNode) params).getData();
         int leftValue = getNumericValue(params.evaluate(true), 1);
         int rightValue = getNumericValue(right.evaluate(true), 2);
         int result = leftValue - rightValue;
@@ -38,8 +33,8 @@ public class MinusFunction extends BaseFunction implements LispFunction {
     }
 
     @Override
-    public LispFunction newFunctionInstance(Node node) {
-        return new MinusFunction(node);
+    public LispFunction newFunctionInstance() {
+        return new MinusFunction();
     }
 
     @Override

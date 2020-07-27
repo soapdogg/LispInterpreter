@@ -12,35 +12,26 @@ public class AtomFunction extends BaseFunction implements LispFunction {
 	    functionLengthAsserter = new FunctionLengthAsserter();
     }
 
-	private AtomFunction(Node params){
-        super(params);
-        functionLengthAsserter = new FunctionLengthAsserter();
-	}
-
-	public Node evaluate() throws Exception{
-        functionLengthAsserter.assertLengthIsAsExpected(
-            getFunctionName(),
-            expectedParameterLength(),
-            params.getLength()
-        );
-	    Node evaluatedResult = params.evaluate(true);
-	    boolean result = !evaluatedResult.isList();
-	    return new AtomNode(result);
-	}
-
     @Override
     String getFunctionName() {
         return "ATOM";
     }
 
     @Override
-    public Node evaluateLispFunction() throws Exception {
-	    return evaluate();
+    public Node evaluateLispFunction(Node params) throws Exception {
+        functionLengthAsserter.assertLengthIsAsExpected(
+            getFunctionName(),
+            expectedParameterLength(),
+            params.getLength()
+        );
+        Node evaluatedResult = params.evaluate(true);
+        boolean result = !evaluatedResult.isList();
+        return new AtomNode(result);
     }
 
     @Override
-    public LispFunction newFunctionInstance(Node node) {
-        return new AtomFunction(node);
+    public LispFunction newFunctionInstance() {
+        return new AtomFunction();
     }
 
     @Override

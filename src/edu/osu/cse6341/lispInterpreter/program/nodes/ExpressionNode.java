@@ -114,8 +114,8 @@ public class ExpressionNode extends Node{
 
 	private Node executeBuiltInFunction(String functionName) throws Exception{
         LispFunction function = functionMap.get(functionName);
-        function = function.newFunctionInstance(data);
-        return function.evaluateLispFunction();
+        function = function.newFunctionInstance();
+        return function.evaluateLispFunction(data);
     }
 
     private String getDataListNotationAsString(){

@@ -12,30 +12,25 @@ public class CarFunction extends BaseFunction implements LispFunction {
 	    functionLengthAsserter = new FunctionLengthAsserter();
     }
 
-	private CarFunction(Node params){
-	    super(params);
-	    functionLengthAsserter = new FunctionLengthAsserter();
-	}
-
     @Override
     String getFunctionName() {
         return "CAR";
     }
 
     @Override
-    public Node evaluateLispFunction() throws Exception {
+    public Node evaluateLispFunction(Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             getFunctionName(),
             expectedParameterLength(),
             params.getLength()
         );
-        ExpressionNode node = getListValue(((ExpressionNode)params).getAddress().evaluate(false));
+        ExpressionNode node = getListValue(((ExpressionNode) params).getAddress().evaluate(false));
         return node.getAddress();
     }
 
     @Override
-    public LispFunction newFunctionInstance(Node node) {
-        return new CarFunction(node);
+    public LispFunction newFunctionInstance() {
+        return new CarFunction();
     }
 
     @Override

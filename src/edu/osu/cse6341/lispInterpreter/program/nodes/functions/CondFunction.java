@@ -16,21 +16,16 @@ public class CondFunction extends BaseFunction implements LispFunction {
 	    functionLengthAsserter = new FunctionLengthAsserter();
     }
 
-	private CondFunction(Node params){
-        super(params);
-        functionLengthAsserter = new FunctionLengthAsserter();
-    }
-
     @Override
     String getFunctionName() {
         return "COND";
     }
 
     @Override
-    public Node evaluateLispFunction() throws Exception {
+    public Node evaluateLispFunction(Node params) throws Exception {
         List<ExpressionNode> parameters = new ArrayList<>();
         while(params.isList()){
-            ExpressionNode expressionParams = (ExpressionNode)params;
+            ExpressionNode expressionParams = (ExpressionNode) params;
             Node tempParameter = expressionParams.getAddress();
             ExpressionNode parameter = getListValue(tempParameter);
             functionLengthAsserter.assertLengthIsAsExpected(
@@ -51,8 +46,8 @@ public class CondFunction extends BaseFunction implements LispFunction {
     }
 
     @Override
-    public LispFunction newFunctionInstance(Node node) {
-        return new CondFunction(node);
+    public LispFunction newFunctionInstance() {
+        return new CondFunction();
     }
 
     @Override

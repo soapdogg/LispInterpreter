@@ -42,11 +42,6 @@ public class DefunFunction extends BaseFunction implements LispFunction {
         functionLengthAsserter = new FunctionLengthAsserter();
     }
 
-    private DefunFunction(Node params){
-        this.params = params;
-        functionLengthAsserter = new FunctionLengthAsserter();
-    }
-
     @Override
     String getFunctionName() {
         return "DEFUN";
@@ -87,7 +82,7 @@ public class DefunFunction extends BaseFunction implements LispFunction {
     }
 
     @Override
-    public Node evaluateLispFunction() throws Exception {
+    public Node evaluateLispFunction(Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             getFunctionName(),
             expectedParameterLength(),
@@ -112,8 +107,8 @@ public class DefunFunction extends BaseFunction implements LispFunction {
     }
 
     @Override
-    public LispFunction newFunctionInstance(Node node) {
-        return new DefunFunction(node);
+    public LispFunction newFunctionInstance() {
+        return new DefunFunction();
     }
 
     @Override

@@ -12,18 +12,13 @@ public class NullFunction extends BaseFunction implements LispFunction {
 	    functionLengthAsserter = new FunctionLengthAsserter();
     }
 
-	private NullFunction(Node params) {
-	    super(params);
-	    functionLengthAsserter = new FunctionLengthAsserter();
-	}
-
     @Override
     String getFunctionName() {
         return "NULL";
     }
 
     @Override
-    public Node evaluateLispFunction() throws Exception {
+    public Node evaluateLispFunction(Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             getFunctionName(),
             expectedParameterLength(),
@@ -35,8 +30,8 @@ public class NullFunction extends BaseFunction implements LispFunction {
     }
 
     @Override
-    public LispFunction newFunctionInstance(Node node) {
-        return new NullFunction(node);
+    public LispFunction newFunctionInstance() {
+        return new NullFunction();
     }
 
     @Override

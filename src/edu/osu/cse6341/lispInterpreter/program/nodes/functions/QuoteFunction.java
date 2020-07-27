@@ -12,29 +12,24 @@ public class QuoteFunction extends BaseFunction implements LispFunction {
 	    functionLengthAsserter = new FunctionLengthAsserter();
     }
 
-	private QuoteFunction(Node params){
-	    super(params);
-	    functionLengthAsserter = new FunctionLengthAsserter();
-    }
-
     @Override
     String getFunctionName() {
         return "QUOTE";
     }
 
     @Override
-    public Node evaluateLispFunction() throws Exception {
+    public Node evaluateLispFunction(Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             getFunctionName(),
             expectedParameterLength(),
             params.getLength()
         );
-        return ((ExpressionNode)params).getAddress();
+        return ((ExpressionNode) params).getAddress();
     }
 
     @Override
-    public LispFunction newFunctionInstance(Node node) {
-        return new QuoteFunction(node);
+    public LispFunction newFunctionInstance() {
+        return new QuoteFunction();
     }
 
     @Override

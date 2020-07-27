@@ -12,24 +12,19 @@ public class ConsFunction extends BaseFunction implements LispFunction {
         functionLengthAsserter = new FunctionLengthAsserter();
     }
 
-	private ConsFunction(Node params){
-	    super(params);
-	    functionLengthAsserter = new FunctionLengthAsserter();
-    }
-
     @Override
     String getFunctionName() {
         return "CONS";
     }
 
     @Override
-    public Node evaluateLispFunction() throws Exception {
+    public Node evaluateLispFunction(Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             getFunctionName(),
             expectedParameterLength(),
             params.getLength()
         );
-        ExpressionNode rightSide = (ExpressionNode) ((ExpressionNode)params).getData();
+        ExpressionNode rightSide = (ExpressionNode) ((ExpressionNode) params).getData();
         return new ExpressionNode(
             ((ExpressionNode) params).getAddress().evaluate(false),
             rightSide.getAddress().evaluate(
@@ -39,8 +34,8 @@ public class ConsFunction extends BaseFunction implements LispFunction {
     }
 
     @Override
-    public LispFunction newFunctionInstance(Node node) {
-        return new ConsFunction(node);
+    public LispFunction newFunctionInstance() {
+        return new ConsFunction();
     }
 
     @Override
