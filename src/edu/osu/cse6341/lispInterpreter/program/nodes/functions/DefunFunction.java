@@ -10,9 +10,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
 
-public class DefunFunction extends BaseFunction {
+public class DefunFunction extends BaseFunction implements LispFunction {
 
-    private static Set<String> invalidFunctionNames;
+    private static final Set<String> invalidFunctionNames;
 
     static {
         invalidFunctionNames = new HashSet<>();
@@ -110,5 +110,25 @@ public class DefunFunction extends BaseFunction {
 
     private static boolean isInvalidName(String name){
         return invalidFunctionNames.contains(name) || name.matches("-?[1-9][0-9]*|0");
+    }
+
+    @Override
+    public Node evaluateLispFunction() throws Exception {
+        return evaluate();
+    }
+
+    @Override
+    public LispFunction newFunctionInstance(Node node) {
+        return new DefunFunction(node);
+    }
+
+    @Override
+    public String getLispFunctionName() {
+        return getFunctionName();
+    }
+
+    @Override
+    public int expectedParameterLength() {
+        return getExpectedLength();
     }
 }

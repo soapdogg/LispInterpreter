@@ -4,7 +4,7 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
-public class GreaterFunction extends BaseFunction {
+public class GreaterFunction extends BaseFunction implements LispFunction {
 
 	public GreaterFunction(){}
 
@@ -37,4 +37,23 @@ public class GreaterFunction extends BaseFunction {
         return 3;
     }
 
+    @Override
+    public Node evaluateLispFunction() throws Exception {
+        return null;
+    }
+
+    @Override
+    public LispFunction newFunctionInstance(Node node) {
+        return null;
+    }
+
+    @Override
+    public String getLispFunctionName() {
+        return null;
+    }
+
+    @Override
+    public int expectedParameterLength() {
+        return 0;
+    }
 }

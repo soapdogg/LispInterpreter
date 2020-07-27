@@ -3,7 +3,7 @@ package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
-public class CdrFunction extends BaseFunction {
+public class CdrFunction extends BaseFunction implements LispFunction {
 
 	public CdrFunction(){}
 
@@ -33,4 +33,23 @@ public class CdrFunction extends BaseFunction {
         return 2;
     }
 
+    @Override
+    public Node evaluateLispFunction() throws Exception {
+        return evaluate();
+    }
+
+    @Override
+    public LispFunction newFunctionInstance(Node node) {
+        return new CdrFunction(node);
+    }
+
+    @Override
+    public String getLispFunctionName() {
+        return getFunctionName();
+    }
+
+    @Override
+    public int expectedParameterLength() {
+        return getExpectedLength();
+    }
 }

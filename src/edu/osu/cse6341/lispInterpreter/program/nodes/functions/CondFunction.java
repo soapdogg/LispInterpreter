@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CondFunction extends BaseFunction {
+public class CondFunction extends BaseFunction implements LispFunction {
 
 	public CondFunction(){}
 
@@ -50,4 +50,23 @@ public class CondFunction extends BaseFunction {
         return 2;
     }
 
+    @Override
+    public Node evaluateLispFunction() throws Exception {
+        return evaluate();
+    }
+
+    @Override
+    public LispFunction newFunctionInstance(Node node) {
+        return new CondFunction(node);
+    }
+
+    @Override
+    public String getLispFunctionName() {
+        return getFunctionName();
+    }
+
+    @Override
+    public int expectedParameterLength() {
+        return getExpectedLength();
+    }
 }

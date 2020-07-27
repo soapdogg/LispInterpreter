@@ -3,7 +3,7 @@ package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
-public class IntFunction extends BaseFunction {
+public class IntFunction extends BaseFunction implements LispFunction {
 
 	public IntFunction(){}
 
@@ -34,4 +34,23 @@ public class IntFunction extends BaseFunction {
         return 2;
     }
 
+    @Override
+    public Node evaluateLispFunction() throws Exception {
+        return evaluate();
+    }
+
+    @Override
+    public LispFunction newFunctionInstance(Node node) {
+        return new IntFunction(node);
+    }
+
+    @Override
+    public String getLispFunctionName() {
+        return getFunctionName();
+    }
+
+    @Override
+    public int expectedParameterLength() {
+        return getExpectedLength();
+    }
 }

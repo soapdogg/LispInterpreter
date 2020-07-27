@@ -4,7 +4,7 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
-public class MinusFunction extends BaseFunction {
+public class MinusFunction extends BaseFunction implements LispFunction {
 
 	public MinusFunction(){}
 
@@ -37,4 +37,23 @@ public class MinusFunction extends BaseFunction {
         return 3;
     }
 
+    @Override
+    public Node evaluateLispFunction() throws Exception {
+        return evaluate();
+    }
+
+    @Override
+    public LispFunction newFunctionInstance(Node node) {
+        return new MinusFunction(node);
+    }
+
+    @Override
+    public String getLispFunctionName() {
+        return getFunctionName();
+    }
+
+    @Override
+    public int expectedParameterLength() {
+        return getExpectedLength();
+    }
 }
