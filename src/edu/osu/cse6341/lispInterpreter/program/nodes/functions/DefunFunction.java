@@ -6,6 +6,7 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.UserDefinedFunction;
 import edu.osu.cse6341.lispInterpreter.program.nodes.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.program.nodes.functions.valueretriver.AtomicValueRetriever;
+import edu.osu.cse6341.lispInterpreter.program.nodes.functions.valueretriver.ListValueRetriever;
 
 import java.util.Set;
 import java.util.HashSet;
@@ -39,10 +40,12 @@ public class DefunFunction extends BaseFunction implements LispFunction {
 
     private final FunctionLengthAsserter functionLengthAsserter;
     private final AtomicValueRetriever atomicValueRetriever;
+    private final ListValueRetriever listValueRetriever;
 
     public DefunFunction(){
         functionLengthAsserter = new FunctionLengthAsserter();
         atomicValueRetriever = new AtomicValueRetriever();
+        listValueRetriever = new ListValueRetriever();
     }
 
     @Override
@@ -60,7 +63,10 @@ public class DefunFunction extends BaseFunction implements LispFunction {
         boolean hasNext = formalParametersNode.isList();
         int counter = 1;
         while(hasNext){
-            ExpressionNode temp = getListValue(formalParametersNode);
+            ExpressionNode temp = listValueRetriever.retrieveListValue(
+                formalParametersNode,
+                getLispFunctionName()
+            );
             Node formalNode = temp.getAddress();
             String formalId = atomicValueRetriever.retrieveAtomicValue(
                 formalNode,
@@ -96,7 +102,10 @@ public class DefunFunction extends BaseFunction implements LispFunction {
             params.getLength()
         );
 
-        ExpressionNode functionNameNode = getListValue(params);
+        ExpressionNode functionNameNode = listValueRetriever.retrieveListValue(
+            params,
+            getLispFunctionName()
+        );
         String functionName = atomicValueRetriever.retrieveAtomicValue(
             functionNameNode.getAddress(),
             1,
@@ -105,10 +114,19 @@ public class DefunFunction extends BaseFunction implements LispFunction {
         assertFunctionNameIsValid(functionName);
 
         Node functionNameNodeData = functionNameNode.getData();
-        ExpressionNode tempNode = getListValue(functionNameNodeData);
-        ExpressionNode formalParametersNode = getListValue(tempNode.getAddress());
+        ExpressionNode tempNode = listValueRetriever.retrieveListValue(
+            functionNameNodeData,
+            getLispFunctionName()
+        );
+        ExpressionNode formalParametersNode = listValueRetriever.retrieveListValue(
+            tempNode.getAddress(),
+            getLispFunctionName()
+        );
         List<String> formalParameters = getFormalParameters(formalParametersNode);
-        ExpressionNode temp = getListValue(functionNameNodeData);
+        ExpressionNode temp = listValueRetriever.retrieveListValue(
+            functionNameNodeData,
+            getLispFunctionName()
+        );
 
         Node body = temp.getData();
 

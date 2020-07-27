@@ -3,6 +3,7 @@ package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.nodes.asserter.FunctionLengthAsserter;
+import edu.osu.cse6341.lispInterpreter.program.nodes.functions.valueretriver.ListValueRetriever;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +12,11 @@ import java.util.List;
 public class CondFunction extends BaseFunction implements LispFunction {
 
     private final FunctionLengthAsserter functionLengthAsserter;
+    private final ListValueRetriever listValueRetriever;
 
 	public CondFunction(){
 	    functionLengthAsserter = new FunctionLengthAsserter();
+	    listValueRetriever = new ListValueRetriever();
     }
 
     @Override
@@ -27,7 +30,10 @@ public class CondFunction extends BaseFunction implements LispFunction {
         while(params.isList()){
             ExpressionNode expressionParams = (ExpressionNode) params;
             Node tempParameter = expressionParams.getAddress();
-            ExpressionNode parameter = getListValue(tempParameter);
+            ExpressionNode parameter = listValueRetriever.retrieveListValue(
+                tempParameter,
+                getLispFunctionName()
+            );
             functionLengthAsserter.assertLengthIsAsExpected(
                 getFunctionName(),
                 expectedParameterLength(),
