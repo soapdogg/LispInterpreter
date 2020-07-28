@@ -5,9 +5,10 @@ import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
-import edu.osu.cse6341.lispInterpreter.program.asserter.FunctionLengthAsserter;
-import edu.osu.cse6341.lispInterpreter.program.functions.valueretriver.NumericValueRetriever;
+import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
+import edu.osu.cse6341.lispInterpreter.valueretriver.NumericValueRetriever;
 import edu.osu.cse6341.lispInterpreter.singleton.AsserterSingleton;
+import edu.osu.cse6341.lispInterpreter.singleton.ValueRetrieverSingleton;
 
 public class TimesFunction implements LispFunction {
 
@@ -16,7 +17,7 @@ public class TimesFunction implements LispFunction {
 
 	public TimesFunction(){
         functionLengthAsserter = AsserterSingleton.INSTANCE.getFunctionLengthAsserter();
-        numericValueRetriever = new NumericValueRetriever();
+        numericValueRetriever = ValueRetrieverSingleton.INSTANCE.getNumericValueRetriever();
     }
 
     @Override

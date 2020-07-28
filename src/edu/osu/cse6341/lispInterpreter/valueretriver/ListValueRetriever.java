@@ -1,18 +1,16 @@
-package edu.osu.cse6341.lispInterpreter.program.functions.valueretriver;
+package edu.osu.cse6341.lispInterpreter.valueretriver;
 
 import edu.osu.cse6341.lispInterpreter.exceptions.NotAListException;
 import edu.osu.cse6341.lispInterpreter.program.Environment;
-import edu.osu.cse6341.lispInterpreter.program.comparator.NodeValueComparator;
+import edu.osu.cse6341.lispInterpreter.comparator.NodeValueComparator;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor(staticName = "newInstance")
 public class ListValueRetriever {
 
     private final NodeValueComparator nodeValueComparator;
-
-    public ListValueRetriever() {
-        nodeValueComparator = new NodeValueComparator();
-    }
 
     public ExpressionNode retrieveListValue(
         final Node node,

@@ -1,6 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.program.parser;
 
-import edu.osu.cse6341.lispInterpreter.program.asserter.TokenKindAsserter;
+import edu.osu.cse6341.lispInterpreter.asserter.TokenKindAsserter;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;

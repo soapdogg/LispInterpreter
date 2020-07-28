@@ -1,8 +1,10 @@
-package edu.osu.cse6341.lispInterpreter.program.functions.valueretriver;
+package edu.osu.cse6341.lispInterpreter.valueretriver;
 
 import edu.osu.cse6341.lispInterpreter.exceptions.NotNumericException;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor(staticName = "newInstance")
 public class NumericValueRetriever {
 
     public int retrieveNumericValue(

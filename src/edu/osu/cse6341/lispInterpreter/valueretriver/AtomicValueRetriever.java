@@ -1,8 +1,10 @@
-package edu.osu.cse6341.lispInterpreter.program.functions.valueretriver;
+package edu.osu.cse6341.lispInterpreter.valueretriver;
 
 import edu.osu.cse6341.lispInterpreter.exceptions.NotAtomicException;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor(staticName = "newInstance")
 public class AtomicValueRetriever {
 
     public String retrieveAtomicValue(

@@ -4,9 +4,10 @@ import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
-import edu.osu.cse6341.lispInterpreter.program.asserter.FunctionLengthAsserter;
-import edu.osu.cse6341.lispInterpreter.program.functions.valueretriver.ListValueRetriever;
+import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
+import edu.osu.cse6341.lispInterpreter.valueretriver.ListValueRetriever;
 import edu.osu.cse6341.lispInterpreter.singleton.AsserterSingleton;
+import edu.osu.cse6341.lispInterpreter.singleton.ValueRetrieverSingleton;
 
 public class CdrFunction implements LispFunction {
 
@@ -15,7 +16,7 @@ public class CdrFunction implements LispFunction {
 
 	public CdrFunction(){
 	    functionLengthAsserter = AsserterSingleton.INSTANCE.getFunctionLengthAsserter();
-	    listValueRetriever = new ListValueRetriever();
+	    listValueRetriever = ValueRetrieverSingleton.INSTANCE.getListValueRetriever();
     }
 
     @Override

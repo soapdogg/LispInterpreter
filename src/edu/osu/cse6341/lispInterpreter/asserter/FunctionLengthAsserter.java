@@ -1,4 +1,4 @@
-package edu.osu.cse6341.lispInterpreter.program.asserter;
+package edu.osu.cse6341.lispInterpreter.asserter;
 
 import edu.osu.cse6341.lispInterpreter.exceptions.WrongFunctionLengthException;
 import lombok.AllArgsConstructor;

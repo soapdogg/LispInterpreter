@@ -6,10 +6,11 @@ import edu.osu.cse6341.lispInterpreter.program.Environment;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.UserDefinedFunction;
-import edu.osu.cse6341.lispInterpreter.program.asserter.FunctionLengthAsserter;
-import edu.osu.cse6341.lispInterpreter.program.functions.valueretriver.AtomicValueRetriever;
-import edu.osu.cse6341.lispInterpreter.program.functions.valueretriver.ListValueRetriever;
+import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
+import edu.osu.cse6341.lispInterpreter.valueretriver.AtomicValueRetriever;
+import edu.osu.cse6341.lispInterpreter.valueretriver.ListValueRetriever;
 import edu.osu.cse6341.lispInterpreter.singleton.AsserterSingleton;
+import edu.osu.cse6341.lispInterpreter.singleton.ValueRetrieverSingleton;
 
 import java.util.Set;
 import java.util.HashSet;
@@ -47,8 +48,8 @@ public class DefunFunction implements LispFunction {
 
     public DefunFunction(){
         functionLengthAsserter = AsserterSingleton.INSTANCE.getFunctionLengthAsserter();
-        atomicValueRetriever = new AtomicValueRetriever();
-        listValueRetriever = new ListValueRetriever();
+        atomicValueRetriever = ValueRetrieverSingleton.INSTANCE.getAtomicValueRetriever();
+        listValueRetriever = ValueRetrieverSingleton.INSTANCE.getListValueRetriever();
     }
 
     private void assertFunctionNameIsValid(String functionName) throws Exception{

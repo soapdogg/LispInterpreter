@@ -1,7 +1,9 @@
-package edu.osu.cse6341.lispInterpreter.program.comparator;
+package edu.osu.cse6341.lispInterpreter.comparator;
 
 import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor(staticName = "newInstance")
 public class NodeValueComparator {
 
     public boolean equalsNil(String value){

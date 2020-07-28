@@ -5,8 +5,9 @@ import java.util.HashMap;
 
 import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
 import edu.osu.cse6341.lispInterpreter.program.Environment;
-import edu.osu.cse6341.lispInterpreter.program.comparator.NodeValueComparator;
+import edu.osu.cse6341.lispInterpreter.comparator.NodeValueComparator;
 import edu.osu.cse6341.lispInterpreter.program.parser.Parser;
+import edu.osu.cse6341.lispInterpreter.singleton.ComparatorSingleton;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 import edu.osu.cse6341.lispInterpreter.program.functions.*;
@@ -41,7 +42,7 @@ public class ExpressionNode extends Node implements LispNode {
 	}
 
 	public ExpressionNode(){
-		nodeValueComparator = new NodeValueComparator();
+		nodeValueComparator = ComparatorSingleton.INSTANCE.getNodeValueComparator();
 		parser = new Parser();
 	}
 
@@ -49,7 +50,7 @@ public class ExpressionNode extends Node implements LispNode {
 	    this.address = address;
         this.data = data;
         this.isList = true;
-        nodeValueComparator = new NodeValueComparator();
+        nodeValueComparator = ComparatorSingleton.INSTANCE.getNodeValueComparator();
         parser = new Parser();
     }
 

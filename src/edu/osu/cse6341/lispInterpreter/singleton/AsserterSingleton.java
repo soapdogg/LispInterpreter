@@ -1,8 +1,10 @@
 package edu.osu.cse6341.lispInterpreter.singleton;
 
-import edu.osu.cse6341.lispInterpreter.program.asserter.FunctionLengthAsserter;
-import edu.osu.cse6341.lispInterpreter.program.asserter.TokenKindAsserter;
+import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
+import edu.osu.cse6341.lispInterpreter.asserter.TokenKindAsserter;
+import lombok.Getter;
 
+@Getter
 public enum AsserterSingleton {
     INSTANCE;
 
@@ -12,13 +14,5 @@ public enum AsserterSingleton {
     AsserterSingleton() {
         functionLengthAsserter = FunctionLengthAsserter.newInstance();
         tokenKindAsserter = TokenKindAsserter.newInstance();
-    }
-
-    public FunctionLengthAsserter getFunctionLengthAsserter() {
-        return functionLengthAsserter;
-    }
-
-    public TokenKindAsserter getTokenKindAsserter() {
-        return tokenKindAsserter;
     }
 }
