@@ -7,6 +7,9 @@ import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
 import edu.osu.cse6341.lispInterpreter.program.Environment;
 import edu.osu.cse6341.lispInterpreter.comparator.NodeValueComparator;
+import edu.osu.cse6341.lispInterpreter.program.IEvaluatable;
+import edu.osu.cse6341.lispInterpreter.program.IParsable;
+import edu.osu.cse6341.lispInterpreter.program.IPrettyPrintable;
 import edu.osu.cse6341.lispInterpreter.program.parser.Parser;
 import edu.osu.cse6341.lispInterpreter.singleton.ComparatorSingleton;
 import edu.osu.cse6341.lispInterpreter.singleton.FunctionSingleton;
@@ -14,12 +17,12 @@ import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 import edu.osu.cse6341.lispInterpreter.functions.*;
 
-public class ExpressionNode extends Node implements LispNode {
+public class ExpressionNode implements LispNode, IParsable, IEvaluatable, IPrettyPrintable {
 
 	private static final Map<String, LispFunction> functionMap;
 
-	private Node address;
-	private Node data;
+	private LispNode address;
+	private LispNode data;
 	private boolean isList;
 	private final NodeValueComparator nodeValueComparator;
 	private final Parser parser;
@@ -48,7 +51,10 @@ public class ExpressionNode extends Node implements LispNode {
 		parser = new Parser();
 	}
 
-	public ExpressionNode(Node address, Node data){
+	public ExpressionNode(
+		LispNode address,
+		LispNode data
+	){
 	    this.address = address;
         this.data = data;
         this.isList = true;
@@ -61,16 +67,16 @@ public class ExpressionNode extends Node implements LispNode {
 		TokenKind tokenKind = tokenizer.getCurrent().getTokenKind();
 	    isList = tokenKind != TokenKind.CLOSE_TOKEN;
 		if(!isList) return;
-		address = (Node)parser.parseIntoNode(tokenizer);
+		address = parser.parseIntoNode(tokenizer);
         data = new ExpressionNode();
         data.parse(tokenizer);
 	}
 
 	@Override
-	public Node evaluate(boolean areLiteralsAllowed) throws Exception{
+	public LispNode evaluate(boolean areLiteralsAllowed) throws Exception{
 	    if(this.address == null) return new AtomNode(false);
 
-	    String addressValue = ((LispNode)this.address).getNodeValue();
+	    String addressValue = this.address.getNodeValue();
 	    Environment e = Environment.getEnvironment();
         if(e.isVariableName(addressValue)) return e.getVariableValue(addressValue);
         if(e.isFunctionName(addressValue)) return e.evaluateFunction(addressValue, this.data);
@@ -83,7 +89,7 @@ public class ExpressionNode extends Node implements LispNode {
     public String getListNotationToString(boolean isFirst){
         StringBuilder sb = new StringBuilder();
         if(isFirst) sb.append('(');
-        sb.append(address.getListNotationToString(((LispNode)address).isNodeList()));
+        sb.append(address.getListNotationToString(address.isNodeList()));
         sb.append(getDataListNotationAsString());
         return sb.toString();
     }
@@ -95,22 +101,22 @@ public class ExpressionNode extends Node implements LispNode {
 			: ReservedValuesConstants.NIL;
     }
 
-	public Node getData(){
+	public LispNode getData(){
 		return data;
 	}
 
-	public Node getAddress(){
+	public LispNode getAddress(){
 	    return address;
 	}
 
-	private Node executeBuiltInFunction(String functionName) throws Exception{
+	private LispNode executeBuiltInFunction(String functionName) throws Exception{
         LispFunction function = functionMap.get(functionName);
-        return function.evaluateLispFunction((LispNode)data);
+        return function.evaluateLispFunction(data);
     }
 
     private String getDataListNotationAsString(){
-        if(!((LispNode)data).isNodeList()) {
-            String dataString = (((LispNode)data).isNodeNumeric() || nodeValueComparator.equalsT(((LispNode)data).getNodeValue()))
+        if(!data.isNodeList()) {
+            String dataString = (data.isNodeNumeric() || nodeValueComparator.equalsT(data.getNodeValue()))
                     ? (" . " + data.getListNotationToString(false))
                     : "";
             return dataString + ')';
@@ -119,7 +125,7 @@ public class ExpressionNode extends Node implements LispNode {
     }
 
 	@Override
-	public Node evaluateLispNode(boolean areLiteralsAllowed) throws Exception {
+	public LispNode evaluateLispNode(boolean areLiteralsAllowed) throws Exception {
 		return evaluate(areLiteralsAllowed);
 	}
 
@@ -132,7 +138,7 @@ public class ExpressionNode extends Node implements LispNode {
 	public String getNodeValue() {
 		return address == null
 			? ReservedValuesConstants.NIL
-			: ((LispNode)address).getNodeValue() + ' ' + ((LispNode)data).getNodeValue();
+			: address.getNodeValue() + ' ' + data.getNodeValue();
 	}
 
 	@Override
@@ -147,6 +153,6 @@ public class ExpressionNode extends Node implements LispNode {
 
 	@Override
 	public int parameterLength() {
-		return isNodeList() ? ((LispNode)data).parameterLength() + 1 : 0;
+		return isNodeList() ? data.parameterLength() + 1 : 0;
 	}
 }

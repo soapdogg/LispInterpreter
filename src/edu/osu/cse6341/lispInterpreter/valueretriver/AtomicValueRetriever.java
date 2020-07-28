@@ -2,7 +2,6 @@ package edu.osu.cse6341.lispInterpreter.valueretriver;
 
 import edu.osu.cse6341.lispInterpreter.exceptions.NotAtomicException;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
-import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(staticName = "newInstance")
@@ -18,7 +17,7 @@ public class AtomicValueRetriever {
                 " of function " +
                 functionName +
                 " is not atomic!    Actual: " +
-                ((Node)node).getListNotationToString(true) +
+                node.getListNotationToString(true) +
                 '\n';
             throw new NotAtomicException(sb);
         }

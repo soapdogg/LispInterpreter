@@ -2,10 +2,13 @@ package edu.osu.cse6341.lispInterpreter.program.nodes;
 
 import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
 import edu.osu.cse6341.lispInterpreter.program.Environment;
+import edu.osu.cse6341.lispInterpreter.program.IEvaluatable;
+import edu.osu.cse6341.lispInterpreter.program.IParsable;
+import edu.osu.cse6341.lispInterpreter.program.IPrettyPrintable;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
 
-public class AtomNode extends Node implements LispNode {
+public class AtomNode implements LispNode, IParsable, IEvaluatable, IPrettyPrintable {
 	
 	private String value;
 
@@ -28,7 +31,7 @@ public class AtomNode extends Node implements LispNode {
 	}
 
 	@Override
-	public Node evaluate(boolean areLiteralsAllowed){
+	public LispNode evaluate(boolean areLiteralsAllowed){
 	    if(Environment.getEnvironment().isVariableName(value)) return Environment.getEnvironment().getVariableValue(value);
         return this;
 	}
@@ -44,7 +47,7 @@ public class AtomNode extends Node implements LispNode {
     }
 
     @Override
-    public Node evaluateLispNode(boolean areLiteralsAllowed) {
+    public LispNode evaluateLispNode(boolean areLiteralsAllowed) {
         return evaluate(areLiteralsAllowed);
     }
 

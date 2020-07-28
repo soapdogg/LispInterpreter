@@ -5,7 +5,6 @@ import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
-import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.valueretriver.NumericValueRetriever;
 import lombok.AllArgsConstructor;
@@ -17,22 +16,22 @@ public class TimesFunction implements LispFunction {
     private final NumericValueRetriever numericValueRetriever;
 
     @Override
-    public Node evaluateLispFunction(final LispNode params) throws Exception {
+    public LispNode evaluateLispFunction(final LispNode params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.TIMES,
             FunctionLengthConstants.THREE,
             params.parameterLength()
         );
-        Node evaluatedAddress = params.evaluateLispNode(true);
+        LispNode evaluatedAddress = params.evaluateLispNode(true);
         int leftValue = numericValueRetriever.retrieveNumericValue(
-            (LispNode)evaluatedAddress,
+            evaluatedAddress,
             1,
             FunctionNameConstants.TIMES
         );
-        Node right = ((ExpressionNode) params).getData();
-        Node evaluatedData = right.evaluate(true);
+        LispNode right = ((ExpressionNode) params).getData();
+        LispNode evaluatedData = right.evaluate(true);
         int rightValue = numericValueRetriever.retrieveNumericValue(
-            (LispNode)evaluatedData,
+            evaluatedData,
             2,
             FunctionNameConstants.TIMES
         );

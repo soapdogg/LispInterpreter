@@ -5,7 +5,6 @@ import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.program.Environment;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
-import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.UserDefinedFunction;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.valueretriver.AtomicValueRetriever;
@@ -52,18 +51,18 @@ public class DefunFunction implements LispFunction {
             throw new Exception("Error! Invalid function name: " + functionName + "\n");
     }
 
-    private List<String> getFormalParameters(Node formalParametersNode) throws Exception{
+    private List<String> getFormalParameters(LispNode formalParametersNode) throws Exception{
         List<String> formalParameters = new ArrayList<>();
-        boolean hasNext = ((LispNode)formalParametersNode).isNodeList();
+        boolean hasNext = formalParametersNode.isNodeList();
         int counter = 1;
         while(hasNext){
             ExpressionNode temp = listValueRetriever.retrieveListValue(
-                (LispNode)formalParametersNode,
+                formalParametersNode,
                 FunctionNameConstants.DEFUN
             );
-            Node formalNode = temp.getAddress();
+            LispNode formalNode = temp.getAddress();
             String formalId = atomicValueRetriever.retrieveAtomicValue(
-                (LispNode)formalNode,
+                formalNode,
                 counter,
                 FunctionNameConstants.DEFUN
             );
@@ -71,7 +70,7 @@ public class DefunFunction implements LispFunction {
             formalParameters.add(formalId);
             formalParametersNode = temp.getData();
             ++counter;
-            hasNext = ((LispNode)formalParametersNode).isNodeList();
+            hasNext = formalParametersNode.isNodeList();
         }
         return formalParameters;
     }
@@ -89,7 +88,7 @@ public class DefunFunction implements LispFunction {
     }
 
     @Override
-    public Node evaluateLispFunction(final LispNode params) throws Exception {
+    public LispNode evaluateLispFunction(final LispNode params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.DEFUN,
             FunctionLengthConstants.FOUR,
@@ -101,28 +100,28 @@ public class DefunFunction implements LispFunction {
             FunctionNameConstants.DEFUN
         );
         String functionName = atomicValueRetriever.retrieveAtomicValue(
-            (LispNode)functionNameNode.getAddress(),
+            functionNameNode.getAddress(),
             1,
             FunctionNameConstants.DEFUN
         );
         assertFunctionNameIsValid(functionName);
 
-        Node functionNameNodeData = functionNameNode.getData();
+        LispNode functionNameNodeData = functionNameNode.getData();
         ExpressionNode tempNode = listValueRetriever.retrieveListValue(
-            (LispNode)functionNameNodeData,
+            functionNameNodeData,
             FunctionNameConstants.DEFUN
         );
         ExpressionNode formalParametersNode = listValueRetriever.retrieveListValue(
-            (LispNode)tempNode.getAddress(),
+            tempNode.getAddress(),
             FunctionNameConstants.DEFUN
         );
         List<String> formalParameters = getFormalParameters(formalParametersNode);
         ExpressionNode temp = listValueRetriever.retrieveListValue(
-            (LispNode)functionNameNodeData,
+            functionNameNodeData,
             FunctionNameConstants.DEFUN
         );
 
-        Node body = temp.getData();
+        LispNode body = temp.getData();
 
         UserDefinedFunction userDefinedFunction = new UserDefinedFunction(functionName, formalParameters, body);
         Environment.getEnvironment().addToFunctions(functionName, userDefinedFunction);
