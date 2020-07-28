@@ -21,7 +21,7 @@ public class AtomFunction implements LispFunction {
             params.parameterLength()
         );
         Node evaluatedResult = params.evaluateLispNode(true);
-        boolean result = !evaluatedResult.isList();
+        boolean result = !((LispNode)evaluatedResult).isNodeList();
         return new AtomNode(result);
     }
 }

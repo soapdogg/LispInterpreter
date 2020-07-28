@@ -54,7 +54,7 @@ public class DefunFunction implements LispFunction {
 
     private List<String> getFormalParameters(Node formalParametersNode) throws Exception{
         List<String> formalParameters = new ArrayList<>();
-        boolean hasNext = formalParametersNode.isList();
+        boolean hasNext = ((LispNode)formalParametersNode).isNodeList();
         int counter = 1;
         while(hasNext){
             ExpressionNode temp = listValueRetriever.retrieveListValue(
@@ -71,7 +71,7 @@ public class DefunFunction implements LispFunction {
             formalParameters.add(formalId);
             formalParametersNode = temp.getData();
             ++counter;
-            hasNext = formalParametersNode.isList();
+            hasNext = ((LispNode)formalParametersNode).isNodeList();
         }
         return formalParameters;
     }

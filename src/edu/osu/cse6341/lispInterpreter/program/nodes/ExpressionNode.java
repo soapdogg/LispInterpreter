@@ -80,22 +80,17 @@ public class ExpressionNode extends Node implements LispNode {
 	}
 
     @Override
-    public boolean isList(){
-        return isList;
-    }
-
-    @Override
     public String getListNotationToString(boolean isFirst){
         StringBuilder sb = new StringBuilder();
         if(isFirst) sb.append('(');
-        sb.append(address.getListNotationToString(address.isList()));
+        sb.append(address.getListNotationToString(((LispNode)address).isNodeList()));
         sb.append(getDataListNotationAsString());
         return sb.toString();
     }
 
     @Override
     public String getDotNotationToString() {
-        return isList()
+        return isNodeList()
 			? '(' + address.getDotNotationToString() + " . " + data.getDotNotationToString() + ')'
 			: ReservedValuesConstants.NIL;
     }
@@ -114,7 +109,7 @@ public class ExpressionNode extends Node implements LispNode {
     }
 
     private String getDataListNotationAsString(){
-        if(!data.isList()) {
+        if(!((LispNode)data).isNodeList()) {
             String dataString = (((LispNode)data).isNodeNumeric() || nodeValueComparator.equalsT(((LispNode)data).getNodeValue()))
                     ? (" . " + data.getListNotationToString(false))
                     : "";
@@ -142,7 +137,7 @@ public class ExpressionNode extends Node implements LispNode {
 
 	@Override
 	public boolean isNodeList() {
-		return isList();
+		return isList;
 	}
 
 	@Override
@@ -152,6 +147,6 @@ public class ExpressionNode extends Node implements LispNode {
 
 	@Override
 	public int parameterLength() {
-		return isList() ? ((LispNode)data).parameterLength() + 1 : 0;
+		return isNodeList() ? ((LispNode)data).parameterLength() + 1 : 0;
 	}
 }

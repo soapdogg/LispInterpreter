@@ -44,11 +44,6 @@ public class AtomNode extends Node implements LispNode {
     }
 
     @Override
-    public boolean isList() {
-        return false;
-    }
-
-    @Override
     public Node evaluateLispNode(boolean areLiteralsAllowed) {
         return evaluate(areLiteralsAllowed);
     }
@@ -65,7 +60,7 @@ public class AtomNode extends Node implements LispNode {
 
     @Override
     public boolean isNodeList() {
-        return isList();
+        return false;
     }
 
     @Override

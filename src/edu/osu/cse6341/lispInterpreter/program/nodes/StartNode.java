@@ -29,7 +29,7 @@ public class StartNode implements IParsable, IEvaluatable, IPrettyPrintable{
 
 	@Override
 	public Node evaluate(boolean areLiteralsAllowed) throws Exception{
-        boolean isNotList = !node.isList();
+        boolean isNotList = !((LispNode)node).isNodeList();
         boolean isNotNumeric = !((LispNode)node).isNodeNumeric();
         boolean isNotT = !((LispNode)node).getNodeValue().equals(ReservedValuesConstants.T);
         boolean isNotNil = !((LispNode)node).getNodeValue().equals(ReservedValuesConstants.NIL);
@@ -43,7 +43,7 @@ public class StartNode implements IParsable, IEvaluatable, IPrettyPrintable{
     public String getListNotationToString(boolean isFirst){
 		StringBuilder sb = new StringBuilder();
 		if(node != null) {
-		    sb.append(node.getListNotationToString(node.isList()));
+		    sb.append(node.getListNotationToString(((LispNode)node).isNodeList()));
 		    sb.append('\n');
 		}
 		if(nextExpressionStartNode != null) sb.append(nextExpressionStartNode.getListNotationToString(isFirst));

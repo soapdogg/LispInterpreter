@@ -21,7 +21,7 @@ public class ListValueRetriever {
         String temp = node.getNodeValue();
         Environment e = Environment.getEnvironment();
         boolean isVariable = e.isVariableName(temp);
-        if(isVariable) isVariableList = e.getVariableValue(temp).isList();
+        if(isVariable) isVariableList = ((LispNode)e.getVariableValue(temp)).isNodeList();
         if((!isVariable && !node.isNodeList() && node.parameterLength() == 1) || (isVariable && !isVariableList) || (!node.isNodeList() && !nodeValueComparator.equalsNil(node.getNodeValue()))) {
             String sb = "Error! Parameter of " + functionName +
                 " is not a list.    Actual: " +
