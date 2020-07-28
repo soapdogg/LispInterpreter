@@ -3,6 +3,7 @@ package edu.osu.cse6341.lispInterpreter.functions;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
+import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.valueretriver.ListValueRetriever;
@@ -15,15 +16,15 @@ public class CarFunction implements LispFunction {
     private final ListValueRetriever listValueRetriever;
 
     @Override
-    public Node evaluateLispFunction(final Node params) throws Exception {
+    public Node evaluateLispFunction(final LispNode params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.CAR,
             FunctionLengthConstants.TWO,
-            params.getLength()
+            params.parameterLength()
         );
         Node evaluatedAddress = ((ExpressionNode) params).getAddress().evaluate(false);
         ExpressionNode node = listValueRetriever.retrieveListValue(
-            evaluatedAddress,
+            (LispNode)evaluatedAddress,
             FunctionNameConstants.CAR
         );
         return node.getAddress();

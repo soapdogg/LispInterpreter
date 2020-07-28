@@ -4,6 +4,7 @@ import edu.osu.cse6341.lispInterpreter.exceptions.NotAListException;
 import edu.osu.cse6341.lispInterpreter.program.Environment;
 import edu.osu.cse6341.lispInterpreter.comparator.NodeValueComparator;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
+import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import lombok.AllArgsConstructor;
 
@@ -13,22 +14,22 @@ public class ListValueRetriever {
     private final NodeValueComparator nodeValueComparator;
 
     public ExpressionNode retrieveListValue(
-        final Node node,
+        final LispNode node,
         final String functionName
     ) throws Exception{
         boolean isVariableList = false;
-        String temp = node.getValue();
+        String temp = node.getNodeValue();
         Environment e = Environment.getEnvironment();
         boolean isVariable = e.isVariableName(temp);
         if(isVariable) isVariableList = e.getVariableValue(temp).isList();
-        if((!isVariable && !node.isList() && node.getLength() == 1) || (isVariable && !isVariableList) || (!node.isList() && !nodeValueComparator.equalsNil(node.getValue()))) {
+        if((!isVariable && !node.isNodeList() && node.parameterLength() == 1) || (isVariable && !isVariableList) || (!node.isNodeList() && !nodeValueComparator.equalsNil(node.getNodeValue()))) {
             String sb = "Error! Parameter of " + functionName +
                 " is not a list.    Actual: " +
-                node.getValue() +
+                node.getNodeValue() +
                 '\n';
             throw new NotAListException(sb);
         }
-        Node result = isVariableList ? e.getVariableValue(temp) : node;
+        Node result = isVariableList ? e.getVariableValue(temp) :(Node) node;
         return (ExpressionNode)result;
     }
 }

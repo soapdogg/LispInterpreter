@@ -4,6 +4,7 @@ import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.comparator.NodeValueComparator;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
+import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.valueretriver.ListValueRetriever;
@@ -20,14 +21,14 @@ public class CondFunction implements LispFunction {
     private final NodeValueComparator nodeValueComparator;
 
     @Override
-    public Node evaluateLispFunction(final Node params) throws Exception {
+    public Node evaluateLispFunction(final LispNode params) throws Exception {
         List<ExpressionNode> parameters = new ArrayList<>();
-        Node current = params;
-        while(current.isList()){
+        LispNode current = params;
+        while(current.isNodeList()){
             ExpressionNode expressionParams = (ExpressionNode) current;
             Node tempParameter = expressionParams.getAddress();
             ExpressionNode parameter = listValueRetriever.retrieveListValue(
-                tempParameter,
+                (LispNode)tempParameter,
                 FunctionNameConstants.COND
             );
             functionLengthAsserter.assertLengthIsAsExpected(
@@ -36,7 +37,7 @@ public class CondFunction implements LispFunction {
                 parameter.getData().getLength()
             );
             parameters.add(parameter);
-            current = expressionParams.getData();
+            current = (LispNode) expressionParams.getData();
         }
         for(ExpressionNode parameter: parameters){
             Node booleanResult = parameter.getAddress().evaluate(true);

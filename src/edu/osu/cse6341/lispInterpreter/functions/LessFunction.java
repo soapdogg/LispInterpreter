@@ -4,6 +4,7 @@ import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
+import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.valueretriver.NumericValueRetriever;
@@ -16,13 +17,13 @@ public class LessFunction implements LispFunction {
     private final NumericValueRetriever numericValueRetriever;
 
     @Override
-    public Node evaluateLispFunction(final Node params) throws Exception {
+    public Node evaluateLispFunction(final LispNode params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.LESS,
             FunctionLengthConstants.THREE,
-            params.getLength()
+            params.parameterLength()
         );
-        Node evaluatedAddress = params.evaluate(true);
+        Node evaluatedAddress = params.evaluateLispNode(true);
         int leftValue = numericValueRetriever.retrieveNumericValue(
             evaluatedAddress,
             1,

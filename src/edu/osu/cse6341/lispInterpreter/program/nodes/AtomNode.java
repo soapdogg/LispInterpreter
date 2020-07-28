@@ -69,6 +69,31 @@ public class AtomNode extends Node implements LispNode {
     }
 
     @Override
+    public Node evaluateLispNode(boolean areLiteralsAllowed) {
+        return evaluate(areLiteralsAllowed);
+    }
+
+    @Override
+    public LispNode newLispNodeInstance() {
+        return new AtomNode();
+    }
+
+    @Override
+    public String getNodeValue() {
+        return getValue();
+    }
+
+    @Override
+    public boolean isNodeList() {
+        return isList();
+    }
+
+    @Override
+    public boolean isNodeNumeric() {
+        return isNumeric();
+    }
+
+    @Override
     public int parameterLength() {
         return getLength();
     }

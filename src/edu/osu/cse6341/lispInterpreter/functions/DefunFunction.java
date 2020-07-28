@@ -4,6 +4,7 @@ import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.program.Environment;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
+import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.UserDefinedFunction;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
@@ -57,7 +58,7 @@ public class DefunFunction implements LispFunction {
         int counter = 1;
         while(hasNext){
             ExpressionNode temp = listValueRetriever.retrieveListValue(
-                formalParametersNode,
+                (LispNode)formalParametersNode,
                 FunctionNameConstants.DEFUN
             );
             Node formalNode = temp.getAddress();
@@ -88,11 +89,11 @@ public class DefunFunction implements LispFunction {
     }
 
     @Override
-    public Node evaluateLispFunction(final Node params) throws Exception {
+    public Node evaluateLispFunction(final LispNode params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.DEFUN,
             FunctionLengthConstants.FOUR,
-            params.getLength()
+            params.parameterLength()
         );
 
         ExpressionNode functionNameNode = listValueRetriever.retrieveListValue(
@@ -108,16 +109,16 @@ public class DefunFunction implements LispFunction {
 
         Node functionNameNodeData = functionNameNode.getData();
         ExpressionNode tempNode = listValueRetriever.retrieveListValue(
-            functionNameNodeData,
+            (LispNode)functionNameNodeData,
             FunctionNameConstants.DEFUN
         );
         ExpressionNode formalParametersNode = listValueRetriever.retrieveListValue(
-            tempNode.getAddress(),
+            (LispNode)tempNode.getAddress(),
             FunctionNameConstants.DEFUN
         );
         List<String> formalParameters = getFormalParameters(formalParametersNode);
         ExpressionNode temp = listValueRetriever.retrieveListValue(
-            functionNameNodeData,
+            (LispNode)functionNameNodeData,
             FunctionNameConstants.DEFUN
         );
 

@@ -129,7 +129,7 @@ public class ExpressionNode extends Node implements LispNode {
 
 	private Node executeBuiltInFunction(String functionName) throws Exception{
         LispFunction function = functionMap.get(functionName);
-        return function.evaluateLispFunction(data);
+        return function.evaluateLispFunction((LispNode)data);
     }
 
     private String getDataListNotationAsString(){
@@ -141,6 +141,31 @@ public class ExpressionNode extends Node implements LispNode {
         }
         else return ' ' + data.getListNotationToString(false);
     }
+
+	@Override
+	public Node evaluateLispNode(boolean areLiteralsAllowed) throws Exception {
+		return evaluate(areLiteralsAllowed);
+	}
+
+	@Override
+	public LispNode newLispNodeInstance() {
+		return new ExpressionNode();
+	}
+
+	@Override
+	public String getNodeValue() {
+		return getValue();
+	}
+
+	@Override
+	public boolean isNodeList() {
+		return isList();
+	}
+
+	@Override
+	public boolean isNodeNumeric() {
+		return isNumeric();
+	}
 
 	@Override
 	public int parameterLength() {
