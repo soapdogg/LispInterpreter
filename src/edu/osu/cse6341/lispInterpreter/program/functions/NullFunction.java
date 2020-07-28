@@ -2,6 +2,7 @@ package edu.osu.cse6341.lispInterpreter.program.functions;
 
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
+import edu.osu.cse6341.lispInterpreter.program.comparator.NodeValueComparator;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.asserter.FunctionLengthAsserter;
@@ -9,9 +10,11 @@ import edu.osu.cse6341.lispInterpreter.program.asserter.FunctionLengthAsserter;
 public class NullFunction implements LispFunction {
 
     private final FunctionLengthAsserter functionLengthAsserter;
+    private final NodeValueComparator nodeValueComparator;
 
 	public NullFunction(){
 	    functionLengthAsserter = new FunctionLengthAsserter();
+	    nodeValueComparator = new NodeValueComparator();
     }
 
     @Override
@@ -22,7 +25,7 @@ public class NullFunction implements LispFunction {
             params.getLength()
         );
         Node evaluatedResult = params.evaluate(true);
-        boolean result = Node.equalsNil(evaluatedResult.getValue());
+        boolean result = nodeValueComparator.equalsNil(evaluatedResult.getValue());
         return new AtomNode(result);
     }
 }

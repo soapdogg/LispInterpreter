@@ -5,6 +5,8 @@ import java.util.HashMap;
 
 import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
 import edu.osu.cse6341.lispInterpreter.program.Environment;
+import edu.osu.cse6341.lispInterpreter.program.comparator.NodeValueComparator;
+import edu.osu.cse6341.lispInterpreter.program.parser.Parser;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 import edu.osu.cse6341.lispInterpreter.program.functions.*;
@@ -16,6 +18,8 @@ public class ExpressionNode extends Node implements LispNode {
 	private Node address;
 	private Node data;
 	private boolean isList;
+	private final NodeValueComparator nodeValueComparator;
+	private final Parser parser;
 
 	static{
 		functionMap = new HashMap<>();
@@ -36,12 +40,17 @@ public class ExpressionNode extends Node implements LispNode {
 		functionMap.put("TIMES", new TimesFunction());
 	}
 
-	public ExpressionNode(){}
+	public ExpressionNode(){
+		nodeValueComparator = new NodeValueComparator();
+		parser = new Parser();
+	}
 
 	public ExpressionNode(Node address, Node data){
 	    this.address = address;
         this.data = data;
         this.isList = true;
+        nodeValueComparator = new NodeValueComparator();
+        parser = new Parser();
     }
 
 	@Override
@@ -49,7 +58,7 @@ public class ExpressionNode extends Node implements LispNode {
 		TokenKind tokenKind = tokenizer.getCurrent().getTokenKind();
 	    isList = tokenKind != TokenKind.CLOSE_TOKEN;
 		if(!isList) return;
-		address = Node.parseIntoNode(tokenizer);
+		address = parser.parseIntoNode(tokenizer);
         data = new ExpressionNode();
         data.parse(tokenizer);
 	}
@@ -122,7 +131,7 @@ public class ExpressionNode extends Node implements LispNode {
 
     private String getDataListNotationAsString(){
         if(!data.isList()) {
-            String dataString = (data.isNumeric() || equalsT(data.getValue()))
+            String dataString = (data.isNumeric() || nodeValueComparator.equalsT(data.getValue()))
                     ? (" . " + data.getListNotationToString(false))
                     : "";
             return dataString + ')';
