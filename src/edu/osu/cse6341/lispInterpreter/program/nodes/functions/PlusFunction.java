@@ -1,5 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
+import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
@@ -21,7 +22,7 @@ public class PlusFunction implements LispFunction {
     public Node evaluateLispFunction(Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.PLUS,
-            expectedParameterLength(),
+            FunctionLengthConstants.THREE,
             params.getLength()
         );
         Node right = ((ExpressionNode) params).getData();
@@ -37,10 +38,5 @@ public class PlusFunction implements LispFunction {
         );
         int result = leftValue + rightValue;
         return new AtomNode(result);
-    }
-
-    @Override
-    public int expectedParameterLength() {
-        return 3;
     }
 }

@@ -1,5 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
+import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
@@ -17,7 +18,7 @@ public class ConsFunction implements LispFunction {
     public Node evaluateLispFunction(Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.CONS,
-            expectedParameterLength(),
+            FunctionLengthConstants.THREE,
             params.getLength()
         );
         ExpressionNode rightSide = (ExpressionNode) ((ExpressionNode) params).getData();
@@ -27,10 +28,5 @@ public class ConsFunction implements LispFunction {
             false
             )
         );
-    }
-
-    @Override
-    public int expectedParameterLength() {
-        return 3;
     }
 }

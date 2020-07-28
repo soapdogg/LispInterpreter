@@ -1,5 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
+import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.program.Environment;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
@@ -94,7 +95,7 @@ public class DefunFunction implements LispFunction {
     public Node evaluateLispFunction(Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.DEFUN,
-            expectedParameterLength(),
+            FunctionLengthConstants.FOUR,
             params.getLength()
         );
 
@@ -129,10 +130,5 @@ public class DefunFunction implements LispFunction {
         UserDefinedFunction userDefinedFunction = new UserDefinedFunction(functionName, formalParameters, body);
         Environment.getEnvironment().addToFunctions(functionName, userDefinedFunction);
         return null;
-    }
-
-    @Override
-    public int expectedParameterLength() {
-        return 4;
     }
 }

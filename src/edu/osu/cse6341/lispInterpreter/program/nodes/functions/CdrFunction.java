@@ -1,5 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
 
+import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
@@ -20,7 +21,7 @@ public class CdrFunction implements LispFunction {
     public Node evaluateLispFunction(Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.CDR,
-            expectedParameterLength(),
+            FunctionLengthConstants.TWO,
             params.getLength()
         );
         ExpressionNode node = listValueRetriever.retrieveListValue(
@@ -28,10 +29,5 @@ public class CdrFunction implements LispFunction {
             FunctionNameConstants.CDR
         );
         return node.getData();
-    }
-
-    @Override
-    public int expectedParameterLength() {
-        return 2;
     }
 }
