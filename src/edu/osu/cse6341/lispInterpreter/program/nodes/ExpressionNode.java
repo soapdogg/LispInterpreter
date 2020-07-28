@@ -125,11 +125,6 @@ public class ExpressionNode implements LispNode, IParsable, IEvaluatable, IPrett
     }
 
 	@Override
-	public LispNode evaluateLispNode(boolean areLiteralsAllowed) throws Exception {
-		return evaluate(areLiteralsAllowed);
-	}
-
-	@Override
 	public LispNode newLispNodeInstance() {
 		return new ExpressionNode();
 	}

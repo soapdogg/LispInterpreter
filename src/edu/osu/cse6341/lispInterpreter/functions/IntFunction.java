@@ -19,7 +19,7 @@ public class IntFunction implements LispFunction {
             FunctionLengthConstants.TWO,
             params.parameterLength()
         );
-        LispNode evaluatedResult = params.evaluateLispNode(true);
+        LispNode evaluatedResult = params.evaluate(true);
         boolean result = evaluatedResult.isNodeNumeric();
         return new AtomNode(result);
     }

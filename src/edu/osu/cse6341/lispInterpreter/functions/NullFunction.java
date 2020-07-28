@@ -21,7 +21,7 @@ public class NullFunction implements LispFunction {
             FunctionLengthConstants.TWO,
             params.parameterLength()
         );
-        LispNode evaluatedResult = params.evaluateLispNode(true);
+        LispNode evaluatedResult = params.evaluate(true);
         boolean result = nodeValueComparator.equalsNil(evaluatedResult.getNodeValue());
         return new AtomNode(result);
     }

@@ -47,11 +47,6 @@ public class AtomNode implements LispNode, IParsable, IEvaluatable, IPrettyPrint
     }
 
     @Override
-    public LispNode evaluateLispNode(boolean areLiteralsAllowed) {
-        return evaluate(areLiteralsAllowed);
-    }
-
-    @Override
     public LispNode newLispNodeInstance() {
         return new AtomNode();
     }

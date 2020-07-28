@@ -22,7 +22,7 @@ public class EqFunction implements LispFunction {
             FunctionLengthConstants.THREE,
             params.parameterLength()
         );
-        LispNode evaluatedAddress = params.evaluateLispNode(true);
+        LispNode evaluatedAddress = params.evaluate(true);
         String leftValue = atomicValueRetriever.retrieveAtomicValue(
             evaluatedAddress,
             1,

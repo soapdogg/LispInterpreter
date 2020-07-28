@@ -22,7 +22,7 @@ public class GreaterFunction implements LispFunction {
             FunctionLengthConstants.THREE,
             params.parameterLength()
         );
-        LispNode evaluatedAddress = params.evaluateLispNode(true);
+        LispNode evaluatedAddress = params.evaluate(true);
         int leftValue = numericValueRetriever.retrieveNumericValue(
             evaluatedAddress,
             1,
