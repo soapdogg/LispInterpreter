@@ -1,6 +1,7 @@
 package edu.osu.cse6341.lispInterpreter.program;
 
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
+import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 
 import java.util.HashMap;
@@ -41,10 +42,10 @@ public class UserDefinedFunction {
     }
 
     private void assertActualsLengthSameAsFormalsLength(Node params) throws Exception{
-         if(formalParameters.size() != params.getLength())
+         if(formalParameters.size() != ((LispNode)params).parameterLength())
             throw new Exception("Length of actual parameters does not match length of formal parameters for function: "
                     + functionName
                     + "\nExpected: " + formalParameters.size()
-                    + "    Actual: " + params.getLength() + "\n");
+                    + "    Actual: " + ((LispNode)params).parameterLength()  + "\n");
     }
 }

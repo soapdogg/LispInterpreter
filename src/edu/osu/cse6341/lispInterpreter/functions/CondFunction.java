@@ -34,7 +34,7 @@ public class CondFunction implements LispFunction {
             functionLengthAsserter.assertLengthIsAsExpected(
                 FunctionNameConstants.COND,
                 FunctionLengthConstants.TWO,
-                parameter.getData().getLength()
+                ((LispNode)parameter.getData()).parameterLength()
             );
             parameters.add(parameter);
             current = (LispNode) expressionParams.getData();

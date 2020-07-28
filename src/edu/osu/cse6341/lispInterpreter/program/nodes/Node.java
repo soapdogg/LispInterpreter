@@ -8,6 +8,5 @@ public abstract class Node implements IParsable, IEvaluatable, IPrettyPrintable{
 
     public abstract String getValue();
     public abstract boolean isList();
-    public abstract int getLength();
 
 }

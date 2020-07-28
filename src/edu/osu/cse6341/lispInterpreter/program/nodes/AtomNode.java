@@ -54,11 +54,6 @@ public class AtomNode extends Node implements LispNode {
     }
 
     @Override
-    public int getLength(){
-        return 1;
-    }
-
-    @Override
     public Node evaluateLispNode(boolean areLiteralsAllowed) {
         return evaluate(areLiteralsAllowed);
     }
@@ -85,6 +80,6 @@ public class AtomNode extends Node implements LispNode {
 
     @Override
     public int parameterLength() {
-        return getLength();
+        return 1;
     }
 }

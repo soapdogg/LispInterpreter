@@ -105,10 +105,6 @@ public class ExpressionNode extends Node implements LispNode {
 			: ReservedValuesConstants.NIL;
     }
 
-    public int getLength(){
-		return isList() ? data.getLength() + 1 : 0;
-	}
-
 	public Node getData(){
 		return data;
 	}
@@ -159,6 +155,6 @@ public class ExpressionNode extends Node implements LispNode {
 
 	@Override
 	public int parameterLength() {
-		return getLength();
+		return isList() ? ((LispNode)data).parameterLength() + 1 : 0;
 	}
 }
