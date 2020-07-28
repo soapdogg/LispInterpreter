@@ -54,11 +54,6 @@ public class AtomNode extends Node implements LispNode {
     }
 
     @Override
-	public boolean isNumeric(){
-        return value.matches("-?[1-9][0-9]*|0");
-    }
-
-    @Override
     public boolean isList() {
         return false;
     }
@@ -90,7 +85,7 @@ public class AtomNode extends Node implements LispNode {
 
     @Override
     public boolean isNodeNumeric() {
-        return isNumeric();
+        return value.matches("-?[1-9][0-9]*|0");
     }
 
     @Override

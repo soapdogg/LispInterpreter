@@ -25,14 +25,14 @@ public class GreaterFunction implements LispFunction {
         );
         Node evaluatedAddress = params.evaluateLispNode(true);
         int leftValue = numericValueRetriever.retrieveNumericValue(
-            evaluatedAddress,
+            (LispNode)evaluatedAddress,
             1,
             FunctionNameConstants.GREATER
         );
         Node right = ((ExpressionNode) params).getData();
         Node evaluatedData = right.evaluate(true);
         int rightValue = numericValueRetriever.retrieveNumericValue(
-            evaluatedData,
+            (LispNode)evaluatedData,
             2,
             FunctionNameConstants.GREATER
         );

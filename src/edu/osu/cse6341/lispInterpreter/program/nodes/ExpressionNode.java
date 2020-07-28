@@ -95,11 +95,6 @@ public class ExpressionNode extends Node implements LispNode {
     }
 
     @Override
-    public boolean isNumeric(){
-        return false;
-    }
-
-    @Override
     public String getListNotationToString(boolean isFirst){
         StringBuilder sb = new StringBuilder();
         if(isFirst) sb.append('(');
@@ -134,7 +129,7 @@ public class ExpressionNode extends Node implements LispNode {
 
     private String getDataListNotationAsString(){
         if(!data.isList()) {
-            String dataString = (data.isNumeric() || nodeValueComparator.equalsT(data.getValue()))
+            String dataString = (((LispNode)data).isNodeNumeric() || nodeValueComparator.equalsT(data.getValue()))
                     ? (" . " + data.getListNotationToString(false))
                     : "";
             return dataString + ')';
@@ -164,7 +159,7 @@ public class ExpressionNode extends Node implements LispNode {
 
 	@Override
 	public boolean isNodeNumeric() {
-		return isNumeric();
+		return false;
 	}
 
 	@Override

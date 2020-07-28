@@ -1,5 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes;
 
+import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
 import edu.osu.cse6341.lispInterpreter.program.IEvaluatable;
 import edu.osu.cse6341.lispInterpreter.program.IParsable;
 import edu.osu.cse6341.lispInterpreter.program.IPrettyPrintable;
@@ -29,9 +30,9 @@ public class StartNode implements IParsable, IEvaluatable, IPrettyPrintable{
 	@Override
 	public Node evaluate(boolean areLiteralsAllowed) throws Exception{
         boolean isNotList = !node.isList();
-        boolean isNotNumeric = !node.isNumeric();
-        boolean isNotT = !node.getValue().equals("T");
-        boolean isNotNil = !node.getValue().equals("NIL");
+        boolean isNotNumeric = !((LispNode)node).isNodeNumeric();
+        boolean isNotT = !node.getValue().equals(ReservedValuesConstants.T);
+        boolean isNotNil = !node.getValue().equals(ReservedValuesConstants.NIL);
         if(isNotList && isNotNumeric && isNotT && isNotNil) throw new Exception("Error! " + node.getValue() + " is not a valid atomic value!\n");
         node = node.evaluate(false);
 		if(nextExpressionStartNode != null) nextExpressionStartNode.evaluate(true);
