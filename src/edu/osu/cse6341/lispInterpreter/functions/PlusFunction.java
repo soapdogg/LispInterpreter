@@ -2,6 +2,7 @@ package edu.osu.cse6341.lispInterpreter.functions;
 
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
+import edu.osu.cse6341.lispInterpreter.program.IEvaluatable;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
@@ -22,14 +23,14 @@ public class PlusFunction implements LispFunction {
             FunctionLengthConstants.THREE,
             params.parameterLength()
         );
-        LispNode evaluatedAddress = params.evaluate(true);
+        LispNode evaluatedAddress = ((IEvaluatable)params).evaluate(true);
         int leftValue = numericValueRetriever.retrieveNumericValue(
             evaluatedAddress,
             1,
             FunctionNameConstants.PLUS
         );
         LispNode right = ((ExpressionNode) params).getData();
-        LispNode evaluatedData = right.evaluate(true);
+        LispNode evaluatedData = ((IEvaluatable)right).evaluate(true);
         int rightValue = numericValueRetriever.retrieveNumericValue(
             evaluatedData,
             2,

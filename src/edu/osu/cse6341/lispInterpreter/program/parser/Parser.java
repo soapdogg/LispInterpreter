@@ -1,6 +1,7 @@
 package edu.osu.cse6341.lispInterpreter.program.parser;
 
 import edu.osu.cse6341.lispInterpreter.asserter.TokenKindAsserter;
+import edu.osu.cse6341.lispInterpreter.program.IParsable;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
@@ -35,7 +36,7 @@ public class Parser {
         expressionChild = expressionChild.newLispNodeInstance();
         boolean isList = token.getTokenKind() == TokenKind.OPEN_TOKEN;
         if(isList) tokenizer.getNextToken();
-        expressionChild.parse(tokenizer);
+        ((IParsable)expressionChild).parse(tokenizer);
         if(isList) tokenizer.getNextToken();
         return expressionChild;
     }

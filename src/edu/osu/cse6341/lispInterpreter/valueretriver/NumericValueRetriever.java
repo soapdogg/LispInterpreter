@@ -1,6 +1,7 @@
 package edu.osu.cse6341.lispInterpreter.valueretriver;
 
 import edu.osu.cse6341.lispInterpreter.exceptions.NotNumericException;
+import edu.osu.cse6341.lispInterpreter.program.IPrettyPrintable;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
 import lombok.AllArgsConstructor;
 
@@ -17,7 +18,7 @@ public class NumericValueRetriever {
                 " of function " +
                 functionName +
                 " is not numeric!    Actual: " +
-                node.getListNotationToString(true) +
+                ((IPrettyPrintable)node).getListNotationToString(true) +
                 '\n';
             throw new NotNumericException(sb);
         }

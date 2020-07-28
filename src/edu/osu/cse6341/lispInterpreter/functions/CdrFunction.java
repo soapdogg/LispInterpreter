@@ -2,6 +2,7 @@ package edu.osu.cse6341.lispInterpreter.functions;
 
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
+import edu.osu.cse6341.lispInterpreter.program.IEvaluatable;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
@@ -21,7 +22,7 @@ public class CdrFunction implements LispFunction {
             FunctionLengthConstants.TWO,
             params.parameterLength()
         );
-        LispNode evaluatedAddress = ((ExpressionNode) params).getAddress().evaluate(false);
+        LispNode evaluatedAddress = ((IEvaluatable)((ExpressionNode) params).getAddress()).evaluate(false);
         ExpressionNode node = listValueRetriever.retrieveListValue(
             evaluatedAddress,
             FunctionNameConstants.CDR

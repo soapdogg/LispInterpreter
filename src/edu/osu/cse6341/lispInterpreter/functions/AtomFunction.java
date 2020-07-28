@@ -2,6 +2,7 @@ package edu.osu.cse6341.lispInterpreter.functions;
 
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
+import edu.osu.cse6341.lispInterpreter.program.IEvaluatable;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
@@ -19,7 +20,7 @@ public class AtomFunction implements LispFunction {
             FunctionLengthConstants.TWO,
             params.parameterLength()
         );
-        LispNode evaluatedResult = params.evaluate(true);
+        LispNode evaluatedResult = ((IEvaluatable)params).evaluate(true);
         boolean result = !evaluatedResult.isNodeList();
         return new AtomNode(result);
     }

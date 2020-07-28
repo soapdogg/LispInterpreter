@@ -69,7 +69,7 @@ public class ExpressionNode implements LispNode, IParsable, IEvaluatable, IPrett
 		if(!isList) return;
 		address = parser.parseIntoNode(tokenizer);
         data = new ExpressionNode();
-        data.parse(tokenizer);
+		((IParsable)data).parse(tokenizer);
 	}
 
 	@Override
@@ -82,14 +82,14 @@ public class ExpressionNode implements LispNode, IParsable, IEvaluatable, IPrett
         if(e.isFunctionName(addressValue)) return e.evaluateFunction(addressValue, this.data);
         if(functionMap.containsKey(addressValue)) return executeBuiltInFunction(addressValue);
         if(!areLiteralsAllowed) throw new Exception("Error! Invalid CAR value: " + addressValue + '\n');
-        return this.address.evaluate(true);
+        return ((IEvaluatable)this.address).evaluate(true);
 	}
 
     @Override
     public String getListNotationToString(boolean isFirst){
         StringBuilder sb = new StringBuilder();
         if(isFirst) sb.append('(');
-        sb.append(address.getListNotationToString(address.isNodeList()));
+        sb.append(((IPrettyPrintable)address).getListNotationToString(address.isNodeList()));
         sb.append(getDataListNotationAsString());
         return sb.toString();
     }
@@ -97,7 +97,7 @@ public class ExpressionNode implements LispNode, IParsable, IEvaluatable, IPrett
     @Override
     public String getDotNotationToString() {
         return isNodeList()
-			? '(' + address.getDotNotationToString() + " . " + data.getDotNotationToString() + ')'
+			? '(' + ((IPrettyPrintable)address).getDotNotationToString() + " . " + ((IPrettyPrintable)data).getDotNotationToString() + ')'
 			: ReservedValuesConstants.NIL;
     }
 
@@ -117,11 +117,11 @@ public class ExpressionNode implements LispNode, IParsable, IEvaluatable, IPrett
     private String getDataListNotationAsString(){
         if(!data.isNodeList()) {
             String dataString = (data.isNodeNumeric() || nodeValueComparator.equalsT(data.getNodeValue()))
-                    ? (" . " + data.getListNotationToString(false))
+                    ? (" . " + ((IPrettyPrintable)data).getListNotationToString(false))
                     : "";
             return dataString + ')';
         }
-        else return ' ' + data.getListNotationToString(false);
+        else return ' ' + ((IPrettyPrintable)data).getListNotationToString(false);
     }
 
 	@Override

@@ -2,6 +2,7 @@ package edu.osu.cse6341.lispInterpreter.functions;
 
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
+import edu.osu.cse6341.lispInterpreter.program.IEvaluatable;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
@@ -20,8 +21,8 @@ public class ConsFunction implements LispFunction {
             params.parameterLength()
         );
         ExpressionNode rightSide = (ExpressionNode) ((ExpressionNode) params).getData();
-        LispNode evaluatedAddress =((ExpressionNode) params).getAddress().evaluate(false);
-        LispNode evaluatedData = rightSide.getAddress().evaluate(false);
+        LispNode evaluatedAddress =((IEvaluatable)((ExpressionNode) params).getAddress()).evaluate(false);
+        LispNode evaluatedData = ((IEvaluatable)rightSide.getAddress()).evaluate(false);
 
         return new ExpressionNode(
             evaluatedAddress,

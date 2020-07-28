@@ -24,7 +24,7 @@ public class UserDefinedFunction {
         Map<String, LispNode> oldVariables = e.getVariables();
         Map<String, LispNode> newVariables = bindVariablesToParameters(params);
         e.unionVariables(newVariables);
-        LispNode result = body.evaluate(true);
+        LispNode result = ((IEvaluatable)body).evaluate(true);
         e.setVariables(oldVariables);
         return result;
     }
@@ -34,7 +34,7 @@ public class UserDefinedFunction {
         Map<String, LispNode> newVariables = new HashMap<>();
         for (String formal: formalParameters) {
             ExpressionNode temp = (ExpressionNode)params;
-            newVariables.put(formal, temp.getAddress().evaluate(true));
+            newVariables.put(formal, ((IEvaluatable)temp.getAddress()).evaluate(true));
             params = temp.getData();
         }
         return newVariables;
