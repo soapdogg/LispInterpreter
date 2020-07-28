@@ -25,14 +25,16 @@ public class PlusFunction implements LispFunction {
             FunctionLengthConstants.THREE,
             params.getLength()
         );
-        Node right = ((ExpressionNode) params).getData();
+        Node evaluatedAddress = params.evaluate(true);
         int leftValue = numericValueRetriever.retrieveNumericValue(
-            params.evaluate(true),
+            evaluatedAddress,
             1,
             FunctionNameConstants.PLUS
         );
+        Node right = ((ExpressionNode) params).getData();
+        Node evaluatedData = right.evaluate(true);
         int rightValue = numericValueRetriever.retrieveNumericValue(
-            right.evaluate(true),
+            evaluatedData,
             2,
             FunctionNameConstants.PLUS
         );

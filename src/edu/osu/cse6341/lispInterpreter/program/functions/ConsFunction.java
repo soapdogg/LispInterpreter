@@ -22,11 +22,12 @@ public class ConsFunction implements LispFunction {
             params.getLength()
         );
         ExpressionNode rightSide = (ExpressionNode) ((ExpressionNode) params).getData();
+        Node evaluatedAddress =((ExpressionNode) params).getAddress().evaluate(false);
+        Node evaluatedData = rightSide.getAddress().evaluate(false);
+
         return new ExpressionNode(
-            ((ExpressionNode) params).getAddress().evaluate(false),
-            rightSide.getAddress().evaluate(
-            false
-            )
+            evaluatedAddress,
+            evaluatedData
         );
     }
 }
