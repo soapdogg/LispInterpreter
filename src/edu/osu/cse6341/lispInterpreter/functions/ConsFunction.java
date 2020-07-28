@@ -1,4 +1,4 @@
-package edu.osu.cse6341.lispInterpreter.program.functions;
+package edu.osu.cse6341.lispInterpreter.functions;
 
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
@@ -6,14 +6,12 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.singleton.AsserterSingleton;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor(staticName = "newInstance")
 public class ConsFunction implements LispFunction {
 
     private final FunctionLengthAsserter functionLengthAsserter;
-
-    public ConsFunction(){
-        functionLengthAsserter = AsserterSingleton.INSTANCE.getFunctionLengthAsserter();
-    }
 
     @Override
     public Node evaluateLispFunction(final Node params) throws Exception {

@@ -1,4 +1,4 @@
-package edu.osu.cse6341.lispInterpreter.program.functions;
+package edu.osu.cse6341.lispInterpreter.functions;
 
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
@@ -9,16 +9,13 @@ import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.valueretriver.NumericValueRetriever;
 import edu.osu.cse6341.lispInterpreter.singleton.AsserterSingleton;
 import edu.osu.cse6341.lispInterpreter.singleton.ValueRetrieverSingleton;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor(staticName = "newInstance")
 public class PlusFunction implements LispFunction {
 
     private final FunctionLengthAsserter functionLengthAsserter;
     private final NumericValueRetriever numericValueRetriever;
-
-	public PlusFunction(){
-	    functionLengthAsserter = AsserterSingleton.INSTANCE.getFunctionLengthAsserter();
-	    numericValueRetriever = ValueRetrieverSingleton.INSTANCE.getNumericValueRetriever();
-    }
 
     @Override
     public Node evaluateLispFunction(final Node params) throws Exception {

@@ -1,4 +1,4 @@
-package edu.osu.cse6341.lispInterpreter.program.functions;
+package edu.osu.cse6341.lispInterpreter.functions;
 
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
@@ -7,25 +7,17 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.valueretriver.ListValueRetriever;
-import edu.osu.cse6341.lispInterpreter.singleton.AsserterSingleton;
-import edu.osu.cse6341.lispInterpreter.singleton.ComparatorSingleton;
-import edu.osu.cse6341.lispInterpreter.singleton.ValueRetrieverSingleton;
+import lombok.AllArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+@AllArgsConstructor(staticName = "newInstance")
 public class CondFunction implements LispFunction {
 
     private final FunctionLengthAsserter functionLengthAsserter;
     private final ListValueRetriever listValueRetriever;
     private final NodeValueComparator nodeValueComparator;
-
-	public CondFunction(){
-	    functionLengthAsserter = AsserterSingleton.INSTANCE.getFunctionLengthAsserter();
-	    listValueRetriever = ValueRetrieverSingleton.INSTANCE.getListValueRetriever();
-	    nodeValueComparator = ComparatorSingleton.INSTANCE.getNodeValueComparator();
-    }
 
     @Override
     public Node evaluateLispFunction(final Node params) throws Exception {

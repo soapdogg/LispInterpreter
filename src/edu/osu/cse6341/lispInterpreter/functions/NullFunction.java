@@ -1,29 +1,30 @@
-package edu.osu.cse6341.lispInterpreter.program.functions;
+package edu.osu.cse6341.lispInterpreter.functions;
 
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
+import edu.osu.cse6341.lispInterpreter.comparator.NodeValueComparator;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.singleton.AsserterSingleton;
+import edu.osu.cse6341.lispInterpreter.singleton.ComparatorSingleton;
+import lombok.AllArgsConstructor;
 
-public class IntFunction implements LispFunction {
+@AllArgsConstructor(staticName = "newInstance")
+public class NullFunction implements LispFunction {
 
     private final FunctionLengthAsserter functionLengthAsserter;
-
-	public IntFunction(){
-	    functionLengthAsserter = AsserterSingleton.INSTANCE.getFunctionLengthAsserter();
-    }
+    private final NodeValueComparator nodeValueComparator;
 
     @Override
     public Node evaluateLispFunction(final Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
-            FunctionNameConstants.INT,
+            FunctionNameConstants.NULL,
             FunctionLengthConstants.TWO,
             params.getLength()
         );
         Node evaluatedResult = params.evaluate(true);
-        boolean result = evaluatedResult.isNumeric();
+        boolean result = nodeValueComparator.equalsNil(evaluatedResult.getValue());
         return new AtomNode(result);
     }
 }

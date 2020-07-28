@@ -1,4 +1,4 @@
-package edu.osu.cse6341.lispInterpreter.program.functions;
+package edu.osu.cse6341.lispInterpreter.functions;
 
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
@@ -6,41 +6,36 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
-import edu.osu.cse6341.lispInterpreter.valueretriver.NumericValueRetriever;
-import edu.osu.cse6341.lispInterpreter.singleton.AsserterSingleton;
-import edu.osu.cse6341.lispInterpreter.singleton.ValueRetrieverSingleton;
+import edu.osu.cse6341.lispInterpreter.valueretriver.AtomicValueRetriever;
+import lombok.AllArgsConstructor;
 
-public class GreaterFunction implements LispFunction {
+@AllArgsConstructor(staticName = "newInstance")
+public class EqFunction implements LispFunction {
 
     private final FunctionLengthAsserter functionLengthAsserter;
-    private final NumericValueRetriever numericValueRetriever;
-
-	public GreaterFunction(){
-	    functionLengthAsserter = AsserterSingleton.INSTANCE.getFunctionLengthAsserter();
-	    numericValueRetriever = ValueRetrieverSingleton.INSTANCE.getNumericValueRetriever();
-    }
+    private final AtomicValueRetriever atomicValueRetriever;
 
     @Override
     public Node evaluateLispFunction(final Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
-            FunctionNameConstants.GREATER,
+            FunctionNameConstants.EQ,
             FunctionLengthConstants.THREE,
             params.getLength()
         );
         Node evaluatedAddress = params.evaluate(true);
-        int leftValue = numericValueRetriever.retrieveNumericValue(
+        String leftValue = atomicValueRetriever.retrieveAtomicValue(
             evaluatedAddress,
             1,
-            FunctionNameConstants.GREATER
+            FunctionNameConstants.EQ
         );
         Node right = ((ExpressionNode) params).getData();
         Node evaluatedData = right.evaluate(true);
-        int rightValue = numericValueRetriever.retrieveNumericValue(
+        String rightValue = atomicValueRetriever.retrieveAtomicValue(
             evaluatedData,
             2,
-            FunctionNameConstants.GREATER
+            FunctionNameConstants.EQ
         );
-        boolean result = leftValue > rightValue;
+        boolean result = leftValue.equals(rightValue);
         return new AtomNode(result);
     }
 }

@@ -1,4 +1,4 @@
-package edu.osu.cse6341.lispInterpreter.program.functions;
+package edu.osu.cse6341.lispInterpreter.functions;
 
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
@@ -7,23 +7,18 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.valueretriver.NumericValueRetriever;
-import edu.osu.cse6341.lispInterpreter.singleton.AsserterSingleton;
-import edu.osu.cse6341.lispInterpreter.singleton.ValueRetrieverSingleton;
+import lombok.AllArgsConstructor;
 
-public class LessFunction implements LispFunction {
+@AllArgsConstructor(staticName = "newInstance")
+public class GreaterFunction implements LispFunction {
 
     private final FunctionLengthAsserter functionLengthAsserter;
     private final NumericValueRetriever numericValueRetriever;
 
-	public LessFunction(){
-	    functionLengthAsserter = AsserterSingleton.INSTANCE.getFunctionLengthAsserter();
-	    numericValueRetriever = ValueRetrieverSingleton.INSTANCE.getNumericValueRetriever();
-    }
-
     @Override
     public Node evaluateLispFunction(final Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
-            FunctionNameConstants.LESS,
+            FunctionNameConstants.GREATER,
             FunctionLengthConstants.THREE,
             params.getLength()
         );
@@ -31,16 +26,16 @@ public class LessFunction implements LispFunction {
         int leftValue = numericValueRetriever.retrieveNumericValue(
             evaluatedAddress,
             1,
-            FunctionNameConstants.LESS
+            FunctionNameConstants.GREATER
         );
         Node right = ((ExpressionNode) params).getData();
         Node evaluatedData = right.evaluate(true);
         int rightValue = numericValueRetriever.retrieveNumericValue(
             evaluatedData,
             2,
-            FunctionNameConstants.LESS
+            FunctionNameConstants.GREATER
         );
-        boolean result = leftValue < rightValue;
+        boolean result = leftValue > rightValue;
         return new AtomNode(result);
     }
 }

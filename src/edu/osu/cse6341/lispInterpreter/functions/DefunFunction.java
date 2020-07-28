@@ -1,4 +1,4 @@
-package edu.osu.cse6341.lispInterpreter.program.functions;
+package edu.osu.cse6341.lispInterpreter.functions;
 
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
@@ -9,14 +9,14 @@ import edu.osu.cse6341.lispInterpreter.program.UserDefinedFunction;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.valueretriver.AtomicValueRetriever;
 import edu.osu.cse6341.lispInterpreter.valueretriver.ListValueRetriever;
-import edu.osu.cse6341.lispInterpreter.singleton.AsserterSingleton;
-import edu.osu.cse6341.lispInterpreter.singleton.ValueRetrieverSingleton;
+import lombok.AllArgsConstructor;
 
 import java.util.Set;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
 
+@AllArgsConstructor(staticName = "newInstance")
 public class DefunFunction implements LispFunction {
 
     private static final Set<String> invalidFunctionNames;
@@ -45,12 +45,6 @@ public class DefunFunction implements LispFunction {
     private final FunctionLengthAsserter functionLengthAsserter;
     private final AtomicValueRetriever atomicValueRetriever;
     private final ListValueRetriever listValueRetriever;
-
-    public DefunFunction(){
-        functionLengthAsserter = AsserterSingleton.INSTANCE.getFunctionLengthAsserter();
-        atomicValueRetriever = ValueRetrieverSingleton.INSTANCE.getAtomicValueRetriever();
-        listValueRetriever = ValueRetrieverSingleton.INSTANCE.getListValueRetriever();
-    }
 
     private void assertFunctionNameIsValid(String functionName) throws Exception{
         if(isInvalidName(functionName))

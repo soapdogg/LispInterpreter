@@ -3,14 +3,16 @@ package edu.osu.cse6341.lispInterpreter.program.nodes;
 import java.util.Map;
 import java.util.HashMap;
 
+import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
 import edu.osu.cse6341.lispInterpreter.program.Environment;
 import edu.osu.cse6341.lispInterpreter.comparator.NodeValueComparator;
 import edu.osu.cse6341.lispInterpreter.program.parser.Parser;
 import edu.osu.cse6341.lispInterpreter.singleton.ComparatorSingleton;
+import edu.osu.cse6341.lispInterpreter.singleton.FunctionSingleton;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
-import edu.osu.cse6341.lispInterpreter.program.functions.*;
+import edu.osu.cse6341.lispInterpreter.functions.*;
 
 public class ExpressionNode extends Node implements LispNode {
 
@@ -24,21 +26,21 @@ public class ExpressionNode extends Node implements LispNode {
 
 	static{
 		functionMap = new HashMap<>();
-		functionMap.put("ATOM", new AtomFunction());
-		functionMap.put("CAR", new CarFunction());
-		functionMap.put("CDR", new CdrFunction());
-		functionMap.put("COND", new CondFunction());
-		functionMap.put("CONS", new ConsFunction());
-		functionMap.put("DEFUN", new DefunFunction());
-		functionMap.put("EQ", new EqFunction());
-		functionMap.put("GREATER", new GreaterFunction());
-		functionMap.put("INT", new IntFunction());
-		functionMap.put("LESS", new LessFunction());
-		functionMap.put("MINUS", new MinusFunction());
-		functionMap.put("NULL", new NullFunction());
-		functionMap.put("PLUS", new PlusFunction());
-		functionMap.put("QUOTE", new QuoteFunction());
-		functionMap.put("TIMES", new TimesFunction());
+		functionMap.put(FunctionNameConstants.ATOM, FunctionSingleton.INSTANCE.getAtomFunction());
+		functionMap.put(FunctionNameConstants.CAR, FunctionSingleton.INSTANCE.getCarFunction());
+		functionMap.put(FunctionNameConstants.CDR, FunctionSingleton.INSTANCE.getCdrFunction());
+		functionMap.put(FunctionNameConstants.COND, FunctionSingleton.INSTANCE.getCondFunction());
+		functionMap.put(FunctionNameConstants.CONS, FunctionSingleton.INSTANCE.getConsFunction());
+		functionMap.put(FunctionNameConstants.DEFUN, FunctionSingleton.INSTANCE.getDefunFunction());
+		functionMap.put(FunctionNameConstants.EQ, FunctionSingleton.INSTANCE.getEqFunction());
+		functionMap.put(FunctionNameConstants.GREATER, FunctionSingleton.INSTANCE.getGreaterFunction());
+		functionMap.put(FunctionNameConstants.INT, FunctionSingleton.INSTANCE.getIntFunction());
+		functionMap.put(FunctionNameConstants.LESS, FunctionSingleton.INSTANCE.getLessFunction());
+		functionMap.put(FunctionNameConstants.MINUS, FunctionSingleton.INSTANCE.getMinusFunction());
+		functionMap.put(FunctionNameConstants.NULL, FunctionSingleton.INSTANCE.getNullFunction());
+		functionMap.put(FunctionNameConstants.PLUS, FunctionSingleton.INSTANCE.getPlusFunction());
+		functionMap.put(FunctionNameConstants.QUOTE, FunctionSingleton.INSTANCE.getQuoteFunction());
+		functionMap.put(FunctionNameConstants.TIMES, FunctionSingleton.INSTANCE.getTimesFunction());
 	}
 
 	public ExpressionNode(){
