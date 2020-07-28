@@ -26,11 +26,6 @@ public class IntFunction implements LispFunction {
     }
 
     @Override
-    public LispFunction newFunctionInstance() {
-        return new IntFunction();
-    }
-
-    @Override
     public int expectedParameterLength() {
         return 2;
     }

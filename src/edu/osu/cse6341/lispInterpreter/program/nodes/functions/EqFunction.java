@@ -7,8 +7,6 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.nodes.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.program.nodes.functions.valueretriver.AtomicValueRetriever;
 
-import javax.swing.plaf.FontUIResource;
-
 public class EqFunction implements LispFunction {
 
     private final FunctionLengthAsserter functionLengthAsserter;
@@ -39,11 +37,6 @@ public class EqFunction implements LispFunction {
         );
         boolean result = leftValue.equals(rightValue);
         return new AtomNode(result);
-    }
-
-    @Override
-    public LispFunction newFunctionInstance() {
-        return new EqFunction();
     }
 
     @Override

@@ -132,11 +132,6 @@ public class DefunFunction implements LispFunction {
     }
 
     @Override
-    public LispFunction newFunctionInstance() {
-        return new DefunFunction();
-    }
-
-    @Override
     public int expectedParameterLength() {
         return 4;
     }

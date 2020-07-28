@@ -31,11 +31,6 @@ public class CarFunction implements LispFunction {
     }
 
     @Override
-    public LispFunction newFunctionInstance() {
-        return new CarFunction();
-    }
-
-    @Override
     public int expectedParameterLength() {
         return 2;
     }

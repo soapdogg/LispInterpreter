@@ -40,11 +40,6 @@ public class PlusFunction implements LispFunction {
     }
 
     @Override
-    public LispFunction newFunctionInstance() {
-        return new PlusFunction();
-    }
-
-    @Override
     public int expectedParameterLength() {
         return 3;
     }

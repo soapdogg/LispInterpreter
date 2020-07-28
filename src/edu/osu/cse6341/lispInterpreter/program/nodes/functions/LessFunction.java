@@ -40,11 +40,6 @@ public class LessFunction implements LispFunction {
     }
 
     @Override
-    public LispFunction newFunctionInstance() {
-        return new LessFunction();
-    }
-
-    @Override
     public int expectedParameterLength() {
         return 3;
     }

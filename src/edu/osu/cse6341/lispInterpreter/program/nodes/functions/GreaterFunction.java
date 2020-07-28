@@ -40,11 +40,6 @@ public class GreaterFunction implements LispFunction {
     }
 
     @Override
-    public LispFunction newFunctionInstance() {
-        return new GreaterFunction();
-    }
-
-    @Override
     public int expectedParameterLength() {
         return 3;
     }

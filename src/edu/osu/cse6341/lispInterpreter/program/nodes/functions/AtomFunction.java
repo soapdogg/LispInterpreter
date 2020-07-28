@@ -26,11 +26,6 @@ public class AtomFunction implements LispFunction {
     }
 
     @Override
-    public LispFunction newFunctionInstance() {
-        return new AtomFunction();
-    }
-
-    @Override
     public int expectedParameterLength() {
         return 2;
     }

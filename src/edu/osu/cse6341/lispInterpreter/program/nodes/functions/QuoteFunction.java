@@ -24,11 +24,6 @@ public class QuoteFunction implements LispFunction {
     }
 
     @Override
-    public LispFunction newFunctionInstance() {
-        return new QuoteFunction();
-    }
-
-    @Override
     public int expectedParameterLength() {
         return 2;
     }

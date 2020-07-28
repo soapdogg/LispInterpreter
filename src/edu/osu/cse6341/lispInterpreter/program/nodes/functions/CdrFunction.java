@@ -31,11 +31,6 @@ public class CdrFunction implements LispFunction {
     }
 
     @Override
-    public LispFunction newFunctionInstance() {
-        return new CdrFunction();
-    }
-
-    @Override
     public int expectedParameterLength() {
         return 2;
     }

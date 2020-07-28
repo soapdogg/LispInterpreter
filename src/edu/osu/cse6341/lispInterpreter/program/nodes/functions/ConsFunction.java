@@ -30,11 +30,6 @@ public class ConsFunction implements LispFunction {
     }
 
     @Override
-    public LispFunction newFunctionInstance() {
-        return new ConsFunction();
-    }
-
-    @Override
     public int expectedParameterLength() {
         return 3;
     }

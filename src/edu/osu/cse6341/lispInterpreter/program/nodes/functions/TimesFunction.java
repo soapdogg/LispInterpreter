@@ -40,11 +40,6 @@ public class TimesFunction implements LispFunction {
     }
 
     @Override
-    public LispFunction newFunctionInstance() {
-        return new TimesFunction();
-    }
-
-    @Override
     public int expectedParameterLength() {
         return 3;
     }

@@ -26,11 +26,6 @@ public class NullFunction implements LispFunction {
     }
 
     @Override
-    public LispFunction newFunctionInstance() {
-        return new NullFunction();
-    }
-
-    @Override
     public int expectedParameterLength() {
         return 2;
     }
