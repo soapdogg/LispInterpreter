@@ -31,9 +31,9 @@ public class StartNode implements IParsable, IEvaluatable, IPrettyPrintable{
 	public Node evaluate(boolean areLiteralsAllowed) throws Exception{
         boolean isNotList = !node.isList();
         boolean isNotNumeric = !((LispNode)node).isNodeNumeric();
-        boolean isNotT = !node.getValue().equals(ReservedValuesConstants.T);
-        boolean isNotNil = !node.getValue().equals(ReservedValuesConstants.NIL);
-        if(isNotList && isNotNumeric && isNotT && isNotNil) throw new Exception("Error! " + node.getValue() + " is not a valid atomic value!\n");
+        boolean isNotT = !((LispNode)node).getNodeValue().equals(ReservedValuesConstants.T);
+        boolean isNotNil = !((LispNode)node).getNodeValue().equals(ReservedValuesConstants.NIL);
+        if(isNotList && isNotNumeric && isNotT && isNotNil) throw new Exception("Error! " + ((LispNode)node).getNodeValue() + " is not a valid atomic value!\n");
         node = node.evaluate(false);
 		if(nextExpressionStartNode != null) nextExpressionStartNode.evaluate(true);
 		return null;

@@ -63,7 +63,7 @@ public class DefunFunction implements LispFunction {
             );
             Node formalNode = temp.getAddress();
             String formalId = atomicValueRetriever.retrieveAtomicValue(
-                formalNode,
+                (LispNode)formalNode,
                 counter,
                 FunctionNameConstants.DEFUN
             );
@@ -101,7 +101,7 @@ public class DefunFunction implements LispFunction {
             FunctionNameConstants.DEFUN
         );
         String functionName = atomicValueRetriever.retrieveAtomicValue(
-            functionNameNode.getAddress(),
+            (LispNode)functionNameNode.getAddress(),
             1,
             FunctionNameConstants.DEFUN
         );

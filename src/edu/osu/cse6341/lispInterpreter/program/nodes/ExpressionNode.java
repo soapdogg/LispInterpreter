@@ -70,7 +70,7 @@ public class ExpressionNode extends Node implements LispNode {
 	public Node evaluate(boolean areLiteralsAllowed) throws Exception{
 	    if(this.address == null) return new AtomNode(false);
 
-	    String addressValue = this.address.getValue();
+	    String addressValue = ((LispNode)this.address).getNodeValue();
 	    Environment e = Environment.getEnvironment();
         if(e.isVariableName(addressValue)) return e.getVariableValue(addressValue);
         if(e.isFunctionName(addressValue)) return e.evaluateFunction(addressValue, this.data);
@@ -78,11 +78,6 @@ public class ExpressionNode extends Node implements LispNode {
         if(!areLiteralsAllowed) throw new Exception("Error! Invalid CAR value: " + addressValue + '\n');
         return this.address.evaluate(true);
 	}
-
-    @Override
-    public String getValue() {
-        return address == null ? ReservedValuesConstants.NIL : address.getValue() + ' ' + data.getValue();
-    }
 
     @Override
     public boolean isList(){
@@ -120,7 +115,7 @@ public class ExpressionNode extends Node implements LispNode {
 
     private String getDataListNotationAsString(){
         if(!data.isList()) {
-            String dataString = (((LispNode)data).isNodeNumeric() || nodeValueComparator.equalsT(data.getValue()))
+            String dataString = (((LispNode)data).isNodeNumeric() || nodeValueComparator.equalsT(((LispNode)data).getNodeValue()))
                     ? (" . " + data.getListNotationToString(false))
                     : "";
             return dataString + ')';
@@ -140,7 +135,9 @@ public class ExpressionNode extends Node implements LispNode {
 
 	@Override
 	public String getNodeValue() {
-		return getValue();
+		return address == null
+			? ReservedValuesConstants.NIL
+			: ((LispNode)address).getNodeValue() + ' ' + ((LispNode)data).getNodeValue();
 	}
 
 	@Override

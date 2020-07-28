@@ -44,11 +44,6 @@ public class AtomNode extends Node implements LispNode {
     }
 
     @Override
-    public String getValue(){
-        return value;
-    }
-
-    @Override
     public boolean isList() {
         return false;
     }
@@ -65,7 +60,7 @@ public class AtomNode extends Node implements LispNode {
 
     @Override
     public String getNodeValue() {
-        return getValue();
+        return value;
     }
 
     @Override

@@ -6,7 +6,6 @@ import edu.osu.cse6341.lispInterpreter.program.IPrettyPrintable;
 
 public abstract class Node implements IParsable, IEvaluatable, IPrettyPrintable{
 
-    public abstract String getValue();
     public abstract boolean isList();
 
 }

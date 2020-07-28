@@ -23,7 +23,7 @@ public class NullFunction implements LispFunction {
             params.parameterLength()
         );
         Node evaluatedResult = params.evaluateLispNode(true);
-        boolean result = nodeValueComparator.equalsNil(evaluatedResult.getValue());
+        boolean result = nodeValueComparator.equalsNil(((LispNode)evaluatedResult).getNodeValue());
         return new AtomNode(result);
     }
 }

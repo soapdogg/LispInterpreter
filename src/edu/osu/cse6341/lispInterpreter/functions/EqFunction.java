@@ -25,14 +25,14 @@ public class EqFunction implements LispFunction {
         );
         Node evaluatedAddress = params.evaluateLispNode(true);
         String leftValue = atomicValueRetriever.retrieveAtomicValue(
-            evaluatedAddress,
+            (LispNode)evaluatedAddress,
             1,
             FunctionNameConstants.EQ
         );
         Node right = ((ExpressionNode) params).getData();
         Node evaluatedData = right.evaluate(true);
         String rightValue = atomicValueRetriever.retrieveAtomicValue(
-            evaluatedData,
+            (LispNode)evaluatedData,
             2,
             FunctionNameConstants.EQ
         );
