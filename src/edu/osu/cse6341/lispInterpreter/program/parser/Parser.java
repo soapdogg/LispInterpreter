@@ -3,6 +3,7 @@ package edu.osu.cse6341.lispInterpreter.program.parser;
 import edu.osu.cse6341.lispInterpreter.asserter.TokenKindAsserter;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
+import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.singleton.AsserterSingleton;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
@@ -13,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Parser {
-    private static final Map<TokenKind, Node> tokenToNodeMap;
+    private static final Map<TokenKind, LispNode> tokenToNodeMap;
 
     static{
         tokenToNodeMap = new HashMap<>();
@@ -28,11 +29,11 @@ public class Parser {
         tokenKindAsserter = AsserterSingleton.INSTANCE.getTokenKindAsserter();
     }
 
-    public Node parseIntoNode(Tokenizer tokenizer) throws Exception{
+    public LispNode parseIntoNode(Tokenizer tokenizer) throws Exception{
         IToken token = tokenizer.getCurrent();
         tokenKindAsserter.assertTokenIsAtomOrOpen(token);
-        Node expressionChild = tokenToNodeMap.get(token.getTokenKind());
-        expressionChild = expressionChild.newInstance();
+        LispNode expressionChild = tokenToNodeMap.get(token.getTokenKind());
+        expressionChild = expressionChild.newLispNodeInstance();
         boolean isList = token.getTokenKind() == TokenKind.OPEN_TOKEN;
         if(isList) tokenizer.getNextToken();
         expressionChild.parse(tokenizer);

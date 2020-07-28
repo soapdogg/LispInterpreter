@@ -43,11 +43,6 @@ public class AtomNode extends Node implements LispNode {
         return value;
     }
 
-	@Override
-	public Node newInstance(){
-		return new AtomNode();
-	}
-
     @Override
     public String getValue(){
         return value;

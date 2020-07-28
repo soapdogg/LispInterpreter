@@ -61,7 +61,7 @@ public class ExpressionNode extends Node implements LispNode {
 		TokenKind tokenKind = tokenizer.getCurrent().getTokenKind();
 	    isList = tokenKind != TokenKind.CLOSE_TOKEN;
 		if(!isList) return;
-		address = parser.parseIntoNode(tokenizer);
+		address = (Node)parser.parseIntoNode(tokenizer);
         data = new ExpressionNode();
         data.parse(tokenizer);
 	}
@@ -77,11 +77,6 @@ public class ExpressionNode extends Node implements LispNode {
         if(functionMap.containsKey(addressValue)) return executeBuiltInFunction(addressValue);
         if(!areLiteralsAllowed) throw new Exception("Error! Invalid CAR value: " + addressValue + '\n');
         return this.address.evaluate(true);
-	}
-
-	@Override
-	public Node newInstance(){
-		return new ExpressionNode();
 	}
 
     @Override

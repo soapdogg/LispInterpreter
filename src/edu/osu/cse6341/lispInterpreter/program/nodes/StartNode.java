@@ -21,7 +21,7 @@ public class StartNode implements IParsable, IEvaluatable, IPrettyPrintable{
     @Override
     public void parse(Tokenizer tokenizer) throws Exception{
         if(tokenizer.getCurrent().getTokenKind() == TokenKind.EOF_TOKEN) return;
-        node = parser.parseIntoNode(tokenizer);
+        node = (Node)parser.parseIntoNode(tokenizer);
 		if(tokenizer.getCurrent().getTokenKind() == TokenKind.EOF_TOKEN) return;
 		nextExpressionStartNode = new StartNode();
 		nextExpressionStartNode.parse(tokenizer);

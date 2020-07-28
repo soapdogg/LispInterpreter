@@ -1,6 +1,8 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes;
 
-public interface LispNode {
+import edu.osu.cse6341.lispInterpreter.program.IParsable;
+
+public interface LispNode extends IParsable {
 
     Node evaluateLispNode(boolean areLiteralsAllowed) throws Exception;
     LispNode newLispNodeInstance();
