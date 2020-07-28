@@ -1,8 +1,10 @@
 package edu.osu.cse6341.lispInterpreter.program.parser;
 
+import edu.osu.cse6341.lispInterpreter.program.asserter.TokenKindAsserter;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
+import edu.osu.cse6341.lispInterpreter.singleton.AsserterSingleton;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
@@ -20,9 +22,15 @@ public class Parser {
         tokenToNodeMap.put(TokenKind.LITERAL_TOKEN, new AtomNode());
     }
 
+    private final TokenKindAsserter tokenKindAsserter;
+
+    public Parser() {
+        tokenKindAsserter = AsserterSingleton.INSTANCE.getTokenKindAsserter();
+    }
+
     public Node parseIntoNode(Tokenizer tokenizer) throws Exception{
         IToken token = tokenizer.getCurrent();
-        assertTokenIsAtomOrOpen(token);
+        tokenKindAsserter.assertTokenIsAtomOrOpen(token);
         Node expressionChild = tokenToNodeMap.get(token.getTokenKind());
         expressionChild = expressionChild.newInstance();
         boolean isList = token.getTokenKind() == TokenKind.OPEN_TOKEN;
@@ -32,13 +40,4 @@ public class Parser {
         return expressionChild;
     }
 
-    private static void assertTokenIsAtomOrOpen(IToken token) throws Exception{
-        boolean result = tokenToNodeMap.containsKey(token.getTokenKind());
-        if (result) return;
-        String errorMessage = "Expected either an ATOM or OPEN token.\nActual: " + token.getTokenKind().toString() +
-            "    Value: " +
-            token.toString() +
-            '\n';
-        throw new Exception(errorMessage);
-    }
 }

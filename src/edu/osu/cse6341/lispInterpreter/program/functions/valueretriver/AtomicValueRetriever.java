@@ -6,9 +6,9 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 public class AtomicValueRetriever {
 
     public String retrieveAtomicValue(
-        Node node,
-        int position,
-        String functionName
+        final Node node,
+        final int position,
+        final String functionName
     ) throws Exception{
         if(node.isList()) {
             String sb = "Error! Parameter at position: " + position +

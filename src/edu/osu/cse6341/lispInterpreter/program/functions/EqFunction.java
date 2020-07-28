@@ -7,6 +7,7 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.program.functions.valueretriver.AtomicValueRetriever;
+import edu.osu.cse6341.lispInterpreter.singleton.AsserterSingleton;
 
 public class EqFunction implements LispFunction {
 
@@ -14,12 +15,12 @@ public class EqFunction implements LispFunction {
     private final AtomicValueRetriever atomicValueRetriever;
 
 	public EqFunction(){
-	    functionLengthAsserter = new FunctionLengthAsserter();
+	    functionLengthAsserter = AsserterSingleton.INSTANCE.getFunctionLengthAsserter();
 	    atomicValueRetriever = new AtomicValueRetriever();
     }
 
     @Override
-    public Node evaluateLispFunction(Node params) throws Exception {
+    public Node evaluateLispFunction(final Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.EQ,
             FunctionLengthConstants.THREE,

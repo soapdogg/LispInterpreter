@@ -7,6 +7,7 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.program.functions.valueretriver.NumericValueRetriever;
+import edu.osu.cse6341.lispInterpreter.singleton.AsserterSingleton;
 
 public class LessFunction implements LispFunction {
 
@@ -14,12 +15,12 @@ public class LessFunction implements LispFunction {
     private final NumericValueRetriever numericValueRetriever;
 
 	public LessFunction(){
-	    functionLengthAsserter = new FunctionLengthAsserter();
+	    functionLengthAsserter = AsserterSingleton.INSTANCE.getFunctionLengthAsserter();
 	    numericValueRetriever = new NumericValueRetriever();
     }
 
     @Override
-    public Node evaluateLispFunction(Node params) throws Exception {
+    public Node evaluateLispFunction(final Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.LESS,
             FunctionLengthConstants.THREE,

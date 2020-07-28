@@ -5,17 +5,18 @@ import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.asserter.FunctionLengthAsserter;
+import edu.osu.cse6341.lispInterpreter.singleton.AsserterSingleton;
 
 public class AtomFunction implements LispFunction {
 
     private final FunctionLengthAsserter functionLengthAsserter;
 
 	public AtomFunction(){
-	    functionLengthAsserter = new FunctionLengthAsserter();
+	    functionLengthAsserter = AsserterSingleton.INSTANCE.getFunctionLengthAsserter();
     }
 
     @Override
-    public Node evaluateLispFunction(Node params) throws Exception {
+    public Node evaluateLispFunction(final Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.ATOM,
             FunctionLengthConstants.TWO,

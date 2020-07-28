@@ -6,6 +6,7 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.program.functions.valueretriver.ListValueRetriever;
+import edu.osu.cse6341.lispInterpreter.singleton.AsserterSingleton;
 
 public class CarFunction implements LispFunction {
 
@@ -13,12 +14,12 @@ public class CarFunction implements LispFunction {
     private final ListValueRetriever listValueRetriever;
 
 	public CarFunction(){
-	    functionLengthAsserter = new FunctionLengthAsserter();
+	    functionLengthAsserter = AsserterSingleton.INSTANCE.getFunctionLengthAsserter();
 	    listValueRetriever = new ListValueRetriever();
     }
 
     @Override
-    public Node evaluateLispFunction(Node params) throws Exception {
+    public Node evaluateLispFunction(final Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.CAR,
             FunctionLengthConstants.TWO,

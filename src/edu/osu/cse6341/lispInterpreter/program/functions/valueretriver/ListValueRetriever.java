@@ -15,8 +15,8 @@ public class ListValueRetriever {
     }
 
     public ExpressionNode retrieveListValue(
-        Node node,
-        String functionName
+        final Node node,
+        final String functionName
     ) throws Exception{
         boolean isVariableList = false;
         String temp = node.getValue();

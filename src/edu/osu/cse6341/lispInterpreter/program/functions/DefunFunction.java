@@ -9,6 +9,7 @@ import edu.osu.cse6341.lispInterpreter.program.UserDefinedFunction;
 import edu.osu.cse6341.lispInterpreter.program.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.program.functions.valueretriver.AtomicValueRetriever;
 import edu.osu.cse6341.lispInterpreter.program.functions.valueretriver.ListValueRetriever;
+import edu.osu.cse6341.lispInterpreter.singleton.AsserterSingleton;
 
 import java.util.Set;
 import java.util.HashSet;
@@ -45,7 +46,7 @@ public class DefunFunction implements LispFunction {
     private final ListValueRetriever listValueRetriever;
 
     public DefunFunction(){
-        functionLengthAsserter = new FunctionLengthAsserter();
+        functionLengthAsserter = AsserterSingleton.INSTANCE.getFunctionLengthAsserter();
         atomicValueRetriever = new AtomicValueRetriever();
         listValueRetriever = new ListValueRetriever();
     }
@@ -92,7 +93,7 @@ public class DefunFunction implements LispFunction {
     }
 
     @Override
-    public Node evaluateLispFunction(Node params) throws Exception {
+    public Node evaluateLispFunction(final Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.DEFUN,
             FunctionLengthConstants.FOUR,

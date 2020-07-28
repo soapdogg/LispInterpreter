@@ -5,17 +5,18 @@ import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.asserter.FunctionLengthAsserter;
+import edu.osu.cse6341.lispInterpreter.singleton.AsserterSingleton;
 
 public class QuoteFunction implements LispFunction {
 
     private final FunctionLengthAsserter functionLengthAsserter;
 
 	public QuoteFunction(){
-	    functionLengthAsserter = new FunctionLengthAsserter();
+	    functionLengthAsserter = AsserterSingleton.INSTANCE.getFunctionLengthAsserter();
     }
 
     @Override
-    public Node evaluateLispFunction(Node params) throws Exception {
+    public Node evaluateLispFunction(final Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.QUOTE,
             FunctionLengthConstants.TWO,

@@ -6,6 +6,7 @@ import edu.osu.cse6341.lispInterpreter.program.comparator.NodeValueComparator;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.asserter.FunctionLengthAsserter;
+import edu.osu.cse6341.lispInterpreter.singleton.AsserterSingleton;
 
 public class NullFunction implements LispFunction {
 
@@ -13,12 +14,12 @@ public class NullFunction implements LispFunction {
     private final NodeValueComparator nodeValueComparator;
 
 	public NullFunction(){
-	    functionLengthAsserter = new FunctionLengthAsserter();
+	    functionLengthAsserter = AsserterSingleton.INSTANCE.getFunctionLengthAsserter();
 	    nodeValueComparator = new NodeValueComparator();
     }
 
     @Override
-    public Node evaluateLispFunction(Node params) throws Exception {
+    public Node evaluateLispFunction(final Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.NULL,
             FunctionLengthConstants.TWO,

@@ -7,6 +7,7 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.program.functions.valueretriver.ListValueRetriever;
+import edu.osu.cse6341.lispInterpreter.singleton.AsserterSingleton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,16 +20,17 @@ public class CondFunction implements LispFunction {
     private final NodeValueComparator nodeValueComparator;
 
 	public CondFunction(){
-	    functionLengthAsserter = new FunctionLengthAsserter();
+	    functionLengthAsserter = AsserterSingleton.INSTANCE.getFunctionLengthAsserter();
 	    listValueRetriever = new ListValueRetriever();
 	    nodeValueComparator = new NodeValueComparator();
     }
 
     @Override
-    public Node evaluateLispFunction(Node params) throws Exception {
+    public Node evaluateLispFunction(final Node params) throws Exception {
         List<ExpressionNode> parameters = new ArrayList<>();
-        while(params.isList()){
-            ExpressionNode expressionParams = (ExpressionNode) params;
+        Node current = params;
+        while(current.isList()){
+            ExpressionNode expressionParams = (ExpressionNode) current;
             Node tempParameter = expressionParams.getAddress();
             ExpressionNode parameter = listValueRetriever.retrieveListValue(
                 tempParameter,
@@ -40,7 +42,7 @@ public class CondFunction implements LispFunction {
                 parameter.getData().getLength()
             );
             parameters.add(parameter);
-            params = expressionParams.getData();
+            current = expressionParams.getData();
         }
         for(ExpressionNode parameter: parameters){
             Node booleanResult = parameter.getAddress().evaluate(true);
