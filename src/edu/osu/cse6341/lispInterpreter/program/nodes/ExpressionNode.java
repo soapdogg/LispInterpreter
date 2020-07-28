@@ -6,7 +6,7 @@ import java.util.HashMap;
 import edu.osu.cse6341.lispInterpreter.program.Environment;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
-import edu.osu.cse6341.lispInterpreter.program.nodes.functions.*;
+import edu.osu.cse6341.lispInterpreter.program.functions.*;
 
 public class ExpressionNode extends Node{
 

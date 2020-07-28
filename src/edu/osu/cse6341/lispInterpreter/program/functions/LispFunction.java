@@ -1,4 +1,4 @@
-package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
+package edu.osu.cse6341.lispInterpreter.program.functions;
 
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 

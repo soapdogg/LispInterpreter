@@ -1,42 +1,42 @@
-package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
+package edu.osu.cse6341.lispInterpreter.program.functions;
 
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
-import edu.osu.cse6341.lispInterpreter.program.nodes.asserter.FunctionLengthAsserter;
-import edu.osu.cse6341.lispInterpreter.program.nodes.functions.valueretriver.AtomicValueRetriever;
+import edu.osu.cse6341.lispInterpreter.program.asserter.FunctionLengthAsserter;
+import edu.osu.cse6341.lispInterpreter.program.functions.valueretriver.NumericValueRetriever;
 
-public class EqFunction implements LispFunction {
+public class PlusFunction implements LispFunction {
 
     private final FunctionLengthAsserter functionLengthAsserter;
-    private final AtomicValueRetriever atomicValueRetriever;
+    private final NumericValueRetriever numericValueRetriever;
 
-	public EqFunction(){
+	public PlusFunction(){
 	    functionLengthAsserter = new FunctionLengthAsserter();
-	    atomicValueRetriever = new AtomicValueRetriever();
+	    numericValueRetriever = new NumericValueRetriever();
     }
 
     @Override
     public Node evaluateLispFunction(Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
-            FunctionNameConstants.EQ,
+            FunctionNameConstants.PLUS,
             FunctionLengthConstants.THREE,
             params.getLength()
         );
         Node right = ((ExpressionNode) params).getData();
-        String leftValue = atomicValueRetriever.retrieveAtomicValue(
+        int leftValue = numericValueRetriever.retrieveNumericValue(
             params.evaluate(true),
             1,
-            FunctionNameConstants.EQ
+            FunctionNameConstants.PLUS
         );
-        String rightValue = atomicValueRetriever.retrieveAtomicValue(
+        int rightValue = numericValueRetriever.retrieveNumericValue(
             right.evaluate(true),
             2,
-            FunctionNameConstants.EQ
+            FunctionNameConstants.PLUS
         );
-        boolean result = leftValue.equals(rightValue);
+        int result = leftValue + rightValue;
         return new AtomNode(result);
     }
 }

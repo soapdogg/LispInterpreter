@@ -1,27 +1,27 @@
-package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
+package edu.osu.cse6341.lispInterpreter.program.functions;
 
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
-import edu.osu.cse6341.lispInterpreter.program.nodes.asserter.FunctionLengthAsserter;
-import edu.osu.cse6341.lispInterpreter.program.nodes.functions.valueretriver.NumericValueRetriever;
+import edu.osu.cse6341.lispInterpreter.program.asserter.FunctionLengthAsserter;
+import edu.osu.cse6341.lispInterpreter.program.functions.valueretriver.NumericValueRetriever;
 
-public class MinusFunction implements LispFunction {
+public class TimesFunction implements LispFunction {
 
     private final FunctionLengthAsserter functionLengthAsserter;
     private final NumericValueRetriever numericValueRetriever;
 
-	public MinusFunction(){
-	    functionLengthAsserter = new FunctionLengthAsserter();
-	    numericValueRetriever = new NumericValueRetriever();
+	public TimesFunction(){
+        functionLengthAsserter = new FunctionLengthAsserter();
+        numericValueRetriever = new NumericValueRetriever();
     }
 
     @Override
     public Node evaluateLispFunction(Node params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
-            FunctionNameConstants.MINUS,
+            FunctionNameConstants.TIMES,
             FunctionLengthConstants.THREE,
             params.getLength()
         );
@@ -29,14 +29,14 @@ public class MinusFunction implements LispFunction {
         int leftValue = numericValueRetriever.retrieveNumericValue(
             params.evaluate(true),
             1,
-            FunctionNameConstants.MINUS
+            FunctionNameConstants.TIMES
         );
         int rightValue = numericValueRetriever.retrieveNumericValue(
             right.evaluate(true),
             2,
-            FunctionNameConstants.MINUS
+            FunctionNameConstants.TIMES
         );
-        int result = leftValue - rightValue;
+        int result = leftValue * rightValue;
         return new AtomNode(result);
     }
 }

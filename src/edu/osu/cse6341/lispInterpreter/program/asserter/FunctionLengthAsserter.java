@@ -1,4 +1,4 @@
-package edu.osu.cse6341.lispInterpreter.program.nodes.asserter;
+package edu.osu.cse6341.lispInterpreter.program.asserter;
 
 import edu.osu.cse6341.lispInterpreter.exceptions.WrongFunctionLengthException;
 

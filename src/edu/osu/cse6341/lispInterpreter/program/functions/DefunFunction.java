@@ -1,4 +1,4 @@
-package edu.osu.cse6341.lispInterpreter.program.nodes.functions;
+package edu.osu.cse6341.lispInterpreter.program.functions;
 
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
@@ -6,9 +6,9 @@ import edu.osu.cse6341.lispInterpreter.program.Environment;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.Node;
 import edu.osu.cse6341.lispInterpreter.program.UserDefinedFunction;
-import edu.osu.cse6341.lispInterpreter.program.nodes.asserter.FunctionLengthAsserter;
-import edu.osu.cse6341.lispInterpreter.program.nodes.functions.valueretriver.AtomicValueRetriever;
-import edu.osu.cse6341.lispInterpreter.program.nodes.functions.valueretriver.ListValueRetriever;
+import edu.osu.cse6341.lispInterpreter.program.asserter.FunctionLengthAsserter;
+import edu.osu.cse6341.lispInterpreter.program.functions.valueretriver.AtomicValueRetriever;
+import edu.osu.cse6341.lispInterpreter.program.functions.valueretriver.ListValueRetriever;
 
 import java.util.Set;
 import java.util.HashSet;
