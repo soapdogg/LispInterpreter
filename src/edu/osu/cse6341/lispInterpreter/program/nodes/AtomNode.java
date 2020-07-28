@@ -1,19 +1,20 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes;
 
+import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
 import edu.osu.cse6341.lispInterpreter.program.Environment;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
 
-public class AtomNode extends Node{
+public class AtomNode extends Node implements LispNode {
 	
 	private String value;
 
 	public AtomNode(){
-	    value = Node.NIL;
+	    value = ReservedValuesConstants.NIL;
     }
 
     public AtomNode(boolean value){
-	    this.value = value ? Node.T : Node.NIL;
+	    this.value = value ? ReservedValuesConstants.T : ReservedValuesConstants.NIL;
     }
 
     public AtomNode(int value){
@@ -67,5 +68,8 @@ public class AtomNode extends Node{
         return 1;
     }
 
-
+    @Override
+    public int parameterLength() {
+        return getLength();
+    }
 }

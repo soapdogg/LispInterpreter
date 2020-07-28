@@ -3,12 +3,13 @@ package edu.osu.cse6341.lispInterpreter.program.nodes;
 import java.util.Map;
 import java.util.HashMap;
 
+import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
 import edu.osu.cse6341.lispInterpreter.program.Environment;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 import edu.osu.cse6341.lispInterpreter.program.functions.*;
 
-public class ExpressionNode extends Node{
+public class ExpressionNode extends Node implements LispNode {
 
 	private static final Map<String, LispFunction> functionMap;
 
@@ -73,7 +74,7 @@ public class ExpressionNode extends Node{
 
     @Override
     public String getValue() {
-        return address == null ? "NIL" : address.getValue() + ' ' + data.getValue();
+        return address == null ? ReservedValuesConstants.NIL : address.getValue() + ' ' + data.getValue();
     }
 
     @Override
@@ -97,7 +98,9 @@ public class ExpressionNode extends Node{
 
     @Override
     public String getDotNotationToString() {
-        return isList() ? '(' + address.getDotNotationToString() + " . " + data.getDotNotationToString() + ')' : Node.NIL;
+        return isList()
+			? '(' + address.getDotNotationToString() + " . " + data.getDotNotationToString() + ')'
+			: ReservedValuesConstants.NIL;
     }
 
     public int getLength(){
@@ -126,4 +129,9 @@ public class ExpressionNode extends Node{
         }
         else return ' ' + data.getListNotationToString(false);
     }
+
+	@Override
+	public int parameterLength() {
+		return getLength();
+	}
 }

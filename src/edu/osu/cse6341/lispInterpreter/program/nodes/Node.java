@@ -1,5 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes;
 
+import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
 import edu.osu.cse6341.lispInterpreter.program.IEvaluatable;
 import edu.osu.cse6341.lispInterpreter.program.IParsable;
 import edu.osu.cse6341.lispInterpreter.program.IPrettyPrintable;
@@ -13,16 +14,12 @@ import java.util.Map;
 public abstract class Node implements IParsable, IEvaluatable, IPrettyPrintable{
 
     private static final Map<TokenKind, Node> tokenToNodeMap;
-    static final String NIL;
-    static final String T;
 
     static{
         tokenToNodeMap = new HashMap<>();
         tokenToNodeMap.put(TokenKind.OPEN_TOKEN, new ExpressionNode());
         tokenToNodeMap.put(TokenKind.NUMERIC_TOKEN, new AtomNode());
         tokenToNodeMap.put(TokenKind.LITERAL_TOKEN, new AtomNode());
-        NIL = "NIL";
-        T = "T";
     }
 
     protected abstract Node newInstance();
@@ -54,10 +51,10 @@ public abstract class Node implements IParsable, IEvaluatable, IPrettyPrintable{
     }
 
     public static boolean equalsNil(String value){
-        return NIL.equals(value);
+        return ReservedValuesConstants.NIL.equals(value);
     }
 
     static boolean equalsT(String value){
-        return T.equals(value);
+        return ReservedValuesConstants.T.equals(value);
     }
 }
