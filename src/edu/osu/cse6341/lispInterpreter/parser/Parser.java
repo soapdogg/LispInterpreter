@@ -1,21 +1,19 @@
-package edu.osu.cse6341.lispInterpreter.program.parser;
+package edu.osu.cse6341.lispInterpreter.parser;
 
 import edu.osu.cse6341.lispInterpreter.asserter.TokenKindAsserter;
-import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
+import edu.osu.cse6341.lispInterpreter.generator.NodeGenerator;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
-import edu.osu.cse6341.lispInterpreter.singleton.AsserterSingleton;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor(staticName = "newInstance")
 public class Parser {
 
     private final TokenKindAsserter tokenKindAsserter;
-
-    public Parser() {
-        tokenKindAsserter = AsserterSingleton.INSTANCE.getTokenKindAsserter();
-    }
+    private final NodeGenerator nodeGenerator;
 
     public LispNode parseIntoNode(
         Tokenizer tokenizer
@@ -32,7 +30,9 @@ public class Parser {
         } else {
             token = tokenizer.getNextToken();
             String value = token.toString();
-            return new AtomNode(value);
+            return nodeGenerator.generateAtomNode(
+                value
+            );
         }
     }
 
@@ -40,13 +40,17 @@ public class Parser {
         Tokenizer tokenizer
     ) throws Exception {
         boolean isClose = tokenizer.getCurrent().getTokenKind() == TokenKind.CLOSE_TOKEN;
-        if (isClose) return new ExpressionNode();
-        LispNode address = parseIntoNode(tokenizer);
-        LispNode data = parseExpressionNode(tokenizer);
-        return new ExpressionNode(
-            address,
-            data
-        );
+        LispNode result;
+        if (isClose) result = new ExpressionNode();
+        else {
+            LispNode address = parseIntoNode(tokenizer);
+            LispNode data = parseExpressionNode(tokenizer);
+            result = new ExpressionNode(
+                address,
+                data
+            );
+        }
+        return result;
     }
 
 }

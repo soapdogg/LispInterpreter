@@ -123,7 +123,11 @@ public class DefunFunction implements LispFunction {
 
         LispNode body = temp.getData();
 
-        UserDefinedFunction userDefinedFunction = new UserDefinedFunction(functionName, formalParameters, body);
+        UserDefinedFunction userDefinedFunction = UserDefinedFunction.newInstance(
+            formalParameters,
+            body,
+            functionName
+        );
         Environment.getEnvironment().addToFunctions(functionName, userDefinedFunction);
         return null;
     }

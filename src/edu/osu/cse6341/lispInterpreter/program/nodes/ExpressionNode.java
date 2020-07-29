@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
+import edu.osu.cse6341.lispInterpreter.generator.NodeGenerator;
 import edu.osu.cse6341.lispInterpreter.program.Environment;
 import edu.osu.cse6341.lispInterpreter.comparator.NodeValueComparator;
 import edu.osu.cse6341.lispInterpreter.program.IEvaluatable;
@@ -12,6 +13,7 @@ import edu.osu.cse6341.lispInterpreter.program.IPrettyPrintable;
 import edu.osu.cse6341.lispInterpreter.singleton.ComparatorSingleton;
 import edu.osu.cse6341.lispInterpreter.singleton.FunctionSingleton;
 import edu.osu.cse6341.lispInterpreter.functions.*;
+import edu.osu.cse6341.lispInterpreter.singleton.GeneratorSingleton;
 
 public class ExpressionNode implements LispNode, IEvaluatable, IPrettyPrintable {
 
@@ -21,6 +23,7 @@ public class ExpressionNode implements LispNode, IEvaluatable, IPrettyPrintable 
 	private LispNode data;
 	private boolean isList;
 	private final NodeValueComparator nodeValueComparator;
+	private final NodeGenerator nodeGenerator;
 
 	static{
 		functionMap = new HashMap<>();
@@ -43,6 +46,7 @@ public class ExpressionNode implements LispNode, IEvaluatable, IPrettyPrintable 
 
 	public ExpressionNode(){
 		nodeValueComparator = ComparatorSingleton.INSTANCE.getNodeValueComparator();
+		nodeGenerator = GeneratorSingleton.INSTANCE.getNodeGenerator();
 	}
 
 	public ExpressionNode(
@@ -53,11 +57,12 @@ public class ExpressionNode implements LispNode, IEvaluatable, IPrettyPrintable 
         this.data = data;
         this.isList = true;
         nodeValueComparator = ComparatorSingleton.INSTANCE.getNodeValueComparator();
+        nodeGenerator = GeneratorSingleton.INSTANCE.getNodeGenerator();
     }
 
 	@Override
 	public LispNode evaluate(boolean areLiteralsAllowed) throws Exception{
-	    if(this.address == null) return new AtomNode(false);
+	    if(this.address == null) return nodeGenerator.generateAtomNode(false);
 
 	    String addressValue = this.address.getNodeValue();
 	    Environment e = Environment.getEnvironment();

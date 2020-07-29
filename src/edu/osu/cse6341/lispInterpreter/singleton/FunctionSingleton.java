@@ -26,7 +26,8 @@ public enum  FunctionSingleton {
 
     FunctionSingleton() {
         atomFunction = AtomFunction.newInstance(
-            AsserterSingleton.INSTANCE.getFunctionLengthAsserter()
+            AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
+            GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
         carFunction = CarFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
@@ -51,37 +52,45 @@ public enum  FunctionSingleton {
         );
         eqFunction = EqFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
-            ValueRetrieverSingleton.INSTANCE.getAtomicValueRetriever()
+            ValueRetrieverSingleton.INSTANCE.getAtomicValueRetriever(),
+            GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
         greaterFunction = GreaterFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
-            ValueRetrieverSingleton.INSTANCE.getNumericValueRetriever()
+            ValueRetrieverSingleton.INSTANCE.getNumericValueRetriever(),
+            GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
         intFunction = IntFunction.newInstance(
-            AsserterSingleton.INSTANCE.getFunctionLengthAsserter()
+            AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
+            GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
         lessFunction = LessFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
-            ValueRetrieverSingleton.INSTANCE.getNumericValueRetriever()
+            ValueRetrieverSingleton.INSTANCE.getNumericValueRetriever(),
+            GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
         minusFunction = MinusFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
-            ValueRetrieverSingleton.INSTANCE.getNumericValueRetriever()
+            ValueRetrieverSingleton.INSTANCE.getNumericValueRetriever(),
+            GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
         nullFunction = NullFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
-            ComparatorSingleton.INSTANCE.getNodeValueComparator()
+            ComparatorSingleton.INSTANCE.getNodeValueComparator(),
+            GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
         plusFunction = PlusFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
-            ValueRetrieverSingleton.INSTANCE.getNumericValueRetriever()
+            ValueRetrieverSingleton.INSTANCE.getNumericValueRetriever(),
+            GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
         quoteFunction = QuoteFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter()
         );
         timesFunction = TimesFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
-            ValueRetrieverSingleton.INSTANCE.getNumericValueRetriever()
+            ValueRetrieverSingleton.INSTANCE.getNumericValueRetriever(),
+            GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
     }
 }

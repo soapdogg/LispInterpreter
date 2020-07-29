@@ -1,25 +1,14 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes;
 
-import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
 import edu.osu.cse6341.lispInterpreter.program.Environment;
 import edu.osu.cse6341.lispInterpreter.program.IEvaluatable;
 import edu.osu.cse6341.lispInterpreter.program.IPrettyPrintable;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor(staticName = "newInstance")
 public class AtomNode implements LispNode, IEvaluatable, IPrettyPrintable {
 
 	private final String value;
-
-    public AtomNode(boolean value){
-	    this.value = value ? ReservedValuesConstants.T : ReservedValuesConstants.NIL;
-    }
-
-    public AtomNode(int value){
-        this.value = Integer.toString(value);
-    }
-
-    public AtomNode(String value) {
-	    this.value = value;
-    }
 
 	@Override
 	public LispNode evaluate(boolean areLiteralsAllowed){

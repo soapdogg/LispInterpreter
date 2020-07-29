@@ -2,7 +2,9 @@ package edu.osu.cse6341.lispInterpreter.program;
 
 import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
-import edu.osu.cse6341.lispInterpreter.program.parser.Parser;
+import edu.osu.cse6341.lispInterpreter.parser.Parser;
+import edu.osu.cse6341.lispInterpreter.singleton.AsserterSingleton;
+import edu.osu.cse6341.lispInterpreter.singleton.GeneratorSingleton;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 
@@ -22,7 +24,10 @@ public class Program implements IPrettyPrintable{
 	}
 
 	public void parse(Tokenizer tokenizer) throws Exception{
-		Parser parser = new Parser();
+		Parser parser = Parser.newInstance(
+			AsserterSingleton.INSTANCE.getTokenKindAsserter(),
+			GeneratorSingleton.INSTANCE.getNodeGenerator()
+		);
 		while (tokenizer.getCurrent().getTokenKind() != TokenKind.EOF_TOKEN) {
 			LispNode root = parser.parseIntoNode(tokenizer);
 			rootNodes.add(root);
