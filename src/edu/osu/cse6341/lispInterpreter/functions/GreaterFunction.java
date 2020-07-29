@@ -2,8 +2,8 @@ package edu.osu.cse6341.lispInterpreter.functions;
 
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
+import edu.osu.cse6341.lispInterpreter.evaluator.NodeEvaluator;
 import edu.osu.cse6341.lispInterpreter.generator.NodeGenerator;
-import edu.osu.cse6341.lispInterpreter.program.IEvaluatable;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 public class GreaterFunction implements LispFunction {
 
     private final FunctionLengthAsserter functionLengthAsserter;
+    private final NodeEvaluator nodeEvaluator;
     private final NumericValueRetriever numericValueRetriever;
     private final NodeGenerator nodeGenerator;
 
@@ -24,14 +25,20 @@ public class GreaterFunction implements LispFunction {
             FunctionLengthConstants.THREE,
             params.parameterLength()
         );
-        LispNode evaluatedAddress = ((IEvaluatable)params).evaluate(true);
+        LispNode evaluatedAddress = nodeEvaluator.evaluate(
+            params,
+            true
+        );
         int leftValue = numericValueRetriever.retrieveNumericValue(
             evaluatedAddress,
             1,
             FunctionNameConstants.GREATER
         );
-        LispNode right = ((ExpressionNode) params).getData();
-        LispNode evaluatedData = ((IEvaluatable)right).evaluate(true);
+        LispNode data = ((ExpressionNode) params).getData();
+        LispNode evaluatedData = nodeEvaluator.evaluate(
+            data,
+            true
+        );
         int rightValue = numericValueRetriever.retrieveNumericValue(
             evaluatedData,
             2,

@@ -2,8 +2,8 @@ package edu.osu.cse6341.lispInterpreter.functions;
 
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
+import edu.osu.cse6341.lispInterpreter.evaluator.NodeEvaluator;
 import edu.osu.cse6341.lispInterpreter.generator.NodeGenerator;
-import edu.osu.cse6341.lispInterpreter.program.IEvaluatable;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 public class ConsFunction implements LispFunction {
 
     private final FunctionLengthAsserter functionLengthAsserter;
+    private final NodeEvaluator nodeEvaluator;
     private final NodeGenerator nodeGenerator;
 
     @Override
@@ -22,9 +23,16 @@ public class ConsFunction implements LispFunction {
             FunctionLengthConstants.THREE,
             params.parameterLength()
         );
+        LispNode address =((ExpressionNode) params).getAddress();
+        LispNode evaluatedAddress = nodeEvaluator.evaluate(
+            address,
+            false
+        );
         ExpressionNode rightSide = (ExpressionNode) ((ExpressionNode) params).getData();
-        LispNode evaluatedAddress =((IEvaluatable)((ExpressionNode) params).getAddress()).evaluate(false);
-        LispNode evaluatedData = ((IEvaluatable)rightSide.getAddress()).evaluate(false);
+        LispNode evaluatedData = nodeEvaluator.evaluate(
+            rightSide.getAddress(),
+            false
+        );
 
         return nodeGenerator.generateExpressionNode(
             evaluatedAddress,

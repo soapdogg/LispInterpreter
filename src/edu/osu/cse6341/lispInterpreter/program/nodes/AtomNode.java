@@ -1,20 +1,12 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes;
 
-import edu.osu.cse6341.lispInterpreter.program.Environment;
-import edu.osu.cse6341.lispInterpreter.program.IEvaluatable;
 import edu.osu.cse6341.lispInterpreter.program.IPrettyPrintable;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(staticName = "newInstance")
-public class AtomNode implements LispNode, IEvaluatable, IPrettyPrintable {
+public class AtomNode implements LispNode, IPrettyPrintable {
 
 	private final String value;
-
-	@Override
-	public LispNode evaluate(boolean areLiteralsAllowed){
-	    if(Environment.getEnvironment().isVariableName(value)) return Environment.getEnvironment().getVariableValue(value);
-        return this;
-	}
 
 	@Override
 	public String getListNotationToString(boolean isFirst){

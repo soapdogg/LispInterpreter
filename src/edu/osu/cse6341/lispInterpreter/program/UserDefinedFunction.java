@@ -2,6 +2,7 @@ package edu.osu.cse6341.lispInterpreter.program;
 
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.singleton.EvaluatorSingleton;
 import lombok.AllArgsConstructor;
 
 import java.util.HashMap;
@@ -20,7 +21,10 @@ public class UserDefinedFunction {
         Map<String, LispNode> oldVariables = e.getVariables();
         Map<String, LispNode> newVariables = bindVariablesToParameters(params);
         e.unionVariables(newVariables);
-        LispNode result = ((IEvaluatable)body).evaluate(true);
+        LispNode result = EvaluatorSingleton.INSTANCE.getNodeEvaluator().evaluate(
+            body,
+            true
+        );
         e.setVariables(oldVariables);
         return result;
     }
@@ -30,7 +34,11 @@ public class UserDefinedFunction {
         Map<String, LispNode> newVariables = new HashMap<>();
         for (String formal: formalParameters) {
             ExpressionNode temp = (ExpressionNode)params;
-            newVariables.put(formal, ((IEvaluatable)temp.getAddress()).evaluate(true));
+            LispNode evaluatedAddress = EvaluatorSingleton.INSTANCE.getNodeEvaluator().evaluate(
+                temp.getAddress(),
+                true
+            );
+            newVariables.put(formal, evaluatedAddress);
             params = temp.getData();
         }
         return newVariables;

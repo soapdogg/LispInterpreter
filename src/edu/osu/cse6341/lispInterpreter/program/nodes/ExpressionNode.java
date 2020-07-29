@@ -1,59 +1,16 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes;
 
-import java.util.Map;
-import java.util.HashMap;
-
-import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
-import edu.osu.cse6341.lispInterpreter.program.Environment;
-import edu.osu.cse6341.lispInterpreter.program.IEvaluatable;
 import edu.osu.cse6341.lispInterpreter.program.IPrettyPrintable;
 import edu.osu.cse6341.lispInterpreter.singleton.ComparatorSingleton;
-import edu.osu.cse6341.lispInterpreter.singleton.FunctionSingleton;
-import edu.osu.cse6341.lispInterpreter.functions.*;
-import edu.osu.cse6341.lispInterpreter.singleton.GeneratorSingleton;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(staticName = "newInstance")
-public class ExpressionNode implements LispNode, IEvaluatable, IPrettyPrintable {
-
-	private static final Map<String, LispFunction> functionMap;
+public class ExpressionNode implements LispNode, IPrettyPrintable {
 
 	private final LispNode address;
 	private final LispNode data;
 	private final boolean isList;
-
-	static{
-		functionMap = new HashMap<>();
-		functionMap.put(FunctionNameConstants.ATOM, FunctionSingleton.INSTANCE.getAtomFunction());
-		functionMap.put(FunctionNameConstants.CAR, FunctionSingleton.INSTANCE.getCarFunction());
-		functionMap.put(FunctionNameConstants.CDR, FunctionSingleton.INSTANCE.getCdrFunction());
-		functionMap.put(FunctionNameConstants.COND, FunctionSingleton.INSTANCE.getCondFunction());
-		functionMap.put(FunctionNameConstants.CONS, FunctionSingleton.INSTANCE.getConsFunction());
-		functionMap.put(FunctionNameConstants.DEFUN, FunctionSingleton.INSTANCE.getDefunFunction());
-		functionMap.put(FunctionNameConstants.EQ, FunctionSingleton.INSTANCE.getEqFunction());
-		functionMap.put(FunctionNameConstants.GREATER, FunctionSingleton.INSTANCE.getGreaterFunction());
-		functionMap.put(FunctionNameConstants.INT, FunctionSingleton.INSTANCE.getIntFunction());
-		functionMap.put(FunctionNameConstants.LESS, FunctionSingleton.INSTANCE.getLessFunction());
-		functionMap.put(FunctionNameConstants.MINUS, FunctionSingleton.INSTANCE.getMinusFunction());
-		functionMap.put(FunctionNameConstants.NULL, FunctionSingleton.INSTANCE.getNullFunction());
-		functionMap.put(FunctionNameConstants.PLUS, FunctionSingleton.INSTANCE.getPlusFunction());
-		functionMap.put(FunctionNameConstants.QUOTE, FunctionSingleton.INSTANCE.getQuoteFunction());
-		functionMap.put(FunctionNameConstants.TIMES, FunctionSingleton.INSTANCE.getTimesFunction());
-	}
-
-	@Override
-	public LispNode evaluate(boolean areLiteralsAllowed) throws Exception{
-	    if(this.address == null) return GeneratorSingleton.INSTANCE.getNodeGenerator().generateAtomNode(false);
-
-	    String addressValue = this.address.getNodeValue();
-	    Environment e = Environment.getEnvironment();
-        if(e.isVariableName(addressValue)) return e.getVariableValue(addressValue);
-        if(e.isFunctionName(addressValue)) return e.evaluateFunction(addressValue, this.data);
-        if(functionMap.containsKey(addressValue)) return executeBuiltInFunction(addressValue);
-        if(!areLiteralsAllowed) throw new Exception("Error! Invalid CAR value: " + addressValue + '\n');
-        return ((IEvaluatable)this.address).evaluate(true);
-	}
 
     @Override
     public String getListNotationToString(boolean isFirst){
@@ -78,11 +35,6 @@ public class ExpressionNode implements LispNode, IEvaluatable, IPrettyPrintable 
 	public LispNode getAddress(){
 	    return address;
 	}
-
-	private LispNode executeBuiltInFunction(String functionName) throws Exception{
-        LispFunction function = functionMap.get(functionName);
-        return function.evaluateLispFunction(data);
-    }
 
     private String getDataListNotationAsString(){
         if(!data.isNodeList()) {

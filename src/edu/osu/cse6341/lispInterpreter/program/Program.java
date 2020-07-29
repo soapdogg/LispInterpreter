@@ -4,6 +4,7 @@ import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.parser.Parser;
 import edu.osu.cse6341.lispInterpreter.singleton.AsserterSingleton;
+import edu.osu.cse6341.lispInterpreter.singleton.EvaluatorSingleton;
 import edu.osu.cse6341.lispInterpreter.singleton.GeneratorSingleton;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
@@ -42,7 +43,10 @@ public class Program implements IPrettyPrintable{
 			boolean isNotNil = !node.getNodeValue().equals(ReservedValuesConstants.NIL);
 			if (isNotList && isNotNumeric && isNotT && isNotNil)
 				throw new Exception("Error! " + node.getNodeValue() + " is not a valid atomic value!\n");
-			LispNode evaluatedNode = ((IEvaluatable) node).evaluate(false);
+			LispNode evaluatedNode = EvaluatorSingleton.INSTANCE.getNodeEvaluator().evaluate(
+				node,
+				false
+			);
 			if(evaluatedNode != null) evaluatedNodes.add(evaluatedNode);
 		}
 		isEvaluated = true;

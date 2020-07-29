@@ -27,23 +27,28 @@ public enum  FunctionSingleton {
     FunctionSingleton() {
         atomFunction = AtomFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
+            EvaluatorSingleton.INSTANCE.getNodeEvaluator(),
             GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
         carFunction = CarFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
-            ValueRetrieverSingleton.INSTANCE.getListValueRetriever()
+            ValueRetrieverSingleton.INSTANCE.getListValueRetriever(),
+            EvaluatorSingleton.INSTANCE.getNodeEvaluator()
         );
         cdrFunction = CdrFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
-            ValueRetrieverSingleton.INSTANCE.getListValueRetriever()
+            ValueRetrieverSingleton.INSTANCE.getListValueRetriever(),
+            EvaluatorSingleton.INSTANCE.getNodeEvaluator()
         );
         condFunction = CondFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
             ValueRetrieverSingleton.INSTANCE.getListValueRetriever(),
+            EvaluatorSingleton.INSTANCE.getNodeEvaluator(),
             ComparatorSingleton.INSTANCE.getNodeValueComparator()
         );
         consFunction = ConsFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
+            EvaluatorSingleton.INSTANCE.getNodeEvaluator(),
             GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
         defunFunction = DefunFunction.newInstance(
@@ -53,35 +58,42 @@ public enum  FunctionSingleton {
         );
         eqFunction = EqFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
+            EvaluatorSingleton.INSTANCE.getNodeEvaluator(),
             ValueRetrieverSingleton.INSTANCE.getAtomicValueRetriever(),
             GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
         greaterFunction = GreaterFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
+            EvaluatorSingleton.INSTANCE.getNodeEvaluator(),
             ValueRetrieverSingleton.INSTANCE.getNumericValueRetriever(),
             GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
         intFunction = IntFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
+            EvaluatorSingleton.INSTANCE.getNodeEvaluator(),
             GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
         lessFunction = LessFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
+            EvaluatorSingleton.INSTANCE.getNodeEvaluator(),
             ValueRetrieverSingleton.INSTANCE.getNumericValueRetriever(),
             GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
         minusFunction = MinusFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
+            EvaluatorSingleton.INSTANCE.getNodeEvaluator(),
             ValueRetrieverSingleton.INSTANCE.getNumericValueRetriever(),
             GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
         nullFunction = NullFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
+            EvaluatorSingleton.INSTANCE.getNodeEvaluator(),
             ComparatorSingleton.INSTANCE.getNodeValueComparator(),
             GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
         plusFunction = PlusFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
+            EvaluatorSingleton.INSTANCE.getNodeEvaluator(),
             ValueRetrieverSingleton.INSTANCE.getNumericValueRetriever(),
             GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
@@ -90,6 +102,7 @@ public enum  FunctionSingleton {
         );
         timesFunction = TimesFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
+            EvaluatorSingleton.INSTANCE.getNodeEvaluator(),
             ValueRetrieverSingleton.INSTANCE.getNumericValueRetriever(),
             GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
