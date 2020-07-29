@@ -2,13 +2,12 @@ package edu.osu.cse6341.lispInterpreter.program.nodes;
 
 import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
 import edu.osu.cse6341.lispInterpreter.program.IEvaluatable;
-import edu.osu.cse6341.lispInterpreter.program.IParsable;
 import edu.osu.cse6341.lispInterpreter.program.IPrettyPrintable;
 import edu.osu.cse6341.lispInterpreter.program.parser.Parser;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 
-public class StartNode implements IParsable, IEvaluatable, IPrettyPrintable{
+public class StartNode implements IEvaluatable, IPrettyPrintable{
     private LispNode node;
 	private StartNode nextExpressionStartNode;
 
@@ -18,7 +17,6 @@ public class StartNode implements IParsable, IEvaluatable, IPrettyPrintable{
         parser = new Parser();
     }
 
-    @Override
     public void parse(Tokenizer tokenizer) throws Exception{
         if(tokenizer.getCurrent().getTokenKind() == TokenKind.EOF_TOKEN) return;
         node = parser.parseIntoNode(tokenizer);

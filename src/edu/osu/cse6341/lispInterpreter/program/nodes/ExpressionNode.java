@@ -8,16 +8,12 @@ import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
 import edu.osu.cse6341.lispInterpreter.program.Environment;
 import edu.osu.cse6341.lispInterpreter.comparator.NodeValueComparator;
 import edu.osu.cse6341.lispInterpreter.program.IEvaluatable;
-import edu.osu.cse6341.lispInterpreter.program.IParsable;
 import edu.osu.cse6341.lispInterpreter.program.IPrettyPrintable;
-import edu.osu.cse6341.lispInterpreter.program.parser.Parser;
 import edu.osu.cse6341.lispInterpreter.singleton.ComparatorSingleton;
 import edu.osu.cse6341.lispInterpreter.singleton.FunctionSingleton;
-import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
-import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 import edu.osu.cse6341.lispInterpreter.functions.*;
 
-public class ExpressionNode implements LispNode, IParsable, IEvaluatable, IPrettyPrintable {
+public class ExpressionNode implements LispNode, IEvaluatable, IPrettyPrintable {
 
 	private static final Map<String, LispFunction> functionMap;
 
@@ -25,7 +21,6 @@ public class ExpressionNode implements LispNode, IParsable, IEvaluatable, IPrett
 	private LispNode data;
 	private boolean isList;
 	private final NodeValueComparator nodeValueComparator;
-	private final Parser parser;
 
 	static{
 		functionMap = new HashMap<>();
@@ -48,7 +43,6 @@ public class ExpressionNode implements LispNode, IParsable, IEvaluatable, IPrett
 
 	public ExpressionNode(){
 		nodeValueComparator = ComparatorSingleton.INSTANCE.getNodeValueComparator();
-		parser = new Parser();
 	}
 
 	public ExpressionNode(
@@ -59,18 +53,7 @@ public class ExpressionNode implements LispNode, IParsable, IEvaluatable, IPrett
         this.data = data;
         this.isList = true;
         nodeValueComparator = ComparatorSingleton.INSTANCE.getNodeValueComparator();
-        parser = new Parser();
     }
-
-	@Override
-	public void parse(Tokenizer tokenizer) throws Exception{
-		TokenKind tokenKind = tokenizer.getCurrent().getTokenKind();
-	    isList = tokenKind != TokenKind.CLOSE_TOKEN;
-		if(!isList) return;
-		address = parser.parseIntoNode(tokenizer);
-        data = new ExpressionNode();
-		((IParsable)data).parse(tokenizer);
-	}
 
 	@Override
 	public LispNode evaluate(boolean areLiteralsAllowed) throws Exception{
@@ -123,11 +106,6 @@ public class ExpressionNode implements LispNode, IParsable, IEvaluatable, IPrett
         }
         else return ' ' + ((IPrettyPrintable)data).getListNotationToString(false);
     }
-
-	@Override
-	public LispNode newLispNodeInstance() {
-		return new ExpressionNode();
-	}
 
 	@Override
 	public String getNodeValue() {

@@ -11,7 +11,7 @@ public class TokenKindAsserter {
      public void assertTokenIsAtomOrOpen(
          final IToken token
      ) throws Exception{
-        boolean result = TokenKindToNode.tokenKindNodeMap.containsKey(token.getTokenKind());
+        boolean result = TokenKindToNode.startingTokenKindSet.contains(token.getTokenKind());
         if (result) return;
         String errorMessage = "Expected either an ATOM or OPEN token.\nActual: " + token.getTokenKind().toString() +
             "    Value: " +
