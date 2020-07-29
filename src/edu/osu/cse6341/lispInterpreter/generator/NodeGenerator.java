@@ -2,6 +2,8 @@ package edu.osu.cse6341.lispInterpreter.generator;
 
 import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
+import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
+import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(staticName = "newInstance")
@@ -29,5 +31,24 @@ public class NodeGenerator {
         final String value
     ) {
         return AtomNode.newInstance(value);
+    }
+
+    public ExpressionNode generateExpressionNode() {
+        return ExpressionNode.newInstance(
+            null,
+            null,
+            false
+        );
+    }
+
+    public ExpressionNode generateExpressionNode(
+        final LispNode address,
+        final LispNode data
+    ) {
+        return ExpressionNode.newInstance(
+            address,
+            data,
+            true
+        );
     }
 }

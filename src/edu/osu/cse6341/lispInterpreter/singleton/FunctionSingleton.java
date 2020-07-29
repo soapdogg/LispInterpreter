@@ -43,7 +43,8 @@ public enum  FunctionSingleton {
             ComparatorSingleton.INSTANCE.getNodeValueComparator()
         );
         consFunction = ConsFunction.newInstance(
-            AsserterSingleton.INSTANCE.getFunctionLengthAsserter()
+            AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
+            GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
         defunFunction = DefunFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),

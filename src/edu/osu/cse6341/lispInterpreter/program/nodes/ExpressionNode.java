@@ -5,25 +5,23 @@ import java.util.HashMap;
 
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
-import edu.osu.cse6341.lispInterpreter.generator.NodeGenerator;
 import edu.osu.cse6341.lispInterpreter.program.Environment;
-import edu.osu.cse6341.lispInterpreter.comparator.NodeValueComparator;
 import edu.osu.cse6341.lispInterpreter.program.IEvaluatable;
 import edu.osu.cse6341.lispInterpreter.program.IPrettyPrintable;
 import edu.osu.cse6341.lispInterpreter.singleton.ComparatorSingleton;
 import edu.osu.cse6341.lispInterpreter.singleton.FunctionSingleton;
 import edu.osu.cse6341.lispInterpreter.functions.*;
 import edu.osu.cse6341.lispInterpreter.singleton.GeneratorSingleton;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor(staticName = "newInstance")
 public class ExpressionNode implements LispNode, IEvaluatable, IPrettyPrintable {
 
 	private static final Map<String, LispFunction> functionMap;
 
-	private LispNode address;
-	private LispNode data;
-	private boolean isList;
-	private final NodeValueComparator nodeValueComparator;
-	private final NodeGenerator nodeGenerator;
+	private final LispNode address;
+	private final LispNode data;
+	private final boolean isList;
 
 	static{
 		functionMap = new HashMap<>();
@@ -44,25 +42,9 @@ public class ExpressionNode implements LispNode, IEvaluatable, IPrettyPrintable 
 		functionMap.put(FunctionNameConstants.TIMES, FunctionSingleton.INSTANCE.getTimesFunction());
 	}
 
-	public ExpressionNode(){
-		nodeValueComparator = ComparatorSingleton.INSTANCE.getNodeValueComparator();
-		nodeGenerator = GeneratorSingleton.INSTANCE.getNodeGenerator();
-	}
-
-	public ExpressionNode(
-		LispNode address,
-		LispNode data
-	){
-	    this.address = address;
-        this.data = data;
-        this.isList = true;
-        nodeValueComparator = ComparatorSingleton.INSTANCE.getNodeValueComparator();
-        nodeGenerator = GeneratorSingleton.INSTANCE.getNodeGenerator();
-    }
-
 	@Override
 	public LispNode evaluate(boolean areLiteralsAllowed) throws Exception{
-	    if(this.address == null) return nodeGenerator.generateAtomNode(false);
+	    if(this.address == null) return GeneratorSingleton.INSTANCE.getNodeGenerator().generateAtomNode(false);
 
 	    String addressValue = this.address.getNodeValue();
 	    Environment e = Environment.getEnvironment();
@@ -104,7 +86,7 @@ public class ExpressionNode implements LispNode, IEvaluatable, IPrettyPrintable 
 
     private String getDataListNotationAsString(){
         if(!data.isNodeList()) {
-            String dataString = (data.isNodeNumeric() || nodeValueComparator.equalsT(data.getNodeValue()))
+            String dataString = (data.isNodeNumeric() || ComparatorSingleton.INSTANCE.getNodeValueComparator().equalsT(data.getNodeValue()))
                     ? (" . " + ((IPrettyPrintable)data).getListNotationToString(false))
                     : "";
             return dataString + ')';

@@ -2,6 +2,7 @@ package edu.osu.cse6341.lispInterpreter.functions;
 
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
+import edu.osu.cse6341.lispInterpreter.generator.NodeGenerator;
 import edu.osu.cse6341.lispInterpreter.program.IEvaluatable;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
@@ -12,6 +13,7 @@ import lombok.AllArgsConstructor;
 public class ConsFunction implements LispFunction {
 
     private final FunctionLengthAsserter functionLengthAsserter;
+    private final NodeGenerator nodeGenerator;
 
     @Override
     public LispNode evaluateLispFunction(final LispNode params) throws Exception {
@@ -24,7 +26,7 @@ public class ConsFunction implements LispFunction {
         LispNode evaluatedAddress =((IEvaluatable)((ExpressionNode) params).getAddress()).evaluate(false);
         LispNode evaluatedData = ((IEvaluatable)rightSide.getAddress()).evaluate(false);
 
-        return new ExpressionNode(
+        return nodeGenerator.generateExpressionNode(
             evaluatedAddress,
             evaluatedData
         );

@@ -2,7 +2,6 @@ package edu.osu.cse6341.lispInterpreter.parser;
 
 import edu.osu.cse6341.lispInterpreter.asserter.TokenKindAsserter;
 import edu.osu.cse6341.lispInterpreter.generator.NodeGenerator;
-import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
@@ -41,11 +40,11 @@ public class Parser {
     ) throws Exception {
         boolean isClose = tokenizer.getCurrent().getTokenKind() == TokenKind.CLOSE_TOKEN;
         LispNode result;
-        if (isClose) result = new ExpressionNode();
+        if (isClose) result = nodeGenerator.generateExpressionNode();
         else {
             LispNode address = parseIntoNode(tokenizer);
             LispNode data = parseExpressionNode(tokenizer);
-            result = new ExpressionNode(
+            result = nodeGenerator.generateExpressionNode(
                 address,
                 data
             );
