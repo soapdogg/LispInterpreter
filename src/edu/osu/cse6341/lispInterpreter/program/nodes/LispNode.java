@@ -6,6 +6,5 @@ public interface LispNode extends IPrettyPrintable {
 
     String getNodeValue();
     boolean isNodeList();
-    boolean isNodeNumeric();
     int parameterLength();
 }

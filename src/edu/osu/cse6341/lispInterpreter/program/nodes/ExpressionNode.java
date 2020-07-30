@@ -2,6 +2,7 @@ package edu.osu.cse6341.lispInterpreter.program.nodes;
 
 import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
 import edu.osu.cse6341.lispInterpreter.singleton.ComparatorSingleton;
+import edu.osu.cse6341.lispInterpreter.singleton.DeterminerSingleton;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(staticName = "newInstance")
@@ -37,7 +38,7 @@ public class ExpressionNode implements LispNode {
 
     private String getDataListNotationAsString(){
         if(!data.isNodeList()) {
-            String dataString = (data.isNodeNumeric() || ComparatorSingleton.INSTANCE.getNodeValueComparator().equalsT(data.getNodeValue()))
+            String dataString = (DeterminerSingleton.INSTANCE.getNumericStringDeterminer().isStringNumeric(data.getNodeValue()) || ComparatorSingleton.INSTANCE.getNodeValueComparator().equalsT(data.getNodeValue()))
                     ? (" . " + data.getListNotationToString(false))
                     : "";
             return dataString + ')';
@@ -55,11 +56,6 @@ public class ExpressionNode implements LispNode {
 	@Override
 	public boolean isNodeList() {
 		return isList;
-	}
-
-	@Override
-	public boolean isNodeNumeric() {
-		return false;
 	}
 
 	@Override

@@ -71,6 +71,7 @@ public enum  FunctionSingleton {
         intFunction = IntFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
             EvaluatorSingleton.INSTANCE.getNodeEvaluator(),
+            DeterminerSingleton.INSTANCE.getNumericStringDeterminer(),
             GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
         lessFunction = LessFunction.newInstance(

@@ -28,11 +28,6 @@ public class AtomNode implements LispNode {
     }
 
     @Override
-    public boolean isNodeNumeric() {
-        return value.matches("-?[1-9][0-9]*|0");
-    }
-
-    @Override
     public int parameterLength() {
         return 1;
     }

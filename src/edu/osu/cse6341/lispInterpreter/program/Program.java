@@ -2,6 +2,7 @@ package edu.osu.cse6341.lispInterpreter.program;
 
 import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.singleton.DeterminerSingleton;
 import edu.osu.cse6341.lispInterpreter.singleton.EvaluatorSingleton;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class Program implements IPrettyPrintable{
 	public void evaluate() throws Exception{
 		for(LispNode node: rootNodes) {
 			boolean isNotList = !node.isNodeList();
-			boolean isNotNumeric = !node.isNodeNumeric();
+			boolean isNotNumeric = !DeterminerSingleton.INSTANCE.getNumericStringDeterminer().isStringNumeric(node.getNodeValue());
 			boolean isNotT = !node.getNodeValue().equals(ReservedValuesConstants.T);
 			boolean isNotNil = !node.getNodeValue().equals(ReservedValuesConstants.NIL);
 			if (isNotList && isNotNumeric && isNotT && isNotNil)

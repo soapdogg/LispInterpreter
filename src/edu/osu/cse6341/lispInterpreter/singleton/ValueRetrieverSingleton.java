@@ -18,6 +18,8 @@ public enum ValueRetrieverSingleton {
         listValueRetriever = ListValueRetriever.newInstance(
             ComparatorSingleton.INSTANCE.getNodeValueComparator()
         );
-        numericValueRetriever = NumericValueRetriever.newInstance();
+        numericValueRetriever = NumericValueRetriever.newInstance(
+            DeterminerSingleton.INSTANCE.getNumericStringDeterminer()
+        );
     }
 }
