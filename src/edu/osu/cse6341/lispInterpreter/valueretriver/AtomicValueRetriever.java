@@ -1,7 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.valueretriver;
 
 import edu.osu.cse6341.lispInterpreter.exceptions.NotAtomicException;
-import edu.osu.cse6341.lispInterpreter.program.IPrettyPrintable;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
 import lombok.AllArgsConstructor;
 
@@ -12,13 +11,13 @@ public class AtomicValueRetriever {
         final LispNode node,
         final int position,
         final String functionName
-    ) throws Exception{
+    ) throws NotAtomicException {
         if(node.isNodeList()) {
             String sb = "Error! Parameter at position: " + position +
                 " of function " +
                 functionName +
                 " is not atomic!    Actual: " +
-                ((IPrettyPrintable)node).getListNotationToString(true) +
+                node.getListNotationToString(true) +
                 '\n';
             throw new NotAtomicException(sb);
         }

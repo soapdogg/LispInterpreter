@@ -1,10 +1,9 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes;
 
-import edu.osu.cse6341.lispInterpreter.program.IPrettyPrintable;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(staticName = "newInstance")
-public class AtomNode implements LispNode, IPrettyPrintable {
+public class AtomNode implements LispNode {
 
 	private final String value;
 

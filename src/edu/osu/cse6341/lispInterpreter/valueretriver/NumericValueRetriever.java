@@ -1,7 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.valueretriver;
 
 import edu.osu.cse6341.lispInterpreter.exceptions.NotNumericException;
-import edu.osu.cse6341.lispInterpreter.program.IPrettyPrintable;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
 import lombok.AllArgsConstructor;
 
@@ -12,13 +11,13 @@ public class NumericValueRetriever {
         final LispNode node,
         final int position,
         final String functionName
-    ) throws Exception{
+    ) throws NotNumericException {
         if(!node.isNodeNumeric()) {
             String sb = "Error! Parameter at position: " + position +
                 " of function " +
                 functionName +
                 " is not numeric!    Actual: " +
-                ((IPrettyPrintable)node).getListNotationToString(true) +
+                node.getListNotationToString(true) +
                 '\n';
             throw new NotNumericException(sb);
         }

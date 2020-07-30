@@ -1,12 +1,11 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes;
 
 import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
-import edu.osu.cse6341.lispInterpreter.program.IPrettyPrintable;
 import edu.osu.cse6341.lispInterpreter.singleton.ComparatorSingleton;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(staticName = "newInstance")
-public class ExpressionNode implements LispNode, IPrettyPrintable {
+public class ExpressionNode implements LispNode {
 
 	private final LispNode address;
 	private final LispNode data;
@@ -16,7 +15,7 @@ public class ExpressionNode implements LispNode, IPrettyPrintable {
     public String getListNotationToString(boolean isFirst){
         StringBuilder sb = new StringBuilder();
         if(isFirst) sb.append('(');
-        sb.append(((IPrettyPrintable)address).getListNotationToString(address.isNodeList()));
+        sb.append(address.getListNotationToString(address.isNodeList()));
         sb.append(getDataListNotationAsString());
         return sb.toString();
     }
@@ -24,7 +23,7 @@ public class ExpressionNode implements LispNode, IPrettyPrintable {
     @Override
     public String getDotNotationToString() {
         return isNodeList()
-			? '(' + ((IPrettyPrintable)address).getDotNotationToString() + " . " + ((IPrettyPrintable)data).getDotNotationToString() + ')'
+			? '(' + address.getDotNotationToString() + " . " + data.getDotNotationToString() + ')'
 			: ReservedValuesConstants.NIL;
     }
 
@@ -39,11 +38,11 @@ public class ExpressionNode implements LispNode, IPrettyPrintable {
     private String getDataListNotationAsString(){
         if(!data.isNodeList()) {
             String dataString = (data.isNodeNumeric() || ComparatorSingleton.INSTANCE.getNodeValueComparator().equalsT(data.getNodeValue()))
-                    ? (" . " + ((IPrettyPrintable)data).getListNotationToString(false))
+                    ? (" . " + data.getListNotationToString(false))
                     : "";
             return dataString + ')';
         }
-        else return ' ' + ((IPrettyPrintable)data).getListNotationToString(false);
+        else return ' ' + data.getListNotationToString(false);
     }
 
 	@Override
