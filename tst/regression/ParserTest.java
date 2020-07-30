@@ -1,5 +1,6 @@
-package edu.osu.cse6341.lispInterpreter;
+package regression;
 
+import edu.osu.cse6341.lispInterpreter.Interpreter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

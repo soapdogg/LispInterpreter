@@ -13,15 +13,15 @@ import lombok.AllArgsConstructor;
 public class NodeEvaluator {
 
     public LispNode evaluate(
-        LispNode lispNode,
-        boolean areLiteralsAllowed
+        final LispNode lispNode,
+        final boolean areLiteralsAllowed
     ) throws Exception {
         if (lispNode instanceof AtomNode) return evaluate((AtomNode) lispNode);
         return evaluate((ExpressionNode)lispNode, areLiteralsAllowed);
     }
 
     private LispNode evaluate(
-        AtomNode atomNode
+        final AtomNode atomNode
     ) {
         String value = atomNode.getNodeValue();
         if(Environment.getEnvironment().isVariableName(value)) return Environment.getEnvironment().getVariableValue(value);
@@ -29,8 +29,8 @@ public class NodeEvaluator {
     }
 
     private LispNode evaluate(
-        ExpressionNode expressionNode,
-        boolean areLiteralsAllowed
+        final ExpressionNode expressionNode,
+        final boolean areLiteralsAllowed
     ) throws Exception {
         LispNode address = expressionNode.getAddress();
         if(address == null) return GeneratorSingleton.INSTANCE.getNodeGenerator().generateAtomNode(false);

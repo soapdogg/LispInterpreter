@@ -8,11 +8,24 @@ import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 import lombok.AllArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @AllArgsConstructor(staticName = "newInstance")
 public class Parser {
 
     private final TokenKindAsserter tokenKindAsserter;
     private final NodeGenerator nodeGenerator;
+
+    public List<LispNode> parse(Tokenizer tokenizer) throws Exception {
+
+        List<LispNode> rootNodes = new ArrayList<>();
+        while (tokenizer.getCurrent().getTokenKind() != TokenKind.EOF_TOKEN) {
+            LispNode root = parseIntoNode(tokenizer);
+            rootNodes.add(root);
+        }
+        return rootNodes;
+    }
 
     public LispNode parseIntoNode(
         Tokenizer tokenizer

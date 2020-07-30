@@ -2,12 +2,7 @@ package edu.osu.cse6341.lispInterpreter.program;
 
 import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
-import edu.osu.cse6341.lispInterpreter.parser.Parser;
-import edu.osu.cse6341.lispInterpreter.singleton.AsserterSingleton;
 import edu.osu.cse6341.lispInterpreter.singleton.EvaluatorSingleton;
-import edu.osu.cse6341.lispInterpreter.singleton.GeneratorSingleton;
-import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
-import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,21 +13,12 @@ public class Program implements IPrettyPrintable{
 	private List<LispNode> evaluatedNodes;
 	private boolean isEvaluated;
 
-	public Program(){
-        rootNodes = new ArrayList<>();
+	public Program(
+		List<LispNode> rootNodes
+	){
+		this.rootNodes = rootNodes;
         evaluatedNodes = new ArrayList<>();
         isEvaluated = false;
-	}
-
-	public void parse(Tokenizer tokenizer) throws Exception{
-		Parser parser = Parser.newInstance(
-			AsserterSingleton.INSTANCE.getTokenKindAsserter(),
-			GeneratorSingleton.INSTANCE.getNodeGenerator()
-		);
-		while (tokenizer.getCurrent().getTokenKind() != TokenKind.EOF_TOKEN) {
-			LispNode root = parser.parseIntoNode(tokenizer);
-			rootNodes.add(root);
-		}
 	}
 
 	public void evaluate() throws Exception{

@@ -6,11 +6,11 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor(staticName = "newInstance")
 public class NodeValueComparator {
 
-    public boolean equalsNil(String value){
+    public boolean equalsNil(final String value){
         return ReservedValuesConstants.NIL.equals(value);
     }
 
-    public boolean equalsT(String value){
+    public boolean equalsT(final String value){
         return ReservedValuesConstants.T.equals(value);
     }
 }
