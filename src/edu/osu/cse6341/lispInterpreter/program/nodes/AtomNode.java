@@ -13,11 +13,6 @@ public class AtomNode implements LispNode {
 	}
 
     @Override
-    public String getDotNotationToString() {
-        return value;
-    }
-
-    @Override
     public String getNodeValue() {
         return value;
     }

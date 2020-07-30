@@ -21,13 +21,6 @@ public class ExpressionNode implements LispNode {
         return sb.toString();
     }
 
-    @Override
-    public String getDotNotationToString() {
-        return isNodeList()
-			? '(' + address.getDotNotationToString() + " . " + data.getDotNotationToString() + ')'
-			: ReservedValuesConstants.NIL;
-    }
-
 	public LispNode getData(){
 		return data;
 	}

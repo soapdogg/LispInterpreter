@@ -121,20 +121,14 @@ public class UserDefinedTest {
 
     private static String scanExpected(String expectedFile) {
         StringBuilder builder = new StringBuilder();
-        Scanner in = null;
-        try {
-            in = new Scanner(Paths.get(expectedFile));
+        try (Scanner in = new Scanner(Paths.get(expectedFile))) {
             while (in.hasNextLine()) {
                 String next = in.nextLine();
                 builder.append(next);
                 builder.append('\n');
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
-        }
-        finally {
-            if(in != null) in.close();
         }
         return builder.toString();
     }
