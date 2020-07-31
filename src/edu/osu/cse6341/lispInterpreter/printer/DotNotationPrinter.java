@@ -1,6 +1,5 @@
 package edu.osu.cse6341.lispInterpreter.printer;
 
-import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
@@ -19,11 +18,8 @@ public class DotNotationPrinter {
     }
 
     private String printExpressionNodeInDotNotation(ExpressionNode node) {
-        if (node.isNodeList()) {
-            String addressDotNotation = printInDotNotation(node.getAddress());
-            String dataDotNotation = printInDotNotation(node.getData());
-            return'(' + addressDotNotation + " . " + dataDotNotation + ')';
-        }
-        return ReservedValuesConstants.NIL;
+        String addressDotNotation = printInDotNotation(node.getAddress());
+        String dataDotNotation = printInDotNotation(node.getData());
+        return'(' + addressDotNotation + " . " + dataDotNotation + ')';
     }
 }

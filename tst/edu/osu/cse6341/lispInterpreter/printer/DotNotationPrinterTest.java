@@ -1,6 +1,5 @@
 package edu.osu.cse6341.lispInterpreter.printer;
 
-import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import org.junit.jupiter.api.Assertions;
@@ -51,14 +50,5 @@ class DotNotationPrinterTest {
         String actual = dotNotationPrinter.printInDotNotation(expressionNode);
 
         Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    void printExpressionNodeNotListTest() {
-        ExpressionNode expressionNode = Mockito.mock(ExpressionNode.class);
-        Mockito.when(expressionNode.isNodeList()).thenReturn(false);
-
-        String actual = dotNotationPrinter.printInDotNotation(expressionNode);
-        Assertions.assertEquals(ReservedValuesConstants.NIL, actual);
     }
 }
