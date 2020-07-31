@@ -1,16 +1,12 @@
 package edu.osu.cse6341.lispInterpreter.program.nodes;
 
+import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(staticName = "newInstance")
 public class AtomNode implements LispNode {
 
 	private final String value;
-
-	@Override
-	public String getListNotationToString(boolean isFirst){
-		return value;
-	}
 
     @Override
     public String getNodeValue() {
@@ -24,6 +20,6 @@ public class AtomNode implements LispNode {
 
     @Override
     public int parameterLength() {
-        return 1;
+        return value.equals(ReservedValuesConstants.NIL) ? 0: 1;
     }
 }

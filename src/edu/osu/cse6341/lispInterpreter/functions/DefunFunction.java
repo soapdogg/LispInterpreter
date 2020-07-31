@@ -2,6 +2,7 @@ package edu.osu.cse6341.lispInterpreter.functions;
 
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
+import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
 import edu.osu.cse6341.lispInterpreter.program.Environment;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
@@ -11,10 +12,7 @@ import edu.osu.cse6341.lispInterpreter.valueretriver.AtomicValueRetriever;
 import edu.osu.cse6341.lispInterpreter.valueretriver.ListValueRetriever;
 import lombok.AllArgsConstructor;
 
-import java.util.Set;
-import java.util.HashSet;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 
 @AllArgsConstructor(staticName = "newInstance")
 public class DefunFunction implements LispFunction {
@@ -111,11 +109,16 @@ public class DefunFunction implements LispFunction {
             functionNameNodeData,
             FunctionNameConstants.DEFUN
         );
-        ExpressionNode formalParametersNode = listValueRetriever.retrieveListValue(
-            tempNode.getAddress(),
-            FunctionNameConstants.DEFUN
-        );
-        List<String> formalParameters = getFormalParameters(formalParametersNode);
+        List<String> formalParameters;
+        if (tempNode.getAddress().getNodeValue().equals(ReservedValuesConstants.NIL)) {
+            formalParameters = Collections.emptyList();
+        } else {
+            ExpressionNode formalParametersNode = listValueRetriever.retrieveListValue(
+                tempNode.getAddress(),
+                FunctionNameConstants.DEFUN
+            );
+            formalParameters = getFormalParameters(formalParametersNode);
+        }
         ExpressionNode temp = listValueRetriever.retrieveListValue(
             functionNameNodeData,
             FunctionNameConstants.DEFUN

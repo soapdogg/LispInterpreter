@@ -2,6 +2,7 @@ package edu.osu.cse6341.lispInterpreter.valueretriver;
 
 import edu.osu.cse6341.lispInterpreter.determiner.NumericStringDeterminer;
 import edu.osu.cse6341.lispInterpreter.exceptions.NotNumericException;
+import edu.osu.cse6341.lispInterpreter.printer.ListNotationPrinter;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
 import lombok.AllArgsConstructor;
 
@@ -9,6 +10,7 @@ import lombok.AllArgsConstructor;
 public class NumericValueRetriever {
 
     private final NumericStringDeterminer numericStringDeterminer;
+    private final ListNotationPrinter listNotationPrinter;
 
     public int retrieveNumericValue(
         final LispNode node,
@@ -17,11 +19,15 @@ public class NumericValueRetriever {
     ) throws NotNumericException {
         boolean isNumeric = numericStringDeterminer.isStringNumeric(node.getNodeValue());
         if(!isNumeric) {
+            String listNotation = listNotationPrinter.printInListNotation(
+                node,
+                true
+            );
             String sb = "Error! Parameter at position: " + position +
                 " of function " +
                 functionName +
                 " is not numeric!    Actual: " +
-                node.getListNotationToString(true) +
+                listNotation +
                 '\n';
             throw new NotNumericException(sb);
         }

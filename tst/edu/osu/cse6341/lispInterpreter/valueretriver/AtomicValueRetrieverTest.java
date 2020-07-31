@@ -2,12 +2,12 @@ package edu.osu.cse6341.lispInterpreter.valueretriver;
 
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.exceptions.NotAtomicException;
+import edu.osu.cse6341.lispInterpreter.printer.ListNotationPrinter;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
 
 class AtomicValueRetrieverTest {
 
@@ -15,6 +15,7 @@ class AtomicValueRetrieverTest {
     private int position;
     private String functionName;
 
+    private ListNotationPrinter listNotationPrinter;
     private AtomicValueRetriever atomicValueRetriever;
 
     @BeforeEach
@@ -23,7 +24,10 @@ class AtomicValueRetrieverTest {
         position = 1;
         functionName = FunctionNameConstants.TIMES;
 
-        atomicValueRetriever = AtomicValueRetriever.newInstance();
+        listNotationPrinter = Mockito.mock(ListNotationPrinter.class);
+        atomicValueRetriever = AtomicValueRetriever.newInstance(
+            listNotationPrinter
+        );
     }
 
     @Test

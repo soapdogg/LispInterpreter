@@ -93,7 +93,7 @@ public final class Interpreter{
     }
 
 	String getValue(){
-	    return program.getListNotationToString(false);
+	    return program.getListNotationToString();
     }
 
     private String getDotNotation() {

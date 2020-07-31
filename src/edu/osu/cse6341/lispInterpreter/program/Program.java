@@ -9,7 +9,7 @@ import edu.osu.cse6341.lispInterpreter.singleton.PrinterSingleton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Program implements IPrettyPrintable{
+public class Program {
 
 	private List<LispNode> rootNodes;
 	private List<LispNode> evaluatedNodes;
@@ -40,12 +40,15 @@ public class Program implements IPrettyPrintable{
 		isEvaluated = true;
 	}
 
-	@Override
-	public String getListNotationToString(boolean isFirst){
+	public String getListNotationToString(){
 		List<LispNode> nodes = isEvaluated ? evaluatedNodes : rootNodes;
 		StringBuilder sb = new StringBuilder();
 		for (LispNode node : nodes) {
-			sb.append(node.getListNotationToString(node.isNodeList()));
+			String listNotation = PrinterSingleton.INSTANCE.getListNotationPrinter().printInListNotation(
+				node,
+				node.isNodeList()
+			);
+			sb.append(listNotation);
 			sb.append('\n');
 		}
 	    return sb.toString();

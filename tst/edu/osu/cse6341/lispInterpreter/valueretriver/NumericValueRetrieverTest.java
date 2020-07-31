@@ -3,6 +3,7 @@ package edu.osu.cse6341.lispInterpreter.valueretriver;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.determiner.NumericStringDeterminer;
 import edu.osu.cse6341.lispInterpreter.exceptions.NotNumericException;
+import edu.osu.cse6341.lispInterpreter.printer.ListNotationPrinter;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +17,7 @@ class NumericValueRetrieverTest {
     private String functionName;
 
     private NumericStringDeterminer numericStringDeterminer;
+    private ListNotationPrinter listNotationPrinter;
     private NumericValueRetriever numericValueRetriever;
 
     @BeforeEach
@@ -25,8 +27,10 @@ class NumericValueRetrieverTest {
         functionName = FunctionNameConstants.QUOTE;
 
         numericStringDeterminer = Mockito.mock(NumericStringDeterminer.class);
+        listNotationPrinter = Mockito.mock(ListNotationPrinter.class);
         numericValueRetriever = NumericValueRetriever.newInstance(
-            numericStringDeterminer
+            numericStringDeterminer,
+            listNotationPrinter
         );
     }
 

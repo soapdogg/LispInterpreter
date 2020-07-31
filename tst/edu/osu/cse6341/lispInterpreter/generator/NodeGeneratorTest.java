@@ -49,15 +49,6 @@ public class NodeGeneratorTest {
     }
 
     @Test
-    void generateEmptyExpressionNodeTest(){
-        ExpressionNode actual = nodeGenerator.generateExpressionNode();
-
-        Assertions.assertNull(actual.getAddress());
-        Assertions.assertNull(actual.getData());
-        Assertions.assertFalse(actual.isNodeList());
-    }
-
-    @Test
     void generateNonEmptyExpressionNodeTest() {
         LispNode address = Mockito.mock(LispNode.class);
         LispNode data = Mockito.mock(LispNode.class);
