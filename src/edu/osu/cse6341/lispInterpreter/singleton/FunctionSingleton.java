@@ -28,6 +28,7 @@ public enum  FunctionSingleton {
         atomFunction = AtomFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
             EvaluatorSingleton.INSTANCE.getNodeEvaluator(),
+            DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer(),
             GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
         carFunction = CarFunction.newInstance(
@@ -41,6 +42,7 @@ public enum  FunctionSingleton {
             EvaluatorSingleton.INSTANCE.getNodeEvaluator()
         );
         condFunction = CondFunction.newInstance(
+            DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer(),
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
             ValueRetrieverSingleton.INSTANCE.getListValueRetriever(),
             EvaluatorSingleton.INSTANCE.getNodeEvaluator(),
@@ -52,6 +54,7 @@ public enum  FunctionSingleton {
             GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
         defunFunction = DefunFunction.newInstance(
+            DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer(),
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
             ValueRetrieverSingleton.INSTANCE.getAtomicValueRetriever(),
             ValueRetrieverSingleton.INSTANCE.getListValueRetriever()

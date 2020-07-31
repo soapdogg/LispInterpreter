@@ -3,6 +3,7 @@ package edu.osu.cse6341.lispInterpreter.functions;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
+import edu.osu.cse6341.lispInterpreter.determiner.ExpressionNodeDeterminer;
 import edu.osu.cse6341.lispInterpreter.program.Environment;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
@@ -40,6 +41,7 @@ public class DefunFunction implements LispFunction {
         invalidFunctionNames.add("NIL");
     }
 
+    private final ExpressionNodeDeterminer expressionNodeDeterminer;
     private final FunctionLengthAsserter functionLengthAsserter;
     private final AtomicValueRetriever atomicValueRetriever;
     private final ListValueRetriever listValueRetriever;
@@ -51,7 +53,7 @@ public class DefunFunction implements LispFunction {
 
     private List<String> getFormalParameters(LispNode formalParametersNode) throws Exception{
         List<String> formalParameters = new ArrayList<>();
-        boolean hasNext = formalParametersNode.isNodeList();
+        boolean hasNext = expressionNodeDeterminer.isExpressionNode(formalParametersNode);
         int counter = 1;
         while(hasNext){
             ExpressionNode temp = listValueRetriever.retrieveListValue(
@@ -68,7 +70,7 @@ public class DefunFunction implements LispFunction {
             formalParameters.add(formalId);
             formalParametersNode = temp.getData();
             ++counter;
-            hasNext = formalParametersNode.isNodeList();
+            hasNext = expressionNodeDeterminer.isExpressionNode(formalParametersNode);
         }
         return formalParameters;
     }

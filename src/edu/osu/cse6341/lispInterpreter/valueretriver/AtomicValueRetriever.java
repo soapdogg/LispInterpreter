@@ -1,5 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.valueretriver;
 
+import edu.osu.cse6341.lispInterpreter.determiner.ExpressionNodeDeterminer;
 import edu.osu.cse6341.lispInterpreter.exceptions.NotAtomicException;
 import edu.osu.cse6341.lispInterpreter.printer.ListNotationPrinter;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
@@ -8,6 +9,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor(staticName = "newInstance")
 public class AtomicValueRetriever {
 
+    private final ExpressionNodeDeterminer expressionNodeDeterminer;
     private final ListNotationPrinter listNotationPrinter;
 
     public String retrieveAtomicValue(
@@ -15,7 +17,8 @@ public class AtomicValueRetriever {
         final int position,
         final String functionName
     ) throws NotAtomicException {
-        if(node.isNodeList()) {
+        boolean isList = expressionNodeDeterminer.isExpressionNode(node);
+        if(isList) {
             String listNotation = listNotationPrinter.printInListNotation(
                 node,
                 true

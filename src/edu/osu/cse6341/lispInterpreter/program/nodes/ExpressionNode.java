@@ -17,11 +17,6 @@ public class ExpressionNode implements LispNode {
 	}
 
 	@Override
-	public boolean isNodeList() {
-		return isList;
-	}
-
-	@Override
 	public int parameterLength() {
 		return data.parameterLength() + 1;
 	}

@@ -25,7 +25,7 @@ public class Program {
 
 	public void evaluate() throws Exception{
 		for(LispNode node: rootNodes) {
-			boolean isNotList = !node.isNodeList();
+			boolean isNotList = !DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer().isExpressionNode(node);
 			boolean isNotNumeric = !DeterminerSingleton.INSTANCE.getNumericStringDeterminer().isStringNumeric(node.getNodeValue());
 			boolean isNotT = !node.getNodeValue().equals(ReservedValuesConstants.T);
 			boolean isNotNil = !node.getNodeValue().equals(ReservedValuesConstants.NIL);
@@ -46,7 +46,7 @@ public class Program {
 		for (LispNode node : nodes) {
 			String listNotation = PrinterSingleton.INSTANCE.getListNotationPrinter().printInListNotation(
 				node,
-				node.isNodeList()
+				DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer().isExpressionNode(node)
 			);
 			sb.append(listNotation);
 			sb.append('\n');

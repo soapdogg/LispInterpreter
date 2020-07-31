@@ -16,11 +16,6 @@ public class AtomNode implements LispNode {
     }
 
     @Override
-    public boolean isNodeList() {
-        return false;
-    }
-
-    @Override
     public int parameterLength() {
         return value.equals(ReservedValuesConstants.NIL) ? 0: 1;
     }

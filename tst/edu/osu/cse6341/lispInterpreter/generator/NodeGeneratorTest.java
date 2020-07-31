@@ -60,6 +60,5 @@ public class NodeGeneratorTest {
 
         Assertions.assertEquals(address, actual.getAddress());
         Assertions.assertEquals(data, actual.getData());
-        Assertions.assertTrue(actual.isNodeList());
     }
 }

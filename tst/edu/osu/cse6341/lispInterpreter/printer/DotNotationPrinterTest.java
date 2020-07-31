@@ -41,7 +41,6 @@ class DotNotationPrinterTest {
         Mockito.when(data.getNodeValue()).thenReturn(dataStr);
 
         ExpressionNode expressionNode = Mockito.mock(ExpressionNode.class);
-        Mockito.when(expressionNode.isNodeList()).thenReturn(true);
         Mockito.when(expressionNode.getAddress()).thenReturn(address);
         Mockito.when(expressionNode.getData()).thenReturn(data);
 

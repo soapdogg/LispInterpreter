@@ -1,6 +1,7 @@
 package edu.osu.cse6341.lispInterpreter.printer;
 
 import edu.osu.cse6341.lispInterpreter.comparator.NodeValueComparator;
+import edu.osu.cse6341.lispInterpreter.determiner.ExpressionNodeDeterminer;
 import edu.osu.cse6341.lispInterpreter.determiner.NumericStringDeterminer;
 import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
@@ -10,6 +11,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor(staticName = "newInstance")
 public class ListNotationPrinter {
 
+    private final ExpressionNodeDeterminer expressionNodeDeterminer;
     private final NumericStringDeterminer numericStringDeterminer;
     private final NodeValueComparator nodeValueComparator;
 
@@ -35,11 +37,17 @@ public class ListNotationPrinter {
         StringBuilder sb = new StringBuilder();
         if(isFirst) sb.append('(');
         LispNode address = node.getAddress();
-        sb.append(printInListNotation(address, address.isNodeList()));
+        sb.append(
+            printInListNotation(
+                address,
+                expressionNodeDeterminer.isExpressionNode(address)
+            )
+        );
 
         LispNode data = node.getData();
         String dataListNotation;
-        if (data.isNodeList()) {
+        boolean isDataList = expressionNodeDeterminer.isExpressionNode(data);
+        if (isDataList) {
             dataListNotation = ' ' + printInListNotation(data, false);
         } else {
             String dataString = (

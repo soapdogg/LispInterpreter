@@ -15,9 +15,11 @@ public enum ValueRetrieverSingleton {
 
     ValueRetrieverSingleton() {
         atomicValueRetriever = AtomicValueRetriever.newInstance(
+            DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer(),
             PrinterSingleton.INSTANCE.getListNotationPrinter()
         );
         listValueRetriever = ListValueRetriever.newInstance(
+            DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer(),
             ComparatorSingleton.INSTANCE.getNodeValueComparator()
         );
         numericValueRetriever = NumericValueRetriever.newInstance(
