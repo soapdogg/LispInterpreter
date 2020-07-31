@@ -33,22 +33,13 @@ public class NodeGenerator {
         return AtomNode.newInstance(value);
     }
 
-    public ExpressionNode generateExpressionNode() {
-        return ExpressionNode.newInstance(
-            null,
-            null,
-            false
-        );
-    }
-
     public ExpressionNode generateExpressionNode(
         final LispNode address,
         final LispNode data
     ) {
         return ExpressionNode.newInstance(
             address,
-            data,
-            true
+            data
         );
     }
 }

@@ -9,7 +9,6 @@ public class ExpressionNode implements LispNode {
 
 	private final LispNode address;
 	private final LispNode data;
-	private final boolean isList;
 
 	@Override
 	public String getNodeValue() {

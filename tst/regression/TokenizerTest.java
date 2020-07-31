@@ -74,12 +74,58 @@ public class TokenizerTest
         Interpreter interpreter = new Interpreter();
         String actual;
         try {
-            actual = interpreter.testTokenizer(programFile);
+            Scanner in = getScannerFromFilePath(programFile);
+            interpreter.interpret(
+                in,
+                true,
+                false
+            );
+            actual = getTokenizedResults(
+                interpreter
+            );
         }catch (Exception e){
             actual = e.getMessage();
         }
         String expected = scanExpected(expectedFile);
         Assertions.assertEquals(expected, actual);
+    }
+
+    private static Scanner getScannerFromFilePath(String programFilePath){
+        Scanner in = null;
+        try {
+            in = new Scanner(Paths.get(programFilePath));
+        }catch (IOException e){
+            System.out.println("File not found");
+            System.out.println(programFilePath);
+            System.exit(-10);
+        }
+        return in;
+    }
+
+    public static String getTokenizedResults(
+        Interpreter interpreter
+    ) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("LITERAL ATOMS: ");
+        sb.append(interpreter.literalAtoms.size());
+        for (String s : interpreter.literalAtoms) {
+            sb.append(',');
+            sb.append(' ');
+            sb.append(s);
+        }
+        sb.append('\n');
+        sb.append("NUMERIC ATOMS: ");
+        sb.append(interpreter.numericAtomsCount);
+        sb.append(',');
+        sb.append(interpreter.numericAtomsSum);
+        sb.append('\n');
+        sb.append("OPEN PARENTHESES: ");
+        sb.append(interpreter.openCount);
+        sb.append('\n');
+        sb.append("CLOSING PARENTHESES: ");
+        sb.append(interpreter.closingCount);
+        sb.append('\n');
+        return sb.toString();
     }
 
     private static String scanExpected(String expectedFile) {

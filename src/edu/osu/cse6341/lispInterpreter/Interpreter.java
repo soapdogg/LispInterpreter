@@ -18,8 +18,8 @@ import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
 public final class Interpreter{
 
 	private Program program;
-	private final Queue<String> literalAtoms;
-	private int numericAtomsCount, numericAtomsSum, openCount, closingCount;
+	public final Queue<String> literalAtoms;
+	public int numericAtomsCount, numericAtomsSum, openCount, closingCount;
 	private final Tokenizer tokenizer;
 	private final Parser parser;
 
@@ -37,7 +37,7 @@ public final class Interpreter{
 		interpret(scanner, false, true);
 	}
 
-	private void interpret(Scanner in, boolean shouldBeProcessed, boolean shouldBeEvaluated) throws Exception{
+	public void interpret(Scanner in, boolean shouldBeProcessed, boolean shouldBeEvaluated) throws Exception{
 	    tokenize(in);
 	    if(shouldBeProcessed) {
 	    	processTokens();
@@ -86,12 +86,6 @@ public final class Interpreter{
 	    return getDotNotation();
     }
 
-	public String testTokenizer(String programFilePath) throws Exception{
-        Scanner in = getScannerFromFilePath(programFilePath);
-        interpret(in, true, false);
-        return getTokenizedResults();
-    }
-
 	String getValue(){
 	    return program.getListNotationToString();
     }
@@ -121,29 +115,6 @@ public final class Interpreter{
 	}
 
 
-    private String getTokenizedResults(){
-	    StringBuilder sb = new StringBuilder();
-		sb.append("LITERAL ATOMS: ");
-		sb.append(literalAtoms.size());
-		for(String s : literalAtoms){
-			sb.append(',');
-			sb.append(' ');
-			sb.append(s);
-		}
-		sb.append('\n');
-		sb.append("NUMERIC ATOMS: ");
-		sb.append(numericAtomsCount);
-		sb.append(',');
-		sb.append(numericAtomsSum);
-		sb.append('\n');
-		sb.append("OPEN PARENTHESES: ");
-		sb.append(openCount);
-		sb.append('\n');
-		sb.append("CLOSING PARENTHESES: ");
-		sb.append(closingCount);
-		sb.append('\n');
-		return sb.toString();
-	}
 }
 
  
