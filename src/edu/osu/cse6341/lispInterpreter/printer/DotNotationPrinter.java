@@ -14,7 +14,7 @@ public class DotNotationPrinter {
     }
 
     private String printAtomNodeInDotNotation(AtomNode node) {
-        return node.getNodeValue();
+        return node.getValue();
     }
 
     private String printExpressionNodeInDotNotation(ExpressionNode node) {

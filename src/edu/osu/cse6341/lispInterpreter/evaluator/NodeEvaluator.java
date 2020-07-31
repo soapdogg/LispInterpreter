@@ -23,7 +23,7 @@ public class NodeEvaluator {
     private LispNode evaluate(
         final AtomNode atomNode
     ) {
-        String value = atomNode.getNodeValue();
+        String value = atomNode.getValue();
         if(Environment.getEnvironment().isVariableName(value)) return Environment.getEnvironment().getVariableValue(value);
         return atomNode;
     }
@@ -35,7 +35,7 @@ public class NodeEvaluator {
         LispNode address = expressionNode.getAddress();
         if(address == null) return GeneratorSingleton.INSTANCE.getNodeGenerator().generateAtomNode(false);
 
-        String addressValue = address.getNodeValue();
+        String addressValue = address.getValue();
         Environment e = Environment.getEnvironment();
         if(e.isVariableName(addressValue)) return e.getVariableValue(addressValue);
         if(e.isFunctionName(addressValue)) return e.evaluateFunction(addressValue, expressionNode.getData());

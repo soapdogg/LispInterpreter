@@ -11,12 +11,7 @@ public class ExpressionNode implements LispNode {
 	private final LispNode data;
 
 	@Override
-	public String getNodeValue() {
-		return address.getNodeValue() + ' ' + data.getNodeValue();
-	}
-
-	@Override
-	public int parameterLength() {
-		return data.parameterLength() + 1;
+	public String getValue() {
+		return address.getValue() + ' ' + data.getValue();
 	}
 }

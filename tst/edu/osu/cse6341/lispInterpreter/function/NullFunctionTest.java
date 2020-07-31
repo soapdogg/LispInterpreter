@@ -45,9 +45,6 @@ class NullFunctionTest {
 
     @Test
     void nullFunctionTest() throws Exception {
-        int length = 2;
-        Mockito.when(params.parameterLength()).thenReturn(length);
-
         LispNode evaluatedResult = Mockito.mock(LispNode.class);
         Mockito.when(
             nodeEvaluator.evaluate(
@@ -57,7 +54,7 @@ class NullFunctionTest {
         ).thenReturn(evaluatedResult);
 
         String value = ReservedValuesConstants.NIL;
-        Mockito.when(evaluatedResult.getNodeValue()).thenReturn(value);
+        Mockito.when(evaluatedResult.getValue()).thenReturn(value);
 
         boolean result = true;
         Mockito.when(nodeValueComparator.equalsNil(value)).thenReturn(result);
@@ -71,7 +68,7 @@ class NullFunctionTest {
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
             FunctionNameConstants.NULL,
             FunctionLengthConstants.TWO,
-            length
+            params
         );
     }
 }

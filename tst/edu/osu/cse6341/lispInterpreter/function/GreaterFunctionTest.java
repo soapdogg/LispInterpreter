@@ -49,9 +49,6 @@ class GreaterFunctionTest {
 
     @Test
     void greaterFunctionTest() throws Exception {
-        int length = 3;
-        Mockito.when(params.parameterLength()).thenReturn(length);
-
         LispNode evaluatedAddress = Mockito.mock(LispNode.class);
         Mockito.when(
             nodeEvaluator.evaluate(
@@ -110,7 +107,7 @@ class GreaterFunctionTest {
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
             FunctionNameConstants.GREATER,
             FunctionLengthConstants.THREE,
-            length
+            params
         );
 
     }

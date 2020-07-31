@@ -20,7 +20,8 @@ public enum ValueRetrieverSingleton {
         );
         listValueRetriever = ListValueRetriever.newInstance(
             DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer(),
-            ComparatorSingleton.INSTANCE.getNodeValueComparator()
+            ComparatorSingleton.INSTANCE.getNodeValueComparator(),
+            DeterminerSingleton.INSTANCE.getFunctionLengthDeterminer()
         );
         numericValueRetriever = NumericValueRetriever.newInstance(
             DeterminerSingleton.INSTANCE.getNumericStringDeterminer(),

@@ -19,7 +19,7 @@ public class QuoteFunction implements LispFunction {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.QUOTE,
             FunctionLengthConstants.TWO,
-            params.parameterLength()
+            params
         );
         ExpressionNode expressionNodeParams = listValueRetriever.retrieveListValue(
             params,

@@ -22,7 +22,7 @@ public class AtomFunction implements LispFunction {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.ATOM,
             FunctionLengthConstants.TWO,
-            params.parameterLength()
+            params
         );
         LispNode evaluatedResult = nodeEvaluator.evaluate(
             params,

@@ -49,9 +49,6 @@ class LessFunctionTest {
 
     @Test
     void lessFunctionTest() throws Exception {
-        int length = 3;
-        Mockito.when(params.parameterLength()).thenReturn(length);
-
         LispNode evaluatedAddress = Mockito.mock(LispNode.class);
         Mockito.when(
             nodeEvaluator.evaluate(
@@ -110,7 +107,7 @@ class LessFunctionTest {
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
             FunctionNameConstants.LESS,
             FunctionLengthConstants.THREE,
-            length
+            params
         );
 
     }

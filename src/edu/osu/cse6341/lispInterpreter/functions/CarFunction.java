@@ -21,7 +21,7 @@ public class CarFunction implements LispFunction {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.CAR,
             FunctionLengthConstants.TWO,
-            params.parameterLength()
+            params
         );
         ExpressionNode expressionNodeParams = listValueRetriever.retrieveListValue(
             params,

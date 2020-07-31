@@ -21,7 +21,7 @@ class DotNotationPrinterTest {
         AtomNode atomNode = Mockito.mock(AtomNode.class);
 
         String value = "value";
-        Mockito.when(atomNode.getNodeValue()).thenReturn(value);
+        Mockito.when(atomNode.getValue()).thenReturn(value);
 
         String actual = dotNotationPrinter.printInDotNotation(atomNode);
 
@@ -33,12 +33,12 @@ class DotNotationPrinterTest {
         AtomNode address = Mockito.mock(AtomNode.class);
 
         String addressStr = "address";
-        Mockito.when(address.getNodeValue()).thenReturn(addressStr);
+        Mockito.when(address.getValue()).thenReturn(addressStr);
 
         AtomNode data = Mockito.mock(AtomNode.class);
 
         String dataStr = "data";
-        Mockito.when(data.getNodeValue()).thenReturn(dataStr);
+        Mockito.when(data.getValue()).thenReturn(dataStr);
 
         ExpressionNode expressionNode = Mockito.mock(ExpressionNode.class);
         Mockito.when(expressionNode.getAddress()).thenReturn(address);

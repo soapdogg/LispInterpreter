@@ -2,6 +2,7 @@ package edu.osu.cse6341.lispInterpreter.program;
 
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.singleton.DeterminerSingleton;
 import edu.osu.cse6341.lispInterpreter.singleton.EvaluatorSingleton;
 import lombok.AllArgsConstructor;
 
@@ -45,10 +46,11 @@ public class UserDefinedFunction {
     }
 
     private void assertActualLengthSameAsFormalsLength(LispNode params) throws Exception{
-         if(formalParameters.size() != params.parameterLength())
+        int actualLength = DeterminerSingleton.INSTANCE.getFunctionLengthDeterminer().determineFunctionLength(params);
+         if(formalParameters.size() != actualLength)
             throw new Exception("Length of actual parameters does not match length of formal parameters for function: "
                     + functionName
                     + "\nExpected: " + formalParameters.size()
-                    + "    Actual: " + params.parameterLength()  + "\n");
+                    + "    Actual: " + actualLength  + "\n");
     }
 }

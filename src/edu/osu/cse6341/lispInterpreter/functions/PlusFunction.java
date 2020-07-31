@@ -25,7 +25,7 @@ public class PlusFunction implements LispFunction {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.PLUS,
             FunctionLengthConstants.THREE,
-            params.parameterLength()
+            params
         );
         LispNode evaluatedAddress = nodeEvaluator.evaluate(
             params,

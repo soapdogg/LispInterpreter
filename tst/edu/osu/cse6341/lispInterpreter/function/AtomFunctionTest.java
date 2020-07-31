@@ -44,9 +44,6 @@ class AtomFunctionTest {
 
     @Test
     void atomFunctionTest() throws Exception {
-        int length = 2;
-        Mockito.when(params.parameterLength()).thenReturn(length);
-
         LispNode evaluatedResult = Mockito.mock(LispNode.class);
         Mockito.when(
             nodeEvaluator.evaluate(
@@ -67,7 +64,7 @@ class AtomFunctionTest {
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
             FunctionNameConstants.ATOM,
             FunctionLengthConstants.TWO,
-            length
+            params
         );
     }
 }

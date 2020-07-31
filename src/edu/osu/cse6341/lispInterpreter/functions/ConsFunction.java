@@ -21,7 +21,7 @@ public class ConsFunction implements LispFunction {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.CONS,
             FunctionLengthConstants.THREE,
-            params.parameterLength()
+            params
         );
         LispNode address =((ExpressionNode) params).getAddress();
         LispNode evaluatedAddress = nodeEvaluator.evaluate(

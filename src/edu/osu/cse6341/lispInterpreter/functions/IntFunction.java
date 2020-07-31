@@ -22,13 +22,13 @@ public class IntFunction implements LispFunction {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.INT,
             FunctionLengthConstants.TWO,
-            params.parameterLength()
+            params
         );
         LispNode evaluatedResult = nodeEvaluator.evaluate(
             params,
             true
         );
-        boolean result = numericStringDeterminer.isStringNumeric(evaluatedResult.getNodeValue());
+        boolean result = numericStringDeterminer.isStringNumeric(evaluatedResult.getValue());
         return nodeGenerator.generateAtomNode(result);
     }
 }

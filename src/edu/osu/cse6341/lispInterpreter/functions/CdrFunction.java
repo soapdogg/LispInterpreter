@@ -21,7 +21,7 @@ public class CdrFunction implements LispFunction {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.CDR,
             FunctionLengthConstants.TWO,
-            params.parameterLength()
+            params
         );
         ExpressionNode expressionNodeParams = listValueRetriever.retrieveListValue(
             params,

@@ -53,7 +53,7 @@ class AtomicValueRetrieverTest {
         Mockito.when(expressionNodeDeterminer.isExpressionNode(node)).thenReturn(false);
 
         String value = "value";
-        Mockito.when(node.getNodeValue()).thenReturn(value);
+        Mockito.when(node.getValue()).thenReturn(value);
 
         String actual = atomicValueRetriever.retrieveAtomicValue(
             node,

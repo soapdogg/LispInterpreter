@@ -25,7 +25,7 @@ public class LessFunction implements LispFunction {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.LESS,
             FunctionLengthConstants.THREE,
-            params.parameterLength()
+            params
         );
         LispNode evaluatedAddress = nodeEvaluator.evaluate(
             params,

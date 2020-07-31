@@ -31,6 +31,6 @@ public class AtomicValueRetriever {
                 '\n';
             throw new NotAtomicException(sb);
         }
-        return node.getNodeValue();
+        return node.getValue();
     }
 }

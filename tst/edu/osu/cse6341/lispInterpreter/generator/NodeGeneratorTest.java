@@ -22,14 +22,14 @@ public class NodeGeneratorTest {
     void generateTAtomNodeTest() {
         AtomNode actual = nodeGenerator.generateAtomNode(true);
 
-        Assertions.assertEquals(ReservedValuesConstants.T, actual.getNodeValue());
+        Assertions.assertEquals(ReservedValuesConstants.T, actual.getValue());
     }
 
     @Test
     void generateNilAtomNodeTest() {
         AtomNode actual = nodeGenerator.generateAtomNode(false);
 
-        Assertions.assertEquals(ReservedValuesConstants.NIL, actual.getNodeValue());
+        Assertions.assertEquals(ReservedValuesConstants.NIL, actual.getValue());
     }
 
     @Test
@@ -37,7 +37,7 @@ public class NodeGeneratorTest {
         int value = 10;
         AtomNode actual = nodeGenerator.generateAtomNode(value);
 
-        Assertions.assertEquals(Integer.toString(value), actual.getNodeValue());
+        Assertions.assertEquals(Integer.toString(value), actual.getValue());
     }
 
     @Test
@@ -45,7 +45,7 @@ public class NodeGeneratorTest {
         String value = "value";
         AtomNode actual = nodeGenerator.generateAtomNode(value);
 
-        Assertions.assertEquals(value, actual.getNodeValue());
+        Assertions.assertEquals(value, actual.getValue());
     }
 
     @Test

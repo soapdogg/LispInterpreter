@@ -15,7 +15,9 @@ public enum AsserterSingleton {
     private final TokenKindAsserter tokenKindAsserter;
 
     AsserterSingleton() {
-        functionLengthAsserter = FunctionLengthAsserter.newInstance();
+        functionLengthAsserter = FunctionLengthAsserter.newInstance(
+            DeterminerSingleton.INSTANCE.getFunctionLengthDeterminer()
+        );
 
         final Set<TokenKind> startingTokenKindSet = Set.of(
             TokenKind.OPEN_TOKEN,

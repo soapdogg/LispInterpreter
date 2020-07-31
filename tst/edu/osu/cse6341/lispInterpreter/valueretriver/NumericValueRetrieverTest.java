@@ -37,7 +37,7 @@ class NumericValueRetrieverTest {
     @Test
     void nodeIsNotNumericTest() {
         String value = "value";
-        Mockito.when(node.getNodeValue()).thenReturn(value);
+        Mockito.when(node.getValue()).thenReturn(value);
         Mockito.when(numericStringDeterminer.isStringNumeric(value)).thenReturn(false);
 
         Assertions.assertThrows(
@@ -53,7 +53,7 @@ class NumericValueRetrieverTest {
     @Test
     void nodeIsNumericTest() throws NotNumericException {
         int value = 34;
-        Mockito.when(node.getNodeValue()).thenReturn(Integer.toString(value));
+        Mockito.when(node.getValue()).thenReturn(Integer.toString(value));
         Mockito.when(numericStringDeterminer.isStringNumeric(Integer.toString(value))).thenReturn(true);
 
 

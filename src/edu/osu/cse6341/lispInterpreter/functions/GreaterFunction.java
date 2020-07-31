@@ -25,7 +25,7 @@ public class GreaterFunction implements LispFunction {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.GREATER,
             FunctionLengthConstants.THREE,
-            params.parameterLength()
+            params
         );
         LispNode evaluatedAddress = nodeEvaluator.evaluate(
             params,

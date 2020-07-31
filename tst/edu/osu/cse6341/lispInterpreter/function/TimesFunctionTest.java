@@ -49,9 +49,6 @@ class TimesFunctionTest {
 
     @Test
     void timesFunctionTest() throws Exception {
-        int length = 3;
-        Mockito.when(params.parameterLength()).thenReturn(length);
-
         LispNode evaluatedAddress = Mockito.mock(LispNode.class);
         Mockito.when(
             nodeEvaluator.evaluate(
@@ -110,7 +107,7 @@ class TimesFunctionTest {
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
             FunctionNameConstants.TIMES,
             FunctionLengthConstants.THREE,
-            length
+            params
         );
     }
 }

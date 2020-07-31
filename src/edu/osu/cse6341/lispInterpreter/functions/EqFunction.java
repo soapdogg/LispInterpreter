@@ -25,7 +25,7 @@ public class EqFunction implements LispFunction {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.EQ,
             FunctionLengthConstants.THREE,
-            params.parameterLength()
+            params
         );
         LispNode evaluatedAddress = nodeEvaluator.evaluate(
             params,

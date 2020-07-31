@@ -22,13 +22,13 @@ public class NullFunction implements LispFunction {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.NULL,
             FunctionLengthConstants.TWO,
-            params.parameterLength()
+            params
         );
         LispNode evaluatedResult = nodeEvaluator.evaluate(
             params,
             true
         );
-        boolean result = nodeValueComparator.equalsNil(evaluatedResult.getNodeValue());
+        boolean result = nodeValueComparator.equalsNil(evaluatedResult.getValue());
         return nodeGenerator.generateAtomNode(result);
     }
 }

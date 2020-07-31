@@ -27,7 +27,7 @@ public class ListNotationPrinter {
     }
 
     private String printAtomNodeInListNotation(final AtomNode node) {
-        return node.getNodeValue();
+        return node.getValue();
     }
 
     private String printExpressionNodeInListNotation(
@@ -51,7 +51,7 @@ public class ListNotationPrinter {
             dataListNotation = ' ' + printInListNotation(data, false);
         } else {
             String dataString = (
-                numericStringDeterminer.isStringNumeric(data.getNodeValue()) || nodeValueComparator.equalsT(data.getNodeValue()))
+                numericStringDeterminer.isStringNumeric(data.getValue()) || nodeValueComparator.equalsT(data.getValue()))
                 ? (" . " + printInListNotation(data, false))
                 : "";
             dataListNotation = dataString + ')';

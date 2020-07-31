@@ -92,7 +92,7 @@ public class DefunFunction implements LispFunction {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.DEFUN,
             FunctionLengthConstants.FOUR,
-            params.parameterLength()
+            params
         );
 
         ExpressionNode functionNameNode = listValueRetriever.retrieveListValue(
@@ -112,7 +112,7 @@ public class DefunFunction implements LispFunction {
             FunctionNameConstants.DEFUN
         );
         List<String> formalParameters;
-        if (tempNode.getAddress().getNodeValue().equals(ReservedValuesConstants.NIL)) {
+        if (tempNode.getAddress().getValue().equals(ReservedValuesConstants.NIL)) {
             formalParameters = Collections.emptyList();
         } else {
             ExpressionNode formalParametersNode = listValueRetriever.retrieveListValue(

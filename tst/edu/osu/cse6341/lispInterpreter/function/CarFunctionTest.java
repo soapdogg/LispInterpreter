@@ -40,9 +40,6 @@ class CarFunctionTest {
 
     @Test
     void carFunctionTest() throws Exception {
-        int length = 2;
-        Mockito.when(params.parameterLength()).thenReturn(length);
-
         ExpressionNode expressionNodeParams = Mockito.mock(ExpressionNode.class);
         Mockito.when(
             listValueRetriever.retrieveListValue(
@@ -81,7 +78,7 @@ class CarFunctionTest {
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
             FunctionNameConstants.CAR,
             FunctionLengthConstants.TWO,
-            length
+            params
         );
     }
 }

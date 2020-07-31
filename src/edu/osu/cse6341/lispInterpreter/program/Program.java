@@ -26,11 +26,11 @@ public class Program {
 	public void evaluate() throws Exception{
 		for(LispNode node: rootNodes) {
 			boolean isNotList = !DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer().isExpressionNode(node);
-			boolean isNotNumeric = !DeterminerSingleton.INSTANCE.getNumericStringDeterminer().isStringNumeric(node.getNodeValue());
-			boolean isNotT = !node.getNodeValue().equals(ReservedValuesConstants.T);
-			boolean isNotNil = !node.getNodeValue().equals(ReservedValuesConstants.NIL);
+			boolean isNotNumeric = !DeterminerSingleton.INSTANCE.getNumericStringDeterminer().isStringNumeric(node.getValue());
+			boolean isNotT = !node.getValue().equals(ReservedValuesConstants.T);
+			boolean isNotNil = !node.getValue().equals(ReservedValuesConstants.NIL);
 			if (isNotList && isNotNumeric && isNotT && isNotNil)
-				throw new Exception("Error! " + node.getNodeValue() + " is not a valid atomic value!\n");
+				throw new Exception("Error! " + node.getValue() + " is not a valid atomic value!\n");
 			LispNode evaluatedNode = EvaluatorSingleton.INSTANCE.getNodeEvaluator().evaluate(
 				node,
 				false

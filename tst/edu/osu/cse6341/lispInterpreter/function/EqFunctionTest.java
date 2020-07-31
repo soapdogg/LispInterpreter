@@ -49,9 +49,6 @@ class EqFunctionTest {
 
     @Test
     void eqFunctionTest() throws Exception {
-        int length = 3;
-        Mockito.when(params.parameterLength()).thenReturn(length);
-
         LispNode evaluatedAddress = Mockito.mock(LispNode.class);
         Mockito.when(
             nodeEvaluator.evaluate(
@@ -110,7 +107,7 @@ class EqFunctionTest {
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
             FunctionNameConstants.EQ,
             FunctionLengthConstants.THREE,
-            length
+            params
         );
     }
 }

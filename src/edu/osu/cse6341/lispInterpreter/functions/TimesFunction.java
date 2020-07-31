@@ -25,7 +25,7 @@ public class TimesFunction implements LispFunction {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.TIMES,
             FunctionLengthConstants.THREE,
-            params.parameterLength()
+            params
         );
 
         LispNode evaluatedAddress = nodeEvaluator.evaluate(

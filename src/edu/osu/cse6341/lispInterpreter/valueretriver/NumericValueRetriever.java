@@ -17,7 +17,7 @@ public class NumericValueRetriever {
         final int position,
         final String functionName
     ) throws NotNumericException {
-        boolean isNumeric = numericStringDeterminer.isStringNumeric(node.getNodeValue());
+        boolean isNumeric = numericStringDeterminer.isStringNumeric(node.getValue());
         if(!isNumeric) {
             String listNotation = listNotationPrinter.printInListNotation(
                 node,
@@ -31,6 +31,6 @@ public class NumericValueRetriever {
                 '\n';
             throw new NotNumericException(sb);
         }
-        return Integer.parseInt(node.getNodeValue());
+        return Integer.parseInt(node.getValue());
     }
 }

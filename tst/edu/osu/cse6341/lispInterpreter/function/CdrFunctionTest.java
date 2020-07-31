@@ -40,9 +40,6 @@ class CdrFunctionTest {
 
     @Test
     void carFunctionTest() throws Exception {
-        int length = 2;
-        Mockito.when(params.parameterLength()).thenReturn(length);
-
         ExpressionNode expressionNodeParams = Mockito.mock(ExpressionNode.class);
         Mockito.when(
             listValueRetriever.retrieveListValue(
@@ -81,7 +78,7 @@ class CdrFunctionTest {
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
             FunctionNameConstants.CDR,
             FunctionLengthConstants.TWO,
-            length
+            params
         );
     }
 }

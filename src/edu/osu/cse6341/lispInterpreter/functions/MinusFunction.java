@@ -25,7 +25,7 @@ public class MinusFunction implements LispFunction {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.MINUS,
             FunctionLengthConstants.THREE,
-            params.parameterLength()
+            params
         );
         LispNode evaluatedAddress = nodeEvaluator.evaluate(
             params,

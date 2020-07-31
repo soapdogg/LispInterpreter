@@ -44,9 +44,6 @@ class IntFunctionTest {
 
     @Test
     void intFunctionTest() throws Exception {
-        int length = 2;
-        Mockito.when(params.parameterLength()).thenReturn(length);
-
         LispNode evaluatedResult = Mockito.mock(LispNode.class);
         Mockito.when(
             nodeEvaluator.evaluate(
@@ -56,7 +53,7 @@ class IntFunctionTest {
         ).thenReturn(evaluatedResult);
 
         String value = ReservedValuesConstants.NIL;
-        Mockito.when(evaluatedResult.getNodeValue()).thenReturn(value);
+        Mockito.when(evaluatedResult.getValue()).thenReturn(value);
 
         boolean result = true;
         Mockito.when(numericStringDeterminer.isStringNumeric(value)).thenReturn(result);
@@ -70,7 +67,7 @@ class IntFunctionTest {
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
             FunctionNameConstants.INT,
             FunctionLengthConstants.TWO,
-            length
+            params
         );
     }
 }
