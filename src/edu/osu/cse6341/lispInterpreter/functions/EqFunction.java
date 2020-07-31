@@ -8,6 +8,7 @@ import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.valueretriver.AtomicValueRetriever;
+import edu.osu.cse6341.lispInterpreter.valueretriver.ListValueRetriever;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(staticName = "newInstance")
@@ -16,6 +17,7 @@ public class EqFunction implements LispFunction {
     private final FunctionLengthAsserter functionLengthAsserter;
     private final NodeEvaluator nodeEvaluator;
     private final AtomicValueRetriever atomicValueRetriever;
+    private final ListValueRetriever listValueRetriever;
     private final NodeGenerator nodeGenerator;
 
     @Override
@@ -34,7 +36,11 @@ public class EqFunction implements LispFunction {
             1,
             FunctionNameConstants.EQ
         );
-        LispNode data = ((ExpressionNode) params).getData();
+        ExpressionNode expressionNodeParams = listValueRetriever.retrieveListValue(
+            params,
+            FunctionNameConstants.EQ
+        );
+        LispNode data = expressionNodeParams.getData();
         LispNode evaluatedData = nodeEvaluator.evaluate(
             data,
             true

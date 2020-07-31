@@ -23,7 +23,11 @@ public class CdrFunction implements LispFunction {
             FunctionLengthConstants.TWO,
             params.parameterLength()
         );
-        LispNode address = ((ExpressionNode) params).getAddress();
+        ExpressionNode expressionNodeParams = listValueRetriever.retrieveListValue(
+            params,
+            FunctionNameConstants.CDR
+        );
+        LispNode address = expressionNodeParams.getAddress();
         LispNode evaluatedAddress = nodeEvaluator.evaluate(address, false);
         ExpressionNode node = listValueRetriever.retrieveListValue(
             evaluatedAddress,

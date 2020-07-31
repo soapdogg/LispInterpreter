@@ -7,6 +7,7 @@ import edu.osu.cse6341.lispInterpreter.generator.NodeGenerator;
 import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
+import edu.osu.cse6341.lispInterpreter.valueretriver.ListValueRetriever;
 import edu.osu.cse6341.lispInterpreter.valueretriver.NumericValueRetriever;
 import lombok.AllArgsConstructor;
 
@@ -16,6 +17,7 @@ public class GreaterFunction implements LispFunction {
     private final FunctionLengthAsserter functionLengthAsserter;
     private final NodeEvaluator nodeEvaluator;
     private final NumericValueRetriever numericValueRetriever;
+    private final ListValueRetriever listValueRetriever;
     private final NodeGenerator nodeGenerator;
 
     @Override
@@ -34,7 +36,11 @@ public class GreaterFunction implements LispFunction {
             1,
             FunctionNameConstants.GREATER
         );
-        LispNode data = ((ExpressionNode) params).getData();
+        ExpressionNode expressionNodeParams = listValueRetriever.retrieveListValue(
+            params,
+            FunctionNameConstants.GREATER
+        );
+        LispNode data = expressionNodeParams.getData();
         LispNode evaluatedData = nodeEvaluator.evaluate(
             data,
             true
