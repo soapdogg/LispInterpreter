@@ -2,7 +2,7 @@ package edu.osu.cse6341.lispInterpreter.asserter;
 
 import edu.osu.cse6341.lispInterpreter.determiner.FunctionLengthDeterminer;
 import edu.osu.cse6341.lispInterpreter.exceptions.WrongFunctionLengthException;
-import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(staticName = "newInstance")

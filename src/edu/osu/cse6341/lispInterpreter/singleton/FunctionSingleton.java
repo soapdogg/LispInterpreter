@@ -76,6 +76,8 @@ public enum  FunctionSingleton {
         intFunction = IntFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
             EvaluatorSingleton.INSTANCE.getNodeEvaluator(),
+            DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer(),
+            ValueRetrieverSingleton.INSTANCE.getAtomicValueRetriever(),
             DeterminerSingleton.INSTANCE.getNumericStringDeterminer(),
             GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
@@ -96,6 +98,8 @@ public enum  FunctionSingleton {
         nullFunction = NullFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
             EvaluatorSingleton.INSTANCE.getNodeEvaluator(),
+            DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer(),
+            ValueRetrieverSingleton.INSTANCE.getAtomicValueRetriever(),
             ComparatorSingleton.INSTANCE.getNodeValueComparator(),
             GeneratorSingleton.INSTANCE.getNodeGenerator()
         );

@@ -1,7 +1,7 @@
 package edu.osu.cse6341.lispInterpreter.printer;
 
-import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
-import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
+import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
+import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.program;
 
-import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
 
 import java.util.HashMap;
 import java.util.Map;

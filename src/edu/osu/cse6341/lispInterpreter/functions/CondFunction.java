@@ -5,8 +5,9 @@ import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.comparator.NodeValueComparator;
 import edu.osu.cse6341.lispInterpreter.determiner.ExpressionNodeDeterminer;
 import edu.osu.cse6341.lispInterpreter.evaluator.NodeEvaluator;
-import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
-import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
+import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
+import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.valueretriver.ListValueRetriever;
 import lombok.AllArgsConstructor;
@@ -48,7 +49,7 @@ public class CondFunction implements LispFunction {
                 true
             );
 
-            if(!nodeValueComparator.equalsNil(booleanResult.getValue()))
+            if((booleanResult instanceof AtomNode) && !nodeValueComparator.equalsNil(((AtomNode)booleanResult).getValue()))
                 return nodeEvaluator.evaluate(parameter.getData(), true);
         }
         throw new Exception("Error! None of the conditions in the COND function evaluated to true.\n");

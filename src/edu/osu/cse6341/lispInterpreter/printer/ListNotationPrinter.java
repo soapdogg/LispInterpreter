@@ -3,9 +3,9 @@ package edu.osu.cse6341.lispInterpreter.printer;
 import edu.osu.cse6341.lispInterpreter.comparator.NodeValueComparator;
 import edu.osu.cse6341.lispInterpreter.determiner.ExpressionNodeDeterminer;
 import edu.osu.cse6341.lispInterpreter.determiner.NumericStringDeterminer;
-import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
-import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
-import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
+import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
+import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(staticName = "newInstance")
@@ -50,8 +50,8 @@ public class ListNotationPrinter {
         if (isDataList) {
             dataListNotation = ' ' + printInListNotation(data, false);
         } else {
-            String dataString = (
-                numericStringDeterminer.isStringNumeric(data.getValue()) || nodeValueComparator.equalsT(data.getValue()))
+            AtomNode atomData = ((AtomNode) data);
+            String dataString = (!nodeValueComparator.equalsNil(atomData.getValue()))
                 ? (" . " + printInListNotation(data, false))
                 : "";
             dataListNotation = dataString + ')';

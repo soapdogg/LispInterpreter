@@ -1,7 +1,8 @@
 package edu.osu.cse6341.lispInterpreter.program;
 
 import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
-import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
+import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.singleton.DeterminerSingleton;
 import edu.osu.cse6341.lispInterpreter.singleton.EvaluatorSingleton;
 import edu.osu.cse6341.lispInterpreter.singleton.PrinterSingleton;
@@ -26,11 +27,14 @@ public class Program {
 	public void evaluate() throws Exception{
 		for(LispNode node: rootNodes) {
 			boolean isNotList = !DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer().isExpressionNode(node);
-			boolean isNotNumeric = !DeterminerSingleton.INSTANCE.getNumericStringDeterminer().isStringNumeric(node.getValue());
-			boolean isNotT = !node.getValue().equals(ReservedValuesConstants.T);
-			boolean isNotNil = !node.getValue().equals(ReservedValuesConstants.NIL);
-			if (isNotList && isNotNumeric && isNotT && isNotNil)
-				throw new Exception("Error! " + node.getValue() + " is not a valid atomic value!\n");
+			if (isNotList) {
+				AtomNode atomNode = (AtomNode)node;
+				boolean isNotNumeric = !DeterminerSingleton.INSTANCE.getNumericStringDeterminer().isStringNumeric(atomNode.getValue());
+				boolean isNotT = !atomNode.getValue().equals(ReservedValuesConstants.T);
+				boolean isNotNil = !atomNode.getValue().equals(ReservedValuesConstants.NIL);
+				if (isNotNumeric && isNotT && isNotNil)
+					throw new Exception("Error! " + atomNode.getValue() + " is not a valid atomic value!\n");
+			}
 			LispNode evaluatedNode = EvaluatorSingleton.INSTANCE.getNodeEvaluator().evaluate(
 				node,
 				false

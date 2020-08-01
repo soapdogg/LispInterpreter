@@ -3,7 +3,8 @@ package edu.osu.cse6341.lispInterpreter.valueretriver;
 import edu.osu.cse6341.lispInterpreter.determiner.ExpressionNodeDeterminer;
 import edu.osu.cse6341.lispInterpreter.exceptions.NotAtomicException;
 import edu.osu.cse6341.lispInterpreter.printer.ListNotationPrinter;
-import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
+import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(staticName = "newInstance")
@@ -31,6 +32,6 @@ public class AtomicValueRetriever {
                 '\n';
             throw new NotAtomicException(sb);
         }
-        return node.getValue();
+        return ((AtomNode)node).getValue();
     }
 }

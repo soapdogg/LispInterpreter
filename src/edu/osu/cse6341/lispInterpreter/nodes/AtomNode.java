@@ -1,4 +1,4 @@
-package edu.osu.cse6341.lispInterpreter.program.nodes;
+package edu.osu.cse6341.lispInterpreter.nodes;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

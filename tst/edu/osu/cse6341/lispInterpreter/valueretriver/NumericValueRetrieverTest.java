@@ -2,9 +2,10 @@ package edu.osu.cse6341.lispInterpreter.valueretriver;
 
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.determiner.NumericStringDeterminer;
+import edu.osu.cse6341.lispInterpreter.exceptions.NotAtomicException;
 import edu.osu.cse6341.lispInterpreter.exceptions.NotNumericException;
 import edu.osu.cse6341.lispInterpreter.printer.ListNotationPrinter;
-import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,8 +17,9 @@ class NumericValueRetrieverTest {
     private int position;
     private String functionName;
 
+    private AtomicValueRetriever atomicValueRetriever;
     private NumericStringDeterminer numericStringDeterminer;
-    private ListNotationPrinter listNotationPrinter;
+
     private NumericValueRetriever numericValueRetriever;
 
     @BeforeEach
@@ -26,18 +28,27 @@ class NumericValueRetrieverTest {
         position = 1;
         functionName = FunctionNameConstants.QUOTE;
 
+        atomicValueRetriever = Mockito.mock(AtomicValueRetriever.class);
         numericStringDeterminer = Mockito.mock(NumericStringDeterminer.class);
-        listNotationPrinter = Mockito.mock(ListNotationPrinter.class);
+        ListNotationPrinter listNotationPrinter = Mockito.mock(ListNotationPrinter.class);
+
         numericValueRetriever = NumericValueRetriever.newInstance(
+            atomicValueRetriever,
             numericStringDeterminer,
             listNotationPrinter
         );
     }
 
     @Test
-    void nodeIsNotNumericTest() {
+    void nodeIsNotNumericTest() throws NotAtomicException {
         String value = "value";
-        Mockito.when(node.getValue()).thenReturn(value);
+        Mockito.when(
+            atomicValueRetriever.retrieveAtomicValue(
+                node,
+                position,
+                functionName
+            )
+        ).thenReturn(value);
         Mockito.when(numericStringDeterminer.isStringNumeric(value)).thenReturn(false);
 
         Assertions.assertThrows(
@@ -51,9 +62,15 @@ class NumericValueRetrieverTest {
     }
 
     @Test
-    void nodeIsNumericTest() throws NotNumericException {
+    void nodeIsNumericTest() throws NotNumericException, NotAtomicException {
         int value = 34;
-        Mockito.when(node.getValue()).thenReturn(Integer.toString(value));
+        Mockito.when(
+            atomicValueRetriever.retrieveAtomicValue(
+                node,
+                position,
+                functionName
+            )
+        ).thenReturn(Integer.toString(value));
         Mockito.when(numericStringDeterminer.isStringNumeric(Integer.toString(value))).thenReturn(true);
 
 

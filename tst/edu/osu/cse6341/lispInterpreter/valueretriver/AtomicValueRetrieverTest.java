@@ -4,7 +4,8 @@ import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.determiner.ExpressionNodeDeterminer;
 import edu.osu.cse6341.lispInterpreter.exceptions.NotAtomicException;
 import edu.osu.cse6341.lispInterpreter.printer.ListNotationPrinter;
-import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
+import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,17 +18,16 @@ class AtomicValueRetrieverTest {
     private String functionName;
 
     private ExpressionNodeDeterminer expressionNodeDeterminer;
-    private ListNotationPrinter listNotationPrinter;
     private AtomicValueRetriever atomicValueRetriever;
 
     @BeforeEach
     void setup() {
-        node = Mockito.mock(LispNode.class);
+        node = Mockito.mock(AtomNode.class);
         position = 1;
         functionName = FunctionNameConstants.TIMES;
 
         expressionNodeDeterminer = Mockito.mock(ExpressionNodeDeterminer.class);
-        listNotationPrinter = Mockito.mock(ListNotationPrinter.class);
+        ListNotationPrinter listNotationPrinter = Mockito.mock(ListNotationPrinter.class);
         atomicValueRetriever = AtomicValueRetriever.newInstance(
             expressionNodeDeterminer,
             listNotationPrinter
@@ -53,7 +53,7 @@ class AtomicValueRetrieverTest {
         Mockito.when(expressionNodeDeterminer.isExpressionNode(node)).thenReturn(false);
 
         String value = "value";
-        Mockito.when(node.getValue()).thenReturn(value);
+        Mockito.when(((AtomNode)node).getValue()).thenReturn(value);
 
         String actual = atomicValueRetriever.retrieveAtomicValue(
             node,

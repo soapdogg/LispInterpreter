@@ -4,12 +4,14 @@ import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
+import edu.osu.cse6341.lispInterpreter.determiner.ExpressionNodeDeterminer;
 import edu.osu.cse6341.lispInterpreter.determiner.NumericStringDeterminer;
 import edu.osu.cse6341.lispInterpreter.evaluator.NodeEvaluator;
 import edu.osu.cse6341.lispInterpreter.functions.IntFunction;
 import edu.osu.cse6341.lispInterpreter.generator.NodeGenerator;
-import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
-import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
+import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.valueretriver.AtomicValueRetriever;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,6 +22,8 @@ class IntFunctionTest {
 
     private FunctionLengthAsserter functionLengthAsserter;
     private NodeEvaluator nodeEvaluator;
+    private ExpressionNodeDeterminer expressionNodeDeterminer;
+    private AtomicValueRetriever atomicValueRetriever;
     private NumericStringDeterminer numericStringDeterminer;
     private NodeGenerator nodeGenerator;
 
@@ -31,12 +35,16 @@ class IntFunctionTest {
 
         functionLengthAsserter = Mockito.mock(FunctionLengthAsserter.class);
         nodeEvaluator = Mockito.mock(NodeEvaluator.class);
+        expressionNodeDeterminer = Mockito.mock(ExpressionNodeDeterminer.class);
+        atomicValueRetriever = Mockito.mock(AtomicValueRetriever.class);
         numericStringDeterminer = Mockito.mock(NumericStringDeterminer.class);
         nodeGenerator = Mockito.mock(NodeGenerator.class);
 
         intFunction = IntFunction.newInstance(
             functionLengthAsserter,
             nodeEvaluator,
+            expressionNodeDeterminer,
+            atomicValueRetriever,
             numericStringDeterminer,
             nodeGenerator
         );
@@ -53,7 +61,13 @@ class IntFunctionTest {
         ).thenReturn(evaluatedResult);
 
         String value = ReservedValuesConstants.NIL;
-        Mockito.when(evaluatedResult.getValue()).thenReturn(value);
+        Mockito.when(
+            atomicValueRetriever.retrieveAtomicValue(
+                evaluatedResult,
+                1,
+                FunctionNameConstants.INT
+            )
+        ).thenReturn(value);
 
         boolean result = true;
         Mockito.when(numericStringDeterminer.isStringNumeric(value)).thenReturn(result);

@@ -1,16 +1,19 @@
 package edu.osu.cse6341.lispInterpreter.evaluator;
 
 import edu.osu.cse6341.lispInterpreter.constants.FunctionsConstants;
+import edu.osu.cse6341.lispInterpreter.determiner.ExpressionNodeDeterminer;
 import edu.osu.cse6341.lispInterpreter.functions.LispFunction;
 import edu.osu.cse6341.lispInterpreter.program.Environment;
-import edu.osu.cse6341.lispInterpreter.program.nodes.AtomNode;
-import edu.osu.cse6341.lispInterpreter.program.nodes.ExpressionNode;
-import edu.osu.cse6341.lispInterpreter.program.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
+import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
+import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.singleton.GeneratorSingleton;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(staticName = "newInstance")
 public class NodeEvaluator {
+
+    private final ExpressionNodeDeterminer expressionNodeDeterminer;
 
     public LispNode evaluate(
         final LispNode lispNode,
@@ -35,15 +38,17 @@ public class NodeEvaluator {
         LispNode address = expressionNode.getAddress();
         if(address == null) return GeneratorSingleton.INSTANCE.getNodeGenerator().generateAtomNode(false);
 
-        String addressValue = address.getValue();
-        Environment e = Environment.getEnvironment();
-        if(e.isVariableName(addressValue)) return e.getVariableValue(addressValue);
-        if(e.isFunctionName(addressValue)) return e.evaluateFunction(addressValue, expressionNode.getData());
-        if(FunctionsConstants.functionMap.containsKey(addressValue)) return executeBuiltInFunction(
-            addressValue,
-            expressionNode.getData()
-        );
-        if(!areLiteralsAllowed) throw new Exception("Error! Invalid CAR value: " + addressValue + '\n');
+        if (!expressionNodeDeterminer.isExpressionNode(address)) {
+            String addressValue = ((AtomNode)address).getValue();
+            Environment e = Environment.getEnvironment();
+            if (e.isVariableName(addressValue)) return e.getVariableValue(addressValue);
+            if (e.isFunctionName(addressValue)) return e.evaluateFunction(addressValue, expressionNode.getData());
+            if (FunctionsConstants.functionMap.containsKey(addressValue)) return executeBuiltInFunction(
+                addressValue,
+                expressionNode.getData()
+            );
+            if (!areLiteralsAllowed) throw new Exception("Error! Invalid CAR value: " + addressValue + '\n');
+        }
         return evaluate(address, true);
     }
 

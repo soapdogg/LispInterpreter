@@ -1,4 +1,4 @@
-package edu.osu.cse6341.lispInterpreter.program.nodes;
+package edu.osu.cse6341.lispInterpreter.nodes;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,9 +9,4 @@ public class ExpressionNode implements LispNode {
 
 	private final LispNode address;
 	private final LispNode data;
-
-	@Override
-	public String getValue() {
-		return address.getValue() + ' ' + data.getValue();
-	}
 }

@@ -10,6 +10,8 @@ public enum EvaluatorSingleton {
     private final NodeEvaluator nodeEvaluator;
 
     EvaluatorSingleton() {
-        nodeEvaluator = NodeEvaluator.newInstance();
+        nodeEvaluator = NodeEvaluator.newInstance(
+            DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer()
+        );
     }
 }
