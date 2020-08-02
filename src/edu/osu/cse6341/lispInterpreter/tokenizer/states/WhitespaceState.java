@@ -1,6 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.tokenizer.states;
 
-import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
+import edu.osu.cse6341.lispInterpreter.tokens.Token;
 
 public class WhitespaceState implements IState{
 
@@ -17,7 +17,7 @@ public class WhitespaceState implements IState{
     }
 
     @Override
-    public IToken getToken(){
+    public Token getToken(){
 	    return null;
     }
 }

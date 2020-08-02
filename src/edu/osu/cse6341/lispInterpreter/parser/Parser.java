@@ -5,8 +5,8 @@ import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
 import edu.osu.cse6341.lispInterpreter.generator.NodeGenerator;
 import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
-import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
-import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
+import edu.osu.cse6341.lispInterpreter.tokens.Token;
+import edu.osu.cse6341.lispInterpreter.tokens.TokenKind;
 import lombok.AllArgsConstructor;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class Parser {
     public LispNode parseIntoNode(
         Tokenizer tokenizer
     ) throws Exception {
-        IToken token = tokenizer.getCurrent();
+        Token token = tokenizer.getCurrent();
         tokenKindAsserter.assertTokenIsAtomOrOpen(token);
         TokenKind currentTokenKind = token.getTokenKind();
         boolean isOpen = currentTokenKind == TokenKind.OPEN_TOKEN;
@@ -42,7 +42,7 @@ public class Parser {
             return result;
         } else {
             token = tokenizer.getNextToken();
-            String value = token.toString();
+            String value = token.getValue();
             return nodeGenerator.generateAtomNode(
                 value
             );

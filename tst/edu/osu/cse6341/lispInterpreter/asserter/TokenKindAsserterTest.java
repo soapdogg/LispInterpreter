@@ -1,8 +1,8 @@
 package edu.osu.cse6341.lispInterpreter.asserter;
 
 import edu.osu.cse6341.lispInterpreter.exceptions.UnexpectedTokenKindException;
-import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
-import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.TokenKind;
+import edu.osu.cse6341.lispInterpreter.tokens.Token;
+import edu.osu.cse6341.lispInterpreter.tokens.TokenKind;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,7 @@ public class TokenKindAsserterTest {
 
     private TokenKind startingTokenKind;
 
-    private IToken token;
+    private Token token;
 
     private TokenKindAsserter tokenKindAsserter;
 
@@ -23,7 +23,7 @@ public class TokenKindAsserterTest {
         startingTokenKind = TokenKind.OPEN_TOKEN;
         Set<TokenKind> startingTokenKindSet = Set.of(startingTokenKind);
 
-        token = Mockito.mock(IToken.class);
+        token = Mockito.mock(Token.class);
 
         tokenKindAsserter = TokenKindAsserter.newInstance(startingTokenKindSet);
     }

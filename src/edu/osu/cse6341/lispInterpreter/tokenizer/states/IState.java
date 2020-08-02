@@ -1,6 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.tokenizer.states;
 
-import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
+import edu.osu.cse6341.lispInterpreter.tokens.Token;
 
 public interface IState{
 
@@ -8,5 +8,5 @@ public interface IState{
 
 	int getStartingPos();
 
-	IToken getToken();
+	Token getToken();
 }

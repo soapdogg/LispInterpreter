@@ -5,13 +5,13 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 import edu.osu.cse6341.lispInterpreter.tokenizer.states.*;
-import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
-import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.EndOfFileToken;
+import edu.osu.cse6341.lispInterpreter.tokens.Token;
+import edu.osu.cse6341.lispInterpreter.tokens.TokenKind;
 
 public class Tokenizer {
 
     private static final IState [] nextStateArray;
-	private Queue<IToken> tokens;
+	private Queue<Token> tokens;
 
 	static{
         nextStateArray = new IState[256];
@@ -44,14 +44,14 @@ public class Tokenizer {
                 if(state.getToken() != null) addToTokens(state.getToken());
             }
         }
-		if(continueParsing) tokens.add(new EndOfFileToken());
+		if(continueParsing) tokens.add(Token.newInstance(TokenKind.EOF_TOKEN, "EOF"));
 	}
 
-	public IToken getNextToken(){
+	public Token getNextToken(){
 		return tokens.remove();	
 	}
 
-	public void addToTokens(IToken token){
+	public void addToTokens(Token token){
 		tokens.add(token);
 	}
 
@@ -59,11 +59,11 @@ public class Tokenizer {
 		return !tokens.isEmpty();
 	}
 
-	public IToken getCurrent(){
+	public Token getCurrent(){
 		return tokens.peek();
 	}
 
-	public Queue<IToken> getTokens() {
+	public Queue<Token> getTokens() {
 	    return tokens;
     }
 

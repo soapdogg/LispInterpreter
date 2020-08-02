@@ -14,7 +14,6 @@ import edu.osu.cse6341.lispInterpreter.singleton.GeneratorSingleton;
 import edu.osu.cse6341.lispInterpreter.tokenizer.TokenProcessor;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.program.*;
-import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
 import lombok.Getter;
 
 public final class Interpreter{

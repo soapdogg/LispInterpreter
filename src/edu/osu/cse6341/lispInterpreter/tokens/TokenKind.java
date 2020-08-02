@@ -1,4 +1,4 @@
-package edu.osu.cse6341.lispInterpreter.tokenizer.tokens;
+package edu.osu.cse6341.lispInterpreter.tokens;
 
 public enum TokenKind {
 	CLOSE_TOKEN,

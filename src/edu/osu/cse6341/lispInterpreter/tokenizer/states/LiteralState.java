@@ -1,14 +1,14 @@
 package edu.osu.cse6341.lispInterpreter.tokenizer.states;
 
-import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.LiteralToken;
-import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
+import edu.osu.cse6341.lispInterpreter.tokens.Token;
+import edu.osu.cse6341.lispInterpreter.tokens.TokenKind;
 
 public class LiteralState implements IState{
 
 	private static final boolean [] nextStateArray;
 
 	private int startingPos;
-	private IToken token;
+	private Token token;
 
 	static {
 		nextStateArray = new boolean [256];
@@ -23,7 +23,10 @@ public class LiteralState implements IState{
 	        ++pos;
         }
         String fragment = line.substring(startingPos, pos);
-        token = new LiteralToken(fragment);
+        token = Token.newInstance(
+        	TokenKind.LITERAL_TOKEN,
+			fragment
+		);
         this.startingPos = pos;
         return true;
 	}
@@ -34,7 +37,7 @@ public class LiteralState implements IState{
     }
 
     @Override
-    public IToken getToken(){
+    public Token getToken(){
         return token;
     }
 }

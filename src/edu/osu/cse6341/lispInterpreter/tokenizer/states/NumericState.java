@@ -1,7 +1,7 @@
 package edu.osu.cse6341.lispInterpreter.tokenizer.states;
 
-import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.NumericToken;
-import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
+import edu.osu.cse6341.lispInterpreter.tokens.Token;
+import edu.osu.cse6341.lispInterpreter.tokens.TokenKind;
 
 public class NumericState implements IState{
 
@@ -9,7 +9,7 @@ public class NumericState implements IState{
 	private static final boolean [] errorArray;
 
 	private int startingPos;
-    private IToken token;
+    private Token token;
     private ErrorState errorState;
 
 	static {
@@ -32,8 +32,10 @@ public class NumericState implements IState{
             ++pos;
         }
         String fragment = line.substring(startingPos, pos);
-        int value = Integer.parseInt(fragment);
-        token = new NumericToken(value);
+        token = Token.newInstance(
+            TokenKind.NUMERIC_TOKEN,
+            fragment
+        );
 
         this.startingPos = pos;
         return true;
@@ -45,7 +47,7 @@ public class NumericState implements IState{
     }
 
     @Override
-    public IToken getToken(){
+    public Token getToken(){
         if(errorState != null) return errorState.getToken();
         return token;
     }

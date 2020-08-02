@@ -1,12 +1,12 @@
 package edu.osu.cse6341.lispInterpreter.tokenizer.states;
 
-import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.ErrorToken;
-import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
+import edu.osu.cse6341.lispInterpreter.tokens.Token;
+import edu.osu.cse6341.lispInterpreter.tokens.TokenKind;
 
 
 public class ErrorState implements IState{
 
-    private IToken token;
+    private Token token;
 
 	private static final boolean [] endOfToken;
 
@@ -24,7 +24,10 @@ public class ErrorState implements IState{
 		int pos = startingPos;
 	    while(++pos < line.length() && !endOfToken[line.charAt(pos)]);
 		String fragment = line.substring(startingPos, pos);
-		token = new ErrorToken(fragment);
+		token = Token.newInstance(
+			TokenKind.ERROR_TOKEN,
+			fragment
+		);
 	    return false;
 	}
 
@@ -34,7 +37,7 @@ public class ErrorState implements IState{
     }
 
     @Override
-    public IToken getToken(){
+    public Token getToken(){
         return token;
     }
 }
