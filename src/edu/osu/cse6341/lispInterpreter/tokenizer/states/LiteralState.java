@@ -7,9 +7,6 @@ public class LiteralState implements IState{
 
 	private static final boolean [] nextStateArray;
 
-	private int startingPos;
-	private Token token;
-
 	static {
 		nextStateArray = new boolean [256];
 		for(char i = 'A'; i <= 'Z'; ++i) nextStateArray[i] = true;
@@ -17,27 +14,20 @@ public class LiteralState implements IState{
 	}
 
 	@Override
-	public boolean processState(String line, int startingPos){
+	public ProcessedStateResult processState(String line, int startingPos){
 		int pos = startingPos;
 	    while(pos < line.length() && nextStateArray[line.charAt(pos)]){
 	        ++pos;
         }
         String fragment = line.substring(startingPos, pos);
-        token = Token.newInstance(
+        Token token = Token.newInstance(
         	TokenKind.LITERAL_TOKEN,
 			fragment
 		);
-        this.startingPos = pos;
-        return true;
+
+        return ProcessedStateResult.newInstance(
+        	token,
+			pos
+		);
 	}
-
-	@Override
-    public int getStartingPos(){
-	    return this.startingPos;
-    }
-
-    @Override
-    public Token getToken(){
-        return token;
-    }
 }

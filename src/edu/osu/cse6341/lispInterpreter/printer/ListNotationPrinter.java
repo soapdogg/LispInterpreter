@@ -6,6 +6,7 @@ import edu.osu.cse6341.lispInterpreter.determiner.NumericStringDeterminer;
 import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.valueretriver.ListValueRetriever;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(staticName = "newInstance")
@@ -48,12 +49,16 @@ public class ListNotationPrinter {
         String dataListNotation;
         boolean isDataList = expressionNodeDeterminer.isExpressionNode(data);
         if (isDataList) {
-            dataListNotation = ' ' + printInListNotation(data, false);
+            ExpressionNode expressionNodeData = (ExpressionNode)data;
+            dataListNotation = ' ' + printExpressionNodeInListNotation(
+                expressionNodeData,
+                false
+            );
         } else {
             AtomNode atomData = ((AtomNode) data);
-            String dataString = (!nodeValueComparator.equalsNil(atomData.getValue()))
-                ? (" . " + printInListNotation(data, false))
-                : "";
+            String dataString = nodeValueComparator.equalsNil(atomData.getValue())
+                ? ""
+                : (" . " + printAtomNodeInListNotation(atomData));
             dataListNotation = dataString + ')';
         }
         sb.append(dataListNotation);

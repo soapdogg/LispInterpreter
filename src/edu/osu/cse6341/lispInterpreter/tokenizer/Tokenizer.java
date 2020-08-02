@@ -39,9 +39,14 @@ public class Tokenizer {
             int startingPos = 0;
             while(startingPos < line.length() && continueParsing) {
                 state = nextStateArray[line.charAt(startingPos)];
-                continueParsing = state.processState(line, startingPos);
-                startingPos = state.getStartingPos();
-                if(state.getToken() != null) addToTokens(state.getToken());
+                ProcessedStateResult processedStateResult = state.processState(
+                    line,
+                    startingPos
+                );
+                Token token = processedStateResult.getToken();
+                continueParsing = token == null || token.getTokenKind() != TokenKind.ERROR_TOKEN;
+                startingPos = processedStateResult.getStartingPos();
+                if(token != null) addToTokens(token);
             }
         }
 		if(continueParsing) tokens.add(Token.newInstance(TokenKind.EOF_TOKEN, "EOF"));

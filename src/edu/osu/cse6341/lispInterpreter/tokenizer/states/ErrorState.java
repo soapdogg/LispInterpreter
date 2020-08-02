@@ -6,8 +6,6 @@ import edu.osu.cse6341.lispInterpreter.tokens.TokenKind;
 
 public class ErrorState implements IState{
 
-    private Token token;
-
 	private static final boolean [] endOfToken;
 
 	static{
@@ -20,24 +18,19 @@ public class ErrorState implements IState{
 	}
 
 	@Override
-	public boolean processState(String line, int startingPos){
+	public ProcessedStateResult processState(String line, int startingPos){
 		int pos = startingPos;
-	    while(++pos < line.length() && !endOfToken[line.charAt(pos)]);
+	    while(pos < line.length() && !endOfToken[line.charAt(pos)]) {
+			++pos;
+		}
 		String fragment = line.substring(startingPos, pos);
-		token = Token.newInstance(
+		Token token = Token.newInstance(
 			TokenKind.ERROR_TOKEN,
 			fragment
 		);
-	    return false;
+		return ProcessedStateResult.newInstance(
+			token,
+			-1
+		);
 	}
-
-	@Override
-    public int getStartingPos(){
-	    return -1;
-    }
-
-    @Override
-    public Token getToken(){
-        return token;
-    }
 }

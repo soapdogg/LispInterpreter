@@ -47,6 +47,7 @@ public enum  FunctionSingleton {
         );
         consFunction = ConsFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
+            ValueRetrieverSingleton.INSTANCE.getListValueRetriever(),
             EvaluatorSingleton.INSTANCE.getNodeEvaluator(),
             GeneratorSingleton.INSTANCE.getNodeGenerator()
         );

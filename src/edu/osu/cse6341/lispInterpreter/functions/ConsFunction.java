@@ -7,12 +7,14 @@ import edu.osu.cse6341.lispInterpreter.generator.NodeGenerator;
 import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
+import edu.osu.cse6341.lispInterpreter.valueretriver.ListValueRetriever;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(staticName = "newInstance")
 public class ConsFunction implements LispFunction {
 
     private final FunctionLengthAsserter functionLengthAsserter;
+    private final ListValueRetriever listValueRetriever;
     private final NodeEvaluator nodeEvaluator;
     private final NodeGenerator nodeGenerator;
 
@@ -23,17 +25,20 @@ public class ConsFunction implements LispFunction {
             FunctionLengthConstants.THREE,
             params
         );
-        LispNode address =((ExpressionNode) params).getAddress();
+        ExpressionNode expressionNodeParams = listValueRetriever.retrieveListValue(
+            params,
+            FunctionNameConstants.CONS
+        );
+        LispNode address = expressionNodeParams.getAddress();
         LispNode evaluatedAddress = nodeEvaluator.evaluate(
             address,
-            false
+            true
         );
-        ExpressionNode rightSide = (ExpressionNode) ((ExpressionNode) params).getData();
+        LispNode data = expressionNodeParams.getData();
         LispNode evaluatedData = nodeEvaluator.evaluate(
-            rightSide.getAddress(),
-            false
+            data,
+            true
         );
-
         return nodeGenerator.generateExpressionNode(
             evaluatedAddress,
             evaluatedData

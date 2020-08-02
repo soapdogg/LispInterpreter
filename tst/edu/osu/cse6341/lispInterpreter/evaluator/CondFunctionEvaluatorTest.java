@@ -1,7 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.evaluator;
 
 import edu.osu.cse6341.lispInterpreter.comparator.NodeValueComparator;
-import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.exceptions.NotAListException;
 import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;

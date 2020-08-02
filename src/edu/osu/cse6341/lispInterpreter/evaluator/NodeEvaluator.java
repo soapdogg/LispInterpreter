@@ -37,7 +37,6 @@ public class NodeEvaluator {
         final boolean areLiteralsAllowed
     ) throws Exception {
         LispNode address = expressionNode.getAddress();
-        if(address == null) return GeneratorSingleton.INSTANCE.getNodeGenerator().generateAtomNode(false);
 
         if (!expressionNodeDeterminer.isExpressionNode(address)) {
             String addressValue = ((AtomNode)address).getValue();

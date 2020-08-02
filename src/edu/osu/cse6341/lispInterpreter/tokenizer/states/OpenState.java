@@ -4,28 +4,18 @@ import edu.osu.cse6341.lispInterpreter.tokens.Token;
 import edu.osu.cse6341.lispInterpreter.tokens.TokenKind;
 
 public class OpenState implements IState{
-
-    private int startingPos;
-    private Token token;
-
 	@Override
-	public boolean processState(String line, int startingPos){
-		this.startingPos = ++startingPos;
-		token = Token.newInstance(
+	public ProcessedStateResult processState(
+		final String line,
+		final int startingPos
+	) {
+		Token token = Token.newInstance(
 		    TokenKind.OPEN_TOKEN,
             "("
         );
-		return true;
+		return ProcessedStateResult.newInstance(
+		 	token,
+			startingPos + 1
+		);
 	}
-
-	@Override
-    public int getStartingPos(){
-	    return this.startingPos;
-    }
-
-    @Override
-    public Token getToken(){
-        return token;
-    }
-
 }
