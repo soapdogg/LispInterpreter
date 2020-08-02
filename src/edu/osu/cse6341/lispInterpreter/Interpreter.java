@@ -11,21 +11,30 @@ import edu.osu.cse6341.lispInterpreter.parser.Parser;
 import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.singleton.AsserterSingleton;
 import edu.osu.cse6341.lispInterpreter.singleton.GeneratorSingleton;
+import edu.osu.cse6341.lispInterpreter.tokenizer.TokenProcessor;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.program.*;
 import edu.osu.cse6341.lispInterpreter.tokenizer.tokens.IToken;
+import lombok.Getter;
 
 public final class Interpreter{
 
 	private Program program;
-	public final Queue<String> literalAtoms;
-	public int numericAtomsCount, numericAtomsSum, openCount, closingCount;
+
 	private final Tokenizer tokenizer;
+	@Getter private final TokenProcessor tokenProcessor;
 	private final Parser parser;
 
 	public Interpreter(){
 		tokenizer = new Tokenizer();
-		literalAtoms = new LinkedList<>();
+		Queue<String> literalAtoms = new LinkedList<>();
+		tokenProcessor = TokenProcessor.newInstance(
+			literalAtoms,
+			0,
+			0,
+			0,
+			0
+		);
 		parser = Parser.newInstance(
 			AsserterSingleton.INSTANCE.getTokenKindAsserter(),
 			GeneratorSingleton.INSTANCE.getNodeGenerator()
@@ -56,10 +65,7 @@ public final class Interpreter{
 	}
 
 	private void processTokens() throws Exception{
-		while(tokenizer.hasNext()){
-			IToken token = tokenizer.getNextToken();
-			token.process(this);
-		}
+		tokenProcessor.processTokens(tokenizer.getTokens());
 	}
 
 	private Scanner getScannerFromFilePath(String programFilePath){
@@ -93,28 +99,6 @@ public final class Interpreter{
     private String getDotNotation() {
 	    return program.getDotNotationToString();
     }
-
-    public void incrementOpenCount(){
-		++openCount;
-	}
-
-	public void incrementClosingCount(){
-    	++closingCount;
-	}
-
-	public void incrementNumericAtomCount(){
-		++numericAtomsCount;
-	}
-
-	public void addToNumericAtomSum(int value){
-		numericAtomsSum += value;
-	}
-
-	public void addToLiteralAtoms(String atomValue){
-		literalAtoms.add(atomValue);
-	}
-
-
 }
 
  

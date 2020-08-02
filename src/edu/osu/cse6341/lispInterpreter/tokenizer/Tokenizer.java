@@ -63,4 +63,8 @@ public class Tokenizer {
 		return tokens.peek();
 	}
 
+	public Queue<IToken> getTokens() {
+	    return tokens;
+    }
+
 }

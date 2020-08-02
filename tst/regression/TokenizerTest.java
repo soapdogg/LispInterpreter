@@ -1,6 +1,7 @@
 package regression;
 
 import edu.osu.cse6341.lispInterpreter.Interpreter;
+import edu.osu.cse6341.lispInterpreter.tokenizer.TokenProcessor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -81,7 +82,7 @@ public class TokenizerTest
                 false
             );
             actual = getTokenizedResults(
-                interpreter
+                interpreter.getTokenProcessor()
             );
         }catch (Exception e){
             actual = e.getMessage();
@@ -103,27 +104,27 @@ public class TokenizerTest
     }
 
     public static String getTokenizedResults(
-        Interpreter interpreter
+        TokenProcessor tokenProcessor
     ) {
         StringBuilder sb = new StringBuilder();
         sb.append("LITERAL ATOMS: ");
-        sb.append(interpreter.literalAtoms.size());
-        for (String s : interpreter.literalAtoms) {
+        sb.append(tokenProcessor.literalAtoms.size());
+        for (String s : tokenProcessor.literalAtoms) {
             sb.append(',');
             sb.append(' ');
             sb.append(s);
         }
         sb.append('\n');
         sb.append("NUMERIC ATOMS: ");
-        sb.append(interpreter.numericAtomsCount);
+        sb.append(tokenProcessor.numericAtomsCount);
         sb.append(',');
-        sb.append(interpreter.numericAtomsSum);
+        sb.append(tokenProcessor.numericAtomsSum);
         sb.append('\n');
         sb.append("OPEN PARENTHESES: ");
-        sb.append(interpreter.openCount);
+        sb.append(tokenProcessor.openCount);
         sb.append('\n');
         sb.append("CLOSING PARENTHESES: ");
-        sb.append(interpreter.closingCount);
+        sb.append(tokenProcessor.closingCount);
         sb.append('\n');
         return sb.toString();
     }
