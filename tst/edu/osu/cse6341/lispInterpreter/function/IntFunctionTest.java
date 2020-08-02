@@ -60,6 +60,8 @@ class IntFunctionTest {
             )
         ).thenReturn(evaluatedResult);
 
+        Mockito.when(expressionNodeDeterminer.isExpressionNode(evaluatedResult)).thenReturn(false);
+
         String value = ReservedValuesConstants.NIL;
         Mockito.when(
             atomicValueRetriever.retrieveAtomicValue(
@@ -83,5 +85,33 @@ class IntFunctionTest {
             FunctionLengthConstants.TWO,
             params
         );
+    }
+
+    @Test
+    void intFunctionIsListTest() throws Exception {
+        LispNode evaluatedResult = Mockito.mock(LispNode.class);
+        Mockito.when(
+            nodeEvaluator.evaluate(
+                params,
+                true
+            )
+        ).thenReturn(evaluatedResult);
+
+        Mockito.when(expressionNodeDeterminer.isExpressionNode(evaluatedResult)).thenReturn(true);
+
+        AtomNode expected = Mockito.mock(AtomNode.class);
+        Mockito.when(nodeGenerator.generateAtomNode(false)).thenReturn(expected);
+
+
+        LispNode actual = intFunction.evaluateLispFunction(params);
+        Assertions.assertEquals(expected, actual);
+        Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
+            FunctionNameConstants.INT,
+            FunctionLengthConstants.TWO,
+            params
+        );
+
+        Mockito.verifyZeroInteractions(atomicValueRetriever);
+        Mockito.verifyZeroInteractions(numericStringDeterminer);
     }
 }

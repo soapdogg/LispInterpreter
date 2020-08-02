@@ -7,6 +7,7 @@ import edu.osu.cse6341.lispInterpreter.program.Environment;
 import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.singleton.EnvironmentSingleton;
 import edu.osu.cse6341.lispInterpreter.singleton.GeneratorSingleton;
 import lombok.AllArgsConstructor;
 
@@ -27,7 +28,7 @@ public class NodeEvaluator {
         final AtomNode atomNode
     ) {
         String value = atomNode.getValue();
-        if(Environment.getEnvironment().isVariableName(value)) return Environment.getEnvironment().getVariableValue(value);
+        if(EnvironmentSingleton.INSTANCE.getEnvironment().isVariableName(value)) return EnvironmentSingleton.INSTANCE.getEnvironment().getVariableValue(value);
         return atomNode;
     }
 
@@ -40,7 +41,7 @@ public class NodeEvaluator {
 
         if (!expressionNodeDeterminer.isExpressionNode(address)) {
             String addressValue = ((AtomNode)address).getValue();
-            Environment e = Environment.getEnvironment();
+            Environment e = EnvironmentSingleton.INSTANCE.getEnvironment();
             if (e.isVariableName(addressValue)) return e.getVariableValue(addressValue);
             if (e.isFunctionName(addressValue)) return e.evaluateFunction(addressValue, expressionNode.getData());
             if (FunctionsConstants.functionMap.containsKey(addressValue)) return executeBuiltInFunction(

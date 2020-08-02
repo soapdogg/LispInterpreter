@@ -1,5 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.singleton;
 
+import edu.osu.cse6341.lispInterpreter.asserter.CondFunctionParameterAsserter;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.asserter.TokenKindAsserter;
 import edu.osu.cse6341.lispInterpreter.tokens.TokenKind;
@@ -13,6 +14,7 @@ public enum AsserterSingleton {
 
     private final FunctionLengthAsserter functionLengthAsserter;
     private final TokenKindAsserter tokenKindAsserter;
+    private final CondFunctionParameterAsserter condFunctionParameterAsserter;
 
     AsserterSingleton() {
         functionLengthAsserter = FunctionLengthAsserter.newInstance(
@@ -26,6 +28,11 @@ public enum AsserterSingleton {
         );
         tokenKindAsserter = TokenKindAsserter.newInstance(
             startingTokenKindSet
+        );
+        condFunctionParameterAsserter = CondFunctionParameterAsserter.newInstance(
+            ComparatorSingleton.INSTANCE.getNodeValueComparator(),
+            ValueRetrieverSingleton.INSTANCE.getListValueRetriever(),
+            functionLengthAsserter
         );
     }
 }

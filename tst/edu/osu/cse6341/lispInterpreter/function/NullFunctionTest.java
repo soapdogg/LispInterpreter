@@ -61,6 +61,8 @@ class NullFunctionTest {
             )
         ).thenReturn(evaluatedResult);
 
+        Mockito.when(expressionNodeDeterminer.isExpressionNode(evaluatedResult)).thenReturn(false);
+
         String value = ReservedValuesConstants.NIL;
         Mockito.when(
             atomicValueRetriever.retrieveAtomicValue(
@@ -84,5 +86,31 @@ class NullFunctionTest {
             FunctionLengthConstants.TWO,
             params
         );
+    }
+
+    @Test
+    void nullFunctionIsListTest() throws Exception {
+        LispNode evaluatedResult = Mockito.mock(LispNode.class);
+        Mockito.when(
+            nodeEvaluator.evaluate(
+                params,
+                true
+            )
+        ).thenReturn(evaluatedResult);
+
+        Mockito.when(expressionNodeDeterminer.isExpressionNode(evaluatedResult)).thenReturn(true);
+        AtomNode expected = Mockito.mock(AtomNode.class);
+        Mockito.when(nodeGenerator.generateAtomNode(false)).thenReturn(expected);
+
+        LispNode actual = nullFunction.evaluateLispFunction(params);
+        Assertions.assertEquals(expected, actual);
+        Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
+            FunctionNameConstants.NULL,
+            FunctionLengthConstants.TWO,
+            params
+        );
+
+        Mockito.verifyZeroInteractions(atomicValueRetriever);
+        Mockito.verifyZeroInteractions(nodeValueComparator);
     }
 }

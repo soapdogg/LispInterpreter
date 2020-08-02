@@ -9,6 +9,7 @@ import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.program.UserDefinedFunction;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.singleton.DeterminerSingleton;
+import edu.osu.cse6341.lispInterpreter.singleton.EnvironmentSingleton;
 import edu.osu.cse6341.lispInterpreter.valueretriver.AtomicValueRetriever;
 import edu.osu.cse6341.lispInterpreter.valueretriver.ListValueRetriever;
 import lombok.AllArgsConstructor;
@@ -133,7 +134,7 @@ public class DefunFunction implements LispFunction {
             body,
             functionName
         );
-        Environment.getEnvironment().addToFunctions(functionName, userDefinedFunction);
+        EnvironmentSingleton.INSTANCE.getEnvironment().addToFunctions(functionName, userDefinedFunction);
         return null;
     }
 }

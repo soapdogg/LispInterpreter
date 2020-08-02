@@ -3,6 +3,7 @@ package edu.osu.cse6341.lispInterpreter.program;
 import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.singleton.DeterminerSingleton;
+import edu.osu.cse6341.lispInterpreter.singleton.EnvironmentSingleton;
 import edu.osu.cse6341.lispInterpreter.singleton.EvaluatorSingleton;
 import lombok.AllArgsConstructor;
 
@@ -18,7 +19,7 @@ public class UserDefinedFunction {
     private final String functionName;
 
     public LispNode evaluate(LispNode params) throws Exception{
-        Environment e = Environment.getEnvironment();
+        Environment e = EnvironmentSingleton.INSTANCE.getEnvironment();
         Map<String, LispNode> oldVariables = e.getVariables();
         Map<String, LispNode> newVariables = bindVariablesToParameters(params);
         e.unionVariables(newVariables);

@@ -8,6 +8,7 @@ import edu.osu.cse6341.lispInterpreter.program.Environment;
 import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.singleton.EnvironmentSingleton;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(staticName = "newInstance")
@@ -21,7 +22,7 @@ public class ListValueRetriever {
         final LispNode node,
         final String functionName
     ) throws Exception{
-        Environment e = Environment.getEnvironment();
+        Environment e = EnvironmentSingleton.INSTANCE.getEnvironment();
         boolean isVariable = false;
         boolean isVariableList = false;
         String temp = "blah";

@@ -67,4 +67,30 @@ class AtomFunctionTest {
             params
         );
     }
+
+    @Test
+    void atomFunctionFalseTest() throws Exception {
+        LispNode evaluatedResult = Mockito.mock(LispNode.class);
+        Mockito.when(
+            nodeEvaluator.evaluate(
+                params,
+                true
+            )
+        ).thenReturn(evaluatedResult);
+
+        boolean result = false;
+        Mockito.when(expressionNodeDeterminer.isExpressionNode(evaluatedResult)).thenReturn(result);
+
+        AtomNode expected = Mockito.mock(AtomNode.class);
+        Mockito.when(nodeGenerator.generateAtomNode(!result)).thenReturn(expected);
+
+        LispNode actual = atomFunction.evaluateLispFunction(params);
+
+        Assertions.assertEquals(expected, actual);
+        Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
+            FunctionNameConstants.ATOM,
+            FunctionLengthConstants.TWO,
+            params
+        );
+    }
 }

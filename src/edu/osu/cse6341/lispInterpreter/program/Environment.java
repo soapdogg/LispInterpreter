@@ -1,26 +1,16 @@
 package edu.osu.cse6341.lispInterpreter.program;
 
 import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import lombok.AllArgsConstructor;
 
 import java.util.HashMap;
 import java.util.Map;
 
 
+@AllArgsConstructor(staticName = "newInstance")
 public class Environment {
     private Map<String, UserDefinedFunction> functions;
     private Map<String, LispNode> variables;
-
-    private static Environment singletonEnvironment;
-
-    private Environment(){
-        functions = new HashMap<>();
-        variables = new HashMap<>();
-    }
-
-    public static Environment getEnvironment(){
-        if(singletonEnvironment == null) singletonEnvironment = new Environment();
-        return singletonEnvironment;
-    }
 
     public boolean isFunctionName(String functionName){
         return functions.containsKey(functionName);

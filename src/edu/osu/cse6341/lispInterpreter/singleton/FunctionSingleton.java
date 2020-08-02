@@ -42,11 +42,8 @@ public enum  FunctionSingleton {
             EvaluatorSingleton.INSTANCE.getNodeEvaluator()
         );
         condFunction = CondFunction.newInstance(
-            DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer(),
-            AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
-            ValueRetrieverSingleton.INSTANCE.getListValueRetriever(),
-            EvaluatorSingleton.INSTANCE.getNodeEvaluator(),
-            ComparatorSingleton.INSTANCE.getNodeValueComparator()
+            AsserterSingleton.INSTANCE.getCondFunctionParameterAsserter(),
+            EvaluatorSingleton.INSTANCE.getCondFunctionEvaluator()
         );
         consFunction = ConsFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
