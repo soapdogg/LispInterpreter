@@ -1,7 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.valueretriver;
 
 import edu.osu.cse6341.lispInterpreter.determiner.ExpressionNodeDeterminer;
-import edu.osu.cse6341.lispInterpreter.determiner.FunctionLengthDeterminer;
 import edu.osu.cse6341.lispInterpreter.exceptions.NotAListException;
 import edu.osu.cse6341.lispInterpreter.printer.DotNotationPrinter;
 import edu.osu.cse6341.lispInterpreter.program.Environment;
@@ -16,7 +15,6 @@ public class ListValueRetriever {
 
     private final ExpressionNodeDeterminer expressionNodeDeterminer;
     private final DotNotationPrinter dotNotationPrinter;
-    private final FunctionLengthDeterminer functionLengthDeterminer;
 
     public ExpressionNode retrieveListValue(
         final LispNode node,
@@ -32,8 +30,7 @@ public class ListValueRetriever {
             if(isVariable) isVariableList = expressionNodeDeterminer.isExpressionNode(e.getVariableValue(temp));
         }
 
-        int nodeLength = functionLengthDeterminer.determineFunctionLength(node);
-        if((!isVariable && !expressionNodeDeterminer.isExpressionNode(node) && nodeLength == 1) || (isVariable && !isVariableList) || (!expressionNodeDeterminer.isExpressionNode(node))) {
+        if((!isVariable && !expressionNodeDeterminer.isExpressionNode(node)) || (isVariable && !isVariableList) || (!expressionNodeDeterminer.isExpressionNode(node))) {
             String sb = "Error! Parameter of " + functionName +
                 " is not a list.    Actual: " +
                 dotNotationPrinter.printInDotNotation(node) +

@@ -2,11 +2,11 @@ package edu.osu.cse6341.lispInterpreter;
 
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
 
+import edu.osu.cse6341.lispInterpreter.datamodels.ProcessedTokensResult;
 import edu.osu.cse6341.lispInterpreter.parser.Parser;
 import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.singleton.AsserterSingleton;
@@ -14,6 +14,7 @@ import edu.osu.cse6341.lispInterpreter.singleton.GeneratorSingleton;
 import edu.osu.cse6341.lispInterpreter.tokenizer.TokenProcessor;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.program.*;
+import edu.osu.cse6341.lispInterpreter.tokens.Token;
 import lombok.Getter;
 
 public final class Interpreter{
@@ -26,14 +27,7 @@ public final class Interpreter{
 
 	public Interpreter(){
 		tokenizer = new Tokenizer();
-		Queue<String> literalAtoms = new LinkedList<>();
-		tokenProcessor = TokenProcessor.newInstance(
-			literalAtoms,
-			0,
-			0,
-			0,
-			0
-		);
+		tokenProcessor = TokenProcessor.newInstance();
 		parser = Parser.newInstance(
 			AsserterSingleton.INSTANCE.getTokenKindAsserter(),
 			GeneratorSingleton.INSTANCE.getNodeGenerator()
@@ -42,29 +36,24 @@ public final class Interpreter{
 
     void interpret() throws Exception{
 		Scanner scanner = new Scanner(System.in);
-		interpret(scanner, false, true);
+		interpret(scanner,  true);
 	}
 
-	public void interpret(Scanner in, boolean shouldBeProcessed, boolean shouldBeEvaluated) throws Exception{
-	    tokenize(in);
-	    if(shouldBeProcessed) {
-	    	processTokens();
-	    	return;
-		}
-	    List<LispNode> rootNodes = parser.parse(tokenizer);
+	public void interpret(Scanner in,  boolean shouldBeEvaluated) throws Exception{
+	    Queue<Token> tokens = tokenizer.tokenize(in);
+	    List<LispNode> rootNodes = parser.parse(tokens);
 	    program = new Program(rootNodes);
         if (shouldBeEvaluated) {
         	program.evaluate();
 		}
     }
 
-	private void tokenize(Scanner in){
-		tokenizer.tokenize(in);
-		in.close();
-	}
 
-	private void processTokens() throws Exception{
-		tokenProcessor.processTokens(tokenizer.getTokens());
+	public ProcessedTokensResult processTokens(
+		Scanner in
+	) throws Exception{
+		Queue<Token> tokens = tokenizer.tokenize(in);
+		return tokenProcessor.processTokens(tokens);
 	}
 
 	private Scanner getScannerFromFilePath(String programFilePath){
@@ -81,13 +70,13 @@ public final class Interpreter{
 
 	public String testInterpreter(String programFilePath) throws Exception{
         Scanner in = getScannerFromFilePath(programFilePath);
-	    interpret(in, false, true);
+	    interpret(in,  true);
 		return getValue();
 	}
 
 	public String testParser(String programFilePath) throws Exception{
 	    Scanner in = getScannerFromFilePath(programFilePath);
-	    interpret(in, false, false);
+	    interpret(in,  false);
 	    return getDotNotation();
     }
 

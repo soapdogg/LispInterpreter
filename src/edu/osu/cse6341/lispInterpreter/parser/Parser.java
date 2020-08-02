@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 @AllArgsConstructor(staticName = "newInstance")
 public class Parser {
@@ -18,30 +19,30 @@ public class Parser {
     private final TokenKindAsserter tokenKindAsserter;
     private final NodeGenerator nodeGenerator;
 
-    public List<LispNode> parse(Tokenizer tokenizer) throws Exception {
+    public List<LispNode> parse(Queue<Token> tokens) throws Exception {
 
         List<LispNode> rootNodes = new ArrayList<>();
-        while (tokenizer.getCurrent().getTokenKind() != TokenKind.EOF_TOKEN) {
-            LispNode root = parseIntoNode(tokenizer);
+        while (tokens.peek().getTokenKind() != TokenKind.EOF_TOKEN) {
+            LispNode root = parseIntoNode(tokens);
             rootNodes.add(root);
         }
         return rootNodes;
     }
 
     public LispNode parseIntoNode(
-        Tokenizer tokenizer
+        Queue<Token> tokens
     ) throws Exception {
-        Token token = tokenizer.getCurrent();
+        Token token = tokens.peek();
         tokenKindAsserter.assertTokenIsAtomOrOpen(token);
         TokenKind currentTokenKind = token.getTokenKind();
         boolean isOpen = currentTokenKind == TokenKind.OPEN_TOKEN;
         if (isOpen) {
-            tokenizer.getNextToken();
-            LispNode result = parseExpressionNode(tokenizer);
-            tokenizer.getNextToken();
+            tokens.remove();
+            LispNode result = parseExpressionNode(tokens);
+            tokens.remove();
             return result;
         } else {
-            token = tokenizer.getNextToken();
+            token = tokens.remove();
             String value = token.getValue();
             return nodeGenerator.generateAtomNode(
                 value
@@ -50,14 +51,14 @@ public class Parser {
     }
 
     private LispNode parseExpressionNode(
-        Tokenizer tokenizer
+        Queue<Token> tokens
     ) throws Exception {
-        boolean isClose = tokenizer.getCurrent().getTokenKind() == TokenKind.CLOSE_TOKEN;
+        boolean isClose = tokens.peek().getTokenKind() == TokenKind.CLOSE_TOKEN;
         LispNode result;
         if (isClose) result = nodeGenerator.generateAtomNode(ReservedValuesConstants.NIL);//nodeGenerator.generateExpressionNode();
         else {
-            LispNode address = parseIntoNode(tokenizer);
-            LispNode data = parseExpressionNode(tokenizer);
+            LispNode address = parseIntoNode(tokens);
+            LispNode data = parseExpressionNode(tokens);
             result = nodeGenerator.generateExpressionNode(
                 address,
                 data

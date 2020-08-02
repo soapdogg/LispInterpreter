@@ -1,5 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.tokenizer;
 
+import java.util.List;
 import java.util.Queue;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -11,7 +12,6 @@ import edu.osu.cse6341.lispInterpreter.tokens.TokenKind;
 public class Tokenizer {
 
     private static final IState [] nextStateArray;
-	private Queue<Token> tokens;
 
 	static{
         nextStateArray = new IState[256];
@@ -26,18 +26,20 @@ public class Tokenizer {
     }
 
 	public Tokenizer(){
-		tokens = new LinkedList<>();
 	}
 
-	public void tokenize(Scanner in){
-		tokens = new LinkedList<>();
+	public Queue<Token> tokenize(Scanner in){
+		Queue<Token> tokens = new LinkedList<>();
         boolean continueParsing = true;
         String line;
         IState state;
-        while(in.hasNextLine() && continueParsing) {
-            line = in.nextLine().trim();
+        List<String> lines = ScannerToLineTransformer.transformScannerInputToLines(
+            in
+        );
+        for(int i = 0; i < lines.size() && continueParsing; ++i) {
+            line = lines.get(i);
             int startingPos = 0;
-            while(startingPos < line.length() && continueParsing) {
+            while (startingPos < line.length() && continueParsing) {
                 state = nextStateArray[line.charAt(startingPos)];
                 ProcessedStateResult processedStateResult = state.processState(
                     line,
@@ -46,30 +48,10 @@ public class Tokenizer {
                 Token token = processedStateResult.getToken();
                 continueParsing = token == null || token.getTokenKind() != TokenKind.ERROR_TOKEN;
                 startingPos = processedStateResult.getStartingPos();
-                if(token != null) addToTokens(token);
+                if (token != null) tokens.add(token);
             }
         }
 		if(continueParsing) tokens.add(Token.newInstance(TokenKind.EOF_TOKEN, "EOF"));
+        return tokens;
 	}
-
-	public Token getNextToken(){
-		return tokens.remove();	
-	}
-
-	public void addToTokens(Token token){
-		tokens.add(token);
-	}
-
-	public boolean hasNext(){
-		return !tokens.isEmpty();
-	}
-
-	public Token getCurrent(){
-		return tokens.peek();
-	}
-
-	public Queue<Token> getTokens() {
-	    return tokens;
-    }
-
 }

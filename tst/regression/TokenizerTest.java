@@ -1,7 +1,7 @@
 package regression;
 
 import edu.osu.cse6341.lispInterpreter.Interpreter;
-import edu.osu.cse6341.lispInterpreter.tokenizer.TokenProcessor;
+import edu.osu.cse6341.lispInterpreter.datamodels.ProcessedTokensResult;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -76,13 +76,11 @@ public class TokenizerTest
         String actual;
         try {
             Scanner in = getScannerFromFilePath(programFile);
-            interpreter.interpret(
-                in,
-                true,
-                false
+            ProcessedTokensResult processedTokensResult = interpreter.processTokens(
+                in
             );
             actual = getTokenizedResults(
-                interpreter.getTokenProcessor()
+                processedTokensResult
             );
         }catch (Exception e){
             actual = e.getMessage();
@@ -104,27 +102,27 @@ public class TokenizerTest
     }
 
     public static String getTokenizedResults(
-        TokenProcessor tokenProcessor
+        ProcessedTokensResult processedTokensResult
     ) {
         StringBuilder sb = new StringBuilder();
         sb.append("LITERAL ATOMS: ");
-        sb.append(tokenProcessor.literalAtoms.size());
-        for (String s : tokenProcessor.literalAtoms) {
+        sb.append(processedTokensResult.getLiteralAtoms().size());
+        for (String s : processedTokensResult.getLiteralAtoms()) {
             sb.append(',');
             sb.append(' ');
             sb.append(s);
         }
         sb.append('\n');
         sb.append("NUMERIC ATOMS: ");
-        sb.append(tokenProcessor.numericAtomsCount);
+        sb.append(processedTokensResult.getNumericAtomsCount());
         sb.append(',');
-        sb.append(tokenProcessor.numericAtomsSum);
+        sb.append(processedTokensResult.getNumericAtomsSum());
         sb.append('\n');
         sb.append("OPEN PARENTHESES: ");
-        sb.append(tokenProcessor.openCount);
+        sb.append(processedTokensResult.getOpenCount());
         sb.append('\n');
         sb.append("CLOSING PARENTHESES: ");
-        sb.append(tokenProcessor.closingCount);
+        sb.append(processedTokensResult.getCloseCount());
         sb.append('\n');
         return sb.toString();
     }
