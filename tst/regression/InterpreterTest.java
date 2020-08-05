@@ -349,7 +349,8 @@ public class InterpreterTest {
         Interpreter interpreter = new Interpreter();
         String actual;
         try{
-            actual = interpreter.testInterpreter(programFile);
+            Scanner in = getScannerFromFilePath(programFile);
+            actual = interpreter.interpret(in,  true);
         }catch (Exception e){
             actual = e.getMessage();
         }
@@ -357,6 +358,17 @@ public class InterpreterTest {
         Assertions.assertEquals(expected, actual);
     }
 
+    private static Scanner getScannerFromFilePath(String programFilePath){
+        Scanner in = null;
+        try {
+            in = new Scanner(Paths.get(programFilePath));
+        }catch (IOException e){
+            System.out.println("File not found");
+            System.out.println(programFilePath);
+            System.exit(-10);
+        }
+        return in;
+    }
 
     private static String scanExpected(String expectedFile) {
         StringBuilder builder = new StringBuilder();

@@ -5,8 +5,8 @@ public class Main{
 	public static void main(String [] args){
 		try {
             Interpreter interpreter = new Interpreter();
-            interpreter.interpret();
-            System.out.println(interpreter.getValue());
+            String result = interpreter.interpret();
+            System.out.println(result);
         }catch (Exception e){
 		    System.out.println(e.getMessage());
         }

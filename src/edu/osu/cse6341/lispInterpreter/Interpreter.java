@@ -34,58 +34,20 @@ public final class Interpreter{
 		);
 	}
 
-    void interpret() throws Exception{
+    String interpret() throws Exception{
 		Scanner scanner = new Scanner(System.in);
-		interpret(scanner,  true);
+		return interpret(scanner,  true);
 	}
 
-	public void interpret(Scanner in,  boolean shouldBeEvaluated) throws Exception{
+	public String interpret(Scanner in,  boolean shouldBeEvaluated) throws Exception{
 	    Queue<Token> tokens = tokenizer.tokenize(in);
 	    List<LispNode> rootNodes = parser.parse(tokens);
 	    program = new Program(rootNodes);
         if (shouldBeEvaluated) {
         	program.evaluate();
+        	return program.getListNotationToString();
 		}
-    }
-
-
-	public ProcessedTokensResult processTokens(
-		Scanner in
-	) throws Exception{
-		Queue<Token> tokens = tokenizer.tokenize(in);
-		return tokenProcessor.processTokens(tokens);
-	}
-
-	private Scanner getScannerFromFilePath(String programFilePath){
-        Scanner in = null;
-	    try {
-            in = new Scanner(Paths.get(programFilePath));
-        }catch (IOException e){
-            System.out.println("File not found");
-            System.out.println(programFilePath);
-            System.exit(-10);
-        }
-        return in;
-    }
-
-	public String testInterpreter(String programFilePath) throws Exception{
-        Scanner in = getScannerFromFilePath(programFilePath);
-	    interpret(in,  true);
-		return getValue();
-	}
-
-	public String testParser(String programFilePath) throws Exception{
-	    Scanner in = getScannerFromFilePath(programFilePath);
-	    interpret(in,  false);
-	    return getDotNotation();
-    }
-
-	String getValue(){
-	    return program.getListNotationToString();
-    }
-
-    private String getDotNotation() {
-	    return program.getDotNotationToString();
+        return program.getDotNotationToString();
     }
 }
 

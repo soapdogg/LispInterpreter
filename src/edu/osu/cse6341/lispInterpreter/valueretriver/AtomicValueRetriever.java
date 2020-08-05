@@ -21,8 +21,7 @@ public class AtomicValueRetriever {
         boolean isList = expressionNodeDeterminer.isExpressionNode(node);
         if(isList) {
             String listNotation = listNotationPrinter.printInListNotation(
-                node,
-                true
+                node
             );
             String sb = "Error! Parameter at position: " + position +
                 " of function " +

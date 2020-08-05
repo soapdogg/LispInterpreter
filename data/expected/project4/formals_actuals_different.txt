@@ -1,2 +1,1 @@
-Length of actual parameters does not match length of formal parameters for function: DIFF
-Expected: 2    Actual: 1
+Error! Expected length of DIFF list is 3!    Actual: 2

@@ -2,11 +2,15 @@ package regression;
 
 import edu.osu.cse6341.lispInterpreter.Interpreter;
 import edu.osu.cse6341.lispInterpreter.datamodels.ProcessedTokensResult;
+import edu.osu.cse6341.lispInterpreter.tokenizer.TokenProcessor;
+import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
+import edu.osu.cse6341.lispInterpreter.tokens.Token;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class TokenizerTest
@@ -72,13 +76,13 @@ public class TokenizerTest
 
     //Helpers
     private static void tokenizerTest(String programFile, String expectedFile){
-        Interpreter interpreter = new Interpreter();
+        Tokenizer tokenizer = new Tokenizer();
+        TokenProcessor tokenProcessor = TokenProcessor.newInstance();
         String actual;
         try {
             Scanner in = getScannerFromFilePath(programFile);
-            ProcessedTokensResult processedTokensResult = interpreter.processTokens(
-                in
-            );
+            Queue<Token> tokens = tokenizer.tokenize(in);
+            ProcessedTokensResult processedTokensResult = tokenProcessor.processTokens(tokens);
             actual = getTokenizedResults(
                 processedTokensResult
             );

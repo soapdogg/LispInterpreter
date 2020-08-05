@@ -15,7 +15,6 @@ public enum PrinterSingleton {
         dotNotationPrinter = DotNotationPrinter.newInstance();
         listNotationPrinter = ListNotationPrinter.newInstance(
             DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer(),
-            DeterminerSingleton.INSTANCE.getNumericStringDeterminer(),
             ComparatorSingleton.INSTANCE.getNodeValueComparator()
         );
     }

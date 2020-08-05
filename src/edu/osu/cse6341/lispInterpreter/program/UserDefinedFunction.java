@@ -2,6 +2,7 @@ package edu.osu.cse6341.lispInterpreter.program;
 
 import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.singleton.AsserterSingleton;
 import edu.osu.cse6341.lispInterpreter.singleton.DeterminerSingleton;
 import edu.osu.cse6341.lispInterpreter.singleton.EnvironmentSingleton;
 import edu.osu.cse6341.lispInterpreter.singleton.EvaluatorSingleton;
@@ -32,7 +33,11 @@ public class UserDefinedFunction {
     }
 
     private Map<String, LispNode> bindVariablesToParameters(LispNode params) throws Exception{
-        assertActualLengthSameAsFormalsLength(params);
+        AsserterSingleton.INSTANCE.getFunctionLengthAsserter().assertLengthIsAsExpected(
+            functionName,
+            formalParameters.size() + 1,
+            params
+        );
         Map<String, LispNode> newVariables = new HashMap<>();
         for (String formal: formalParameters) {
             ExpressionNode temp = (ExpressionNode)params;
@@ -44,14 +49,5 @@ public class UserDefinedFunction {
             params = temp.getData();
         }
         return newVariables;
-    }
-
-    private void assertActualLengthSameAsFormalsLength(LispNode params) throws Exception{
-        int actualLength = DeterminerSingleton.INSTANCE.getFunctionLengthDeterminer().determineFunctionLength(params);
-         if(formalParameters.size() != actualLength)
-            throw new Exception("Length of actual parameters does not match length of formal parameters for function: "
-                    + functionName
-                    + "\nExpected: " + formalParameters.size()
-                    + "    Actual: " + actualLength  + "\n");
     }
 }

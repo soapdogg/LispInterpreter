@@ -49,8 +49,7 @@ public class Program {
 		StringBuilder sb = new StringBuilder();
 		for (LispNode node : nodes) {
 			String listNotation = PrinterSingleton.INSTANCE.getListNotationPrinter().printInListNotation(
-				node,
-				DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer().isExpressionNode(node)
+				node
 			);
 			sb.append(listNotation);
 			sb.append('\n');

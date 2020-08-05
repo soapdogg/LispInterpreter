@@ -27,8 +27,7 @@ public class NumericValueRetriever {
         boolean isNumeric = numericStringDeterminer.isStringNumeric(value);
         if(!isNumeric) {
             String listNotation = listNotationPrinter.printInListNotation(
-                node,
-                true
+                node
             );
             String sb = "Error! Parameter at position: " + position +
                 " of function " +
