@@ -1,6 +1,7 @@
 package regression;
 
 import edu.osu.cse6341.lispInterpreter.Interpreter;
+import edu.osu.cse6341.lispInterpreter.singleton.InterpreterSingleton;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -107,7 +108,7 @@ public class UserDefinedTest {
     }
 
     private static void interpreterTest(String programFile, String expectedFile){
-        Interpreter interpreter = new Interpreter();
+        Interpreter interpreter = InterpreterSingleton.INSTANCE.getInterpreter();
         String actual;
         try{
             Scanner in = getScannerFromFilePath(programFile);

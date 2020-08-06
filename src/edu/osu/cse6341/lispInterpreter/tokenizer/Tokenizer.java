@@ -8,7 +8,9 @@ import java.util.Scanner;
 import edu.osu.cse6341.lispInterpreter.tokenizer.states.*;
 import edu.osu.cse6341.lispInterpreter.tokens.Token;
 import edu.osu.cse6341.lispInterpreter.tokens.TokenKind;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor(staticName = "newInstance")
 public class Tokenizer {
 
     private static final IState [] nextStateArray;
@@ -24,9 +26,6 @@ public class Tokenizer {
         nextStateArray['('] = new OpenState();
         nextStateArray[')'] = new CloseState();
     }
-
-	public Tokenizer(){
-	}
 
 	public Queue<Token> tokenize(Scanner in){
 		Queue<Token> tokens = new LinkedList<>();

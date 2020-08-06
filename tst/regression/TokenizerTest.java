@@ -1,6 +1,7 @@
 package regression;
 
 import edu.osu.cse6341.lispInterpreter.datamodels.ProcessedTokensResult;
+import edu.osu.cse6341.lispInterpreter.singleton.TokenizerSingleton;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokens.Token;
 import org.junit.jupiter.api.Assertions;
@@ -75,7 +76,7 @@ public class TokenizerTest
 
     //Helpers
     private static void tokenizerTest(String programFile, String expectedFile){
-        Tokenizer tokenizer = new Tokenizer();
+        Tokenizer tokenizer = TokenizerSingleton.INSTANCE.getTokenizer();
         String actual;
         try {
             Scanner in = getScannerFromFilePath(programFile);

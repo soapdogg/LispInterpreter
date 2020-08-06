@@ -8,7 +8,6 @@ import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.datamodels.UserDefinedFunction;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.program.Environment;
-import edu.osu.cse6341.lispInterpreter.singleton.DeterminerSingleton;
 import edu.osu.cse6341.lispInterpreter.valueretriver.AtomicValueRetriever;
 import edu.osu.cse6341.lispInterpreter.valueretriver.ListValueRetriever;
 import lombok.AllArgsConstructor;

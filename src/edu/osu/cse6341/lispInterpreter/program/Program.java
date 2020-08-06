@@ -56,17 +56,4 @@ public class Program {
 		}
 	    return sb.toString();
     }
-
-    public String getDotNotationToString(){
-		List<LispNode> nodes = isEvaluated ? evaluatedNodes : rootNodes;
-		if (nodes.isEmpty()) return "NIL\n";
-		StringBuilder sb = new StringBuilder();
-		for (LispNode node : nodes) {
-			String dotNotation = PrinterSingleton.INSTANCE.getDotNotationPrinter().printInDotNotation(node);
-			sb.append(dotNotation);
-			sb.append('\n');
-		}
-		return sb.toString();
-	}
-
 }
