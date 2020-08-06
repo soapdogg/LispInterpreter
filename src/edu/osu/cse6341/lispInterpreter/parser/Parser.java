@@ -22,7 +22,7 @@ public class Parser {
     public List<LispNode> parse(Queue<Token> tokens) throws Exception {
 
         List<LispNode> rootNodes = new ArrayList<>();
-        while (tokens.peek().getTokenKind() != TokenKind.EOF_TOKEN) {
+        while (!tokens.isEmpty()) {
             LispNode root = parseIntoNode(tokens);
             rootNodes.add(root);
         }
@@ -33,12 +33,16 @@ public class Parser {
         Queue<Token> tokens
     ) throws Exception {
         Token token = tokens.peek();
+        tokenKindAsserter.assertTokenIsNotNull(token);
         tokenKindAsserter.assertTokenIsAtomOrOpen(token);
         TokenKind currentTokenKind = token.getTokenKind();
         boolean isOpen = currentTokenKind == TokenKind.OPEN_TOKEN;
         if (isOpen) {
             tokens.remove();
             LispNode result = parseExpressionNode(tokens);
+            Token closeToken = tokens.peek();
+            tokenKindAsserter.assertTokenIsNotNull(closeToken);
+            tokenKindAsserter.assertTokenIsClose(closeToken);
             tokens.remove();
             return result;
         } else {
@@ -53,9 +57,10 @@ public class Parser {
     private LispNode parseExpressionNode(
         Queue<Token> tokens
     ) throws Exception {
+        tokenKindAsserter.assertTokenIsNotNull(tokens.peek());
         boolean isClose = tokens.peek().getTokenKind() == TokenKind.CLOSE_TOKEN;
         LispNode result;
-        if (isClose) result = nodeGenerator.generateAtomNode(ReservedValuesConstants.NIL);//nodeGenerator.generateExpressionNode();
+        if (isClose) result = nodeGenerator.generateAtomNode(ReservedValuesConstants.NIL);
         else {
             LispNode address = parseIntoNode(tokens);
             LispNode data = parseExpressionNode(tokens);

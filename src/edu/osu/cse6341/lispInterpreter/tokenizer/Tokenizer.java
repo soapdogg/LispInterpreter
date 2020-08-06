@@ -51,7 +51,6 @@ public class Tokenizer {
                 if (token != null) tokens.add(token);
             }
         }
-		if(continueParsing) tokens.add(Token.newInstance(TokenKind.EOF_TOKEN, "EOF"));
         return tokens;
 	}
 }

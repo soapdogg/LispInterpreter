@@ -1,8 +1,6 @@
 package regression;
 
-import edu.osu.cse6341.lispInterpreter.Interpreter;
 import edu.osu.cse6341.lispInterpreter.datamodels.ProcessedTokensResult;
-import edu.osu.cse6341.lispInterpreter.tokenizer.TokenProcessor;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import edu.osu.cse6341.lispInterpreter.tokens.Token;
 import org.junit.jupiter.api.Assertions;
@@ -10,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
@@ -77,12 +76,11 @@ public class TokenizerTest
     //Helpers
     private static void tokenizerTest(String programFile, String expectedFile){
         Tokenizer tokenizer = new Tokenizer();
-        TokenProcessor tokenProcessor = TokenProcessor.newInstance();
         String actual;
         try {
             Scanner in = getScannerFromFilePath(programFile);
             Queue<Token> tokens = tokenizer.tokenize(in);
-            ProcessedTokensResult processedTokensResult = tokenProcessor.processTokens(tokens);
+            ProcessedTokensResult processedTokensResult = processTokens(tokens);
             actual = getTokenizedResults(
                 processedTokensResult
             );
@@ -105,7 +103,40 @@ public class TokenizerTest
         return in;
     }
 
-    public static String getTokenizedResults(
+    private static ProcessedTokensResult processTokens(Queue<Token> tokens) throws Exception {
+        Queue<String> literalAtoms = new LinkedList<>();
+        int openCount = 0;
+        int closingCount = 0;
+        int numericAtomsSum = 0;
+        int numericAtomsCount = 0;
+
+        for (Token token : tokens) {
+            switch (token.getTokenKind()) {
+                case OPEN_TOKEN -> ++openCount;
+                case CLOSE_TOKEN -> ++closingCount;
+                case LITERAL_TOKEN -> literalAtoms.add(token.getValue());
+                case NUMERIC_TOKEN -> {
+                    ++numericAtomsCount;
+                    numericAtomsSum += Integer.parseInt(token.getValue());
+                }
+                case ERROR_TOKEN -> {
+                    String errorMessage = "Error! Invalid token: " + token.getValue() + "\n";
+                    throw new Exception(errorMessage);
+                }
+                default -> {
+                }
+            }
+        }
+        return ProcessedTokensResult.newInstance(
+            literalAtoms,
+            openCount,
+            closingCount,
+            numericAtomsSum,
+            numericAtomsCount
+        );
+    }
+
+    private static String getTokenizedResults(
         ProcessedTokensResult processedTokensResult
     ) {
         StringBuilder sb = new StringBuilder();

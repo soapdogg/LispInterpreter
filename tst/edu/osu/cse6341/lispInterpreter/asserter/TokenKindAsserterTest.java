@@ -29,7 +29,22 @@ public class TokenKindAsserterTest {
     }
 
     @Test
-    void noExceptionTest() {
+    void noExceptionIsNotNullTest() {
+        Assertions.assertDoesNotThrow(
+            () -> tokenKindAsserter.assertTokenIsNotNull(token)
+        );
+    }
+
+    @Test
+    void unexpectedTokenKindIsNotNullTest() {
+        Assertions.assertThrows(
+            UnexpectedTokenKindException.class,
+            () -> tokenKindAsserter.assertTokenIsNotNull(null)
+        );
+    }
+
+    @Test
+    void noExceptionAtomOrOpenTest() {
         Mockito.when(token.getTokenKind()).thenReturn(startingTokenKind);
 
         Assertions.assertDoesNotThrow(
@@ -38,12 +53,31 @@ public class TokenKindAsserterTest {
     }
 
     @Test
-    void unexpectedTokenKindExceptionTest() {
+    void unexpectedTokenKindAtomOrOpenExceptionTest() {
         Mockito.when(token.getTokenKind()).thenReturn(TokenKind.CLOSE_TOKEN);
 
         Assertions.assertThrows(
             UnexpectedTokenKindException.class,
             () -> tokenKindAsserter.assertTokenIsAtomOrOpen(token)
+        );
+    }
+
+    @Test
+    void noExceptionCloseTest() {
+        Mockito.when(token.getTokenKind()).thenReturn(TokenKind.CLOSE_TOKEN);
+
+        Assertions.assertDoesNotThrow(
+            () -> tokenKindAsserter.assertTokenIsClose(token)
+        );
+    }
+
+    @Test
+    void unexpectedTokenKindCloseExceptionTest() {
+        Mockito.when(token.getTokenKind()).thenReturn(TokenKind.OPEN_TOKEN);
+
+        Assertions.assertThrows(
+            UnexpectedTokenKindException.class,
+            () -> tokenKindAsserter.assertTokenIsClose(token)
         );
     }
 }
