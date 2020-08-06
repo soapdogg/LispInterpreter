@@ -1,6 +1,8 @@
 package edu.osu.cse6341.lispInterpreter.program;
 
+import edu.osu.cse6341.lispInterpreter.datamodels.UserDefinedFunction;
 import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.singleton.EvaluatorSingleton;
 import lombok.AllArgsConstructor;
 
 import java.util.HashMap;
@@ -26,18 +28,18 @@ public class Environment {
 
     public LispNode evaluateFunction(String functionName, LispNode params) throws Exception{
         UserDefinedFunction function = functions.get(functionName);
-        return function.evaluate(params);
+        return EvaluatorSingleton.INSTANCE.getUserDefinedFunctionEvaluator().evaluate(params, function);
     }
 
-    Map<String, LispNode> getVariables(){
+    public Map<String, LispNode> getVariables(){
         return new HashMap<>(variables);
     }
 
-    void unionVariables(Map<String, LispNode> newVariables){
+    public void unionVariables(Map<String, LispNode> newVariables){
         variables.putAll(newVariables);
     }
 
-    void setVariables(Map<String, LispNode> newVariables){
+    public void setVariables(Map<String, LispNode> newVariables){
         variables = newVariables;
     }
 

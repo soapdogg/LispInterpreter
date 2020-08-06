@@ -3,13 +3,12 @@ package edu.osu.cse6341.lispInterpreter.functions;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.determiner.ExpressionNodeDeterminer;
-import edu.osu.cse6341.lispInterpreter.program.Environment;
 import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
-import edu.osu.cse6341.lispInterpreter.program.UserDefinedFunction;
+import edu.osu.cse6341.lispInterpreter.datamodels.UserDefinedFunction;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
+import edu.osu.cse6341.lispInterpreter.program.Environment;
 import edu.osu.cse6341.lispInterpreter.singleton.DeterminerSingleton;
-import edu.osu.cse6341.lispInterpreter.singleton.EnvironmentSingleton;
 import edu.osu.cse6341.lispInterpreter.valueretriver.AtomicValueRetriever;
 import edu.osu.cse6341.lispInterpreter.valueretriver.ListValueRetriever;
 import lombok.AllArgsConstructor;
@@ -46,6 +45,7 @@ public class DefunFunction implements LispFunction {
     private final FunctionLengthAsserter functionLengthAsserter;
     private final AtomicValueRetriever atomicValueRetriever;
     private final ListValueRetriever listValueRetriever;
+    private final Environment environment;
 
     private void assertFunctionNameIsValid(String functionName) throws Exception{
         if(isInvalidName(functionName))
@@ -113,7 +113,7 @@ public class DefunFunction implements LispFunction {
             FunctionNameConstants.DEFUN
         );
         List<String> formalParameters;
-        if (!DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer().isExpressionNode(tempNode.getAddress())) {
+        if (!expressionNodeDeterminer.isExpressionNode(tempNode.getAddress())) {
             formalParameters = Collections.emptyList();
         } else {
             ExpressionNode formalParametersNode = listValueRetriever.retrieveListValue(
@@ -134,7 +134,7 @@ public class DefunFunction implements LispFunction {
             body,
             functionName
         );
-        EnvironmentSingleton.INSTANCE.getEnvironment().addToFunctions(functionName, userDefinedFunction);
+        environment.addToFunctions(functionName, userDefinedFunction);
         return null;
     }
 }

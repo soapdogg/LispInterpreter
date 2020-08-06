@@ -55,7 +55,8 @@ public enum  FunctionSingleton {
             DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer(),
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
             ValueRetrieverSingleton.INSTANCE.getAtomicValueRetriever(),
-            ValueRetrieverSingleton.INSTANCE.getListValueRetriever()
+            ValueRetrieverSingleton.INSTANCE.getListValueRetriever(),
+            EnvironmentSingleton.INSTANCE.getEnvironment()
         );
         eqFunction = EqFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),

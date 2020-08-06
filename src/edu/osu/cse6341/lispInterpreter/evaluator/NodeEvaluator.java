@@ -7,14 +7,13 @@ import edu.osu.cse6341.lispInterpreter.program.Environment;
 import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
-import edu.osu.cse6341.lispInterpreter.singleton.EnvironmentSingleton;
-import edu.osu.cse6341.lispInterpreter.singleton.GeneratorSingleton;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(staticName = "newInstance")
 public class NodeEvaluator {
 
     private final ExpressionNodeDeterminer expressionNodeDeterminer;
+    private final Environment environment;
 
     public LispNode evaluate(
         final LispNode lispNode,
@@ -28,7 +27,7 @@ public class NodeEvaluator {
         final AtomNode atomNode
     ) {
         String value = atomNode.getValue();
-        if(EnvironmentSingleton.INSTANCE.getEnvironment().isVariableName(value)) return EnvironmentSingleton.INSTANCE.getEnvironment().getVariableValue(value);
+        if(environment.isVariableName(value)) return environment.getVariableValue(value);
         return atomNode;
     }
 
@@ -40,23 +39,13 @@ public class NodeEvaluator {
 
         if (!expressionNodeDeterminer.isExpressionNode(address)) {
             String addressValue = ((AtomNode)address).getValue();
-            Environment e = EnvironmentSingleton.INSTANCE.getEnvironment();
-            if (e.isVariableName(addressValue)) return e.getVariableValue(addressValue);
-            if (e.isFunctionName(addressValue)) return e.evaluateFunction(addressValue, expressionNode.getData());
-            if (FunctionsConstants.functionMap.containsKey(addressValue)) return executeBuiltInFunction(
-                addressValue,
-                expressionNode.getData()
-            );
+            if (environment.isFunctionName(addressValue)) return environment.evaluateFunction(addressValue, expressionNode.getData());
+            if (FunctionsConstants.functionMap.containsKey(addressValue)) {
+                LispFunction function = FunctionsConstants.functionMap.get(addressValue);
+                return function.evaluateLispFunction(expressionNode.getData());
+            }
             if (!areLiteralsAllowed) throw new Exception("Error! Invalid CAR value: " + addressValue + '\n');
         }
         return evaluate(address, true);
-    }
-
-    private LispNode executeBuiltInFunction(
-        String functionName,
-        LispNode data
-    ) throws Exception{
-        LispFunction function = FunctionsConstants.functionMap.get(functionName);
-        return function.evaluateLispFunction(data);
     }
 }
