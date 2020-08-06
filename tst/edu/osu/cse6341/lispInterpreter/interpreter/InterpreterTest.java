@@ -1,5 +1,7 @@
 package edu.osu.cse6341.lispInterpreter.interpreter;
 
+import edu.osu.cse6341.lispInterpreter.datamodels.PartitionedRootNodes;
+import edu.osu.cse6341.lispInterpreter.generator.UserDefinedFunctionGenerator;
 import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.parser.Parser;
 import edu.osu.cse6341.lispInterpreter.printer.ListNotationPrinter;
@@ -20,6 +22,8 @@ class InterpreterTest {
     private Tokenizer tokenizer;
     private Parser parser;
     private Program program;
+    private RootNodePartitioner rootNodePartitioner;
+    private UserDefinedFunctionGenerator userDefinedFunctionGenerator;
     private ListNotationPrinter listNotationPrinter;
 
     private Interpreter interpreter;
@@ -31,12 +35,16 @@ class InterpreterTest {
         tokenizer = Mockito.mock(Tokenizer.class);
         parser = Mockito.mock(Parser.class);
         program = Mockito.mock(Program.class);
+        rootNodePartitioner = Mockito.mock(RootNodePartitioner.class);
+        userDefinedFunctionGenerator = Mockito.mock(UserDefinedFunctionGenerator.class);
         listNotationPrinter = Mockito.mock(ListNotationPrinter.class);
 
         interpreter = Interpreter.newInstance(
             tokenizer,
             parser,
             program,
+            rootNodePartitioner,
+            userDefinedFunctionGenerator,
             listNotationPrinter
         );
     }
@@ -49,7 +57,12 @@ class InterpreterTest {
         List<LispNode> rootNodes = Collections.emptyList();
         Mockito.when(parser.parse(tokens)).thenReturn(rootNodes);
 
+        PartitionedRootNodes partitionedRootNodes = Mockito.mock(PartitionedRootNodes.class);
+        Mockito.when(rootNodePartitioner.partitionRootNodes(rootNodes)).thenReturn(partitionedRootNodes);
+
         List<LispNode> evaluatedNodes = Collections.emptyList();
+        Mockito.when(partitionedRootNodes.getEvaluatableNodes()).thenReturn(evaluatedNodes);
+
         Mockito.when(program.evaluate(evaluatedNodes)).thenReturn(evaluatedNodes);
 
         String value = "value";

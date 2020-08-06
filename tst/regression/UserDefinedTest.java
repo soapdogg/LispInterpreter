@@ -78,8 +78,8 @@ public class UserDefinedTest {
     }
 
     @Test
-    public void project4UndefinedFunctionTest(){
-        interpreterTest("data/input/project4/undefined_function.lisp", "data/expected/project4/undefined_function.txt");
+    public void project4OutOfOrderDefunTest(){
+        interpreterTest("data/input/project4/out_of_order_defun.lisp", "data/expected/project4/out_of_order_defun.txt");
     }
 
     @Test

@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
 
+import edu.osu.cse6341.lispInterpreter.datamodels.PartitionedRootNodes;
+import edu.osu.cse6341.lispInterpreter.datamodels.UserDefinedFunction;
+import edu.osu.cse6341.lispInterpreter.generator.UserDefinedFunctionGenerator;
 import edu.osu.cse6341.lispInterpreter.parser.Parser;
 import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.printer.ListNotationPrinter;
@@ -18,12 +21,20 @@ public final class Interpreter{
 	private final Tokenizer tokenizer;
 	private final Parser parser;
 	private final Program program;
+	private final RootNodePartitioner rootNodePartitioner;
+	private final UserDefinedFunctionGenerator userDefinedFunctionGenerator;
 	private final ListNotationPrinter listNotationPrinter;
 
 	public String interpret(Scanner in) throws Exception{
 	    Queue<Token> tokens = tokenizer.tokenize(in);
 	    List<LispNode> rootNodes = parser.parse(tokens);
-		List<LispNode> evaluatedNodes = program.evaluate(rootNodes);
+		PartitionedRootNodes partitionedRootNodes = rootNodePartitioner.partitionRootNodes(
+			rootNodes
+		);
+		List<UserDefinedFunction> userDefinedFunctions = userDefinedFunctionGenerator.generateUserDefinedFunctions(
+			partitionedRootNodes.getDefunNodes()
+		);
+		List<LispNode> evaluatedNodes = program.evaluate(partitionedRootNodes.getEvaluatableNodes());
 		return listNotationPrinter.printInListNotation(evaluatedNodes);
     }
 }

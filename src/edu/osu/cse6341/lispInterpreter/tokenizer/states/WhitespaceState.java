@@ -1,5 +1,7 @@
 package edu.osu.cse6341.lispInterpreter.tokenizer.states;
 
+import edu.osu.cse6341.lispInterpreter.datamodels.ProcessedStateResult;
+
 public class WhitespaceState implements IState{
 
 	@Override

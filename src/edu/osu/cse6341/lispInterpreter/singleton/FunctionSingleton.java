@@ -12,7 +12,6 @@ public enum  FunctionSingleton {
     private final CdrFunction cdrFunction;
     private final CondFunction condFunction;
     private final ConsFunction consFunction;
-    private final DefunFunction defunFunction;
     private final EqFunction eqFunction;
     private final GreaterFunction greaterFunction;
     private final IntFunction intFunction;
@@ -51,15 +50,7 @@ public enum  FunctionSingleton {
             EvaluatorSingleton.INSTANCE.getNodeEvaluator(),
             GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
-        defunFunction = DefunFunction.newInstance(
-            DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer(),
-            AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
-            ValueRetrieverSingleton.INSTANCE.getAtomicValueRetriever(),
-            ValueRetrieverSingleton.INSTANCE.getListValueRetriever(),
-            AsserterSingleton.INSTANCE.getUserDefinedFunctionNameAsserter(),
-            AsserterSingleton.INSTANCE.getUserDefinedFormalParametersAsserter(),
-            EnvironmentSingleton.INSTANCE.getEnvironment()
-        );
+
         eqFunction = EqFunction.newInstance(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
             EvaluatorSingleton.INSTANCE.getNodeEvaluator(),

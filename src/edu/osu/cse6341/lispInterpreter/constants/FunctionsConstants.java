@@ -17,7 +17,6 @@ public class FunctionsConstants {
         functionMap.put(FunctionNameConstants.CDR, FunctionSingleton.INSTANCE.getCdrFunction());
         functionMap.put(FunctionNameConstants.COND, FunctionSingleton.INSTANCE.getCondFunction());
         functionMap.put(FunctionNameConstants.CONS, FunctionSingleton.INSTANCE.getConsFunction());
-        functionMap.put(FunctionNameConstants.DEFUN, FunctionSingleton.INSTANCE.getDefunFunction());
         functionMap.put(FunctionNameConstants.EQ, FunctionSingleton.INSTANCE.getEqFunction());
         functionMap.put(FunctionNameConstants.GREATER, FunctionSingleton.INSTANCE.getGreaterFunction());
         functionMap.put(FunctionNameConstants.INT, FunctionSingleton.INSTANCE.getIntFunction());

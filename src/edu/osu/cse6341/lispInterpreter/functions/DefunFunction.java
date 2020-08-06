@@ -17,7 +17,7 @@ import lombok.AllArgsConstructor;
 import java.util.*;
 
 @AllArgsConstructor(staticName = "newInstance")
-public class DefunFunction implements LispFunction {
+public class DefunFunction  {
 
     private final ExpressionNodeDeterminer expressionNodeDeterminer;
     private final FunctionLengthAsserter functionLengthAsserter;
@@ -53,8 +53,7 @@ public class DefunFunction implements LispFunction {
         return formalParameters;
     }
 
-    @Override
-    public LispNode evaluateLispFunction(final LispNode params) throws Exception {
+    public UserDefinedFunction evaluateLispFunction(final LispNode params) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.DEFUN,
             FunctionLengthConstants.FOUR,
@@ -100,6 +99,6 @@ public class DefunFunction implements LispFunction {
             functionName
         );
         environment.addToFunctions(functionName, userDefinedFunction);
-        return null;
+        return userDefinedFunction;
     }
 }

@@ -1,6 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.tokenizer.states;
 
-import edu.osu.cse6341.lispInterpreter.tokens.Token;
+import edu.osu.cse6341.lispInterpreter.datamodels.ProcessedStateResult;
 
 public interface IState{
 

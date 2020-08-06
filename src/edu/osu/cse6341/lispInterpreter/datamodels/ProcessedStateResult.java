@@ -1,4 +1,4 @@
-package edu.osu.cse6341.lispInterpreter.tokenizer.states;
+package edu.osu.cse6341.lispInterpreter.datamodels;
 
 import edu.osu.cse6341.lispInterpreter.tokens.Token;
 import lombok.AllArgsConstructor;
