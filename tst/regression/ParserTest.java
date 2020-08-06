@@ -1,12 +1,20 @@
 package regression;
 
-import edu.osu.cse6341.lispInterpreter.Interpreter;
-import edu.osu.cse6341.lispInterpreter.singleton.InterpreterSingleton;
+import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.parser.Parser;
+import edu.osu.cse6341.lispInterpreter.printer.DotNotationPrinter;
+import edu.osu.cse6341.lispInterpreter.singleton.ParserSingleton;
+import edu.osu.cse6341.lispInterpreter.singleton.PrinterSingleton;
+import edu.osu.cse6341.lispInterpreter.singleton.TokenizerSingleton;
+import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
+import edu.osu.cse6341.lispInterpreter.tokens.Token;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class ParserTest
@@ -73,11 +81,15 @@ public class ParserTest
 
 
     private static void parserTest(String programFile, String expectedFile){
-        Interpreter interpreter = InterpreterSingleton.INSTANCE.getInterpreter();
+        Tokenizer tokenizer = TokenizerSingleton.INSTANCE.getTokenizer();
+        Parser parser = ParserSingleton.INSTANCE.getParser();
+        DotNotationPrinter dotNotationPrinter = PrinterSingleton.INSTANCE.getDotNotationPrinter();
         String actual;
         try{
             Scanner in = getScannerFromFilePath(programFile);
-            actual = interpreter.interpret(in,  false);
+            Queue<Token> tokens = tokenizer.tokenize(in);
+            List<LispNode> nodes = parser.parse(tokens);
+            actual = dotNotationPrinter.printInDotNotation(nodes);
         } catch (Exception e){
             actual = e.getMessage();
         }

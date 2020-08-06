@@ -5,26 +5,15 @@ import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.singleton.DeterminerSingleton;
 import edu.osu.cse6341.lispInterpreter.singleton.EvaluatorSingleton;
-import edu.osu.cse6341.lispInterpreter.singleton.PrinterSingleton;
+import lombok.AllArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@AllArgsConstructor(staticName = "newInstance")
 public class Program {
 
-	private List<LispNode> rootNodes;
-	private List<LispNode> evaluatedNodes;
-	private boolean isEvaluated;
-
-	public Program(
-		List<LispNode> rootNodes
-	){
-		this.rootNodes = rootNodes;
-        evaluatedNodes = new ArrayList<>();
-        isEvaluated = false;
-	}
-
-	public void evaluate() throws Exception{
+	public List<LispNode> evaluate(List<LispNode> rootNodes) throws Exception{
+		List<LispNode> evaluatedNodes = new ArrayList<>();
 		for(LispNode node: rootNodes) {
 			boolean isNotList = !DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer().isExpressionNode(node);
 			if (isNotList) {
@@ -41,19 +30,6 @@ public class Program {
 			);
 			if(evaluatedNode != null) evaluatedNodes.add(evaluatedNode);
 		}
-		isEvaluated = true;
+		return evaluatedNodes;
 	}
-
-	public String getListNotationToString(){
-		List<LispNode> nodes = isEvaluated ? evaluatedNodes : rootNodes;
-		StringBuilder sb = new StringBuilder();
-		for (LispNode node : nodes) {
-			String listNotation = PrinterSingleton.INSTANCE.getListNotationPrinter().printInListNotation(
-				node
-			);
-			sb.append(listNotation);
-			sb.append('\n');
-		}
-	    return sb.toString();
-    }
 }

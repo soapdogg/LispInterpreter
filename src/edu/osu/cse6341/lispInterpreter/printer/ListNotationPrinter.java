@@ -7,11 +7,27 @@ import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
 import lombok.AllArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor(staticName = "newInstance")
 public class ListNotationPrinter {
 
     private final ExpressionNodeDeterminer expressionNodeDeterminer;
     private final NodeValueComparator nodeValueComparator;
+
+    public String printInListNotation(
+        List<LispNode> nodes
+    ){
+        StringBuilder sb = new StringBuilder();
+        for (LispNode node : nodes) {
+            String listNotation = printInListNotation(
+                node
+            );
+            sb.append(listNotation);
+            sb.append('\n');
+        }
+        return sb.toString();
+    }
 
     public String printInListNotation(
         final LispNode node

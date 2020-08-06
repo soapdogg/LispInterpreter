@@ -1,6 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.singleton;
 
-import edu.osu.cse6341.lispInterpreter.Interpreter;
+import edu.osu.cse6341.lispInterpreter.interpreter.Interpreter;
 import lombok.Getter;
 
 @Getter
@@ -13,7 +13,8 @@ public enum InterpreterSingleton {
         interpreter = Interpreter.newInstance(
             TokenizerSingleton.INSTANCE.getTokenizer(),
             ParserSingleton.INSTANCE.getParser(),
-            PrinterSingleton.INSTANCE.getDotNotationPrinter()
+            ProgramSingleton.INSTANCE.getProgram(),
+            PrinterSingleton.INSTANCE.getListNotationPrinter()
         );
     }
 }

@@ -1,5 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.printer;
 
+import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
 import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
@@ -12,7 +13,7 @@ import java.util.List;
 public class DotNotationPrinter {
 
     public String printInDotNotation(List<LispNode> nodes) {
-        if (nodes.isEmpty()) return "NIL\n";
+        if (nodes.isEmpty()) return ReservedValuesConstants.NIL + '\n';
         StringBuilder sb = new StringBuilder();
         for (LispNode node : nodes) {
             String dotNotation = printInDotNotation(node);
