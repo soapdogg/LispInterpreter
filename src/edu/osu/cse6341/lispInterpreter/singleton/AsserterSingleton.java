@@ -1,11 +1,14 @@
 package edu.osu.cse6341.lispInterpreter.singleton;
 
-import edu.osu.cse6341.lispInterpreter.asserter.CondFunctionParameterAsserter;
-import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
-import edu.osu.cse6341.lispInterpreter.asserter.TokenKindAsserter;
+import edu.osu.cse6341.lispInterpreter.asserter.*;
+import edu.osu.cse6341.lispInterpreter.constants.InvalidUserDefinedNameConstants;
+import edu.osu.cse6341.lispInterpreter.determiner.InvalidNameDeterminer;
+import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
+import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
 import edu.osu.cse6341.lispInterpreter.tokens.TokenKind;
 import lombok.Getter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -15,6 +18,8 @@ public enum AsserterSingleton {
     private final FunctionLengthAsserter functionLengthAsserter;
     private final TokenKindAsserter tokenKindAsserter;
     private final CondFunctionParameterAsserter condFunctionParameterAsserter;
+    private final UserDefinedFormalParametersAsserter userDefinedFormalParametersAsserter;
+    private final UserDefinedFunctionNameAsserter userDefinedFunctionNameAsserter;
 
     AsserterSingleton() {
         functionLengthAsserter = FunctionLengthAsserter.newInstance(
@@ -33,6 +38,12 @@ public enum AsserterSingleton {
             ComparatorSingleton.INSTANCE.getNodeValueComparator(),
             ValueRetrieverSingleton.INSTANCE.getListValueRetriever(),
             functionLengthAsserter
+        );
+        userDefinedFormalParametersAsserter = UserDefinedFormalParametersAsserter.newInstance(
+            InvalidUserDefinedNameConstants.InvalidNames
+        );
+        userDefinedFunctionNameAsserter = UserDefinedFunctionNameAsserter.newInstance(
+            DeterminerSingleton.INSTANCE.getInvalidNameDeterminer()
         );
     }
 }

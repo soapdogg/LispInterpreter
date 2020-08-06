@@ -1,1 +1,1 @@
-Error! Duplicate formal id: X
+Error! Duplicate formal parameter name!

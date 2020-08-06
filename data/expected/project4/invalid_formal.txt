@@ -1,1 +1,1 @@
-Error! Invalid formal id: NIL
+Error! Invalid formal parameter name!
