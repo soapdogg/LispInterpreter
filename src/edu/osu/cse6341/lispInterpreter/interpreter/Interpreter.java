@@ -34,7 +34,10 @@ public final class Interpreter{
 		List<UserDefinedFunction> userDefinedFunctions = userDefinedFunctionGenerator.generateUserDefinedFunctions(
 			partitionedRootNodes.getDefunNodes()
 		);
-		List<LispNode> evaluatedNodes = program.evaluate(partitionedRootNodes.getEvaluatableNodes());
+		List<LispNode> evaluatedNodes = program.evaluate(
+			partitionedRootNodes.getEvaluatableNodes(),
+			userDefinedFunctions
+		);
 		return listNotationPrinter.printInListNotation(evaluatedNodes);
     }
 }

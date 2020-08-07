@@ -2,6 +2,7 @@ package edu.osu.cse6341.lispInterpreter.evaluator;
 
 import edu.osu.cse6341.lispInterpreter.comparator.NodeValueComparator;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
+import edu.osu.cse6341.lispInterpreter.datamodels.UserDefinedFunction;
 import edu.osu.cse6341.lispInterpreter.exceptions.NotAListException;
 import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
@@ -12,9 +13,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.Collections;
+import java.util.List;
+
 class CondFunctionEvaluatorTest {
 
     private LispNode params;
+    private List<UserDefinedFunction> userDefinedFunctions;
 
     private ListValueRetriever listValueRetriever;
     private NodeEvaluator nodeEvaluator;
@@ -24,6 +29,8 @@ class CondFunctionEvaluatorTest {
 
     @BeforeEach
     void setup() {
+        userDefinedFunctions = Collections.emptyList();
+
         listValueRetriever = Mockito.mock(ListValueRetriever.class);
         nodeEvaluator = Mockito.mock(NodeEvaluator.class);
         nodeValueComparator = Mockito.mock(NodeValueComparator.class);
@@ -41,7 +48,7 @@ class CondFunctionEvaluatorTest {
 
         Assertions.assertThrows(
             NotAListException.class,
-            () -> condFunctionEvaluator.evaluateCondFunction(params)
+            () -> condFunctionEvaluator.evaluateCondFunction(params, userDefinedFunctions)
         );
 
         Mockito.verifyZeroInteractions(listValueRetriever);
@@ -71,6 +78,7 @@ class CondFunctionEvaluatorTest {
         Mockito.when(
             nodeEvaluator.evaluate(
                 expressionNodeAddressAddress,
+                userDefinedFunctions,
                 true
             )
         ).thenReturn(booleanResult);
@@ -88,11 +96,12 @@ class CondFunctionEvaluatorTest {
         Mockito.when(
             nodeEvaluator.evaluate(
                 expressionNodeAddressData,
+                userDefinedFunctions,
                 true
             )
         ).thenReturn(expected);
 
-        LispNode actual = condFunctionEvaluator.evaluateCondFunction(params);
+        LispNode actual = condFunctionEvaluator.evaluateCondFunction(params, userDefinedFunctions);
 
         Assertions.assertEquals(expected, actual);
     }
@@ -119,6 +128,7 @@ class CondFunctionEvaluatorTest {
         Mockito.when(
             nodeEvaluator.evaluate(
                 expressionNodeAddressAddress,
+                userDefinedFunctions,
                 true
             )
         ).thenReturn(booleanResult);
@@ -128,7 +138,7 @@ class CondFunctionEvaluatorTest {
 
         Assertions.assertThrows(
             NotAListException.class,
-            () -> condFunctionEvaluator.evaluateCondFunction(params)
+            () -> condFunctionEvaluator.evaluateCondFunction(params, userDefinedFunctions)
         );
     }
 
@@ -154,6 +164,7 @@ class CondFunctionEvaluatorTest {
         Mockito.when(
             nodeEvaluator.evaluate(
                 expressionNodeAddressAddress,
+                userDefinedFunctions,
                 true
             )
         ).thenReturn(booleanResult);
@@ -169,7 +180,7 @@ class CondFunctionEvaluatorTest {
 
         Assertions.assertThrows(
             NotAListException.class,
-            () -> condFunctionEvaluator.evaluateCondFunction(params)
+            () -> condFunctionEvaluator.evaluateCondFunction(params, userDefinedFunctions)
         );
     }
 }

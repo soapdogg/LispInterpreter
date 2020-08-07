@@ -4,6 +4,7 @@ import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
+import edu.osu.cse6341.lispInterpreter.datamodels.UserDefinedFunction;
 import edu.osu.cse6341.lispInterpreter.determiner.ExpressionNodeDeterminer;
 import edu.osu.cse6341.lispInterpreter.determiner.NumericStringDeterminer;
 import edu.osu.cse6341.lispInterpreter.evaluator.NodeEvaluator;
@@ -17,8 +18,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.Collections;
+import java.util.List;
+
 class IntFunctionTest {
     private LispNode params;
+    private List<UserDefinedFunction> userDefinedFunctions;
 
     private FunctionLengthAsserter functionLengthAsserter;
     private NodeEvaluator nodeEvaluator;
@@ -32,6 +37,7 @@ class IntFunctionTest {
     @BeforeEach
     void setup() {
         params = Mockito.mock(LispNode.class);
+        userDefinedFunctions = Collections.emptyList();
 
         functionLengthAsserter = Mockito.mock(FunctionLengthAsserter.class);
         nodeEvaluator = Mockito.mock(NodeEvaluator.class);
@@ -56,6 +62,7 @@ class IntFunctionTest {
         Mockito.when(
             nodeEvaluator.evaluate(
                 params,
+                userDefinedFunctions,
                 true
             )
         ).thenReturn(evaluatedResult);
@@ -77,7 +84,10 @@ class IntFunctionTest {
         AtomNode expected = Mockito.mock(AtomNode.class);
         Mockito.when(nodeGenerator.generateAtomNode(result)).thenReturn(expected);
 
-        LispNode actual = intFunction.evaluateLispFunction(params);
+        LispNode actual = intFunction.evaluateLispFunction(
+            params,
+            userDefinedFunctions
+        );
 
         Assertions.assertEquals(expected, actual);
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
@@ -93,6 +103,7 @@ class IntFunctionTest {
         Mockito.when(
             nodeEvaluator.evaluate(
                 params,
+                userDefinedFunctions,
                 true
             )
         ).thenReturn(evaluatedResult);
@@ -103,7 +114,7 @@ class IntFunctionTest {
         Mockito.when(nodeGenerator.generateAtomNode(false)).thenReturn(expected);
 
 
-        LispNode actual = intFunction.evaluateLispFunction(params);
+        LispNode actual = intFunction.evaluateLispFunction(params, userDefinedFunctions);
         Assertions.assertEquals(expected, actual);
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
             FunctionNameConstants.INT,

@@ -1,6 +1,7 @@
 package edu.osu.cse6341.lispInterpreter.interpreter;
 
 import edu.osu.cse6341.lispInterpreter.datamodels.PartitionedRootNodes;
+import edu.osu.cse6341.lispInterpreter.datamodels.UserDefinedFunction;
 import edu.osu.cse6341.lispInterpreter.generator.UserDefinedFunctionGenerator;
 import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.parser.Parser;
@@ -60,10 +61,21 @@ class InterpreterTest {
         PartitionedRootNodes partitionedRootNodes = Mockito.mock(PartitionedRootNodes.class);
         Mockito.when(rootNodePartitioner.partitionRootNodes(rootNodes)).thenReturn(partitionedRootNodes);
 
+        List<LispNode> defunNodes = Collections.emptyList();
+        Mockito.when(partitionedRootNodes.getDefunNodes()).thenReturn(defunNodes);
+
+        List<UserDefinedFunction> userDefinedFunctions = Collections.emptyList();
+        Mockito.when(userDefinedFunctionGenerator.generateUserDefinedFunctions(defunNodes)).thenReturn(userDefinedFunctions);
+
         List<LispNode> evaluatedNodes = Collections.emptyList();
         Mockito.when(partitionedRootNodes.getEvaluatableNodes()).thenReturn(evaluatedNodes);
 
-        Mockito.when(program.evaluate(evaluatedNodes)).thenReturn(evaluatedNodes);
+        Mockito.when(
+            program.evaluate(
+                evaluatedNodes,
+                userDefinedFunctions
+            )
+        ).thenReturn(evaluatedNodes);
 
         String value = "value";
         Mockito.when(listNotationPrinter.printInListNotation(evaluatedNodes)).thenReturn(value);

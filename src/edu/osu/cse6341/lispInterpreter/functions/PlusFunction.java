@@ -2,6 +2,7 @@ package edu.osu.cse6341.lispInterpreter.functions;
 
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
+import edu.osu.cse6341.lispInterpreter.datamodels.UserDefinedFunction;
 import edu.osu.cse6341.lispInterpreter.evaluator.NodeEvaluator;
 import edu.osu.cse6341.lispInterpreter.generator.NodeGenerator;
 import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
@@ -10,6 +11,8 @@ import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.valueretriver.ListValueRetriever;
 import edu.osu.cse6341.lispInterpreter.valueretriver.NumericValueRetriever;
 import lombok.AllArgsConstructor;
+
+import java.util.List;
 
 @AllArgsConstructor(staticName = "newInstance")
 public class PlusFunction implements LispFunction {
@@ -21,7 +24,7 @@ public class PlusFunction implements LispFunction {
     private final NodeGenerator nodeGenerator;
 
     @Override
-    public LispNode evaluateLispFunction(final LispNode params) throws Exception {
+    public LispNode evaluateLispFunction(final LispNode params, List<UserDefinedFunction> userDefinedFunctions) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.PLUS,
             FunctionLengthConstants.THREE,
@@ -29,6 +32,7 @@ public class PlusFunction implements LispFunction {
         );
         LispNode evaluatedAddress = nodeEvaluator.evaluate(
             params,
+            userDefinedFunctions,
             true
         );
         int leftValue = numericValueRetriever.retrieveNumericValue(
@@ -43,6 +47,7 @@ public class PlusFunction implements LispFunction {
         LispNode data = expressionNodeParams.getData();
         LispNode evaluatedData = nodeEvaluator.evaluate(
             data,
+            userDefinedFunctions,
             true
         );
         int rightValue = numericValueRetriever.retrieveNumericValue(

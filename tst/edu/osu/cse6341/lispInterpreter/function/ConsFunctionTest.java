@@ -3,6 +3,7 @@ package edu.osu.cse6341.lispInterpreter.function;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
+import edu.osu.cse6341.lispInterpreter.datamodels.UserDefinedFunction;
 import edu.osu.cse6341.lispInterpreter.evaluator.NodeEvaluator;
 import edu.osu.cse6341.lispInterpreter.functions.ConsFunction;
 import edu.osu.cse6341.lispInterpreter.generator.NodeGenerator;
@@ -14,9 +15,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.List;
+
 class ConsFunctionTest {
 
     private LispNode params;
+    private List<UserDefinedFunction> userDefinedFunctions;
 
     private FunctionLengthAsserter functionLengthAsserter;
     private ListValueRetriever listValueRetriever;
@@ -59,6 +63,7 @@ class ConsFunctionTest {
         Mockito.when(
             nodeEvaluator.evaluate(
                 address,
+                userDefinedFunctions,
                 true
             )
         ).thenReturn(evaluatedAddress);
@@ -70,6 +75,7 @@ class ConsFunctionTest {
         Mockito.when(
             nodeEvaluator.evaluate(
                 data,
+                userDefinedFunctions,
                 true
             )
         ).thenReturn(evaluatedData);
@@ -83,7 +89,8 @@ class ConsFunctionTest {
         ).thenReturn(expected);
 
         LispNode actual = consFunction.evaluateLispFunction(
-            params
+            params,
+            userDefinedFunctions
         );
 
         Assertions.assertEquals(expected, actual);

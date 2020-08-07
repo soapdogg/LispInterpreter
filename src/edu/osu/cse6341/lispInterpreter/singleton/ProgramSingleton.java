@@ -10,6 +10,11 @@ public enum ProgramSingleton {
     private final Program program;
 
     ProgramSingleton() {
-        program = Program.newInstance();
+        program = Program.newInstance(
+            DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer(),
+            DeterminerSingleton.INSTANCE.getNumericStringDeterminer(),
+            ComparatorSingleton.INSTANCE.getNodeValueComparator(),
+            EvaluatorSingleton.INSTANCE.getNodeEvaluator()
+        );
     }
 }

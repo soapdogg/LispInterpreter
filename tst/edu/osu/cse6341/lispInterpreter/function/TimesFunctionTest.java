@@ -3,6 +3,7 @@ package edu.osu.cse6341.lispInterpreter.function;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
+import edu.osu.cse6341.lispInterpreter.datamodels.UserDefinedFunction;
 import edu.osu.cse6341.lispInterpreter.evaluator.NodeEvaluator;
 import edu.osu.cse6341.lispInterpreter.functions.TimesFunction;
 import edu.osu.cse6341.lispInterpreter.generator.NodeGenerator;
@@ -16,9 +17,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.List;
+
 class TimesFunctionTest {
 
     private LispNode params;
+    private List<UserDefinedFunction> userDefinedFunctions;
 
     private FunctionLengthAsserter functionLengthAsserter;
     private NodeEvaluator nodeEvaluator;
@@ -53,6 +57,7 @@ class TimesFunctionTest {
         Mockito.when(
             nodeEvaluator.evaluate(
                 params,
+                userDefinedFunctions,
                 true
             )
         ).thenReturn(evaluatedAddress);
@@ -81,6 +86,7 @@ class TimesFunctionTest {
         Mockito.when(
             nodeEvaluator.evaluate(
                 data,
+                userDefinedFunctions,
                 true
             )
         ).thenReturn(evaluatedData);
@@ -101,7 +107,7 @@ class TimesFunctionTest {
             )
         ).thenReturn(expected);
 
-        LispNode actual = timesFunction.evaluateLispFunction(params);
+        LispNode actual = timesFunction.evaluateLispFunction(params, userDefinedFunctions);
 
         Assertions.assertEquals(expected, actual);
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(

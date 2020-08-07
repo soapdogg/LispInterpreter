@@ -1,10 +1,12 @@
 package edu.osu.cse6341.lispInterpreter.program;
 
-import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
+import edu.osu.cse6341.lispInterpreter.comparator.NodeValueComparator;
+import edu.osu.cse6341.lispInterpreter.datamodels.UserDefinedFunction;
+import edu.osu.cse6341.lispInterpreter.determiner.ExpressionNodeDeterminer;
+import edu.osu.cse6341.lispInterpreter.determiner.NumericStringDeterminer;
+import edu.osu.cse6341.lispInterpreter.evaluator.NodeEvaluator;
 import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
 import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
-import edu.osu.cse6341.lispInterpreter.singleton.DeterminerSingleton;
-import edu.osu.cse6341.lispInterpreter.singleton.EvaluatorSingleton;
 import lombok.AllArgsConstructor;
 
 import java.util.ArrayList;
@@ -12,23 +14,32 @@ import java.util.List;
 @AllArgsConstructor(staticName = "newInstance")
 public class Program {
 
-	public List<LispNode> evaluate(List<LispNode> rootNodes) throws Exception{
+	private final ExpressionNodeDeterminer expressionNodeDeterminer;
+	private final NumericStringDeterminer numericStringDeterminer;
+	private final NodeValueComparator nodeValueComparator;
+	private final NodeEvaluator nodeEvaluator;
+
+	public List<LispNode> evaluate(
+		List<LispNode> rootNodes,
+		List<UserDefinedFunction> userDefinedFunctions
+	) throws Exception{
 		List<LispNode> evaluatedNodes = new ArrayList<>();
 		for(LispNode node: rootNodes) {
-			boolean isNotList = !DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer().isExpressionNode(node);
+			boolean isNotList = !expressionNodeDeterminer.isExpressionNode(node);
 			if (isNotList) {
 				AtomNode atomNode = (AtomNode)node;
-				boolean isNotNumeric = !DeterminerSingleton.INSTANCE.getNumericStringDeterminer().isStringNumeric(atomNode.getValue());
-				boolean isNotT = !atomNode.getValue().equals(ReservedValuesConstants.T);
-				boolean isNotNil = !atomNode.getValue().equals(ReservedValuesConstants.NIL);
+				boolean isNotNumeric = !numericStringDeterminer.isStringNumeric(atomNode.getValue());
+				boolean isNotT = !nodeValueComparator.equalsT(atomNode.getValue());
+				boolean isNotNil = !nodeValueComparator.equalsNil(((AtomNode) node).getValue());
 				if (isNotNumeric && isNotT && isNotNil)
 					throw new Exception("Error! " + atomNode.getValue() + " is not a valid atomic value!\n");
 			}
-			LispNode evaluatedNode = EvaluatorSingleton.INSTANCE.getNodeEvaluator().evaluate(
+			LispNode evaluatedNode = nodeEvaluator.evaluate(
 				node,
+				userDefinedFunctions,
 				false
 			);
-			if(evaluatedNode != null) evaluatedNodes.add(evaluatedNode);
+			evaluatedNodes.add(evaluatedNode);
 		}
 		return evaluatedNodes;
 	}

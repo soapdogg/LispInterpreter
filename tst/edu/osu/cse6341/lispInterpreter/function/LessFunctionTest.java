@@ -3,6 +3,7 @@ package edu.osu.cse6341.lispInterpreter.function;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
+import edu.osu.cse6341.lispInterpreter.datamodels.UserDefinedFunction;
 import edu.osu.cse6341.lispInterpreter.evaluator.NodeEvaluator;
 import edu.osu.cse6341.lispInterpreter.functions.LessFunction;
 import edu.osu.cse6341.lispInterpreter.generator.NodeGenerator;
@@ -16,9 +17,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.Collections;
+import java.util.List;
+
 class LessFunctionTest {
 
     private LispNode params;
+    private List<UserDefinedFunction> userDefinedFunctions;
 
     private FunctionLengthAsserter functionLengthAsserter;
     private NodeEvaluator nodeEvaluator;
@@ -31,6 +36,7 @@ class LessFunctionTest {
     @BeforeEach
     void setup() {
         params = Mockito.mock(LispNode.class);
+        userDefinedFunctions = Collections.emptyList();
 
         functionLengthAsserter = Mockito.mock(FunctionLengthAsserter.class);
         nodeEvaluator = Mockito.mock(NodeEvaluator.class);
@@ -53,6 +59,7 @@ class LessFunctionTest {
         Mockito.when(
             nodeEvaluator.evaluate(
                 params,
+                userDefinedFunctions,
                 true
             )
         ).thenReturn(evaluatedAddress);
@@ -81,6 +88,7 @@ class LessFunctionTest {
         Mockito.when(
             nodeEvaluator.evaluate(
                 data,
+                userDefinedFunctions,
                 true
             )
         ).thenReturn(evaluatedData);
@@ -101,7 +109,7 @@ class LessFunctionTest {
             )
         ).thenReturn(expected);
 
-        LispNode actual = lessFunction.evaluateLispFunction(params);
+        LispNode actual = lessFunction.evaluateLispFunction(params, userDefinedFunctions);
 
         Assertions.assertEquals(expected, actual);
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
@@ -118,6 +126,7 @@ class LessFunctionTest {
         Mockito.when(
             nodeEvaluator.evaluate(
                 params,
+                userDefinedFunctions,
                 true
             )
         ).thenReturn(evaluatedAddress);
@@ -146,6 +155,7 @@ class LessFunctionTest {
         Mockito.when(
             nodeEvaluator.evaluate(
                 data,
+                userDefinedFunctions,
                 true
             )
         ).thenReturn(evaluatedData);
@@ -166,7 +176,7 @@ class LessFunctionTest {
             )
         ).thenReturn(expected);
 
-        LispNode actual = lessFunction.evaluateLispFunction(params);
+        LispNode actual = lessFunction.evaluateLispFunction(params, userDefinedFunctions);
 
         Assertions.assertEquals(expected, actual);
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(

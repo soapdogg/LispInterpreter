@@ -6,6 +6,7 @@ import edu.osu.cse6341.lispInterpreter.singleton.EvaluatorSingleton;
 import lombok.AllArgsConstructor;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -26,9 +27,17 @@ public class Environment {
         functions.put(functionName, userDefinedFunction);
     }
 
-    public LispNode evaluateFunction(String functionName, LispNode params) throws Exception{
+    public LispNode evaluateFunction(
+        String functionName,
+        LispNode params,
+        List<UserDefinedFunction> userDefinedFunctions
+    ) throws Exception{
         UserDefinedFunction function = functions.get(functionName);
-        return EvaluatorSingleton.INSTANCE.getUserDefinedFunctionEvaluator().evaluate(params, function);
+        return EvaluatorSingleton.INSTANCE.getUserDefinedFunctionEvaluator().evaluate(
+            params,
+            userDefinedFunctions,
+            function
+        );
     }
 
     public Map<String, LispNode> getVariables(){

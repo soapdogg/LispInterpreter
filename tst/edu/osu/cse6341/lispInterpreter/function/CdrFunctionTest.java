@@ -3,6 +3,7 @@ package edu.osu.cse6341.lispInterpreter.function;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
+import edu.osu.cse6341.lispInterpreter.datamodels.UserDefinedFunction;
 import edu.osu.cse6341.lispInterpreter.evaluator.NodeEvaluator;
 import edu.osu.cse6341.lispInterpreter.functions.CdrFunction;
 import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
@@ -13,9 +14,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.List;
+
 class CdrFunctionTest {
 
     private LispNode params;
+    private List<UserDefinedFunction> userDefinedFunctions;
 
     private FunctionLengthAsserter functionLengthAsserter;
     private ListValueRetriever listValueRetriever;
@@ -55,6 +59,7 @@ class CdrFunctionTest {
         Mockito.when(
             nodeEvaluator.evaluate(
                 address,
+                userDefinedFunctions,
                 false
             )
         ).thenReturn(evaluatedAddress);
@@ -71,7 +76,8 @@ class CdrFunctionTest {
         Mockito.when(node.getData()).thenReturn(expected);
 
         LispNode actual = cdrFunction.evaluateLispFunction(
-            params
+            params,
+            userDefinedFunctions
         );
 
         Assertions.assertEquals(expected, actual);

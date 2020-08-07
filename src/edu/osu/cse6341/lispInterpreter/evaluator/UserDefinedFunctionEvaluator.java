@@ -8,6 +8,7 @@ import edu.osu.cse6341.lispInterpreter.datamodels.UserDefinedFunction;
 import lombok.AllArgsConstructor;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @AllArgsConstructor(staticName = "newInstance")
@@ -19,6 +20,7 @@ public class UserDefinedFunctionEvaluator {
 
     public LispNode evaluate(
         LispNode params,
+        List<UserDefinedFunction> userDefinedFunctions,
         UserDefinedFunction userDefinedFunction
     ) throws Exception{
         Map<String, LispNode> oldVariables = environment.getVariables();
@@ -32,6 +34,7 @@ public class UserDefinedFunctionEvaluator {
             ExpressionNode temp = (ExpressionNode)params;
             LispNode evaluatedAddress = nodeEvaluator.evaluate(
                 temp.getAddress(),
+                userDefinedFunctions,
                 true
             );
             newVariables.put(formal, evaluatedAddress);
@@ -41,6 +44,7 @@ public class UserDefinedFunctionEvaluator {
         environment.unionVariables(newVariables);
         LispNode result = nodeEvaluator.evaluate(
             userDefinedFunction.getBody(),
+            userDefinedFunctions,
             true
         );
         environment.setVariables(oldVariables);

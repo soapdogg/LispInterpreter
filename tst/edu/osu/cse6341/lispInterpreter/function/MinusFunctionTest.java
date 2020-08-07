@@ -3,6 +3,7 @@ package edu.osu.cse6341.lispInterpreter.function;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
+import edu.osu.cse6341.lispInterpreter.datamodels.UserDefinedFunction;
 import edu.osu.cse6341.lispInterpreter.evaluator.NodeEvaluator;
 import edu.osu.cse6341.lispInterpreter.functions.MinusFunction;
 import edu.osu.cse6341.lispInterpreter.generator.NodeGenerator;
@@ -16,9 +17,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.Collections;
+import java.util.List;
+
 class MinusFunctionTest {
 
     private LispNode params;
+    private List<UserDefinedFunction> userDefinedFunctions;
 
     private FunctionLengthAsserter functionLengthAsserter;
     private NodeEvaluator nodeEvaluator;
@@ -31,6 +36,7 @@ class MinusFunctionTest {
     @BeforeEach
     void setup() {
         params = Mockito.mock(LispNode.class);
+        userDefinedFunctions = Collections.emptyList();
 
         functionLengthAsserter = Mockito.mock(FunctionLengthAsserter.class);
         nodeEvaluator = Mockito.mock(NodeEvaluator.class);
@@ -53,6 +59,7 @@ class MinusFunctionTest {
         Mockito.when(
             nodeEvaluator.evaluate(
                 params,
+                userDefinedFunctions,
                 true
             )
         ).thenReturn(evaluatedAddress);
@@ -81,6 +88,7 @@ class MinusFunctionTest {
         Mockito.when(
             nodeEvaluator.evaluate(
                 data,
+                userDefinedFunctions,
                 true
             )
         ).thenReturn(evaluatedData);
@@ -101,7 +109,7 @@ class MinusFunctionTest {
             )
         ).thenReturn(expected);
 
-        LispNode actual = minusFunction.evaluateLispFunction(params);
+        LispNode actual = minusFunction.evaluateLispFunction(params, userDefinedFunctions);
 
         Assertions.assertEquals(expected, actual);
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
