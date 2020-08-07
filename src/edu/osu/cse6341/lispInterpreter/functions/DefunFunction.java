@@ -27,8 +27,6 @@ public class DefunFunction  {
     private final UserDefinedFormalParametersAsserter userDefinedFormalParametersAsserter;
     private final Environment environment;
 
-
-
     private List<String> getFormalParameters(LispNode formalParametersNode) throws Exception{
         List<String> formalParameters = new ArrayList<>();
         boolean hasNext = expressionNodeDeterminer.isExpressionNode(formalParametersNode);
@@ -93,12 +91,10 @@ public class DefunFunction  {
 
         LispNode body = temp.getData();
 
-        UserDefinedFunction userDefinedFunction = UserDefinedFunction.newInstance(
+        return UserDefinedFunction.newInstance(
             formalParameters,
             body,
             functionName
         );
-        environment.addToFunctions(functionName, userDefinedFunction);
-        return userDefinedFunction;
     }
 }

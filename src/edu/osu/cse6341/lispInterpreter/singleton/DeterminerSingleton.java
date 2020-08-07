@@ -1,10 +1,7 @@
 package edu.osu.cse6341.lispInterpreter.singleton;
 
 import edu.osu.cse6341.lispInterpreter.constants.InvalidUserDefinedNameConstants;
-import edu.osu.cse6341.lispInterpreter.determiner.ExpressionNodeDeterminer;
-import edu.osu.cse6341.lispInterpreter.determiner.FunctionLengthDeterminer;
-import edu.osu.cse6341.lispInterpreter.determiner.InvalidNameDeterminer;
-import edu.osu.cse6341.lispInterpreter.determiner.NumericStringDeterminer;
+import edu.osu.cse6341.lispInterpreter.determiner.*;
 import lombok.Getter;
 
 @Getter
@@ -14,6 +11,7 @@ public enum DeterminerSingleton {
     private final ExpressionNodeDeterminer expressionNodeDeterminer;
     private final FunctionLengthDeterminer functionLengthDeterminer;
     private final InvalidNameDeterminer invalidNameDeterminer;
+    private final UserDefinedFunctionNameDeterminer userDefinedFunctionNameDeterminer;
 
     DeterminerSingleton() {
         numericStringDeterminer = NumericStringDeterminer.newInstance();
@@ -24,5 +22,6 @@ public enum DeterminerSingleton {
             InvalidUserDefinedNameConstants.InvalidNames,
             numericStringDeterminer
         );
+        userDefinedFunctionNameDeterminer = UserDefinedFunctionNameDeterminer.newInstance();
     }
 }

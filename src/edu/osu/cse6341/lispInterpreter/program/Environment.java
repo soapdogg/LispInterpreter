@@ -12,32 +12,10 @@ import java.util.Map;
 
 @AllArgsConstructor(staticName = "newInstance")
 public class Environment {
-    private Map<String, UserDefinedFunction> functions;
     private Map<String, LispNode> variables;
-
-    public boolean isFunctionName(String functionName){
-        return functions.containsKey(functionName);
-    }
 
     public boolean isVariableName(String variableName){
         return variables.containsKey(variableName);
-    }
-
-    public void addToFunctions(String functionName, UserDefinedFunction userDefinedFunction){
-        functions.put(functionName, userDefinedFunction);
-    }
-
-    public LispNode evaluateFunction(
-        String functionName,
-        LispNode params,
-        List<UserDefinedFunction> userDefinedFunctions
-    ) throws Exception{
-        UserDefinedFunction function = functions.get(functionName);
-        return EvaluatorSingleton.INSTANCE.getUserDefinedFunctionEvaluator().evaluate(
-            params,
-            userDefinedFunctions,
-            function
-        );
     }
 
     public Map<String, LispNode> getVariables(){

@@ -13,7 +13,6 @@ public enum EnvironmentSingleton {
 
     EnvironmentSingleton() {
         environment = Environment.newInstance(
-            new HashMap<>(),
             new HashMap<>()
         );
     }
