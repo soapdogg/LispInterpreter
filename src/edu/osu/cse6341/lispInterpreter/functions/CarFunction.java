@@ -11,6 +11,7 @@ import edu.osu.cse6341.lispInterpreter.valueretriver.ListValueRetriever;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor(staticName = "newInstance")
 public class CarFunction implements LispFunction {
@@ -20,7 +21,11 @@ public class CarFunction implements LispFunction {
     private final NodeEvaluator nodeEvaluator;
 
     @Override
-    public LispNode evaluateLispFunction(final LispNode params, List<UserDefinedFunction> userDefinedFunctions) throws Exception {
+    public LispNode evaluateLispFunction(
+        final LispNode params,
+        final List<UserDefinedFunction> userDefinedFunctions,
+        final Map<String, LispNode> variableNameToValueMap
+    ) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.CAR,
             FunctionLengthConstants.TWO,
@@ -34,6 +39,7 @@ public class CarFunction implements LispFunction {
         LispNode evaluatedAddress = nodeEvaluator.evaluate(
             address,
             userDefinedFunctions,
+            variableNameToValueMap,
             false
         );
         ExpressionNode node = listValueRetriever.retrieveListValue(

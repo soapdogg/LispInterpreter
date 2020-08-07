@@ -1,5 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.interpreter;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
@@ -36,7 +37,8 @@ public final class Interpreter{
 		);
 		List<LispNode> evaluatedNodes = program.evaluate(
 			partitionedRootNodes.getEvaluatableNodes(),
-			userDefinedFunctions
+			userDefinedFunctions,
+			new HashMap<>()
 		);
 		return listNotationPrinter.printInListNotation(evaluatedNodes);
     }

@@ -12,6 +12,7 @@ import edu.osu.cse6341.lispInterpreter.valueretriver.ListValueRetriever;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor(staticName = "newInstance")
 public class ConsFunction implements LispFunction {
@@ -22,7 +23,11 @@ public class ConsFunction implements LispFunction {
     private final NodeGenerator nodeGenerator;
 
     @Override
-    public LispNode evaluateLispFunction(final LispNode params, List<UserDefinedFunction> userDefinedFunctions) throws Exception {
+    public LispNode evaluateLispFunction(
+        final LispNode params,
+        final List<UserDefinedFunction> userDefinedFunctions,
+        final Map<String, LispNode> variableNameToValueMap
+    ) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.CONS,
             FunctionLengthConstants.THREE,
@@ -36,12 +41,14 @@ public class ConsFunction implements LispFunction {
         LispNode evaluatedAddress = nodeEvaluator.evaluate(
             address,
             userDefinedFunctions,
+            variableNameToValueMap,
             true
         );
         LispNode data = expressionNodeParams.getData();
         LispNode evaluatedData = nodeEvaluator.evaluate(
             data,
             userDefinedFunctions,
+            variableNameToValueMap,
             true
         );
         return nodeGenerator.generateExpressionNode(

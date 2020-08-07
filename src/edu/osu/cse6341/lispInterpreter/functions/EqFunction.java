@@ -13,6 +13,7 @@ import edu.osu.cse6341.lispInterpreter.valueretriver.ListValueRetriever;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor(staticName = "newInstance")
 public class EqFunction implements LispFunction {
@@ -24,7 +25,11 @@ public class EqFunction implements LispFunction {
     private final NodeGenerator nodeGenerator;
 
     @Override
-    public LispNode evaluateLispFunction(final LispNode params, List<UserDefinedFunction> userDefinedFunctions) throws Exception {
+    public LispNode evaluateLispFunction(
+        final LispNode params,
+        final List<UserDefinedFunction> userDefinedFunctions,
+        final Map<String, LispNode> variableNameToValueMap
+    ) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.EQ,
             FunctionLengthConstants.THREE,
@@ -33,6 +38,7 @@ public class EqFunction implements LispFunction {
         LispNode evaluatedAddress = nodeEvaluator.evaluate(
             params,
             userDefinedFunctions,
+            variableNameToValueMap,
             true
         );
         String leftValue = atomicValueRetriever.retrieveAtomicValue(
@@ -48,6 +54,7 @@ public class EqFunction implements LispFunction {
         LispNode evaluatedData = nodeEvaluator.evaluate(
             data,
             userDefinedFunctions,
+            variableNameToValueMap,
             true
         );
         String rightValue = atomicValueRetriever.retrieveAtomicValue(

@@ -11,6 +11,7 @@ import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor(staticName = "newInstance")
 public class AtomFunction implements LispFunction {
@@ -23,7 +24,8 @@ public class AtomFunction implements LispFunction {
     @Override
     public LispNode evaluateLispFunction(
         final LispNode params,
-        List<UserDefinedFunction> userDefinedFunctions
+        final List<UserDefinedFunction> userDefinedFunctions,
+        final Map<String, LispNode> variableNameToValueMap
     ) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.ATOM,
@@ -33,6 +35,7 @@ public class AtomFunction implements LispFunction {
         LispNode evaluatedResult = nodeEvaluator.evaluate(
             params,
             userDefinedFunctions,
+            variableNameToValueMap,
             true
         );
         boolean result = !expressionNodeDeterminer.isExpressionNode(evaluatedResult);

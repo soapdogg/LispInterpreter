@@ -20,10 +20,12 @@ import org.mockito.Mockito;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 class IntFunctionTest {
     private LispNode params;
     private List<UserDefinedFunction> userDefinedFunctions;
+    private Map<String, LispNode> variableNameToValueMap;
 
     private FunctionLengthAsserter functionLengthAsserter;
     private NodeEvaluator nodeEvaluator;
@@ -38,6 +40,7 @@ class IntFunctionTest {
     void setup() {
         params = Mockito.mock(LispNode.class);
         userDefinedFunctions = Collections.emptyList();
+        variableNameToValueMap = Collections.emptyMap();
 
         functionLengthAsserter = Mockito.mock(FunctionLengthAsserter.class);
         nodeEvaluator = Mockito.mock(NodeEvaluator.class);
@@ -63,6 +66,7 @@ class IntFunctionTest {
             nodeEvaluator.evaluate(
                 params,
                 userDefinedFunctions,
+                variableNameToValueMap,
                 true
             )
         ).thenReturn(evaluatedResult);
@@ -86,7 +90,8 @@ class IntFunctionTest {
 
         LispNode actual = intFunction.evaluateLispFunction(
             params,
-            userDefinedFunctions
+            userDefinedFunctions,
+            variableNameToValueMap
         );
 
         Assertions.assertEquals(expected, actual);
@@ -104,6 +109,7 @@ class IntFunctionTest {
             nodeEvaluator.evaluate(
                 params,
                 userDefinedFunctions,
+                variableNameToValueMap,
                 true
             )
         ).thenReturn(evaluatedResult);
@@ -114,7 +120,11 @@ class IntFunctionTest {
         Mockito.when(nodeGenerator.generateAtomNode(false)).thenReturn(expected);
 
 
-        LispNode actual = intFunction.evaluateLispFunction(params, userDefinedFunctions);
+        LispNode actual = intFunction.evaluateLispFunction(
+            params,
+            userDefinedFunctions,
+            variableNameToValueMap
+        );
         Assertions.assertEquals(expected, actual);
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
             FunctionNameConstants.INT,

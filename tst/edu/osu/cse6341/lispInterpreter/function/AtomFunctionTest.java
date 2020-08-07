@@ -17,11 +17,13 @@ import org.mockito.Mockito;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 class AtomFunctionTest {
 
     private LispNode params;
     private List<UserDefinedFunction> userDefinedFunctions;
+    private Map<String, LispNode> variableNameToValueMap;
 
     private FunctionLengthAsserter functionLengthAsserter;
     private NodeEvaluator nodeEvaluator;
@@ -34,6 +36,7 @@ class AtomFunctionTest {
     void setup() {
         params = Mockito.mock(LispNode.class);
         userDefinedFunctions = Collections.emptyList();
+        variableNameToValueMap = Collections.emptyMap();
 
         functionLengthAsserter = Mockito.mock(FunctionLengthAsserter.class);
         nodeEvaluator = Mockito.mock(NodeEvaluator.class);
@@ -55,6 +58,7 @@ class AtomFunctionTest {
             nodeEvaluator.evaluate(
                 params,
                 userDefinedFunctions,
+                variableNameToValueMap,
                 true
             )
         ).thenReturn(evaluatedResult);
@@ -67,7 +71,8 @@ class AtomFunctionTest {
 
         LispNode actual = atomFunction.evaluateLispFunction(
             params,
-            userDefinedFunctions
+            userDefinedFunctions,
+            variableNameToValueMap
         );
 
         Assertions.assertEquals(expected, actual);
@@ -85,6 +90,7 @@ class AtomFunctionTest {
             nodeEvaluator.evaluate(
                 params,
                 userDefinedFunctions,
+                variableNameToValueMap,
                 true
             )
         ).thenReturn(evaluatedResult);
@@ -97,7 +103,8 @@ class AtomFunctionTest {
 
         LispNode actual = atomFunction.evaluateLispFunction(
             params,
-            userDefinedFunctions
+            userDefinedFunctions,
+            variableNameToValueMap
         );
 
         Assertions.assertEquals(expected, actual);

@@ -12,11 +12,13 @@ import org.mockito.Mockito;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 class CondFunctionTest {
 
     private LispNode params;
     private List<UserDefinedFunction> userDefinedFunctions;
+    private Map<String, LispNode> variableNameToValueMap;
 
     private CondFunctionParameterAsserter condFunctionParameterAsserter;
     private CondFunctionEvaluator condFunctionEvaluator;
@@ -27,6 +29,7 @@ class CondFunctionTest {
     void setup() {
         params = Mockito.mock(LispNode.class);
         userDefinedFunctions = Collections.emptyList();
+        variableNameToValueMap = Collections.emptyMap();
 
         condFunctionParameterAsserter = Mockito.mock(CondFunctionParameterAsserter.class);
         condFunctionEvaluator = Mockito.mock(CondFunctionEvaluator.class);
@@ -41,12 +44,17 @@ class CondFunctionTest {
     void evaluateLispFunctionTest() throws Exception {
         LispNode expected = Mockito.mock(LispNode.class);
         Mockito.when(
-            condFunctionEvaluator.evaluateCondFunction(params, userDefinedFunctions)
+            condFunctionEvaluator.evaluateCondFunction(
+                params,
+                userDefinedFunctions,
+                variableNameToValueMap
+            )
         ).thenReturn(expected);
 
         LispNode actual = condFunction.evaluateLispFunction(
             params,
-            userDefinedFunctions
+            userDefinedFunctions,
+            variableNameToValueMap
         );
 
         Assertions.assertEquals(expected, actual);

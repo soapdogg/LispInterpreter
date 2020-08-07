@@ -14,12 +14,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 class CdrFunctionTest {
 
     private LispNode params;
     private List<UserDefinedFunction> userDefinedFunctions;
+    private Map<String, LispNode> variableNameToValueMap;
 
     private FunctionLengthAsserter functionLengthAsserter;
     private ListValueRetriever listValueRetriever;
@@ -30,6 +33,8 @@ class CdrFunctionTest {
     @BeforeEach
     void setup() {
         params = Mockito.mock(ExpressionNode.class);
+        userDefinedFunctions = Collections.emptyList();
+        variableNameToValueMap = Collections.emptyMap();
 
         functionLengthAsserter = Mockito.mock(FunctionLengthAsserter.class);
         listValueRetriever = Mockito.mock(ListValueRetriever.class);
@@ -60,6 +65,7 @@ class CdrFunctionTest {
             nodeEvaluator.evaluate(
                 address,
                 userDefinedFunctions,
+                variableNameToValueMap,
                 false
             )
         ).thenReturn(evaluatedAddress);
@@ -77,7 +83,8 @@ class CdrFunctionTest {
 
         LispNode actual = cdrFunction.evaluateLispFunction(
             params,
-            userDefinedFunctions
+            userDefinedFunctions,
+            variableNameToValueMap
         );
 
         Assertions.assertEquals(expected, actual);

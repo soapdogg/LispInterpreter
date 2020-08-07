@@ -20,11 +20,13 @@ import org.mockito.Mockito;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 class NullFunctionTest {
 
     private LispNode params;
     private List<UserDefinedFunction> userDefinedFunctions;
+    private Map<String, LispNode> variableNameToValueMap;
 
     private FunctionLengthAsserter functionLengthAsserter;
     private NodeEvaluator nodeEvaluator;
@@ -38,8 +40,8 @@ class NullFunctionTest {
     @BeforeEach
     void setup() {
         params = Mockito.mock(LispNode.class);
-
         userDefinedFunctions = Collections.emptyList();
+        variableNameToValueMap = Collections.emptyMap();
 
         functionLengthAsserter = Mockito.mock(FunctionLengthAsserter.class);
         nodeEvaluator = Mockito.mock(NodeEvaluator.class);
@@ -65,6 +67,7 @@ class NullFunctionTest {
             nodeEvaluator.evaluate(
                 params,
                 userDefinedFunctions,
+                variableNameToValueMap,
                 true
             )
         ).thenReturn(evaluatedResult);
@@ -86,7 +89,11 @@ class NullFunctionTest {
         AtomNode expected = Mockito.mock(AtomNode.class);
         Mockito.when(nodeGenerator.generateAtomNode(result)).thenReturn(expected);
 
-        LispNode actual = nullFunction.evaluateLispFunction(params, userDefinedFunctions);
+        LispNode actual = nullFunction.evaluateLispFunction(
+            params,
+            userDefinedFunctions,
+            variableNameToValueMap
+        );
 
         Assertions.assertEquals(expected, actual);
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
@@ -103,6 +110,7 @@ class NullFunctionTest {
             nodeEvaluator.evaluate(
                 params,
                 userDefinedFunctions,
+                variableNameToValueMap,
                 true
             )
         ).thenReturn(evaluatedResult);
@@ -113,7 +121,8 @@ class NullFunctionTest {
 
         LispNode actual = nullFunction.evaluateLispFunction(
             params,
-            userDefinedFunctions
+            userDefinedFunctions,
+            variableNameToValueMap
         );
         Assertions.assertEquals(expected, actual);
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(

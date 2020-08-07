@@ -19,11 +19,13 @@ import org.mockito.Mockito;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 class GreaterFunctionTest {
 
     private LispNode params;
     private List<UserDefinedFunction> userDefinedFunctions;
+    private Map<String, LispNode> variableNameToValueMap;
 
     private FunctionLengthAsserter functionLengthAsserter;
     private NodeEvaluator nodeEvaluator;
@@ -37,6 +39,7 @@ class GreaterFunctionTest {
     void setup() {
         params = Mockito.mock(LispNode.class);
         userDefinedFunctions = Collections.emptyList();
+        variableNameToValueMap = Collections.emptyMap();
 
         functionLengthAsserter = Mockito.mock(FunctionLengthAsserter.class);
         nodeEvaluator = Mockito.mock(NodeEvaluator.class);
@@ -60,6 +63,7 @@ class GreaterFunctionTest {
             nodeEvaluator.evaluate(
                 params,
                 userDefinedFunctions,
+                variableNameToValueMap,
                 true
             )
         ).thenReturn(evaluatedAddress);
@@ -89,6 +93,7 @@ class GreaterFunctionTest {
             nodeEvaluator.evaluate(
                 data,
                 userDefinedFunctions,
+                variableNameToValueMap,
                 true
             )
         ).thenReturn(evaluatedData);
@@ -109,7 +114,11 @@ class GreaterFunctionTest {
             )
         ).thenReturn(expected);
 
-        LispNode actual = greaterFunction.evaluateLispFunction(params, userDefinedFunctions);
+        LispNode actual = greaterFunction.evaluateLispFunction(
+            params,
+            userDefinedFunctions,
+            variableNameToValueMap
+        );
 
         Assertions.assertEquals(expected, actual);
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
@@ -127,6 +136,7 @@ class GreaterFunctionTest {
             nodeEvaluator.evaluate(
                 params,
                 userDefinedFunctions,
+                variableNameToValueMap,
                 true
             )
         ).thenReturn(evaluatedAddress);
@@ -156,6 +166,7 @@ class GreaterFunctionTest {
             nodeEvaluator.evaluate(
                 data,
                 userDefinedFunctions,
+                variableNameToValueMap,
                 true
             )
         ).thenReturn(evaluatedData);
@@ -176,7 +187,11 @@ class GreaterFunctionTest {
             )
         ).thenReturn(expected);
 
-        LispNode actual = greaterFunction.evaluateLispFunction(params, userDefinedFunctions);
+        LispNode actual = greaterFunction.evaluateLispFunction(
+            params,
+            userDefinedFunctions,
+            variableNameToValueMap
+        );
 
         Assertions.assertEquals(expected, actual);
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(

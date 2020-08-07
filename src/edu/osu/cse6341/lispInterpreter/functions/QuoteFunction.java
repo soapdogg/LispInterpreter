@@ -10,6 +10,7 @@ import edu.osu.cse6341.lispInterpreter.valueretriver.ListValueRetriever;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor(staticName = "newInstance")
 public class QuoteFunction implements LispFunction {
@@ -18,7 +19,11 @@ public class QuoteFunction implements LispFunction {
     private final ListValueRetriever listValueRetriever;
 
     @Override
-    public LispNode evaluateLispFunction(final LispNode params, List<UserDefinedFunction> userDefinedFunctions) throws Exception {
+    public LispNode evaluateLispFunction(
+        final LispNode params,
+        final List<UserDefinedFunction> userDefinedFunctions,
+        final Map<String, LispNode> variableNameToValueMap
+    ) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.QUOTE,
             FunctionLengthConstants.TWO,

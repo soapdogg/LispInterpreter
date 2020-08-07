@@ -19,11 +19,13 @@ import org.mockito.Mockito;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 class EqFunctionTest {
 
     private LispNode params;
     private List<UserDefinedFunction> userDefinedFunctions;
+    private Map<String, LispNode> variableNameToValueMap;
 
     private FunctionLengthAsserter functionLengthAsserter;
     private NodeEvaluator nodeEvaluator;
@@ -37,6 +39,7 @@ class EqFunctionTest {
     void setup() {
         params = Mockito.mock(LispNode.class);
         userDefinedFunctions = Collections.emptyList();
+        variableNameToValueMap = Collections.emptyMap();
 
         functionLengthAsserter = Mockito.mock(FunctionLengthAsserter.class);
         nodeEvaluator = Mockito.mock(NodeEvaluator.class);
@@ -60,6 +63,7 @@ class EqFunctionTest {
             nodeEvaluator.evaluate(
                 params,
                 userDefinedFunctions,
+                variableNameToValueMap,
                 true
             )
         ).thenReturn(evaluatedAddress);
@@ -89,6 +93,7 @@ class EqFunctionTest {
             nodeEvaluator.evaluate(
                 data,
                 userDefinedFunctions,
+                variableNameToValueMap,
                 true
             )
         ).thenReturn(evaluatedData);
@@ -109,7 +114,11 @@ class EqFunctionTest {
             )
         ).thenReturn(expected);
 
-        LispNode actual = eqFunction.evaluateLispFunction(params, userDefinedFunctions);
+        LispNode actual = eqFunction.evaluateLispFunction(
+            params,
+            userDefinedFunctions,
+            variableNameToValueMap
+        );
 
         Assertions.assertEquals(expected, actual);
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(

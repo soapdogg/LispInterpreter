@@ -73,7 +73,8 @@ class InterpreterTest {
         Mockito.when(
             program.evaluate(
                 evaluatedNodes,
-                userDefinedFunctions
+                userDefinedFunctions,
+                new HashMap<>()
             )
         ).thenReturn(evaluatedNodes);
 

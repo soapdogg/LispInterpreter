@@ -15,11 +15,13 @@ import org.mockito.Mockito;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 class QuoteFunctionTest {
 
     private LispNode params;
     private List<UserDefinedFunction> userDefinedFunctions;
+    private Map<String, LispNode> variableNameToValueMap;
 
     private FunctionLengthAsserter functionLengthAsserter;
     private ListValueRetriever listValueRetriever;
@@ -30,6 +32,7 @@ class QuoteFunctionTest {
     void setup() {
         params = Mockito.mock(ExpressionNode.class);
         userDefinedFunctions = Collections.emptyList();
+        variableNameToValueMap = Collections.emptyMap();
 
         functionLengthAsserter = Mockito.mock(FunctionLengthAsserter.class);
         listValueRetriever = Mockito.mock(ListValueRetriever.class);
@@ -55,7 +58,8 @@ class QuoteFunctionTest {
 
         LispNode actual = quoteFunction.evaluateLispFunction(
             params,
-            userDefinedFunctions
+            userDefinedFunctions,
+            variableNameToValueMap
         );
 
         Assertions.assertEquals(address, actual);

@@ -11,6 +11,8 @@ import lombok.AllArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 @AllArgsConstructor(staticName = "newInstance")
 public class Program {
 
@@ -21,7 +23,8 @@ public class Program {
 
 	public List<LispNode> evaluate(
 		List<LispNode> rootNodes,
-		List<UserDefinedFunction> userDefinedFunctions
+		List<UserDefinedFunction> userDefinedFunctions,
+		Map<String, LispNode> variableNameToValueMap
 	) throws Exception{
 		List<LispNode> evaluatedNodes = new ArrayList<>();
 		for(LispNode node: rootNodes) {
@@ -37,6 +40,7 @@ public class Program {
 			LispNode evaluatedNode = nodeEvaluator.evaluate(
 				node,
 				userDefinedFunctions,
+				variableNameToValueMap,
 				false
 			);
 			evaluatedNodes.add(evaluatedNode);

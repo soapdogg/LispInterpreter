@@ -26,18 +26,25 @@ public class NodeEvaluator {
 
     public LispNode evaluate(
         final LispNode lispNode,
-        List<UserDefinedFunction> userDefinedFunctions, final boolean areLiteralsAllowed
+        final List<UserDefinedFunction> userDefinedFunctions,
+        final Map<String, LispNode> variableNameToValueMap,
+        final boolean areLiteralsAllowed
     ) throws Exception {
-        if (lispNode instanceof AtomNode) return evaluate((AtomNode) lispNode);
+        if (lispNode instanceof AtomNode) return evaluate(
+            (AtomNode) lispNode,
+            variableNameToValueMap
+        );
         return evaluate(
             (ExpressionNode)lispNode,
             userDefinedFunctions,
+            variableNameToValueMap,
             areLiteralsAllowed
         );
     }
 
     private LispNode evaluate(
-        final AtomNode atomNode
+        final AtomNode atomNode,
+        final Map<String, LispNode> variableNameToValueMap
     ) {
         String value = atomNode.getValue();
         if(environment.isVariableName(value)) return environment.getVariableValue(value);
@@ -47,6 +54,7 @@ public class NodeEvaluator {
     private LispNode evaluate(
         final ExpressionNode expressionNode,
         final List<UserDefinedFunction> userDefinedFunctions,
+        final Map<String, LispNode> variableNameToValueMap,
         final boolean areLiteralsAllowed
     ) throws Exception {
         LispNode address = expressionNode.getAddress();
@@ -74,6 +82,7 @@ public class NodeEvaluator {
                     LispNode evaluatedAddress = evaluate(
                         temp.getAddress(),
                         userDefinedFunctions,
+                        variableNameToValueMap,
                         true
                     );
                     newVariables.put(formal, evaluatedAddress);
@@ -84,6 +93,7 @@ public class NodeEvaluator {
                 LispNode result = evaluate(
                     userDefinedFunction.getBody(),
                     userDefinedFunctions,
+                    variableNameToValueMap,
                     true
                 );
                 environment.setVariables(oldVariables);
@@ -93,7 +103,8 @@ public class NodeEvaluator {
                 LispFunction function = FunctionsConstants.functionMap.get(addressValue);
                 return function.evaluateLispFunction(
                     expressionNode.getData(),
-                    userDefinedFunctions
+                    userDefinedFunctions,
+                    variableNameToValueMap
                 );
             }
             if (!areLiteralsAllowed) throw new Exception("Error! Invalid CAR value: " + addressValue + '\n');
@@ -101,6 +112,7 @@ public class NodeEvaluator {
         return evaluate(
             address,
             userDefinedFunctions,
+            variableNameToValueMap,
             true
         );
     }

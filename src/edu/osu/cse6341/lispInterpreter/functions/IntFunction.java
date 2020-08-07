@@ -13,6 +13,7 @@ import edu.osu.cse6341.lispInterpreter.valueretriver.AtomicValueRetriever;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor(staticName = "newInstance")
 public class IntFunction implements LispFunction {
@@ -25,7 +26,11 @@ public class IntFunction implements LispFunction {
     private final NodeGenerator nodeGenerator;
 
     @Override
-    public LispNode evaluateLispFunction(final LispNode params, List<UserDefinedFunction> userDefinedFunctions) throws Exception {
+    public LispNode evaluateLispFunction(
+        final LispNode params,
+        final List<UserDefinedFunction> userDefinedFunctions,
+        final Map<String, LispNode> variableNameToValueMap
+    ) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.INT,
             FunctionLengthConstants.TWO,
@@ -34,6 +39,7 @@ public class IntFunction implements LispFunction {
         LispNode evaluatedResult = nodeEvaluator.evaluate(
             params,
             userDefinedFunctions,
+            variableNameToValueMap,
             true
         );
         if (expressionNodeDeterminer.isExpressionNode(evaluatedResult)) {

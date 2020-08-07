@@ -15,12 +15,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 class ConsFunctionTest {
 
     private LispNode params;
     private List<UserDefinedFunction> userDefinedFunctions;
+    private Map<String, LispNode> variableNameToValueMap;
 
     private FunctionLengthAsserter functionLengthAsserter;
     private ListValueRetriever listValueRetriever;
@@ -32,6 +35,8 @@ class ConsFunctionTest {
     @BeforeEach
     void setup() {
         params = Mockito.mock(LispNode.class);
+        userDefinedFunctions = Collections.emptyList();
+        variableNameToValueMap = Collections.emptyMap();
 
         functionLengthAsserter = Mockito.mock(FunctionLengthAsserter.class);
         listValueRetriever = Mockito.mock(ListValueRetriever.class);
@@ -64,6 +69,7 @@ class ConsFunctionTest {
             nodeEvaluator.evaluate(
                 address,
                 userDefinedFunctions,
+                variableNameToValueMap,
                 true
             )
         ).thenReturn(evaluatedAddress);
@@ -76,6 +82,7 @@ class ConsFunctionTest {
             nodeEvaluator.evaluate(
                 data,
                 userDefinedFunctions,
+                variableNameToValueMap,
                 true
             )
         ).thenReturn(evaluatedData);
@@ -90,7 +97,8 @@ class ConsFunctionTest {
 
         LispNode actual = consFunction.evaluateLispFunction(
             params,
-            userDefinedFunctions
+            userDefinedFunctions,
+            variableNameToValueMap
         );
 
         Assertions.assertEquals(expected, actual);

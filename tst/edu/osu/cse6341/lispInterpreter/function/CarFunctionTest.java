@@ -16,11 +16,13 @@ import org.mockito.Mockito;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 class CarFunctionTest {
 
     private LispNode params;
     private List<UserDefinedFunction> userDefinedFunctions;
+    private Map<String, LispNode> variableNameToValueMap;
 
     private FunctionLengthAsserter functionLengthAsserter;
     private ListValueRetriever listValueRetriever;
@@ -32,6 +34,7 @@ class CarFunctionTest {
     void setup() {
         params = Mockito.mock(ExpressionNode.class);
         userDefinedFunctions = Collections.emptyList();
+        variableNameToValueMap = Collections.emptyMap();
 
         functionLengthAsserter = Mockito.mock(FunctionLengthAsserter.class);
         listValueRetriever = Mockito.mock(ListValueRetriever.class);
@@ -62,6 +65,7 @@ class CarFunctionTest {
             nodeEvaluator.evaluate(
                 address,
                 userDefinedFunctions,
+                variableNameToValueMap,
                 false
             )
         ).thenReturn(evaluatedAddress);
@@ -79,7 +83,8 @@ class CarFunctionTest {
 
         LispNode actual = carFunction.evaluateLispFunction(
             params,
-            userDefinedFunctions
+            userDefinedFunctions,
+            variableNameToValueMap
         );
 
         Assertions.assertEquals(expected, actual);

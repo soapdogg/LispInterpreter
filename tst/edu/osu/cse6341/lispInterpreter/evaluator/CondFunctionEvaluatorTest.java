@@ -15,11 +15,13 @@ import org.mockito.Mockito;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 class CondFunctionEvaluatorTest {
 
     private LispNode params;
     private List<UserDefinedFunction> userDefinedFunctions;
+    private Map<String, LispNode> variableNameToValueMap;
 
     private ListValueRetriever listValueRetriever;
     private NodeEvaluator nodeEvaluator;
@@ -30,6 +32,7 @@ class CondFunctionEvaluatorTest {
     @BeforeEach
     void setup() {
         userDefinedFunctions = Collections.emptyList();
+        variableNameToValueMap = Collections.emptyMap();
 
         listValueRetriever = Mockito.mock(ListValueRetriever.class);
         nodeEvaluator = Mockito.mock(NodeEvaluator.class);
@@ -48,7 +51,11 @@ class CondFunctionEvaluatorTest {
 
         Assertions.assertThrows(
             NotAListException.class,
-            () -> condFunctionEvaluator.evaluateCondFunction(params, userDefinedFunctions)
+            () -> condFunctionEvaluator.evaluateCondFunction(
+                params,
+                userDefinedFunctions,
+                variableNameToValueMap
+            )
         );
 
         Mockito.verifyZeroInteractions(listValueRetriever);
@@ -79,6 +86,7 @@ class CondFunctionEvaluatorTest {
             nodeEvaluator.evaluate(
                 expressionNodeAddressAddress,
                 userDefinedFunctions,
+                variableNameToValueMap,
                 true
             )
         ).thenReturn(booleanResult);
@@ -97,11 +105,16 @@ class CondFunctionEvaluatorTest {
             nodeEvaluator.evaluate(
                 expressionNodeAddressData,
                 userDefinedFunctions,
+                variableNameToValueMap,
                 true
             )
         ).thenReturn(expected);
 
-        LispNode actual = condFunctionEvaluator.evaluateCondFunction(params, userDefinedFunctions);
+        LispNode actual = condFunctionEvaluator.evaluateCondFunction(
+            params,
+            userDefinedFunctions,
+            variableNameToValueMap
+        );
 
         Assertions.assertEquals(expected, actual);
     }
@@ -129,6 +142,7 @@ class CondFunctionEvaluatorTest {
             nodeEvaluator.evaluate(
                 expressionNodeAddressAddress,
                 userDefinedFunctions,
+                variableNameToValueMap,
                 true
             )
         ).thenReturn(booleanResult);
@@ -138,7 +152,11 @@ class CondFunctionEvaluatorTest {
 
         Assertions.assertThrows(
             NotAListException.class,
-            () -> condFunctionEvaluator.evaluateCondFunction(params, userDefinedFunctions)
+            () -> condFunctionEvaluator.evaluateCondFunction(
+                params,
+                userDefinedFunctions,
+                variableNameToValueMap
+            )
         );
     }
 
@@ -165,6 +183,7 @@ class CondFunctionEvaluatorTest {
             nodeEvaluator.evaluate(
                 expressionNodeAddressAddress,
                 userDefinedFunctions,
+                variableNameToValueMap,
                 true
             )
         ).thenReturn(booleanResult);
@@ -180,7 +199,11 @@ class CondFunctionEvaluatorTest {
 
         Assertions.assertThrows(
             NotAListException.class,
-            () -> condFunctionEvaluator.evaluateCondFunction(params, userDefinedFunctions)
+            () -> condFunctionEvaluator.evaluateCondFunction(
+                params,
+                userDefinedFunctions,
+                variableNameToValueMap
+            )
         );
     }
 }
