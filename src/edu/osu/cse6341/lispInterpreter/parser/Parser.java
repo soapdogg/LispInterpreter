@@ -28,7 +28,7 @@ public class Parser {
         return rootNodes;
     }
 
-    public Node parseIntoNode(
+    private Node parseIntoNode(
         Queue<Token> tokens
     ) throws Exception {
         Token token = tokens.peek();
@@ -61,7 +61,27 @@ public class Parser {
         Node result;
         if (isClose) result = nodeGenerator.generateAtomNode(ReservedValuesConstants.NIL);
         else {
-            Node address = parseIntoNode(tokens);
+            Node address;
+            Token token = tokens.peek();
+            tokenKindAsserter.assertTokenIsNotNull(token);
+            tokenKindAsserter.assertTokenIsAtomOrOpen(token);
+            TokenKind currentTokenKind = token.getTokenKind();
+            boolean isOpen = currentTokenKind == TokenKind.OPEN_TOKEN;
+            if (isOpen) {
+                tokens.remove();
+                Node t = parseExpressionNode(tokens);
+                Token closeToken = tokens.peek();
+                tokenKindAsserter.assertTokenIsNotNull(closeToken);
+                tokenKindAsserter.assertTokenIsClose(closeToken);
+                tokens.remove();
+                address = t;
+            } else {
+                token = tokens.remove();
+                String value = token.getValue();
+                address = nodeGenerator.generateAtomNode(
+                    value
+                );
+            }
             Node data = parseExpressionNode(tokens);
             result = nodeGenerator.generateExpressionNode(
                 address,

@@ -15,11 +15,11 @@ public class UserDefinedFunctionGenerator {
     private final DefunFunction defunFunction;
 
     public List<UserDefinedFunction> generateUserDefinedFunctions(
-        List<Node> defunNodes
+        final List<Node> defunNodes
     ) throws Exception {
         List<UserDefinedFunction> userDefinedFunctions = new ArrayList<>();
         for(Node defunNode : defunNodes) {
-            ExpressionNode expressionDefunNode = (ExpressionNode)defunNode;
+            ExpressionNode expressionDefunNode = (ExpressionNode) defunNode;
             UserDefinedFunction userDefinedFunction = defunFunction.evaluateLispFunction(
                 expressionDefunNode.getData()
             );

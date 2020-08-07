@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor(staticName = "newInstance")
 public class ExpressionNodeDeterminer {
 
-    public boolean isExpressionNode(Node node) {
+    public boolean isExpressionNode(final Node node) {
         return node instanceof ExpressionNode;
     }
 }

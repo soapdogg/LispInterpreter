@@ -18,6 +18,7 @@ import java.util.Map;
 @AllArgsConstructor(staticName = "newInstance")
 public class NodeEvaluator {
 
+    private final AtomNodeEvaluator atomNodeEvaluator;
     private final ExpressionNodeDeterminer expressionNodeDeterminer;
     private final UserDefinedFunctionNameDeterminer userDefinedFunctionNameDeterminer;
     private final FunctionLengthAsserter functionLengthAsserter;
@@ -28,7 +29,7 @@ public class NodeEvaluator {
         final Map<String, Node> variableNameToValueMap,
         final boolean areLiteralsAllowed
     ) throws Exception {
-        if (node instanceof AtomNode) return evaluate(
+        if (node instanceof AtomNode) return atomNodeEvaluator.evaluate(
             (AtomNode) node,
             variableNameToValueMap
         );
@@ -41,15 +42,6 @@ public class NodeEvaluator {
     }
 
     private Node evaluate(
-        final AtomNode atomNode,
-        final Map<String, Node> variableNameToValueMap
-    ) {
-        String value = atomNode.getValue();
-        if(variableNameToValueMap.containsKey(value)) return variableNameToValueMap.get(value);
-        return atomNode;
-    }
-
-    private Node evaluate(
         final ExpressionNode expressionNode,
         final List<UserDefinedFunction> userDefinedFunctions,
         final Map<String, Node> variableNameToValueMap,
@@ -59,7 +51,7 @@ public class NodeEvaluator {
 
         if (!expressionNodeDeterminer.isExpressionNode(address)) {
             String addressValue = ((AtomNode)address).getValue();
-            boolean isFunctionName = userDefinedFunctionNameDeterminer.isUserDefinedFunctionName(
+            boolean isFunctionName = userDefinedFunctionNameDeterminer.determineIfUserDefinedFunctionName(
                 userDefinedFunctions,
                 addressValue
             );

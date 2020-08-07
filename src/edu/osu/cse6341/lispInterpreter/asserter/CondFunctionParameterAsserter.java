@@ -20,8 +20,8 @@ public class CondFunctionParameterAsserter {
     private final FunctionLengthAsserter functionLengthAsserter;
 
     public void assertCondFunctionParameters(
-        Node params,
-        Map<String, Node> variableNameToValueMap
+        final Node params,
+        final Map<String, Node> variableNameToValueMap
     ) throws Exception {
         if (params instanceof AtomNode) {
             AtomNode atomNodeParams = (AtomNode)params;

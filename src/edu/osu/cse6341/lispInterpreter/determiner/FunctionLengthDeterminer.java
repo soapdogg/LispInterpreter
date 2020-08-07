@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor(staticName = "newInstance")
 public class FunctionLengthDeterminer {
 
-    public int determineFunctionLength(Node node) {
+    public int determineFunctionLength(final Node node) {
         if (node instanceof AtomNode) {
             AtomNode atomNode = (AtomNode)node;
             return atomNode.getValue().equals(ReservedValuesConstants.NIL) ? 0 : 1;

@@ -16,6 +16,7 @@ public enum AsserterSingleton {
     private final CondFunctionParameterAsserter condFunctionParameterAsserter;
     private final UserDefinedFormalParametersAsserter userDefinedFormalParametersAsserter;
     private final UserDefinedFunctionNameAsserter userDefinedFunctionNameAsserter;
+    private final AtomRootNodeAsserter atomRootNodeAsserter;
 
     AsserterSingleton() {
         functionLengthAsserter = FunctionLengthAsserter.newInstance(
@@ -40,6 +41,10 @@ public enum AsserterSingleton {
         );
         userDefinedFunctionNameAsserter = UserDefinedFunctionNameAsserter.newInstance(
             DeterminerSingleton.INSTANCE.getInvalidNameDeterminer()
+        );
+        atomRootNodeAsserter = AtomRootNodeAsserter.newInstance(
+            DeterminerSingleton.INSTANCE.getNumericStringDeterminer(),
+            ComparatorSingleton.INSTANCE.getNodeValueComparator()
         );
     }
 }
