@@ -32,7 +32,8 @@ public class CondFunctionEvaluator {
         LispNode address = expressionNodeParams.getAddress();
         ExpressionNode expressionNodeAddress = listValueRetriever.retrieveListValue(
             address,
-            FunctionNameConstants.COND
+            FunctionNameConstants.COND,
+            variableNameToValueMap
         );
         LispNode booleanResult = nodeEvaluator.evaluate(
             expressionNodeAddress.getAddress(),

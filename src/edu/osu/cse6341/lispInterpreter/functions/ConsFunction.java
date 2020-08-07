@@ -35,7 +35,8 @@ public class ConsFunction implements LispFunction {
         );
         ExpressionNode expressionNodeParams = listValueRetriever.retrieveListValue(
             params,
-            FunctionNameConstants.CONS
+            FunctionNameConstants.CONS,
+            variableNameToValueMap
         );
         LispNode address = expressionNodeParams.getAddress();
         LispNode evaluatedAddress = nodeEvaluator.evaluate(

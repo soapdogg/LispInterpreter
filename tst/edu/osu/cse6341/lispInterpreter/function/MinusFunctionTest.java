@@ -81,7 +81,8 @@ class MinusFunctionTest {
         Mockito.when(
             listValueRetriever.retrieveListValue(
                 params,
-                FunctionNameConstants.MINUS
+                FunctionNameConstants.MINUS,
+                variableNameToValueMap
             )
         ).thenReturn(expressionNodeParams);
 

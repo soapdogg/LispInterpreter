@@ -74,7 +74,8 @@ class CondFunctionEvaluatorTest {
         Mockito.when(
             listValueRetriever.retrieveListValue(
                 address,
-                FunctionNameConstants.COND
+                FunctionNameConstants.COND,
+                variableNameToValueMap
             )
         ).thenReturn(expressionNodeAddress);
 
@@ -130,7 +131,8 @@ class CondFunctionEvaluatorTest {
         Mockito.when(
             listValueRetriever.retrieveListValue(
                 address,
-                FunctionNameConstants.COND
+                FunctionNameConstants.COND,
+                variableNameToValueMap
             )
         ).thenReturn(expressionNodeAddress);
 
@@ -171,7 +173,8 @@ class CondFunctionEvaluatorTest {
         Mockito.when(
             listValueRetriever.retrieveListValue(
                 address,
-                FunctionNameConstants.COND
+                FunctionNameConstants.COND,
+                variableNameToValueMap
             )
         ).thenReturn(expressionNodeAddress);
 

@@ -48,7 +48,8 @@ public class MinusFunction implements LispFunction {
         );
         ExpressionNode expressionNodeParams = listValueRetriever.retrieveListValue(
             params,
-            FunctionNameConstants.MINUS
+            FunctionNameConstants.MINUS,
+            variableNameToValueMap
         );
         LispNode data = expressionNodeParams.getData();
         LispNode evaluatedData = nodeEvaluator.evaluate(

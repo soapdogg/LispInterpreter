@@ -81,7 +81,8 @@ class PlusFunctionTest {
         Mockito.when(
             listValueRetriever.retrieveListValue(
                 params,
-                FunctionNameConstants.PLUS
+                FunctionNameConstants.PLUS,
+                variableNameToValueMap
             )
         ).thenReturn(expressionNodeParams);
 

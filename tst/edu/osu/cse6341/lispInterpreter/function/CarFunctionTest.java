@@ -53,7 +53,8 @@ class CarFunctionTest {
         Mockito.when(
             listValueRetriever.retrieveListValue(
                 params,
-                FunctionNameConstants.CAR
+                FunctionNameConstants.CAR,
+                variableNameToValueMap
             )
         ).thenReturn(expressionNodeParams);
 
@@ -74,7 +75,8 @@ class CarFunctionTest {
         Mockito.when(
             listValueRetriever.retrieveListValue(
                 evaluatedAddress,
-                FunctionNameConstants.CAR
+                FunctionNameConstants.CAR,
+                variableNameToValueMap
             )
         ).thenReturn(node);
 

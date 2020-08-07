@@ -53,7 +53,8 @@ class CdrFunctionTest {
         Mockito.when(
             listValueRetriever.retrieveListValue(
                 params,
-                FunctionNameConstants.CDR
+                FunctionNameConstants.CDR,
+                variableNameToValueMap
             )
         ).thenReturn(expressionNodeParams);
 
@@ -74,7 +75,8 @@ class CdrFunctionTest {
         Mockito.when(
             listValueRetriever.retrieveListValue(
                 evaluatedAddress,
-                FunctionNameConstants.CDR
+                FunctionNameConstants.CDR,
+                variableNameToValueMap
             )
         ).thenReturn(node);
 

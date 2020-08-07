@@ -81,7 +81,8 @@ class GreaterFunctionTest {
         Mockito.when(
             listValueRetriever.retrieveListValue(
                 params,
-                FunctionNameConstants.GREATER
+                FunctionNameConstants.GREATER,
+                variableNameToValueMap
             )
         ).thenReturn(expressionNodeParams);
 
@@ -154,7 +155,8 @@ class GreaterFunctionTest {
         Mockito.when(
             listValueRetriever.retrieveListValue(
                 params,
-                FunctionNameConstants.GREATER
+                FunctionNameConstants.GREATER,
+                variableNameToValueMap
             )
         ).thenReturn(expressionNodeParams);
 

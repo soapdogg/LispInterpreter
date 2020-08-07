@@ -81,7 +81,8 @@ class EqFunctionTest {
         Mockito.when(
             listValueRetriever.retrieveListValue(
                 params,
-                FunctionNameConstants.EQ
+                FunctionNameConstants.EQ,
+                variableNameToValueMap
             )
         ).thenReturn(expressionNodeParams);
 

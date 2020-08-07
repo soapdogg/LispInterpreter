@@ -9,6 +9,8 @@ import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
 import lombok.AllArgsConstructor;
 
+import java.util.Map;
+
 @AllArgsConstructor(staticName = "newInstance")
 public class ListValueRetriever {
 
@@ -18,7 +20,8 @@ public class ListValueRetriever {
 
     public ExpressionNode retrieveListValue(
         final LispNode node,
-        final String functionName
+        final String functionName,
+        final Map<String, LispNode> variableNameToValueMap
     ) throws Exception{
         boolean isNodeAList = expressionNodeDeterminer.isExpressionNode(node);
         if (isNodeAList) {
@@ -26,9 +29,9 @@ public class ListValueRetriever {
         }
 
         String nodeValue = ((AtomNode)node).getValue();
-        boolean isVariable = environment.isVariableName(nodeValue);
+        boolean isVariable = variableNameToValueMap.containsKey(nodeValue);
         if(isVariable) {
-            LispNode result = environment.getVariableValue(nodeValue);
+            LispNode result = variableNameToValueMap.get(nodeValue);
             boolean isVariableList = expressionNodeDeterminer.isExpressionNode(result);
             if (isVariableList) return (ExpressionNode) result;
         }

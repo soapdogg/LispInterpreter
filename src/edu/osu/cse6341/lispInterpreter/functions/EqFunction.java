@@ -48,7 +48,8 @@ public class EqFunction implements LispFunction {
         );
         ExpressionNode expressionNodeParams = listValueRetriever.retrieveListValue(
             params,
-            FunctionNameConstants.EQ
+            FunctionNameConstants.EQ,
+            variableNameToValueMap
         );
         LispNode data = expressionNodeParams.getData();
         LispNode evaluatedData = nodeEvaluator.evaluate(

@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor(staticName = "newInstance")
 public class UserDefinedFunctionGenerator {
@@ -20,7 +21,9 @@ public class UserDefinedFunctionGenerator {
         List<UserDefinedFunction> userDefinedFunctions = new ArrayList<>();
         for(LispNode defunNode : defunNodes) {
             ExpressionNode expressionDefunNode = (ExpressionNode)defunNode;
-            UserDefinedFunction userDefinedFunction = defunFunction.evaluateLispFunction(expressionDefunNode.getData());
+            UserDefinedFunction userDefinedFunction = defunFunction.evaluateLispFunction(
+                expressionDefunNode.getData()
+            );
             userDefinedFunctions.add(userDefinedFunction);
         }
         return userDefinedFunctions;

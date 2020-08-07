@@ -33,7 +33,8 @@ public class CarFunction implements LispFunction {
         );
         ExpressionNode expressionNodeParams = listValueRetriever.retrieveListValue(
             params,
-            FunctionNameConstants.CAR
+            FunctionNameConstants.CAR,
+            variableNameToValueMap
         );
         LispNode address = expressionNodeParams.getAddress();
         LispNode evaluatedAddress = nodeEvaluator.evaluate(
@@ -44,7 +45,8 @@ public class CarFunction implements LispFunction {
         );
         ExpressionNode node = listValueRetriever.retrieveListValue(
             evaluatedAddress,
-            FunctionNameConstants.CAR
+            FunctionNameConstants.CAR,
+            variableNameToValueMap
         );
         return node.getAddress();
     }

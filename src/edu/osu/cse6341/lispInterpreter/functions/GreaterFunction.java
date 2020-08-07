@@ -48,7 +48,8 @@ public class GreaterFunction implements LispFunction {
         );
         ExpressionNode expressionNodeParams = listValueRetriever.retrieveListValue(
             params,
-            FunctionNameConstants.GREATER
+            FunctionNameConstants.GREATER,
+            variableNameToValueMap
         );
         LispNode data = expressionNodeParams.getData();
         LispNode evaluatedData = nodeEvaluator.evaluate(

@@ -49,7 +49,8 @@ public class TimesFunction implements LispFunction {
         );
         ExpressionNode expressionNodeParams = listValueRetriever.retrieveListValue(
             params,
-            FunctionNameConstants.TIMES
+            FunctionNameConstants.TIMES,
+            variableNameToValueMap
         );
         LispNode data = expressionNodeParams.getData();
         LispNode evaluatedData = nodeEvaluator.evaluate(

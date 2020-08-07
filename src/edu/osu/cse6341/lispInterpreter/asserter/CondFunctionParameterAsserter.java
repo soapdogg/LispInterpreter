@@ -10,6 +10,8 @@ import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
 import edu.osu.cse6341.lispInterpreter.valueretriver.ListValueRetriever;
 import lombok.AllArgsConstructor;
 
+import java.util.Map;
+
 @AllArgsConstructor(staticName = "newInstance")
 public class CondFunctionParameterAsserter {
 
@@ -18,7 +20,8 @@ public class CondFunctionParameterAsserter {
     private final FunctionLengthAsserter functionLengthAsserter;
 
     public void assertCondFunctionParameters(
-        LispNode params
+        LispNode params,
+        Map<String, LispNode> variableNameToValueMap
     ) throws Exception {
         if (params instanceof AtomNode) {
             AtomNode atomNodeParams = (AtomNode)params;
@@ -32,13 +35,17 @@ public class CondFunctionParameterAsserter {
         LispNode address = expressionNodeParams.getAddress();
         ExpressionNode expressionNodeAddress = listValueRetriever.retrieveListValue(
             address,
-            FunctionNameConstants.COND
+            FunctionNameConstants.COND,
+            variableNameToValueMap
         );
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.COND,
             FunctionLengthConstants.TWO,
             expressionNodeAddress.getData()
         );
-        assertCondFunctionParameters(expressionNodeParams.getData());
+        assertCondFunctionParameters(
+            expressionNodeParams.getData(),
+            variableNameToValueMap
+        );
     }
 }

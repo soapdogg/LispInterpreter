@@ -27,14 +27,18 @@ public class DefunFunction  {
     private final UserDefinedFormalParametersAsserter userDefinedFormalParametersAsserter;
     private final Environment environment;
 
-    private List<String> getFormalParameters(LispNode formalParametersNode) throws Exception{
+    private List<String> getFormalParameters(
+        LispNode formalParametersNode,
+        final Map<String, LispNode> variableNameToValueMap
+    ) throws Exception{
         List<String> formalParameters = new ArrayList<>();
         boolean hasNext = expressionNodeDeterminer.isExpressionNode(formalParametersNode);
         int counter = 1;
         while(hasNext){
             ExpressionNode temp = listValueRetriever.retrieveListValue(
                 formalParametersNode,
-                FunctionNameConstants.DEFUN
+                FunctionNameConstants.DEFUN,
+                variableNameToValueMap
             );
             LispNode formalNode = temp.getAddress();
             String formalId = atomicValueRetriever.retrieveAtomicValue(
@@ -51,7 +55,9 @@ public class DefunFunction  {
         return formalParameters;
     }
 
-    public UserDefinedFunction evaluateLispFunction(final LispNode params) throws Exception {
+    public UserDefinedFunction evaluateLispFunction(
+        final LispNode params
+    ) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.DEFUN,
             FunctionLengthConstants.FOUR,
@@ -60,7 +66,8 @@ public class DefunFunction  {
 
         ExpressionNode functionNameNode = listValueRetriever.retrieveListValue(
             params,
-            FunctionNameConstants.DEFUN
+            FunctionNameConstants.DEFUN,
+            new HashMap<>()
         );
         String functionName = atomicValueRetriever.retrieveAtomicValue(
             functionNameNode.getAddress(),
@@ -72,7 +79,8 @@ public class DefunFunction  {
         LispNode functionNameNodeData = functionNameNode.getData();
         ExpressionNode tempNode = listValueRetriever.retrieveListValue(
             functionNameNodeData,
-            FunctionNameConstants.DEFUN
+            FunctionNameConstants.DEFUN,
+            new HashMap<>()
         );
         List<String> formalParameters;
         if (!expressionNodeDeterminer.isExpressionNode(tempNode.getAddress())) {
@@ -80,13 +88,18 @@ public class DefunFunction  {
         } else {
             ExpressionNode formalParametersNode = listValueRetriever.retrieveListValue(
                 tempNode.getAddress(),
-                FunctionNameConstants.DEFUN
+                FunctionNameConstants.DEFUN,
+                new HashMap<>()
             );
-            formalParameters = getFormalParameters(formalParametersNode);
+            formalParameters = getFormalParameters(
+                formalParametersNode,
+                new HashMap<>()
+            );
         }
         ExpressionNode temp = listValueRetriever.retrieveListValue(
             functionNameNodeData,
-            FunctionNameConstants.DEFUN
+            FunctionNameConstants.DEFUN,
+            new HashMap<>()
         );
 
         LispNode body = temp.getData();

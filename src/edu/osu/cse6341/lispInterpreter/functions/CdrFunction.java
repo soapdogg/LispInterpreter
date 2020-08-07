@@ -33,7 +33,8 @@ public class CdrFunction implements LispFunction {
         );
         ExpressionNode expressionNodeParams = listValueRetriever.retrieveListValue(
             params,
-            FunctionNameConstants.CDR
+            FunctionNameConstants.CDR,
+            variableNameToValueMap
         );
         LispNode address = expressionNodeParams.getAddress();
         LispNode evaluatedAddress = nodeEvaluator.evaluate(
@@ -44,7 +45,8 @@ public class CdrFunction implements LispFunction {
         );
         ExpressionNode node = listValueRetriever.retrieveListValue(
             evaluatedAddress,
-            FunctionNameConstants.CDR
+            FunctionNameConstants.CDR,
+            variableNameToValueMap
         );
         return node.getData();
     }

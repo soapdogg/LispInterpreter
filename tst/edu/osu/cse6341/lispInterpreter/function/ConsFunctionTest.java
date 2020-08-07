@@ -57,7 +57,8 @@ class ConsFunctionTest {
         Mockito.when(
             listValueRetriever.retrieveListValue(
                 params,
-                FunctionNameConstants.CONS
+                FunctionNameConstants.CONS,
+                variableNameToValueMap
             )
         ).thenReturn(expressionNodeParams);
 

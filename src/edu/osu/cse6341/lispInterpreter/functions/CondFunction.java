@@ -22,7 +22,8 @@ public class CondFunction implements LispFunction {
         final Map<String, LispNode> variableNameToValueMap
     ) throws Exception {
         condFunctionParameterAsserter.assertCondFunctionParameters(
-            params
+            params,
+            variableNameToValueMap
         );
         return condFunctionEvaluator.evaluateCondFunction(
             params,

@@ -31,7 +31,8 @@ public class QuoteFunction implements LispFunction {
         );
         ExpressionNode expressionNodeParams = listValueRetriever.retrieveListValue(
             params,
-            FunctionNameConstants.QUOTE
+            FunctionNameConstants.QUOTE,
+            variableNameToValueMap
         );
         return expressionNodeParams.getAddress();
     }

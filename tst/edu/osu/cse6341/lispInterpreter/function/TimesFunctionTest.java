@@ -81,7 +81,8 @@ class TimesFunctionTest {
         Mockito.when(
             listValueRetriever.retrieveListValue(
                 params,
-                FunctionNameConstants.TIMES
+                FunctionNameConstants.TIMES,
+                variableNameToValueMap
             )
         ).thenReturn(expressionNodeParams);
 

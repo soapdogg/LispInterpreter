@@ -60,7 +60,8 @@ class CondFunctionTest {
         Assertions.assertEquals(expected, actual);
 
         Mockito.verify(condFunctionParameterAsserter).assertCondFunctionParameters(
-            params
+            params,
+            variableNameToValueMap
         );
     }
 }

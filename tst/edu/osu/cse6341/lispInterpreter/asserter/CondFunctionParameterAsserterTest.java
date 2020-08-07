@@ -14,9 +14,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.Collections;
+import java.util.Map;
+
 class CondFunctionParameterAsserterTest {
 
     private LispNode params;
+    private Map<String, LispNode> variableNameToValueMap;
 
     private NodeValueComparator nodeValueComparator;
     private ListValueRetriever listValueRetriever;
@@ -26,6 +30,8 @@ class CondFunctionParameterAsserterTest {
 
     @BeforeEach
     void setup() {
+        variableNameToValueMap = Collections.emptyMap();
+
         nodeValueComparator = Mockito.mock(NodeValueComparator.class);
         listValueRetriever = Mockito.mock(ListValueRetriever.class);
         functionLengthAsserter = Mockito.mock(FunctionLengthAsserter.class);
@@ -45,7 +51,10 @@ class CondFunctionParameterAsserterTest {
         Mockito.when(nodeValueComparator.equalsNil(ReservedValuesConstants.NIL)).thenReturn(true);
 
         Assertions.assertDoesNotThrow(
-            () -> condFunctionParameterAsserter.assertCondFunctionParameters(params)
+            () -> condFunctionParameterAsserter.assertCondFunctionParameters(
+                params,
+                variableNameToValueMap
+            )
         );
 
         Mockito.verifyZeroInteractions(listValueRetriever);
@@ -61,7 +70,10 @@ class CondFunctionParameterAsserterTest {
 
         Assertions.assertThrows(
             NotAListException.class,
-            () -> condFunctionParameterAsserter.assertCondFunctionParameters(params)
+            () -> condFunctionParameterAsserter.assertCondFunctionParameters(
+                params,
+                variableNameToValueMap
+            )
         );
 
         Mockito.verifyZeroInteractions(listValueRetriever);
@@ -78,7 +90,8 @@ class CondFunctionParameterAsserterTest {
         Mockito.when(
             listValueRetriever.retrieveListValue(
                 address,
-                FunctionNameConstants.COND
+                FunctionNameConstants.COND,
+                variableNameToValueMap
             )
         ).thenReturn(expressionNodeAddress);
 
@@ -93,7 +106,10 @@ class CondFunctionParameterAsserterTest {
         Mockito.when(nodeValueComparator.equalsNil(ReservedValuesConstants.NIL)).thenReturn(true);
 
         Assertions.assertDoesNotThrow(
-            () -> condFunctionParameterAsserter.assertCondFunctionParameters(params)
+            () -> condFunctionParameterAsserter.assertCondFunctionParameters(
+                params,
+                variableNameToValueMap
+            )
         );
 
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(

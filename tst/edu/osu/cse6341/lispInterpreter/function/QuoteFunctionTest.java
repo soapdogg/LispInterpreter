@@ -49,7 +49,8 @@ class QuoteFunctionTest {
         Mockito.when(
             listValueRetriever.retrieveListValue(
                 params,
-                FunctionNameConstants.QUOTE
+                FunctionNameConstants.QUOTE,
+                variableNameToValueMap
             )
         ).thenReturn(expressionNodeParams);
 

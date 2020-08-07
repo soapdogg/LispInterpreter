@@ -81,7 +81,8 @@ class LessFunctionTest {
         Mockito.when(
             listValueRetriever.retrieveListValue(
                 params,
-                FunctionNameConstants.LESS
+                FunctionNameConstants.LESS,
+                variableNameToValueMap
             )
         ).thenReturn(expressionNodeParams);
 
@@ -154,7 +155,8 @@ class LessFunctionTest {
         Mockito.when(
             listValueRetriever.retrieveListValue(
                 params,
-                FunctionNameConstants.LESS
+                FunctionNameConstants.LESS,
+                variableNameToValueMap
             )
         ).thenReturn(expressionNodeParams);
 

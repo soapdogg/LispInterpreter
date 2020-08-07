@@ -12,10 +12,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.Collections;
+import java.util.Map;
+
 class ListValueRetrieverTest {
 
     private LispNode node;
     private String functionName;
+    private Map<String, LispNode> variableNameToValueMap;
 
     private ExpressionNodeDeterminer expressionNodeDeterminer;
     private Environment environment;
@@ -26,6 +30,7 @@ class ListValueRetrieverTest {
     @BeforeEach
     void setup() {
         functionName = "functionName";
+        variableNameToValueMap = Collections.emptyMap();
 
         expressionNodeDeterminer = Mockito.mock(ExpressionNodeDeterminer.class);
         environment = Mockito.mock(Environment.class);
@@ -46,7 +51,8 @@ class ListValueRetrieverTest {
 
         ExpressionNode actual = listValueRetriever.retrieveListValue(
             node,
-            functionName
+            functionName,
+            variableNameToValueMap
         );
 
         Assertions.assertEquals(node, actual);
@@ -64,16 +70,15 @@ class ListValueRetrieverTest {
         String nodeValue = "nodeValue";
         Mockito.when(((AtomNode)node).getValue()).thenReturn(nodeValue);
 
-        Mockito.when(environment.isVariableName(nodeValue)).thenReturn(true);
-
         LispNode result = Mockito.mock(ExpressionNode.class);
-        Mockito.when(environment.getVariableValue(nodeValue)).thenReturn(result);
+        variableNameToValueMap = Collections.singletonMap(nodeValue, result);
 
         Mockito.when(expressionNodeDeterminer.isExpressionNode(result)).thenReturn(true);
 
         ExpressionNode actual = listValueRetriever.retrieveListValue(
             node,
-            functionName
+            functionName,
+            variableNameToValueMap
         );
 
         Assertions.assertEquals(result, actual);
@@ -89,10 +94,8 @@ class ListValueRetrieverTest {
         String nodeValue = "nodeValue";
         Mockito.when(((AtomNode)node).getValue()).thenReturn(nodeValue);
 
-        Mockito.when(environment.isVariableName(nodeValue)).thenReturn(true);
-
         LispNode result = Mockito.mock(ExpressionNode.class);
-        Mockito.when(environment.getVariableValue(nodeValue)).thenReturn(result);
+        variableNameToValueMap = Collections.singletonMap(nodeValue, result);Mockito.when(expressionNodeDeterminer.isExpressionNode(result)).thenReturn(true);
 
         Mockito.when(expressionNodeDeterminer.isExpressionNode(result)).thenReturn(false);
 
@@ -100,7 +103,8 @@ class ListValueRetrieverTest {
             NotAListException.class,
             () -> listValueRetriever.retrieveListValue(
                 node,
-                functionName
+                functionName,
+                variableNameToValueMap
             )
         );
     }
@@ -114,13 +118,12 @@ class ListValueRetrieverTest {
         String nodeValue = "nodeValue";
         Mockito.when(((AtomNode)node).getValue()).thenReturn(nodeValue);
 
-        Mockito.when(environment.isVariableName(nodeValue)).thenReturn(false);
-
         Assertions.assertThrows(
             NotAListException.class,
             () -> listValueRetriever.retrieveListValue(
                 node,
-                functionName
+                functionName,
+                variableNameToValueMap
             )
         );
     }

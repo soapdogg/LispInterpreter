@@ -47,7 +47,7 @@ public class NodeEvaluator {
         final Map<String, LispNode> variableNameToValueMap
     ) {
         String value = atomNode.getValue();
-        if(environment.isVariableName(value)) return environment.getVariableValue(value);
+        if(variableNameToValueMap.containsKey(value)) return variableNameToValueMap.get(value);
         return atomNode;
     }
 
@@ -69,7 +69,6 @@ public class NodeEvaluator {
                 UserDefinedFunction userDefinedFunction = userDefinedFunctions.stream().filter(
                     userDefinedFunction1 -> userDefinedFunction1.getFunctionName().equals(addressValue)
                 ).findFirst().get();
-                Map<String, LispNode> oldVariables = environment.getVariables();
                 LispNode params = expressionNode.getData();
                 functionLengthAsserter.assertLengthIsAsExpected(
                     userDefinedFunction.getFunctionName(),
@@ -77,6 +76,7 @@ public class NodeEvaluator {
                     params
                 );
                 Map<String, LispNode> newVariables = new HashMap<>();
+                newVariables.putAll(variableNameToValueMap);
                 for (String formal: userDefinedFunction.getFormalParameters()) {
                     ExpressionNode temp = (ExpressionNode)params;
                     LispNode evaluatedAddress = evaluate(
@@ -89,14 +89,12 @@ public class NodeEvaluator {
                     params = temp.getData();
                 }
 
-                environment.unionVariables(newVariables);
                 LispNode result = evaluate(
                     userDefinedFunction.getBody(),
                     userDefinedFunctions,
-                    variableNameToValueMap,
+                    newVariables,
                     true
                 );
-                environment.setVariables(oldVariables);
                 return result;
             }
             if (FunctionsConstants.functionMap.containsKey(addressValue)) {
