@@ -1,13 +1,13 @@
 package regression;
 
-import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.Node;
 import edu.osu.cse6341.lispInterpreter.parser.Parser;
 import edu.osu.cse6341.lispInterpreter.printer.DotNotationPrinter;
 import edu.osu.cse6341.lispInterpreter.singleton.ParserSingleton;
 import edu.osu.cse6341.lispInterpreter.singleton.PrinterSingleton;
 import edu.osu.cse6341.lispInterpreter.singleton.TokenizerSingleton;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
-import edu.osu.cse6341.lispInterpreter.tokens.Token;
+import edu.osu.cse6341.lispInterpreter.datamodels.Token;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -88,7 +88,7 @@ public class ParserTest
         try{
             Scanner in = getScannerFromFilePath(programFile);
             Queue<Token> tokens = tokenizer.tokenize(in);
-            List<LispNode> nodes = parser.parse(tokens);
+            List<Node> nodes = parser.parse(tokens);
             actual = dotNotationPrinter.printInDotNotation(nodes);
         } catch (Exception e){
             actual = e.getMessage();

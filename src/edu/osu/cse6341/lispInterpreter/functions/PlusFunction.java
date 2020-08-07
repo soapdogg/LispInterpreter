@@ -5,8 +5,8 @@ import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.datamodels.UserDefinedFunction;
 import edu.osu.cse6341.lispInterpreter.evaluator.NodeEvaluator;
 import edu.osu.cse6341.lispInterpreter.generator.NodeGenerator;
-import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
-import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.ExpressionNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.Node;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
 import edu.osu.cse6341.lispInterpreter.valueretriver.ListValueRetriever;
 import edu.osu.cse6341.lispInterpreter.valueretriver.NumericValueRetriever;
@@ -25,17 +25,17 @@ public class PlusFunction implements LispFunction {
     private final NodeGenerator nodeGenerator;
 
     @Override
-    public LispNode evaluateLispFunction(
-        final LispNode params,
+    public Node evaluateLispFunction(
+        final Node params,
         final List<UserDefinedFunction> userDefinedFunctions,
-        final Map<String, LispNode> variableNameToValueMap
+        final Map<String, Node> variableNameToValueMap
     ) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.PLUS,
             FunctionLengthConstants.THREE,
             params
         );
-        LispNode evaluatedAddress = nodeEvaluator.evaluate(
+        Node evaluatedAddress = nodeEvaluator.evaluate(
             params,
             userDefinedFunctions,
             variableNameToValueMap,
@@ -51,8 +51,8 @@ public class PlusFunction implements LispFunction {
             FunctionNameConstants.PLUS,
             variableNameToValueMap
         );
-        LispNode data = expressionNodeParams.getData();
-        LispNode evaluatedData = nodeEvaluator.evaluate(
+        Node data = expressionNodeParams.getData();
+        Node evaluatedData = nodeEvaluator.evaluate(
             data,
             userDefinedFunctions,
             variableNameToValueMap,

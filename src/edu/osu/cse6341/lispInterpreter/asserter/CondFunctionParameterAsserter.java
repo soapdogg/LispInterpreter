@@ -4,9 +4,9 @@ import edu.osu.cse6341.lispInterpreter.comparator.NodeValueComparator;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.exceptions.NotAListException;
-import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
-import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
-import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.AtomNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.ExpressionNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.Node;
 import edu.osu.cse6341.lispInterpreter.valueretriver.ListValueRetriever;
 import lombok.AllArgsConstructor;
 
@@ -20,8 +20,8 @@ public class CondFunctionParameterAsserter {
     private final FunctionLengthAsserter functionLengthAsserter;
 
     public void assertCondFunctionParameters(
-        LispNode params,
-        Map<String, LispNode> variableNameToValueMap
+        Node params,
+        Map<String, Node> variableNameToValueMap
     ) throws Exception {
         if (params instanceof AtomNode) {
             AtomNode atomNodeParams = (AtomNode)params;
@@ -32,7 +32,7 @@ public class CondFunctionParameterAsserter {
             }
         }
         ExpressionNode expressionNodeParams = (ExpressionNode) params;
-        LispNode address = expressionNodeParams.getAddress();
+        Node address = expressionNodeParams.getAddress();
         ExpressionNode expressionNodeAddress = listValueRetriever.retrieveListValue(
             address,
             FunctionNameConstants.COND,

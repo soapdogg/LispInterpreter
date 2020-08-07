@@ -20,8 +20,7 @@ public enum GeneratorSingleton {
             ValueRetrieverSingleton.INSTANCE.getAtomicValueRetriever(),
             ValueRetrieverSingleton.INSTANCE.getListValueRetriever(),
             AsserterSingleton.INSTANCE.getUserDefinedFunctionNameAsserter(),
-            AsserterSingleton.INSTANCE.getUserDefinedFormalParametersAsserter(),
-            EnvironmentSingleton.INSTANCE.getEnvironment()
+            AsserterSingleton.INSTANCE.getUserDefinedFormalParametersAsserter()
         );
         userDefinedFunctionGenerator =UserDefinedFunctionGenerator.newInstance(
             defunFunction

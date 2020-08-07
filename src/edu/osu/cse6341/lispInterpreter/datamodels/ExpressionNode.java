@@ -5,7 +5,8 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor(staticName = "newInstance")
-public class ProcessedStateResult {
-    private final Token token;
-    private final int startingPos;
+public class ExpressionNode implements Node {
+
+	private final Node address;
+	private final Node data;
 }

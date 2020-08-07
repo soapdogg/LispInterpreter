@@ -5,11 +5,10 @@ import edu.osu.cse6341.lispInterpreter.asserter.UserDefinedFunctionNameAsserter;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.determiner.ExpressionNodeDeterminer;
-import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
-import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.ExpressionNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.Node;
 import edu.osu.cse6341.lispInterpreter.datamodels.UserDefinedFunction;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
-import edu.osu.cse6341.lispInterpreter.program.Environment;
 import edu.osu.cse6341.lispInterpreter.valueretriver.AtomicValueRetriever;
 import edu.osu.cse6341.lispInterpreter.valueretriver.ListValueRetriever;
 import lombok.AllArgsConstructor;
@@ -25,11 +24,10 @@ public class DefunFunction  {
     private final ListValueRetriever listValueRetriever;
     private final UserDefinedFunctionNameAsserter userDefinedFunctionNameAsserter;
     private final UserDefinedFormalParametersAsserter userDefinedFormalParametersAsserter;
-    private final Environment environment;
 
     private List<String> getFormalParameters(
-        LispNode formalParametersNode,
-        final Map<String, LispNode> variableNameToValueMap
+        Node formalParametersNode,
+        final Map<String, Node> variableNameToValueMap
     ) throws Exception{
         List<String> formalParameters = new ArrayList<>();
         boolean hasNext = expressionNodeDeterminer.isExpressionNode(formalParametersNode);
@@ -40,7 +38,7 @@ public class DefunFunction  {
                 FunctionNameConstants.DEFUN,
                 variableNameToValueMap
             );
-            LispNode formalNode = temp.getAddress();
+            Node formalNode = temp.getAddress();
             String formalId = atomicValueRetriever.retrieveAtomicValue(
                 formalNode,
                 counter,
@@ -56,7 +54,7 @@ public class DefunFunction  {
     }
 
     public UserDefinedFunction evaluateLispFunction(
-        final LispNode params
+        final Node params
     ) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.DEFUN,
@@ -76,7 +74,7 @@ public class DefunFunction  {
         );
         userDefinedFunctionNameAsserter.assertFunctionNameIsValid(functionName);
 
-        LispNode functionNameNodeData = functionNameNode.getData();
+        Node functionNameNodeData = functionNameNode.getData();
         ExpressionNode tempNode = listValueRetriever.retrieveListValue(
             functionNameNodeData,
             FunctionNameConstants.DEFUN,
@@ -102,7 +100,7 @@ public class DefunFunction  {
             new HashMap<>()
         );
 
-        LispNode body = temp.getData();
+        Node body = temp.getData();
 
         return UserDefinedFunction.newInstance(
             formalParameters,

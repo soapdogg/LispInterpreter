@@ -1,9 +1,9 @@
 package edu.osu.cse6341.lispInterpreter.printer;
 
 import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
-import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
-import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
-import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.AtomNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.ExpressionNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.Node;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,7 +36,7 @@ class DotNotationPrinterTest {
         String value = "value";
         Mockito.when(atomNode.getValue()).thenReturn(value);
 
-        List<LispNode> nodes = Collections.singletonList(atomNode);
+        List<Node> nodes = Collections.singletonList(atomNode);
 
         String expected = value + '\n';
         String actual = dotNotationPrinter.printInDotNotation(nodes);

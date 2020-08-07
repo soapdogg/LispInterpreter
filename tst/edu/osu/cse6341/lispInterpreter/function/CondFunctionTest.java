@@ -4,7 +4,7 @@ import edu.osu.cse6341.lispInterpreter.asserter.CondFunctionParameterAsserter;
 import edu.osu.cse6341.lispInterpreter.datamodels.UserDefinedFunction;
 import edu.osu.cse6341.lispInterpreter.evaluator.CondFunctionEvaluator;
 import edu.osu.cse6341.lispInterpreter.functions.CondFunction;
-import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.Node;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,9 +16,9 @@ import java.util.Map;
 
 class CondFunctionTest {
 
-    private LispNode params;
+    private Node params;
     private List<UserDefinedFunction> userDefinedFunctions;
-    private Map<String, LispNode> variableNameToValueMap;
+    private Map<String, Node> variableNameToValueMap;
 
     private CondFunctionParameterAsserter condFunctionParameterAsserter;
     private CondFunctionEvaluator condFunctionEvaluator;
@@ -27,7 +27,7 @@ class CondFunctionTest {
 
     @BeforeEach
     void setup() {
-        params = Mockito.mock(LispNode.class);
+        params = Mockito.mock(Node.class);
         userDefinedFunctions = Collections.emptyList();
         variableNameToValueMap = Collections.emptyMap();
 
@@ -42,7 +42,7 @@ class CondFunctionTest {
 
     @Test
     void evaluateLispFunctionTest() throws Exception {
-        LispNode expected = Mockito.mock(LispNode.class);
+        Node expected = Mockito.mock(Node.class);
         Mockito.when(
             condFunctionEvaluator.evaluateCondFunction(
                 params,
@@ -51,7 +51,7 @@ class CondFunctionTest {
             )
         ).thenReturn(expected);
 
-        LispNode actual = condFunction.evaluateLispFunction(
+        Node actual = condFunction.evaluateLispFunction(
             params,
             userDefinedFunctions,
             variableNameToValueMap

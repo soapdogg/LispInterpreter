@@ -3,10 +3,9 @@ package edu.osu.cse6341.lispInterpreter.valueretriver;
 import edu.osu.cse6341.lispInterpreter.determiner.ExpressionNodeDeterminer;
 import edu.osu.cse6341.lispInterpreter.exceptions.NotAListException;
 import edu.osu.cse6341.lispInterpreter.printer.DotNotationPrinter;
-import edu.osu.cse6341.lispInterpreter.program.Environment;
-import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
-import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
-import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.AtomNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.ExpressionNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.Node;
 import lombok.AllArgsConstructor;
 
 import java.util.Map;
@@ -15,13 +14,12 @@ import java.util.Map;
 public class ListValueRetriever {
 
     private final ExpressionNodeDeterminer expressionNodeDeterminer;
-    private final Environment environment;
     private final DotNotationPrinter dotNotationPrinter;
 
     public ExpressionNode retrieveListValue(
-        final LispNode node,
+        final Node node,
         final String functionName,
-        final Map<String, LispNode> variableNameToValueMap
+        final Map<String, Node> variableNameToValueMap
     ) throws Exception{
         boolean isNodeAList = expressionNodeDeterminer.isExpressionNode(node);
         if (isNodeAList) {
@@ -31,7 +29,7 @@ public class ListValueRetriever {
         String nodeValue = ((AtomNode)node).getValue();
         boolean isVariable = variableNameToValueMap.containsKey(nodeValue);
         if(isVariable) {
-            LispNode result = variableNameToValueMap.get(nodeValue);
+            Node result = variableNameToValueMap.get(nodeValue);
             boolean isVariableList = expressionNodeDeterminer.isExpressionNode(result);
             if (isVariableList) return (ExpressionNode) result;
         }

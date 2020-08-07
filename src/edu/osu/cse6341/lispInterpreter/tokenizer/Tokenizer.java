@@ -7,8 +7,8 @@ import java.util.Scanner;
 
 import edu.osu.cse6341.lispInterpreter.datamodels.ProcessedStateResult;
 import edu.osu.cse6341.lispInterpreter.tokenizer.states.*;
-import edu.osu.cse6341.lispInterpreter.tokens.Token;
-import edu.osu.cse6341.lispInterpreter.tokens.TokenKind;
+import edu.osu.cse6341.lispInterpreter.datamodels.Token;
+import edu.osu.cse6341.lispInterpreter.datamodels.TokenKind;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(staticName = "newInstance")

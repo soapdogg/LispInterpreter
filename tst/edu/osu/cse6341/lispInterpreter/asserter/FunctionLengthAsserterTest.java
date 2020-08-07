@@ -2,7 +2,7 @@ package edu.osu.cse6341.lispInterpreter.asserter;
 
 import edu.osu.cse6341.lispInterpreter.determiner.FunctionLengthDeterminer;
 import edu.osu.cse6341.lispInterpreter.exceptions.WrongFunctionLengthException;
-import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.Node;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,7 @@ class FunctionLengthAsserterTest {
 
     private String functionName;
     private int expected;
-    private LispNode params;
+    private Node params;
     private int actual;
 
     private FunctionLengthDeterminer functionLengthDeterminer;
@@ -23,7 +23,7 @@ class FunctionLengthAsserterTest {
     void setup() {
         functionName = "functionName";
         expected = 2;
-        params = Mockito.mock(LispNode.class);
+        params = Mockito.mock(Node.class);
         actual = 1;
 
         functionLengthDeterminer = Mockito.mock(FunctionLengthDeterminer.class);

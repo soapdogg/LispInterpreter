@@ -7,8 +7,8 @@ import edu.osu.cse6341.lispInterpreter.datamodels.UserDefinedFunction;
 import edu.osu.cse6341.lispInterpreter.evaluator.NodeEvaluator;
 import edu.osu.cse6341.lispInterpreter.functions.ConsFunction;
 import edu.osu.cse6341.lispInterpreter.generator.NodeGenerator;
-import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
-import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.ExpressionNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.Node;
 import edu.osu.cse6341.lispInterpreter.valueretriver.ListValueRetriever;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,9 +21,9 @@ import java.util.Map;
 
 class ConsFunctionTest {
 
-    private LispNode params;
+    private Node params;
     private List<UserDefinedFunction> userDefinedFunctions;
-    private Map<String, LispNode> variableNameToValueMap;
+    private Map<String, Node> variableNameToValueMap;
 
     private FunctionLengthAsserter functionLengthAsserter;
     private ListValueRetriever listValueRetriever;
@@ -34,7 +34,7 @@ class ConsFunctionTest {
 
     @BeforeEach
     void setup() {
-        params = Mockito.mock(LispNode.class);
+        params = Mockito.mock(Node.class);
         userDefinedFunctions = Collections.emptyList();
         variableNameToValueMap = Collections.emptyMap();
 
@@ -62,10 +62,10 @@ class ConsFunctionTest {
             )
         ).thenReturn(expressionNodeParams);
 
-        LispNode address = Mockito.mock(LispNode.class);
+        Node address = Mockito.mock(Node.class);
         Mockito.when(expressionNodeParams.getAddress()).thenReturn(address);
 
-        LispNode evaluatedAddress = Mockito.mock(LispNode.class);
+        Node evaluatedAddress = Mockito.mock(Node.class);
         Mockito.when(
             nodeEvaluator.evaluate(
                 address,
@@ -75,10 +75,10 @@ class ConsFunctionTest {
             )
         ).thenReturn(evaluatedAddress);
 
-        LispNode data = Mockito.mock(LispNode.class);
+        Node data = Mockito.mock(Node.class);
         Mockito.when(expressionNodeParams.getData()).thenReturn(data);
 
-        LispNode evaluatedData = Mockito.mock(LispNode.class);
+        Node evaluatedData = Mockito.mock(Node.class);
         Mockito.when(
             nodeEvaluator.evaluate(
                 data,
@@ -96,7 +96,7 @@ class ConsFunctionTest {
             )
         ).thenReturn(expected);
 
-        LispNode actual = consFunction.evaluateLispFunction(
+        Node actual = consFunction.evaluateLispFunction(
             params,
             userDefinedFunctions,
             variableNameToValueMap

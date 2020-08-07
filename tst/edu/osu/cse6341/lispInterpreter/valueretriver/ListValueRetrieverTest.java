@@ -2,11 +2,10 @@ package edu.osu.cse6341.lispInterpreter.valueretriver;
 
 import edu.osu.cse6341.lispInterpreter.determiner.ExpressionNodeDeterminer;
 import edu.osu.cse6341.lispInterpreter.exceptions.NotAListException;
-import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
-import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
-import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.AtomNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.ExpressionNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.Node;
 import edu.osu.cse6341.lispInterpreter.printer.DotNotationPrinter;
-import edu.osu.cse6341.lispInterpreter.program.Environment;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,12 +16,11 @@ import java.util.Map;
 
 class ListValueRetrieverTest {
 
-    private LispNode node;
+    private Node node;
     private String functionName;
-    private Map<String, LispNode> variableNameToValueMap;
+    private Map<String, Node> variableNameToValueMap;
 
     private ExpressionNodeDeterminer expressionNodeDeterminer;
-    private Environment environment;
     private DotNotationPrinter dotNotationPrinter;
 
     private ListValueRetriever listValueRetriever;
@@ -33,12 +31,10 @@ class ListValueRetrieverTest {
         variableNameToValueMap = Collections.emptyMap();
 
         expressionNodeDeterminer = Mockito.mock(ExpressionNodeDeterminer.class);
-        environment = Mockito.mock(Environment.class);
         dotNotationPrinter = Mockito.mock(DotNotationPrinter.class);
 
         listValueRetriever = ListValueRetriever.newInstance(
             expressionNodeDeterminer,
-            environment,
             dotNotationPrinter
         );
     }
@@ -57,7 +53,6 @@ class ListValueRetrieverTest {
 
         Assertions.assertEquals(node, actual);
 
-        Mockito.verifyZeroInteractions(environment);
         Mockito.verifyZeroInteractions(dotNotationPrinter);
     }
 
@@ -70,7 +65,7 @@ class ListValueRetrieverTest {
         String nodeValue = "nodeValue";
         Mockito.when(((AtomNode)node).getValue()).thenReturn(nodeValue);
 
-        LispNode result = Mockito.mock(ExpressionNode.class);
+        Node result = Mockito.mock(ExpressionNode.class);
         variableNameToValueMap = Collections.singletonMap(nodeValue, result);
 
         Mockito.when(expressionNodeDeterminer.isExpressionNode(result)).thenReturn(true);
@@ -94,7 +89,7 @@ class ListValueRetrieverTest {
         String nodeValue = "nodeValue";
         Mockito.when(((AtomNode)node).getValue()).thenReturn(nodeValue);
 
-        LispNode result = Mockito.mock(ExpressionNode.class);
+        Node result = Mockito.mock(ExpressionNode.class);
         variableNameToValueMap = Collections.singletonMap(nodeValue, result);Mockito.when(expressionNodeDeterminer.isExpressionNode(result)).thenReturn(true);
 
         Mockito.when(expressionNodeDeterminer.isExpressionNode(result)).thenReturn(false);

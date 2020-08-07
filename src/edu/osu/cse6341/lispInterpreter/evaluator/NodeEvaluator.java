@@ -6,10 +6,9 @@ import edu.osu.cse6341.lispInterpreter.datamodels.UserDefinedFunction;
 import edu.osu.cse6341.lispInterpreter.determiner.ExpressionNodeDeterminer;
 import edu.osu.cse6341.lispInterpreter.determiner.UserDefinedFunctionNameDeterminer;
 import edu.osu.cse6341.lispInterpreter.functions.LispFunction;
-import edu.osu.cse6341.lispInterpreter.program.Environment;
-import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
-import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
-import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.AtomNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.ExpressionNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.Node;
 import lombok.AllArgsConstructor;
 
 import java.util.HashMap;
@@ -20,44 +19,43 @@ import java.util.Map;
 public class NodeEvaluator {
 
     private final ExpressionNodeDeterminer expressionNodeDeterminer;
-    private final Environment environment;
     private final UserDefinedFunctionNameDeterminer userDefinedFunctionNameDeterminer;
     private final FunctionLengthAsserter functionLengthAsserter;
 
-    public LispNode evaluate(
-        final LispNode lispNode,
+    public Node evaluate(
+        final Node node,
         final List<UserDefinedFunction> userDefinedFunctions,
-        final Map<String, LispNode> variableNameToValueMap,
+        final Map<String, Node> variableNameToValueMap,
         final boolean areLiteralsAllowed
     ) throws Exception {
-        if (lispNode instanceof AtomNode) return evaluate(
-            (AtomNode) lispNode,
+        if (node instanceof AtomNode) return evaluate(
+            (AtomNode) node,
             variableNameToValueMap
         );
         return evaluate(
-            (ExpressionNode)lispNode,
+            (ExpressionNode) node,
             userDefinedFunctions,
             variableNameToValueMap,
             areLiteralsAllowed
         );
     }
 
-    private LispNode evaluate(
+    private Node evaluate(
         final AtomNode atomNode,
-        final Map<String, LispNode> variableNameToValueMap
+        final Map<String, Node> variableNameToValueMap
     ) {
         String value = atomNode.getValue();
         if(variableNameToValueMap.containsKey(value)) return variableNameToValueMap.get(value);
         return atomNode;
     }
 
-    private LispNode evaluate(
+    private Node evaluate(
         final ExpressionNode expressionNode,
         final List<UserDefinedFunction> userDefinedFunctions,
-        final Map<String, LispNode> variableNameToValueMap,
+        final Map<String, Node> variableNameToValueMap,
         final boolean areLiteralsAllowed
     ) throws Exception {
-        LispNode address = expressionNode.getAddress();
+        Node address = expressionNode.getAddress();
 
         if (!expressionNodeDeterminer.isExpressionNode(address)) {
             String addressValue = ((AtomNode)address).getValue();
@@ -69,17 +67,17 @@ public class NodeEvaluator {
                 UserDefinedFunction userDefinedFunction = userDefinedFunctions.stream().filter(
                     userDefinedFunction1 -> userDefinedFunction1.getFunctionName().equals(addressValue)
                 ).findFirst().get();
-                LispNode params = expressionNode.getData();
+                Node params = expressionNode.getData();
                 functionLengthAsserter.assertLengthIsAsExpected(
                     userDefinedFunction.getFunctionName(),
                     userDefinedFunction.getFormalParameters().size() + 1,
                     params
                 );
-                Map<String, LispNode> newVariables = new HashMap<>();
+                Map<String, Node> newVariables = new HashMap<>();
                 newVariables.putAll(variableNameToValueMap);
                 for (String formal: userDefinedFunction.getFormalParameters()) {
                     ExpressionNode temp = (ExpressionNode)params;
-                    LispNode evaluatedAddress = evaluate(
+                    Node evaluatedAddress = evaluate(
                         temp.getAddress(),
                         userDefinedFunctions,
                         variableNameToValueMap,
@@ -89,7 +87,7 @@ public class NodeEvaluator {
                     params = temp.getData();
                 }
 
-                LispNode result = evaluate(
+                Node result = evaluate(
                     userDefinedFunction.getBody(),
                     userDefinedFunctions,
                     newVariables,

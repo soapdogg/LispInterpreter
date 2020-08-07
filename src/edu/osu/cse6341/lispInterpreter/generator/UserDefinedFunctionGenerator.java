@@ -2,13 +2,12 @@ package edu.osu.cse6341.lispInterpreter.generator;
 
 import edu.osu.cse6341.lispInterpreter.datamodels.UserDefinedFunction;
 import edu.osu.cse6341.lispInterpreter.functions.DefunFunction;
-import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
-import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.ExpressionNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.Node;
 import lombok.AllArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @AllArgsConstructor(staticName = "newInstance")
 public class UserDefinedFunctionGenerator {
@@ -16,10 +15,10 @@ public class UserDefinedFunctionGenerator {
     private final DefunFunction defunFunction;
 
     public List<UserDefinedFunction> generateUserDefinedFunctions(
-        List<LispNode> defunNodes
+        List<Node> defunNodes
     ) throws Exception {
         List<UserDefinedFunction> userDefinedFunctions = new ArrayList<>();
-        for(LispNode defunNode : defunNodes) {
+        for(Node defunNode : defunNodes) {
             ExpressionNode expressionDefunNode = (ExpressionNode)defunNode;
             UserDefinedFunction userDefinedFunction = defunFunction.evaluateLispFunction(
                 expressionDefunNode.getData()

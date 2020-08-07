@@ -1,8 +1,8 @@
 package edu.osu.cse6341.lispInterpreter.asserter;
 
 import edu.osu.cse6341.lispInterpreter.exceptions.UnexpectedTokenKindException;
-import edu.osu.cse6341.lispInterpreter.tokens.Token;
-import edu.osu.cse6341.lispInterpreter.tokens.TokenKind;
+import edu.osu.cse6341.lispInterpreter.datamodels.Token;
+import edu.osu.cse6341.lispInterpreter.datamodels.TokenKind;
 import lombok.AllArgsConstructor;
 
 import java.util.Set;

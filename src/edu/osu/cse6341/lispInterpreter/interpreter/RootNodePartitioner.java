@@ -2,9 +2,9 @@ package edu.osu.cse6341.lispInterpreter.interpreter;
 
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.datamodels.PartitionedRootNodes;
-import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
-import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
-import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.AtomNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.ExpressionNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.Node;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
@@ -15,16 +15,16 @@ import java.util.stream.Collectors;
 public class RootNodePartitioner {
 
     public PartitionedRootNodes partitionRootNodes(
-        List<LispNode> rootNodes
+        List<Node> rootNodes
     ) {
-        Map<Boolean, List<LispNode>> defunAndExecutables = rootNodes.stream()
+        Map<Boolean, List<Node>> defunAndExecutables = rootNodes.stream()
             .collect(
                 Collectors.partitioningBy(
                     rootNode -> {
                         boolean isRootNodeExpressionNode = rootNode instanceof ExpressionNode;
                         if (isRootNodeExpressionNode) {
                             ExpressionNode expressionRootNode = (ExpressionNode)rootNode;
-                            LispNode rootNodeAddress = expressionRootNode.getAddress();
+                            Node rootNodeAddress = expressionRootNode.getAddress();
                             boolean isRootNodeAddressAtom = rootNodeAddress instanceof AtomNode;
                             if (isRootNodeAddressAtom) {
                                AtomNode rootNodeAddressAtom = (AtomNode)rootNodeAddress;

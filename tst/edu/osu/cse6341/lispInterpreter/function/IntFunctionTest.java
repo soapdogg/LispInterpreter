@@ -10,8 +10,8 @@ import edu.osu.cse6341.lispInterpreter.determiner.NumericStringDeterminer;
 import edu.osu.cse6341.lispInterpreter.evaluator.NodeEvaluator;
 import edu.osu.cse6341.lispInterpreter.functions.IntFunction;
 import edu.osu.cse6341.lispInterpreter.generator.NodeGenerator;
-import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
-import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.AtomNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.Node;
 import edu.osu.cse6341.lispInterpreter.valueretriver.AtomicValueRetriever;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,9 +23,9 @@ import java.util.List;
 import java.util.Map;
 
 class IntFunctionTest {
-    private LispNode params;
+    private Node params;
     private List<UserDefinedFunction> userDefinedFunctions;
-    private Map<String, LispNode> variableNameToValueMap;
+    private Map<String, Node> variableNameToValueMap;
 
     private FunctionLengthAsserter functionLengthAsserter;
     private NodeEvaluator nodeEvaluator;
@@ -38,7 +38,7 @@ class IntFunctionTest {
 
     @BeforeEach
     void setup() {
-        params = Mockito.mock(LispNode.class);
+        params = Mockito.mock(Node.class);
         userDefinedFunctions = Collections.emptyList();
         variableNameToValueMap = Collections.emptyMap();
 
@@ -61,7 +61,7 @@ class IntFunctionTest {
 
     @Test
     void intFunctionTest() throws Exception {
-        LispNode evaluatedResult = Mockito.mock(LispNode.class);
+        Node evaluatedResult = Mockito.mock(Node.class);
         Mockito.when(
             nodeEvaluator.evaluate(
                 params,
@@ -88,7 +88,7 @@ class IntFunctionTest {
         AtomNode expected = Mockito.mock(AtomNode.class);
         Mockito.when(nodeGenerator.generateAtomNode(result)).thenReturn(expected);
 
-        LispNode actual = intFunction.evaluateLispFunction(
+        Node actual = intFunction.evaluateLispFunction(
             params,
             userDefinedFunctions,
             variableNameToValueMap
@@ -104,7 +104,7 @@ class IntFunctionTest {
 
     @Test
     void intFunctionIsListTest() throws Exception {
-        LispNode evaluatedResult = Mockito.mock(LispNode.class);
+        Node evaluatedResult = Mockito.mock(Node.class);
         Mockito.when(
             nodeEvaluator.evaluate(
                 params,
@@ -120,7 +120,7 @@ class IntFunctionTest {
         Mockito.when(nodeGenerator.generateAtomNode(false)).thenReturn(expected);
 
 
-        LispNode actual = intFunction.evaluateLispFunction(
+        Node actual = intFunction.evaluateLispFunction(
             params,
             userDefinedFunctions,
             variableNameToValueMap

@@ -4,7 +4,7 @@ import edu.osu.cse6341.lispInterpreter.determiner.NumericStringDeterminer;
 import edu.osu.cse6341.lispInterpreter.exceptions.NotAtomicException;
 import edu.osu.cse6341.lispInterpreter.exceptions.NotNumericException;
 import edu.osu.cse6341.lispInterpreter.printer.ListNotationPrinter;
-import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.Node;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor(staticName = "newInstance")
@@ -15,7 +15,7 @@ public class NumericValueRetriever {
     private final ListNotationPrinter listNotationPrinter;
 
     public int retrieveNumericValue(
-        final LispNode node,
+        final Node node,
         final int position,
         final String functionName
     ) throws NotNumericException, NotAtomicException {

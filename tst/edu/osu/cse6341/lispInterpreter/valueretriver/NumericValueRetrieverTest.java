@@ -5,7 +5,7 @@ import edu.osu.cse6341.lispInterpreter.determiner.NumericStringDeterminer;
 import edu.osu.cse6341.lispInterpreter.exceptions.NotAtomicException;
 import edu.osu.cse6341.lispInterpreter.exceptions.NotNumericException;
 import edu.osu.cse6341.lispInterpreter.printer.ListNotationPrinter;
-import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.Node;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ import org.mockito.Mockito;
 
 class NumericValueRetrieverTest {
 
-    private LispNode node;
+    private Node node;
     private int position;
     private String functionName;
 
@@ -24,7 +24,7 @@ class NumericValueRetrieverTest {
 
     @BeforeEach
     void setup() {
-        node = Mockito.mock(LispNode.class);
+        node = Mockito.mock(Node.class);
         position = 1;
         functionName = FunctionNameConstants.QUOTE;
 

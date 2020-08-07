@@ -2,13 +2,9 @@ package edu.osu.cse6341.lispInterpreter.singleton;
 
 import edu.osu.cse6341.lispInterpreter.asserter.*;
 import edu.osu.cse6341.lispInterpreter.constants.InvalidUserDefinedNameConstants;
-import edu.osu.cse6341.lispInterpreter.determiner.InvalidNameDeterminer;
-import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
-import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
-import edu.osu.cse6341.lispInterpreter.tokens.TokenKind;
+import edu.osu.cse6341.lispInterpreter.datamodels.TokenKind;
 import lombok.Getter;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Getter

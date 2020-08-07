@@ -16,7 +16,7 @@ public enum InterpreterSingleton {
         interpreter = Interpreter.newInstance(
             TokenizerSingleton.INSTANCE.getTokenizer(),
             ParserSingleton.INSTANCE.getParser(),
-            ProgramSingleton.INSTANCE.getProgram(),
+            EvaluatorSingleton.INSTANCE.getProgramEvaluator(),
             rootNodePartitioner,
             GeneratorSingleton.INSTANCE.getUserDefinedFunctionGenerator(),
             PrinterSingleton.INSTANCE.getListNotationPrinter()

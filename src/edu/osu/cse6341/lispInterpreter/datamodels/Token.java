@@ -1,4 +1,4 @@
-package edu.osu.cse6341.lispInterpreter.tokens;
+package edu.osu.cse6341.lispInterpreter.datamodels;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

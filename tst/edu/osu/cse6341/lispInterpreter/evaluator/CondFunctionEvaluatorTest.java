@@ -4,9 +4,9 @@ import edu.osu.cse6341.lispInterpreter.comparator.NodeValueComparator;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.datamodels.UserDefinedFunction;
 import edu.osu.cse6341.lispInterpreter.exceptions.NotAListException;
-import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
-import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
-import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.AtomNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.ExpressionNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.Node;
 import edu.osu.cse6341.lispInterpreter.valueretriver.ListValueRetriever;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,9 +19,9 @@ import java.util.Map;
 
 class CondFunctionEvaluatorTest {
 
-    private LispNode params;
+    private Node params;
     private List<UserDefinedFunction> userDefinedFunctions;
-    private Map<String, LispNode> variableNameToValueMap;
+    private Map<String, Node> variableNameToValueMap;
 
     private ListValueRetriever listValueRetriever;
     private NodeEvaluator nodeEvaluator;
@@ -67,7 +67,7 @@ class CondFunctionEvaluatorTest {
     void inputIsListAndBooleanResultIsNotNilTest() throws Exception {
         params = Mockito.mock(ExpressionNode.class);
 
-        LispNode address = Mockito.mock(LispNode.class);
+        Node address = Mockito.mock(Node.class);
         Mockito.when(((ExpressionNode)params).getAddress()).thenReturn(address);
 
         ExpressionNode expressionNodeAddress = Mockito.mock(ExpressionNode.class);
@@ -79,10 +79,10 @@ class CondFunctionEvaluatorTest {
             )
         ).thenReturn(expressionNodeAddress);
 
-        LispNode expressionNodeAddressAddress = Mockito.mock(LispNode.class);
+        Node expressionNodeAddressAddress = Mockito.mock(Node.class);
         Mockito.when(expressionNodeAddress.getAddress()).thenReturn(expressionNodeAddressAddress);
 
-        LispNode booleanResult = Mockito.mock(AtomNode.class);
+        Node booleanResult = Mockito.mock(AtomNode.class);
         Mockito.when(
             nodeEvaluator.evaluate(
                 expressionNodeAddressAddress,
@@ -98,10 +98,10 @@ class CondFunctionEvaluatorTest {
             )
         ).thenReturn(false);
 
-        LispNode expressionNodeAddressData = Mockito.mock(LispNode.class);
+        Node expressionNodeAddressData = Mockito.mock(Node.class);
         Mockito.when(expressionNodeAddress.getData()).thenReturn(expressionNodeAddressData);
 
-        LispNode expected = Mockito.mock(LispNode.class);
+        Node expected = Mockito.mock(Node.class);
         Mockito.when(
             nodeEvaluator.evaluate(
                 expressionNodeAddressData,
@@ -111,7 +111,7 @@ class CondFunctionEvaluatorTest {
             )
         ).thenReturn(expected);
 
-        LispNode actual = condFunctionEvaluator.evaluateCondFunction(
+        Node actual = condFunctionEvaluator.evaluateCondFunction(
             params,
             userDefinedFunctions,
             variableNameToValueMap
@@ -124,7 +124,7 @@ class CondFunctionEvaluatorTest {
     void inputIsListAndBooleanResultIsNotAtomNodeTest() throws Exception {
         params = Mockito.mock(ExpressionNode.class);
 
-        LispNode address = Mockito.mock(LispNode.class);
+        Node address = Mockito.mock(Node.class);
         Mockito.when(((ExpressionNode)params).getAddress()).thenReturn(address);
 
         ExpressionNode expressionNodeAddress = Mockito.mock(ExpressionNode.class);
@@ -136,10 +136,10 @@ class CondFunctionEvaluatorTest {
             )
         ).thenReturn(expressionNodeAddress);
 
-        LispNode expressionNodeAddressAddress = Mockito.mock(LispNode.class);
+        Node expressionNodeAddressAddress = Mockito.mock(Node.class);
         Mockito.when(expressionNodeAddress.getAddress()).thenReturn(expressionNodeAddressAddress);
 
-        LispNode booleanResult = Mockito.mock(ExpressionNode.class);
+        Node booleanResult = Mockito.mock(ExpressionNode.class);
         Mockito.when(
             nodeEvaluator.evaluate(
                 expressionNodeAddressAddress,
@@ -149,7 +149,7 @@ class CondFunctionEvaluatorTest {
             )
         ).thenReturn(booleanResult);
 
-        LispNode data = Mockito.mock(AtomNode.class);
+        Node data = Mockito.mock(AtomNode.class);
         Mockito.when(((ExpressionNode)params).getData()).thenReturn(data);
 
         Assertions.assertThrows(
@@ -166,7 +166,7 @@ class CondFunctionEvaluatorTest {
     void inputIsListAndBooleanResultIsNilTest() throws Exception {
         params = Mockito.mock(ExpressionNode.class);
 
-        LispNode address = Mockito.mock(LispNode.class);
+        Node address = Mockito.mock(Node.class);
         Mockito.when(((ExpressionNode)params).getAddress()).thenReturn(address);
 
         ExpressionNode expressionNodeAddress = Mockito.mock(ExpressionNode.class);
@@ -178,10 +178,10 @@ class CondFunctionEvaluatorTest {
             )
         ).thenReturn(expressionNodeAddress);
 
-        LispNode expressionNodeAddressAddress = Mockito.mock(LispNode.class);
+        Node expressionNodeAddressAddress = Mockito.mock(Node.class);
         Mockito.when(expressionNodeAddress.getAddress()).thenReturn(expressionNodeAddressAddress);
 
-        LispNode booleanResult = Mockito.mock(AtomNode.class);
+        Node booleanResult = Mockito.mock(AtomNode.class);
         Mockito.when(
             nodeEvaluator.evaluate(
                 expressionNodeAddressAddress,
@@ -197,7 +197,7 @@ class CondFunctionEvaluatorTest {
             )
         ).thenReturn(true);
 
-        LispNode data = Mockito.mock(AtomNode.class);
+        Node data = Mockito.mock(AtomNode.class);
         Mockito.when(((ExpressionNode)params).getData()).thenReturn(data);
 
         Assertions.assertThrows(

@@ -7,9 +7,9 @@ import edu.osu.cse6341.lispInterpreter.datamodels.UserDefinedFunction;
 import edu.osu.cse6341.lispInterpreter.evaluator.NodeEvaluator;
 import edu.osu.cse6341.lispInterpreter.functions.GreaterFunction;
 import edu.osu.cse6341.lispInterpreter.generator.NodeGenerator;
-import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
-import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
-import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.AtomNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.ExpressionNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.Node;
 import edu.osu.cse6341.lispInterpreter.valueretriver.ListValueRetriever;
 import edu.osu.cse6341.lispInterpreter.valueretriver.NumericValueRetriever;
 import org.junit.jupiter.api.Assertions;
@@ -23,9 +23,9 @@ import java.util.Map;
 
 class GreaterFunctionTest {
 
-    private LispNode params;
+    private Node params;
     private List<UserDefinedFunction> userDefinedFunctions;
-    private Map<String, LispNode> variableNameToValueMap;
+    private Map<String, Node> variableNameToValueMap;
 
     private FunctionLengthAsserter functionLengthAsserter;
     private NodeEvaluator nodeEvaluator;
@@ -37,7 +37,7 @@ class GreaterFunctionTest {
 
     @BeforeEach
     void setup() {
-        params = Mockito.mock(LispNode.class);
+        params = Mockito.mock(Node.class);
         userDefinedFunctions = Collections.emptyList();
         variableNameToValueMap = Collections.emptyMap();
 
@@ -58,7 +58,7 @@ class GreaterFunctionTest {
 
     @Test
     void greaterFunctionTest() throws Exception {
-        LispNode evaluatedAddress = Mockito.mock(LispNode.class);
+        Node evaluatedAddress = Mockito.mock(Node.class);
         Mockito.when(
             nodeEvaluator.evaluate(
                 params,
@@ -86,10 +86,10 @@ class GreaterFunctionTest {
             )
         ).thenReturn(expressionNodeParams);
 
-        LispNode data = Mockito.mock(LispNode.class);
+        Node data = Mockito.mock(Node.class);
         Mockito.when(expressionNodeParams.getData()).thenReturn(data);
 
-        LispNode evaluatedData = Mockito.mock(LispNode.class);
+        Node evaluatedData = Mockito.mock(Node.class);
         Mockito.when(
             nodeEvaluator.evaluate(
                 data,
@@ -115,7 +115,7 @@ class GreaterFunctionTest {
             )
         ).thenReturn(expected);
 
-        LispNode actual = greaterFunction.evaluateLispFunction(
+        Node actual = greaterFunction.evaluateLispFunction(
             params,
             userDefinedFunctions,
             variableNameToValueMap
@@ -132,7 +132,7 @@ class GreaterFunctionTest {
 
     @Test
     void greaterFunctionTrueTest() throws Exception {
-        LispNode evaluatedAddress = Mockito.mock(LispNode.class);
+        Node evaluatedAddress = Mockito.mock(Node.class);
         Mockito.when(
             nodeEvaluator.evaluate(
                 params,
@@ -160,10 +160,10 @@ class GreaterFunctionTest {
             )
         ).thenReturn(expressionNodeParams);
 
-        LispNode data = Mockito.mock(LispNode.class);
+        Node data = Mockito.mock(Node.class);
         Mockito.when(expressionNodeParams.getData()).thenReturn(data);
 
-        LispNode evaluatedData = Mockito.mock(LispNode.class);
+        Node evaluatedData = Mockito.mock(Node.class);
         Mockito.when(
             nodeEvaluator.evaluate(
                 data,
@@ -189,7 +189,7 @@ class GreaterFunctionTest {
             )
         ).thenReturn(expected);
 
-        LispNode actual = greaterFunction.evaluateLispFunction(
+        Node actual = greaterFunction.evaluateLispFunction(
             params,
             userDefinedFunctions,
             variableNameToValueMap

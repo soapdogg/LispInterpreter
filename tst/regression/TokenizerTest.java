@@ -3,7 +3,7 @@ package regression;
 import edu.osu.cse6341.lispInterpreter.datamodels.ProcessedTokensResult;
 import edu.osu.cse6341.lispInterpreter.singleton.TokenizerSingleton;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
-import edu.osu.cse6341.lispInterpreter.tokens.Token;
+import edu.osu.cse6341.lispInterpreter.datamodels.Token;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

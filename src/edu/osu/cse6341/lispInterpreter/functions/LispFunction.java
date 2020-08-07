@@ -1,15 +1,15 @@
 package edu.osu.cse6341.lispInterpreter.functions;
 
 import edu.osu.cse6341.lispInterpreter.datamodels.UserDefinedFunction;
-import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.Node;
 
 import java.util.List;
 import java.util.Map;
 
 public interface LispFunction {
-    LispNode evaluateLispFunction(
-        final LispNode params,
+    Node evaluateLispFunction(
+        final Node params,
         List<UserDefinedFunction> userDefinedFunctions,
-        Map<String, LispNode> variableNameToValueMap
+        Map<String, Node> variableNameToValueMap
     ) throws Exception;
 }

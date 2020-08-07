@@ -2,9 +2,9 @@ package edu.osu.cse6341.lispInterpreter.interpreter;
 
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.datamodels.PartitionedRootNodes;
-import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
-import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
-import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.AtomNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.ExpressionNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.Node;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ import java.util.List;
 
 class RootNodePartitionerTest {
 
-    private List<LispNode> rootNodes;
+    private List<Node> rootNodes;
 
     private RootNodePartitioner rootNodePartitioner;
 
@@ -43,7 +43,7 @@ class RootNodePartitionerTest {
     void expressionRootNodeWithExpressionAddressTest() {
         ExpressionNode rootNode = Mockito.mock(ExpressionNode.class);
 
-        LispNode address = Mockito.mock(ExpressionNode.class);
+        Node address = Mockito.mock(ExpressionNode.class);
         Mockito.when(rootNode.getAddress()).thenReturn(address);
 
         rootNodes = Collections.singletonList(rootNode);

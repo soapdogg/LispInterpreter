@@ -5,9 +5,9 @@ import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
 import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
 import edu.osu.cse6341.lispInterpreter.exceptions.NotAListException;
-import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
-import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
-import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.AtomNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.ExpressionNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.Node;
 import edu.osu.cse6341.lispInterpreter.valueretriver.ListValueRetriever;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,8 +19,8 @@ import java.util.Map;
 
 class CondFunctionParameterAsserterTest {
 
-    private LispNode params;
-    private Map<String, LispNode> variableNameToValueMap;
+    private Node params;
+    private Map<String, Node> variableNameToValueMap;
 
     private NodeValueComparator nodeValueComparator;
     private ListValueRetriever listValueRetriever;
@@ -83,7 +83,7 @@ class CondFunctionParameterAsserterTest {
     @Test
     void inputIsListTest() throws Exception {
         params = Mockito.mock(ExpressionNode.class);
-        LispNode address = Mockito.mock(LispNode.class);
+        Node address = Mockito.mock(Node.class);
         Mockito.when(((ExpressionNode)params).getAddress()).thenReturn(address);
 
         ExpressionNode expressionNodeAddress = Mockito.mock(ExpressionNode.class);
@@ -95,7 +95,7 @@ class CondFunctionParameterAsserterTest {
             )
         ).thenReturn(expressionNodeAddress);
 
-        LispNode expressionNodeAddressData = Mockito.mock(LispNode.class);
+        Node expressionNodeAddressData = Mockito.mock(Node.class);
         Mockito.when(expressionNodeAddress.getData()).thenReturn(expressionNodeAddressData);
 
 

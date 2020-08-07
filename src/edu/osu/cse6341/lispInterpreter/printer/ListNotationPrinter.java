@@ -2,9 +2,9 @@ package edu.osu.cse6341.lispInterpreter.printer;
 
 import edu.osu.cse6341.lispInterpreter.comparator.NodeValueComparator;
 import edu.osu.cse6341.lispInterpreter.determiner.ExpressionNodeDeterminer;
-import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
-import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
-import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.AtomNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.ExpressionNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.Node;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
@@ -16,10 +16,10 @@ public class ListNotationPrinter {
     private final NodeValueComparator nodeValueComparator;
 
     public String printInListNotation(
-        List<LispNode> nodes
+        List<Node> nodes
     ){
         StringBuilder sb = new StringBuilder();
-        for (LispNode node : nodes) {
+        for (Node node : nodes) {
             String listNotation = printInListNotation(
                 node
             );
@@ -30,7 +30,7 @@ public class ListNotationPrinter {
     }
 
     public String printInListNotation(
-        final LispNode node
+        final Node node
     ) {
         if (node instanceof AtomNode) return ((AtomNode) node).getValue();
         String result = "(";
@@ -43,7 +43,7 @@ public class ListNotationPrinter {
         final ExpressionNode node
     ) {
         StringBuilder sb = new StringBuilder();
-        LispNode address = node.getAddress();
+        Node address = node.getAddress();
 
         if (expressionNodeDeterminer.isExpressionNode(address)) {
             sb.append(
@@ -57,7 +57,7 @@ public class ListNotationPrinter {
             );
         }
 
-        LispNode data = node.getData();
+        Node data = node.getData();
         String dataListNotation;
         boolean isDataList = expressionNodeDeterminer.isExpressionNode(data);
         if (isDataList) {

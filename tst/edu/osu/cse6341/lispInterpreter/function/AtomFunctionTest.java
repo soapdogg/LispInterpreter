@@ -8,8 +8,8 @@ import edu.osu.cse6341.lispInterpreter.determiner.ExpressionNodeDeterminer;
 import edu.osu.cse6341.lispInterpreter.evaluator.NodeEvaluator;
 import edu.osu.cse6341.lispInterpreter.functions.AtomFunction;
 import edu.osu.cse6341.lispInterpreter.generator.NodeGenerator;
-import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
-import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.AtomNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.Node;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,9 +21,9 @@ import java.util.Map;
 
 class AtomFunctionTest {
 
-    private LispNode params;
+    private Node params;
     private List<UserDefinedFunction> userDefinedFunctions;
-    private Map<String, LispNode> variableNameToValueMap;
+    private Map<String, Node> variableNameToValueMap;
 
     private FunctionLengthAsserter functionLengthAsserter;
     private NodeEvaluator nodeEvaluator;
@@ -34,7 +34,7 @@ class AtomFunctionTest {
 
     @BeforeEach
     void setup() {
-        params = Mockito.mock(LispNode.class);
+        params = Mockito.mock(Node.class);
         userDefinedFunctions = Collections.emptyList();
         variableNameToValueMap = Collections.emptyMap();
 
@@ -53,7 +53,7 @@ class AtomFunctionTest {
 
     @Test
     void atomFunctionTest() throws Exception {
-        LispNode evaluatedResult = Mockito.mock(LispNode.class);
+        Node evaluatedResult = Mockito.mock(Node.class);
         Mockito.when(
             nodeEvaluator.evaluate(
                 params,
@@ -69,7 +69,7 @@ class AtomFunctionTest {
         AtomNode expected = Mockito.mock(AtomNode.class);
         Mockito.when(nodeGenerator.generateAtomNode(!result)).thenReturn(expected);
 
-        LispNode actual = atomFunction.evaluateLispFunction(
+        Node actual = atomFunction.evaluateLispFunction(
             params,
             userDefinedFunctions,
             variableNameToValueMap
@@ -85,7 +85,7 @@ class AtomFunctionTest {
 
     @Test
     void atomFunctionFalseTest() throws Exception {
-        LispNode evaluatedResult = Mockito.mock(LispNode.class);
+        Node evaluatedResult = Mockito.mock(Node.class);
         Mockito.when(
             nodeEvaluator.evaluate(
                 params,
@@ -101,7 +101,7 @@ class AtomFunctionTest {
         AtomNode expected = Mockito.mock(AtomNode.class);
         Mockito.when(nodeGenerator.generateAtomNode(!result)).thenReturn(expected);
 
-        LispNode actual = atomFunction.evaluateLispFunction(
+        Node actual = atomFunction.evaluateLispFunction(
             params,
             userDefinedFunctions,
             variableNameToValueMap

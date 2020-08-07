@@ -1,9 +1,9 @@
 package edu.osu.cse6341.lispInterpreter.generator;
 
 import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
-import edu.osu.cse6341.lispInterpreter.nodes.AtomNode;
-import edu.osu.cse6341.lispInterpreter.nodes.ExpressionNode;
-import edu.osu.cse6341.lispInterpreter.nodes.LispNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.AtomNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.ExpressionNode;
+import edu.osu.cse6341.lispInterpreter.datamodels.Node;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,8 +50,8 @@ public class NodeGeneratorTest {
 
     @Test
     void generateNonEmptyExpressionNodeTest() {
-        LispNode address = Mockito.mock(LispNode.class);
-        LispNode data = Mockito.mock(LispNode.class);
+        Node address = Mockito.mock(Node.class);
+        Node data = Mockito.mock(Node.class);
 
         ExpressionNode actual = nodeGenerator.generateExpressionNode(
             address,
