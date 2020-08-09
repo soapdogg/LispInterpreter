@@ -1,5 +1,7 @@
 package edu.osu.cse6341.lispInterpreter.singleton;
 
+import edu.osu.cse6341.lispInterpreter.tokenizer.LineTokenizer;
+import edu.osu.cse6341.lispInterpreter.tokenizer.ScannerToLineTransformer;
 import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
 import lombok.Getter;
 
@@ -7,9 +9,16 @@ import lombok.Getter;
 public enum TokenizerSingleton {
     INSTANCE;
 
+    private final ScannerToLineTransformer scannerToLineTransformer;
+    private final LineTokenizer lineTokenizer;
     private final Tokenizer tokenizer;
 
     TokenizerSingleton() {
-        tokenizer = Tokenizer.newInstance();
+        scannerToLineTransformer = ScannerToLineTransformer.newInstance();
+        lineTokenizer = LineTokenizer.newInstance();
+        tokenizer = Tokenizer.newInstance(
+            scannerToLineTransformer,
+            lineTokenizer
+        );
     }
 }

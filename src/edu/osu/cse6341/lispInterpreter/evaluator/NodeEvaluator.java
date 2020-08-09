@@ -79,13 +79,12 @@ public class NodeEvaluator {
                     params = temp.getData();
                 }
 
-                Node result = evaluate(
+                return evaluate(
                     userDefinedFunction.getBody(),
                     userDefinedFunctions,
                     newVariables,
                     true
                 );
-                return result;
             }
             if (FunctionsConstants.functionMap.containsKey(addressValue)) {
                 LispFunction function = FunctionsConstants.functionMap.get(addressValue);

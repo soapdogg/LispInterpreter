@@ -9,6 +9,7 @@ import edu.osu.cse6341.lispInterpreter.datamodels.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.datamodels.Node;
 import edu.osu.cse6341.lispInterpreter.datamodels.UserDefinedFunction;
 import edu.osu.cse6341.lispInterpreter.asserter.FunctionLengthAsserter;
+import edu.osu.cse6341.lispInterpreter.generator.UserDefinedFunctionFormalParameterGenerator;
 import edu.osu.cse6341.lispInterpreter.valueretriver.AtomicValueRetriever;
 import edu.osu.cse6341.lispInterpreter.valueretriver.ListValueRetriever;
 import lombok.AllArgsConstructor;
@@ -18,40 +19,12 @@ import java.util.*;
 @AllArgsConstructor(staticName = "newInstance")
 public class DefunFunction  {
 
-    private final ExpressionNodeDeterminer expressionNodeDeterminer;
     private final FunctionLengthAsserter functionLengthAsserter;
     private final AtomicValueRetriever atomicValueRetriever;
     private final ListValueRetriever listValueRetriever;
     private final UserDefinedFunctionNameAsserter userDefinedFunctionNameAsserter;
+    private final UserDefinedFunctionFormalParameterGenerator userDefinedFunctionFormalParameterGenerator;
     private final UserDefinedFormalParametersAsserter userDefinedFormalParametersAsserter;
-
-    private List<String> getFormalParameters(
-        Node formalParametersNode,
-        final Map<String, Node> variableNameToValueMap
-    ) throws Exception{
-        List<String> formalParameters = new ArrayList<>();
-        boolean hasNext = expressionNodeDeterminer.isExpressionNode(formalParametersNode);
-        int counter = 1;
-        while(hasNext){
-            ExpressionNode temp = listValueRetriever.retrieveListValue(
-                formalParametersNode,
-                FunctionNameConstants.DEFUN,
-                variableNameToValueMap
-            );
-            Node formalNode = temp.getAddress();
-            String formalId = atomicValueRetriever.retrieveAtomicValue(
-                formalNode,
-                counter,
-                FunctionNameConstants.DEFUN
-            );
-            formalParameters.add(formalId);
-            formalParametersNode = temp.getData();
-            ++counter;
-            hasNext = expressionNodeDeterminer.isExpressionNode(formalParametersNode);
-        }
-        userDefinedFormalParametersAsserter.assertFormalParameters(formalParameters);
-        return formalParameters;
-    }
 
     public UserDefinedFunction evaluateLispFunction(
         final Node params
@@ -80,20 +53,12 @@ public class DefunFunction  {
             FunctionNameConstants.DEFUN,
             new HashMap<>()
         );
-        List<String> formalParameters;
-        if (!expressionNodeDeterminer.isExpressionNode(tempNode.getAddress())) {
-            formalParameters = Collections.emptyList();
-        } else {
-            ExpressionNode formalParametersNode = listValueRetriever.retrieveListValue(
-                tempNode.getAddress(),
-                FunctionNameConstants.DEFUN,
-                new HashMap<>()
-            );
-            formalParameters = getFormalParameters(
-                formalParametersNode,
-                new HashMap<>()
-            );
-        }
+        List<String> formalParameters = userDefinedFunctionFormalParameterGenerator.getFormalParameters(
+            tempNode.getAddress(),
+            1,
+            new HashMap<>()
+        );
+        userDefinedFormalParametersAsserter.assertFormalParameters(formalParameters);
         ExpressionNode temp = listValueRetriever.retrieveListValue(
             functionNameNodeData,
             FunctionNameConstants.DEFUN,
