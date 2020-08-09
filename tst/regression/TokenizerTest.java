@@ -104,7 +104,7 @@ public class TokenizerTest
         return in;
     }
 
-    private static ProcessedTokensResult processTokens(Queue<Token> tokens) throws Exception {
+    private static ProcessedTokensResult processTokens(Queue<Token> tokens) {
         Queue<String> literalAtoms = new LinkedList<>();
         int openCount = 0;
         int closingCount = 0;
@@ -119,12 +119,6 @@ public class TokenizerTest
                 case NUMERIC_TOKEN -> {
                     ++numericAtomsCount;
                     numericAtomsSum += Integer.parseInt(token.getValue());
-                }
-                case ERROR_TOKEN -> {
-                    String errorMessage = "Error! Invalid token: " + token.getValue() + "\n";
-                    throw new Exception(errorMessage);
-                }
-                default -> {
                 }
             }
         }

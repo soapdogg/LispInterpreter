@@ -2,6 +2,7 @@ package edu.osu.cse6341.lispInterpreter.singleton;
 
 import edu.osu.cse6341.lispInterpreter.asserter.*;
 import edu.osu.cse6341.lispInterpreter.constants.InvalidUserDefinedNameConstants;
+import edu.osu.cse6341.lispInterpreter.constants.TokenValueConstants;
 import edu.osu.cse6341.lispInterpreter.datamodels.TokenKind;
 import lombok.Getter;
 
@@ -17,6 +18,7 @@ public enum AsserterSingleton {
     private final UserDefinedFormalParametersAsserter userDefinedFormalParametersAsserter;
     private final UserDefinedFunctionNameAsserter userDefinedFunctionNameAsserter;
     private final AtomRootNodeAsserter atomRootNodeAsserter;
+    private final LineFormatAsserter lineFormatAsserter;
 
     AsserterSingleton() {
         functionLengthAsserter = FunctionLengthAsserter.newInstance(
@@ -45,6 +47,9 @@ public enum AsserterSingleton {
         atomRootNodeAsserter = AtomRootNodeAsserter.newInstance(
             DeterminerSingleton.INSTANCE.getNumericStringDeterminer(),
             ComparatorSingleton.INSTANCE.getNodeValueComparator()
+        );
+        lineFormatAsserter = LineFormatAsserter.newInstance(
+            TokenValueConstants.ERROR_STATE_PATTERN
         );
     }
 }

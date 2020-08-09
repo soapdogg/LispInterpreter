@@ -1,2 +1,1 @@
-Expected either an ATOM or OPEN token.
-Actual: ERROR_TOKEN    Value: 4541W
+Error! Invalid token: 4541W

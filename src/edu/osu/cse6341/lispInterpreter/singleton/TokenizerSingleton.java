@@ -18,6 +18,7 @@ public enum TokenizerSingleton {
         lineTokenizer = LineTokenizer.newInstance();
         tokenizer = Tokenizer.newInstance(
             scannerToLineTransformer,
+            AsserterSingleton.INSTANCE.getLineFormatAsserter(),
             lineTokenizer
         );
     }
