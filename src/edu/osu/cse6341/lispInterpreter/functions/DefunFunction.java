@@ -4,7 +4,6 @@ import edu.osu.cse6341.lispInterpreter.asserter.UserDefinedFormalParametersAsser
 import edu.osu.cse6341.lispInterpreter.asserter.UserDefinedFunctionNameAsserter;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionLengthConstants;
 import edu.osu.cse6341.lispInterpreter.constants.FunctionNameConstants;
-import edu.osu.cse6341.lispInterpreter.determiner.ExpressionNodeDeterminer;
 import edu.osu.cse6341.lispInterpreter.datamodels.ExpressionNode;
 import edu.osu.cse6341.lispInterpreter.datamodels.Node;
 import edu.osu.cse6341.lispInterpreter.datamodels.UserDefinedFunction;
@@ -38,11 +37,11 @@ public class DefunFunction  {
         ExpressionNode functionNameNode = listValueRetriever.retrieveListValue(
             params,
             FunctionNameConstants.DEFUN,
-            new HashMap<>()
+            Collections.emptyMap()
         );
         String functionName = atomicValueRetriever.retrieveAtomicValue(
             functionNameNode.getAddress(),
-            1,
+            FunctionLengthConstants.ONE,
             FunctionNameConstants.DEFUN
         );
         userDefinedFunctionNameAsserter.assertFunctionNameIsValid(functionName);
@@ -51,21 +50,16 @@ public class DefunFunction  {
         ExpressionNode tempNode = listValueRetriever.retrieveListValue(
             functionNameNodeData,
             FunctionNameConstants.DEFUN,
-            new HashMap<>()
+            Collections.emptyMap()
         );
         List<String> formalParameters = userDefinedFunctionFormalParameterGenerator.getFormalParameters(
             tempNode.getAddress(),
-            1,
-            new HashMap<>()
+            FunctionLengthConstants.ONE,
+            Collections.emptyMap()
         );
         userDefinedFormalParametersAsserter.assertFormalParameters(formalParameters);
-        ExpressionNode temp = listValueRetriever.retrieveListValue(
-            functionNameNodeData,
-            FunctionNameConstants.DEFUN,
-            new HashMap<>()
-        );
 
-        Node body = temp.getData();
+        Node body = tempNode.getData();
 
         return UserDefinedFunction.newInstance(
             formalParameters,
