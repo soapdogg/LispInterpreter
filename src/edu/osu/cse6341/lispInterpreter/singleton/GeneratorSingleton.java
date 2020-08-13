@@ -2,6 +2,7 @@ package edu.osu.cse6341.lispInterpreter.singleton;
 
 import edu.osu.cse6341.lispInterpreter.functions.DefunFunction;
 import edu.osu.cse6341.lispInterpreter.generator.NodeGenerator;
+import edu.osu.cse6341.lispInterpreter.generator.TokenGenerator;
 import edu.osu.cse6341.lispInterpreter.generator.UserDefinedFunctionFormalParameterGenerator;
 import edu.osu.cse6341.lispInterpreter.generator.UserDefinedFunctionGenerator;
 import lombok.Getter;
@@ -13,6 +14,7 @@ public enum GeneratorSingleton {
     private final NodeGenerator nodeGenerator;
     private final UserDefinedFunctionGenerator userDefinedFunctionGenerator;
     private final UserDefinedFunctionFormalParameterGenerator userDefinedFunctionFormalParameterGenerator;
+    private final TokenGenerator tokenGenerator;
 
     GeneratorSingleton() {
         nodeGenerator = NodeGenerator.newInstance();
@@ -32,5 +34,6 @@ public enum GeneratorSingleton {
         userDefinedFunctionGenerator = UserDefinedFunctionGenerator.newInstance(
             defunFunction
         );
+        tokenGenerator = TokenGenerator.newInstance();
     }
 }

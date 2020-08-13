@@ -17,7 +17,11 @@ public enum TokenizerSingleton {
 
     TokenizerSingleton() {
         scannerToLineTransformer = ScannerToLineTransformer.newInstance();
-        wordTokenizer = WordTokenizer.newInstance();
+        wordTokenizer = WordTokenizer.newInstance(
+            GeneratorSingleton.INSTANCE.getTokenGenerator(),
+            DeterminerSingleton.INSTANCE.getNumericTokenValueEndIndexDeterminer(),
+            DeterminerSingleton.INSTANCE.getLiteralTokenValueEndIndexDeterminer()
+        );
         lineTokenizer = LineTokenizer.newInstance(
             wordTokenizer
         );

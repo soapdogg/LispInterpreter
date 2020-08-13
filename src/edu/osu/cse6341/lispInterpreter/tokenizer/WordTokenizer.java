@@ -2,7 +2,9 @@ package edu.osu.cse6341.lispInterpreter.tokenizer;
 
 import edu.osu.cse6341.lispInterpreter.constants.TokenValueConstants;
 import edu.osu.cse6341.lispInterpreter.datamodels.Token;
-import edu.osu.cse6341.lispInterpreter.datamodels.TokenKind;
+import edu.osu.cse6341.lispInterpreter.determiner.LiteralTokenValueEndIndexDeterminer;
+import edu.osu.cse6341.lispInterpreter.determiner.NumericTokenValueEndIndexDeterminer;
+import edu.osu.cse6341.lispInterpreter.generator.TokenGenerator;
 import lombok.AllArgsConstructor;
 
 import java.util.LinkedList;
@@ -10,6 +12,10 @@ import java.util.Queue;
 
 @AllArgsConstructor(staticName = "newInstance")
 public class WordTokenizer {
+
+    private final TokenGenerator tokenGenerator;
+    private final NumericTokenValueEndIndexDeterminer numericTokenValueEndIndexDeterminer;
+    private final LiteralTokenValueEndIndexDeterminer literalTokenValueEndIndexDeterminer;
 
     public Queue<Token> tokenizeWord(String word) {
 
@@ -20,33 +26,25 @@ public class WordTokenizer {
             char currentChar = word.charAt(startingPos);
             Token token;
             if (currentChar == TokenValueConstants.CLOSE_PARENTHESES) {
-                token = Token.newInstance(
-                    TokenKind.CLOSE_TOKEN,
-                    String.valueOf(TokenValueConstants.CLOSE_PARENTHESES)
-                );
+                token = tokenGenerator.generateCloseToken();
             } else if (currentChar == TokenValueConstants.OPEN_PARENTHESES){
-                token = Token.newInstance(
-                    TokenKind.OPEN_TOKEN,
-                    String.valueOf(TokenValueConstants.OPEN_PARENTHESES)
-                );
+                token = tokenGenerator.generateOpenToken();
             } else if (Character.isDigit(currentChar)) {
-                int pos = startingPos;
-                while(pos < word.length() && Character.isDigit(word.charAt(pos))) {
-                    ++pos;
-                }
+                int pos = numericTokenValueEndIndexDeterminer.determineEndIndexOfNumericTokenValue(
+                    word,
+                    startingPos
+                );
                 String fragment = word.substring(startingPos, pos);
-                token = Token.newInstance(
-                    TokenKind.NUMERIC_TOKEN,
+                token = tokenGenerator.generateNumericToken(
                     fragment
                 );
             } else {
-                int pos = startingPos;
-                while(pos < word.length() && (Character.isDigit(word.charAt(pos)) || Character.isAlphabetic(word.charAt(pos))) ) {
-                    ++pos;
-                }
+                int pos = literalTokenValueEndIndexDeterminer.determineEndIndexOfLiteralTokenValue(
+                    word,
+                    startingPos
+                );
                 String fragment = word.substring(startingPos, pos);
-                token = Token.newInstance(
-                    TokenKind.LITERAL_TOKEN,
+                token = tokenGenerator.generateLiteralToken(
                     fragment
                 );
             }

@@ -12,6 +12,8 @@ public enum DeterminerSingleton {
     private final FunctionLengthDeterminer functionLengthDeterminer;
     private final InvalidNameDeterminer invalidNameDeterminer;
     private final UserDefinedFunctionNameDeterminer userDefinedFunctionNameDeterminer;
+    private final LiteralTokenValueEndIndexDeterminer literalTokenValueEndIndexDeterminer;
+    private final NumericTokenValueEndIndexDeterminer numericTokenValueEndIndexDeterminer;
 
     DeterminerSingleton() {
         numericStringDeterminer = NumericStringDeterminer.newInstance();
@@ -23,5 +25,7 @@ public enum DeterminerSingleton {
             numericStringDeterminer
         );
         userDefinedFunctionNameDeterminer = UserDefinedFunctionNameDeterminer.newInstance();
+        literalTokenValueEndIndexDeterminer = LiteralTokenValueEndIndexDeterminer.newInstance();
+        numericTokenValueEndIndexDeterminer = NumericTokenValueEndIndexDeterminer.newInstance();
     }
 }
