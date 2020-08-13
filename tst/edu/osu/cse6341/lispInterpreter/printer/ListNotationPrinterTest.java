@@ -1,6 +1,5 @@
 package edu.osu.cse6341.lispInterpreter.printer;
 
-import edu.osu.cse6341.lispInterpreter.constants.ReservedValuesConstants;
 import edu.osu.cse6341.lispInterpreter.constants.TokenValueConstants;
 import edu.osu.cse6341.lispInterpreter.datamodels.AtomNode;
 import edu.osu.cse6341.lispInterpreter.datamodels.ExpressionNode;
@@ -14,37 +13,31 @@ import org.mockito.Mockito;
 import java.util.Collections;
 import java.util.List;
 
-class DotNotationPrinterTest {
+class ListNotationPrinterTest {
 
     private ExpressionNodeDeterminer expressionNodeDeterminer;
     private AtomNodePrinter atomNodePrinter;
-    private DotNotationExpressionNodePrinter dotNotationExpressionNodePrinter;
+    private ListNotationExpressionNodePrinter listNotationExpressionNodePrinter;
 
-    private DotNotationPrinter dotNotationPrinter;
+    private ListNotationPrinter listNotationPrinter;
+
 
     @BeforeEach
     void setup() {
         expressionNodeDeterminer = Mockito.mock(ExpressionNodeDeterminer.class);
         atomNodePrinter = Mockito.mock(AtomNodePrinter.class);
-        dotNotationExpressionNodePrinter = Mockito.mock(DotNotationExpressionNodePrinter.class);
-        dotNotationPrinter = DotNotationPrinter.newInstance(
+        listNotationExpressionNodePrinter = Mockito.mock(ListNotationExpressionNodePrinter.class);
+        listNotationPrinter = ListNotationPrinter.newInstance(
             expressionNodeDeterminer,
             atomNodePrinter,
-            dotNotationExpressionNodePrinter
+            listNotationExpressionNodePrinter
         );
-    }
-
-    @Test
-    void printEmptyListOfNodesTest() {
-        String expected = ReservedValuesConstants.NIL + '\n';
-        String actual = dotNotationPrinter.printInDotNotation(Collections.emptyList());
-
-        Assertions.assertEquals(expected, actual);
     }
 
     @Test
     void printNonEmptyListOfNodesTest() {
         AtomNode atomNode = Mockito.mock(AtomNode.class);
+        Mockito.when(expressionNodeDeterminer.isExpressionNode(atomNode)).thenReturn(false);
 
         String value = "value";
         Mockito.when(atomNodePrinter.printAtomNode(atomNode)).thenReturn(value);
@@ -52,22 +45,10 @@ class DotNotationPrinterTest {
         List<Node> nodes = Collections.singletonList(atomNode);
 
         String expected = value + '\n';
-        String actual = dotNotationPrinter.printInDotNotation(nodes);
+        String actual = listNotationPrinter.printInListNotation(nodes);
 
         Assertions.assertEquals(expected, actual);
-    }
 
-    @Test
-    void printAtomNodeTest() {
-        AtomNode atomNode = Mockito.mock(AtomNode.class);
-        Mockito.when(expressionNodeDeterminer.isExpressionNode(atomNode)).thenReturn(false);
-
-        String value = "value";
-        Mockito.when(atomNodePrinter.printAtomNode(atomNode)).thenReturn(value);
-
-        String actual = dotNotationPrinter.printInDotNotation(atomNode);
-
-        Assertions.assertEquals(value, actual);
     }
 
     @Test
@@ -75,10 +56,11 @@ class DotNotationPrinterTest {
         ExpressionNode expressionNode = Mockito.mock(ExpressionNode.class);
         Mockito.when(expressionNodeDeterminer.isExpressionNode(expressionNode)).thenReturn(true);
 
-        String expected = "value";
-        Mockito.when(dotNotationExpressionNodePrinter.printExpressionNodeInDotNotation(expressionNode)).thenReturn(expected);
+        String value = "value";
+        Mockito.when(listNotationExpressionNodePrinter.printExpressionNodeInListNotation(expressionNode)).thenReturn(value);
 
-        String actual = dotNotationPrinter.printInDotNotation(expressionNode);
+        String expected = TokenValueConstants.OPEN_PARENTHESES + value;
+        String actual = listNotationPrinter.printInListNotation(expressionNode);
 
         Assertions.assertEquals(expected, actual);
     }

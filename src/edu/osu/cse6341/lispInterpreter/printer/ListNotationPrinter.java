@@ -1,6 +1,6 @@
 package edu.osu.cse6341.lispInterpreter.printer;
 
-import edu.osu.cse6341.lispInterpreter.comparator.NodeValueComparator;
+import edu.osu.cse6341.lispInterpreter.constants.TokenValueConstants;
 import edu.osu.cse6341.lispInterpreter.determiner.ExpressionNodeDeterminer;
 import edu.osu.cse6341.lispInterpreter.datamodels.AtomNode;
 import edu.osu.cse6341.lispInterpreter.datamodels.ExpressionNode;
@@ -13,7 +13,8 @@ import java.util.List;
 public class ListNotationPrinter {
 
     private final ExpressionNodeDeterminer expressionNodeDeterminer;
-    private final NodeValueComparator nodeValueComparator;
+    private final AtomNodePrinter atomNodePrinter;
+    private final ListNotationExpressionNodePrinter listNotationExpressionNodePrinter;
 
     public String printInListNotation(
         List<Node> nodes
@@ -32,47 +33,13 @@ public class ListNotationPrinter {
     public String printInListNotation(
         final Node node
     ) {
-        if (node instanceof AtomNode) return ((AtomNode) node).getValue();
-        String result = "(";
-        return result + printExpressionNodeInListNotation(
-            (ExpressionNode) node
-        );
-    }
-
-    private String printExpressionNodeInListNotation(
-        final ExpressionNode node
-    ) {
-        StringBuilder sb = new StringBuilder();
-        Node address = node.getAddress();
-
-        if (expressionNodeDeterminer.isExpressionNode(address)) {
-            sb.append(
-                printInListNotation(
-                    address
-                )
-            );
-        } else {
-            sb.append(
-                ((AtomNode) address).getValue()
+        boolean isExpressionNode = expressionNodeDeterminer.isExpressionNode(node);
+        if (isExpressionNode) {
+            char result = TokenValueConstants.OPEN_PARENTHESES;
+            return result + listNotationExpressionNodePrinter.printExpressionNodeInListNotation(
+                (ExpressionNode) node
             );
         }
-
-        Node data = node.getData();
-        String dataListNotation;
-        boolean isDataList = expressionNodeDeterminer.isExpressionNode(data);
-        if (isDataList) {
-            ExpressionNode expressionNodeData = (ExpressionNode)data;
-            dataListNotation = ' ' + printExpressionNodeInListNotation(
-                expressionNodeData
-            );
-        } else {
-            AtomNode atomData = ((AtomNode) data);
-            String dataString = nodeValueComparator.equalsNil(atomData.getValue())
-                ? ""
-                : " . " + atomData.getValue();
-            dataListNotation = dataString + ')';
-        }
-        sb.append(dataListNotation);
-        return sb.toString();
+        return atomNodePrinter.printAtomNode((AtomNode) node);
     }
 }
