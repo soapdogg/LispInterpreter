@@ -5,7 +5,7 @@ import edu.osu.cse6341.lispInterpreter.singleton.InterpreterSingleton;
 
 import java.util.Scanner;
 
-public class Main{
+public class Main {
 	
 	public static void main(String [] args){
 		try {

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="edu.osu.cse6341.lispInterpreter.generator.NodeGeneratorTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2020-09-20T18:34:46" hostname="erics-air.lan" time="0.013">
+  <properties/>
+  <testcase name="generateTAtomNodeTest()" classname="edu.osu.cse6341.lispInterpreter.generator.NodeGeneratorTest" time="0.002"/>
+  <testcase name="generateNilAtomNodeTest()" classname="edu.osu.cse6341.lispInterpreter.generator.NodeGeneratorTest" time="0.001"/>
+  <testcase name="generateAtomNodeFromIntTest()" classname="edu.osu.cse6341.lispInterpreter.generator.NodeGeneratorTest" time="0.003"/>
+  <testcase name="generateNonEmptyExpressionNodeTest()" classname="edu.osu.cse6341.lispInterpreter.generator.NodeGeneratorTest" time="0.001"/>
+  <testcase name="generateAtomNodeFromStringTest()" classname="edu.osu.cse6341.lispInterpreter.generator.NodeGeneratorTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

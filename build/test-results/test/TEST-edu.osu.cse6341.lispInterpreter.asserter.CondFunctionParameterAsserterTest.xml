@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="edu.osu.cse6341.lispInterpreter.asserter.CondFunctionParameterAsserterTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2020-09-20T18:34:43" hostname="erics-air.lan" time="1.56">
+  <properties/>
+  <testcase name="inputIsNonNilAtomTest()" classname="edu.osu.cse6341.lispInterpreter.asserter.CondFunctionParameterAsserterTest" time="1.476"/>
+  <testcase name="inputIsListTest()" classname="edu.osu.cse6341.lispInterpreter.asserter.CondFunctionParameterAsserterTest" time="0.078"/>
+  <testcase name="inputIsNilTest()" classname="edu.osu.cse6341.lispInterpreter.asserter.CondFunctionParameterAsserterTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

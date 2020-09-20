@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="regression.InterpreterTest" tests="58" skipped="0" failures="0" errors="0" timestamp="2020-09-20T18:34:47" hostname="erics-air.lan" time="0.642">
+  <properties/>
+  <testcase name="project3AtomInvalid1Test()" classname="regression.InterpreterTest" time="0.035"/>
+  <testcase name="project3AtomInvalid2Test()" classname="regression.InterpreterTest" time="0.017"/>
+  <testcase name="project3CarValidTest()" classname="regression.InterpreterTest" time="0.006"/>
+  <testcase name="project3LessValidTest()" classname="regression.InterpreterTest" time="0.009"/>
+  <testcase name="project3ConsValidTest()" classname="regression.InterpreterTest" time="0.011"/>
+  <testcase name="project3MinusInvalid1Test()" classname="regression.InterpreterTest" time="0.01"/>
+  <testcase name="project3MinusInvalid2Test()" classname="regression.InterpreterTest" time="0.008"/>
+  <testcase name="project3MinusInvalid3Test()" classname="regression.InterpreterTest" time="0.02"/>
+  <testcase name="project3NullInvalid1Test()" classname="regression.InterpreterTest" time="0.01"/>
+  <testcase name="project3NullInvalid2Test()" classname="regression.InterpreterTest" time="0.017"/>
+  <testcase name="project3GreaterInvalid1Test()" classname="regression.InterpreterTest" time="0.008"/>
+  <testcase name="project3GreaterInvalid2Test()" classname="regression.InterpreterTest" time="0.007"/>
+  <testcase name="project3GreaterInvalid3Test()" classname="regression.InterpreterTest" time="0.008"/>
+  <testcase name="project3PlusValidTest()" classname="regression.InterpreterTest" time="0.021"/>
+  <testcase name="project3QuoteValidTest()" classname="regression.InterpreterTest" time="0.007"/>
+  <testcase name="project3PlusInvalid1Test()" classname="regression.InterpreterTest" time="0.012"/>
+  <testcase name="project3PlusInvalid2Test()" classname="regression.InterpreterTest" time="0.011"/>
+  <testcase name="project3PlusInvalid3Test()" classname="regression.InterpreterTest" time="0.008"/>
+  <testcase name="project3TimesValidTest()" classname="regression.InterpreterTest" time="0.04"/>
+  <testcase name="project3AtomValidTest()" classname="regression.InterpreterTest" time="0.013"/>
+  <testcase name="project3CarInvalid1Test()" classname="regression.InterpreterTest" time="0.009"/>
+  <testcase name="project3CarInvalid2Test()" classname="regression.InterpreterTest" time="0.007"/>
+  <testcase name="project3CarInvalid3Test()" classname="regression.InterpreterTest" time="0.01"/>
+  <testcase name="project3CarInvalid4Test()" classname="regression.InterpreterTest" time="0.01"/>
+  <testcase name="project3MinusValidTest()" classname="regression.InterpreterTest" time="0.007"/>
+  <testcase name="project3AtomicValidTest()" classname="regression.InterpreterTest" time="0.008"/>
+  <testcase name="project3QuoteInvalid1Test()" classname="regression.InterpreterTest" time="0.005"/>
+  <testcase name="project3QuoteInvalid2Test()" classname="regression.InterpreterTest" time="0.011"/>
+  <testcase name="project3LessInvalid1Test()" classname="regression.InterpreterTest" time="0.005"/>
+  <testcase name="project3LessInvalid2Test()" classname="regression.InterpreterTest" time="0.005"/>
+  <testcase name="project3LessInvalid3Test()" classname="regression.InterpreterTest" time="0.005"/>
+  <testcase name="project3AtomicInvalid1Test()" classname="regression.InterpreterTest" time="0.005"/>
+  <testcase name="project3AtomicInvalid2Test()" classname="regression.InterpreterTest" time="0.005"/>
+  <testcase name="project3AtomicInvalid3Test()" classname="regression.InterpreterTest" time="0.005"/>
+  <testcase name="project3AtomicInvalid4Test()" classname="regression.InterpreterTest" time="0.006"/>
+  <testcase name="project3GreaterValidTest()" classname="regression.InterpreterTest" time="0.005"/>
+  <testcase name="project3EqInvalid1Test()" classname="regression.InterpreterTest" time="0.005"/>
+  <testcase name="project3EqInvalid2Test()" classname="regression.InterpreterTest" time="0.007"/>
+  <testcase name="project3EqInvalid3Test()" classname="regression.InterpreterTest" time="0.004"/>
+  <testcase name="project3IntValidTest()" classname="regression.InterpreterTest" time="0.005"/>
+  <testcase name="project3ConsInvalid1Test()" classname="regression.InterpreterTest" time="0.004"/>
+  <testcase name="project3ConsInvalid2Test()" classname="regression.InterpreterTest" time="0.004"/>
+  <testcase name="project3NullValidTest()" classname="regression.InterpreterTest" time="0.012"/>
+  <testcase name="project3CondInvalid1Test()" classname="regression.InterpreterTest" time="0.012"/>
+  <testcase name="project3CondInvalid2Test()" classname="regression.InterpreterTest" time="0.007"/>
+  <testcase name="project3CondInvalid3Test()" classname="regression.InterpreterTest" time="0.008"/>
+  <testcase name="project3CondInvalid4Test()" classname="regression.InterpreterTest" time="0.005"/>
+  <testcase name="project3IntInvalid1Test()" classname="regression.InterpreterTest" time="0.009"/>
+  <testcase name="project3IntInvalid2Test()" classname="regression.InterpreterTest" time="0.004"/>
+  <testcase name="project3CdrValidTest()" classname="regression.InterpreterTest" time="0.007"/>
+  <testcase name="project3CondValidTest()" classname="regression.InterpreterTest" time="0.018"/>
+  <testcase name="project3EqValidTest()" classname="regression.InterpreterTest" time="0.006"/>
+  <testcase name="project3TimesInvalid1Test()" classname="regression.InterpreterTest" time="0.005"/>
+  <testcase name="project3TimesInvalid2Test()" classname="regression.InterpreterTest" time="0.006"/>
+  <testcase name="project3TimesInvalid3Test()" classname="regression.InterpreterTest" time="0.005"/>
+  <testcase name="project3CdrInvalid1Test()" classname="regression.InterpreterTest" time="0.017"/>
+  <testcase name="project3CdrInvalid2Test()" classname="regression.InterpreterTest" time="0.012"/>
+  <testcase name="project3CdrInvalid3Test()" classname="regression.InterpreterTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

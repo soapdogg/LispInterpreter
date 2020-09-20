@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="regression.TokenizerTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2020-09-20T18:34:47" hostname="erics-air.lan" time="0.115">
+  <properties/>
+  <testcase name="project1Valid2Test()" classname="regression.TokenizerTest" time="0.023"/>
+  <testcase name="project1Valid3Test()" classname="regression.TokenizerTest" time="0.012"/>
+  <testcase name="project1Valid4Test()" classname="regression.TokenizerTest" time="0.006"/>
+  <testcase name="project1Valid5Test()" classname="regression.TokenizerTest" time="0.011"/>
+  <testcase name="project1Valid6Test()" classname="regression.TokenizerTest" time="0.006"/>
+  <testcase name="project1Valid7Test()" classname="regression.TokenizerTest" time="0.008"/>
+  <testcase name="project1Valid8Test()" classname="regression.TokenizerTest" time="0.006"/>
+  <testcase name="project1ValidTest()" classname="regression.TokenizerTest" time="0.007"/>
+  <testcase name="project1Invalid1Test()" classname="regression.TokenizerTest" time="0.008"/>
+  <testcase name="project1Invalid2Test()" classname="regression.TokenizerTest" time="0.008"/>
+  <testcase name="project1Invalid3Test()" classname="regression.TokenizerTest" time="0.007"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

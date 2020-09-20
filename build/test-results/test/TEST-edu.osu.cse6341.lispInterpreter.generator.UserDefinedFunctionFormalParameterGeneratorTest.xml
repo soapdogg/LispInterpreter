@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="edu.osu.cse6341.lispInterpreter.generator.UserDefinedFunctionFormalParameterGeneratorTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2020-09-20T18:34:46" hostname="erics-air.lan" time="0.011">
+  <properties/>
+  <testcase name="formalParameterIsExpressionNodeTest()" classname="edu.osu.cse6341.lispInterpreter.generator.UserDefinedFunctionFormalParameterGeneratorTest" time="0.008"/>
+  <testcase name="formalParameterIsAtomNodeTest()" classname="edu.osu.cse6341.lispInterpreter.generator.UserDefinedFunctionFormalParameterGeneratorTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
