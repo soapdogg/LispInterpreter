@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="edu.osu.cse6341.lispInterpreter.valueretriver.NumericValueRetrieverTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2020-09-20T18:34:46" hostname="erics-air.lan" time="0.027">
-  <properties/>
-  <testcase name="nodeIsNumericTest()" classname="edu.osu.cse6341.lispInterpreter.valueretriver.NumericValueRetrieverTest" time="0.004"/>
-  <testcase name="nodeIsNotNumericTest()" classname="edu.osu.cse6341.lispInterpreter.valueretriver.NumericValueRetrieverTest" time="0.022"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

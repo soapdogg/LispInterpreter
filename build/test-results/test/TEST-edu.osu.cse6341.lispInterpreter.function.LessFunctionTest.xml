@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="edu.osu.cse6341.lispInterpreter.function.LessFunctionTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2020-09-20T18:34:46" hostname="erics-air.lan" time="0.042">
-  <properties/>
-  <testcase name="lessFunctionTest()" classname="edu.osu.cse6341.lispInterpreter.function.LessFunctionTest" time="0.015"/>
-  <testcase name="lessFunctionFalseTest()" classname="edu.osu.cse6341.lispInterpreter.function.LessFunctionTest" time="0.025"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

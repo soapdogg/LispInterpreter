@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="edu.osu.cse6341.lispInterpreter.generator.UserDefinedFunctionGeneratorTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-09-20T18:34:46" hostname="erics-air.lan" time="0.087">
-  <properties/>
-  <testcase name="generateUserDefinedFunctionsTest()" classname="edu.osu.cse6341.lispInterpreter.generator.UserDefinedFunctionGeneratorTest" time="0.087"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

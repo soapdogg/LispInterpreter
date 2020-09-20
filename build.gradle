@@ -6,6 +6,7 @@ plugins {
     id 'java'
     id 'maven-publish'
     id "io.freefair.lombok" version "5.2.1"
+    id 'jacoco'
 }
 
 repositories {
@@ -23,8 +24,8 @@ dependencies {
 
 group = 'edu.osu.cse6341.lispInterpreter'
 version = '1.0-SNAPSHOT'
-sourceCompatibility = 1.15
-targetCompatibility = 1.15
+sourceCompatibility = 1.14
+targetCompatibility = 1.14
 
 publishing {
     publications {
@@ -36,4 +37,9 @@ publishing {
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport // report is always generated after tests run
 }
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+}
+

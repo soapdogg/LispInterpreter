@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="edu.osu.cse6341.lispInterpreter.evaluator.AtomNodeEvaluatorTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2020-09-20T18:34:45" hostname="erics-air.lan" time="0.009">
-  <properties/>
-  <testcase name="atomNodeIsVariableTest()" classname="edu.osu.cse6341.lispInterpreter.evaluator.AtomNodeEvaluatorTest" time="0.004"/>
-  <testcase name="atomNodeIsNotAVariableTest()" classname="edu.osu.cse6341.lispInterpreter.evaluator.AtomNodeEvaluatorTest" time="0.003"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
