@@ -113,13 +113,19 @@ public class TokenizerTest
 
         for (Token token : tokens) {
             switch (token.getTokenKind()) {
-                case OPEN_TOKEN -> ++openCount;
-                case CLOSE_TOKEN -> ++closingCount;
-                case LITERAL_TOKEN -> literalAtoms.add(token.getValue());
-                case NUMERIC_TOKEN -> {
+                case OPEN_TOKEN:
+                    ++openCount;
+                    break;
+                case CLOSE_TOKEN:
+                    ++closingCount;
+                    break;
+                case LITERAL_TOKEN:
+                    literalAtoms.add(token.getValue());
+                    break;
+                case NUMERIC_TOKEN:
                     ++numericAtomsCount;
                     numericAtomsSum += Integer.parseInt(token.getValue());
-                }
+                    break;
             }
         }
         return ProcessedTokensResult.newInstance(
