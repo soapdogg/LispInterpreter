@@ -1,9 +1,9 @@
 package regression;
 
-import edu.osu.cse6341.lispInterpreter.datamodels.ProcessedTokensResult;
-import edu.osu.cse6341.lispInterpreter.singleton.TokenizerSingleton;
-import edu.osu.cse6341.lispInterpreter.tokenizer.Tokenizer;
-import edu.osu.cse6341.lispInterpreter.datamodels.Token;
+import com.soapdogg.lispInterpreter.datamodels.ProcessedTokensResult;
+import com.soapdogg.lispInterpreter.singleton.TokenizerSingleton;
+import com.soapdogg.lispInterpreter.tokenizer.Tokenizer;
+import com.soapdogg.lispInterpreter.datamodels.Token;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
