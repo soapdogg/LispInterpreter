@@ -4,7 +4,7 @@ import com.soapdogg.lispInterpreter.datamodels.PartitionedRootNodes;
 import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction;
 import com.soapdogg.lispInterpreter.generator.UserDefinedFunctionGenerator;
 import com.soapdogg.lispInterpreter.datamodels.Node;
-import com.soapdogg.lispInterpreter.parser.Parser;
+import com.soapdogg.lispInterpreter.parser.RootParser;
 import com.soapdogg.lispInterpreter.printer.ListNotationPrinter;
 import com.soapdogg.lispInterpreter.evaluator.ProgramEvaluator;
 import com.soapdogg.lispInterpreter.tokenizer.Tokenizer;
@@ -21,7 +21,7 @@ class InterpreterTest {
     private Scanner in;
 
     private Tokenizer tokenizer;
-    private Parser parser;
+    private RootParser rootParser;
     private ProgramEvaluator program;
     private RootNodePartitioner rootNodePartitioner;
     private UserDefinedFunctionGenerator userDefinedFunctionGenerator;
@@ -34,7 +34,7 @@ class InterpreterTest {
         in = new Scanner(System.in);
 
         tokenizer = Mockito.mock(Tokenizer.class);
-        parser = Mockito.mock(Parser.class);
+        rootParser = Mockito.mock(RootParser.class);
         program = Mockito.mock(ProgramEvaluator.class);
         rootNodePartitioner = Mockito.mock(RootNodePartitioner.class);
         userDefinedFunctionGenerator = Mockito.mock(UserDefinedFunctionGenerator.class);
@@ -42,7 +42,7 @@ class InterpreterTest {
 
         interpreter = Interpreter.newInstance(
             tokenizer,
-            parser,
+            rootParser,
             program,
             rootNodePartitioner,
             userDefinedFunctionGenerator,
@@ -56,7 +56,7 @@ class InterpreterTest {
         Mockito.when(tokenizer.tokenize(in)).thenReturn(tokens);
 
         List<Node> rootNodes = Collections.emptyList();
-        Mockito.when(parser.parse(tokens)).thenReturn(rootNodes);
+        Mockito.when(rootParser.parse(tokens)).thenReturn(rootNodes);
 
         PartitionedRootNodes partitionedRootNodes = Mockito.mock(PartitionedRootNodes.class);
         Mockito.when(rootNodePartitioner.partitionRootNodes(rootNodes)).thenReturn(partitionedRootNodes);

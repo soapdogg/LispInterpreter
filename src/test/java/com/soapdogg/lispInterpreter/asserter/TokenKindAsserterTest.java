@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.Optional;
 import java.util.Set;
 
 public class TokenKindAsserterTest {
@@ -31,7 +32,7 @@ public class TokenKindAsserterTest {
     @Test
     void noExceptionIsNotNullTest() {
         Assertions.assertDoesNotThrow(
-            () -> tokenKindAsserter.assertTokenIsNotNull(token)
+            () -> tokenKindAsserter.assertTokenIsNotNull(Optional.of(token))
         );
     }
 
@@ -39,7 +40,7 @@ public class TokenKindAsserterTest {
     void unexpectedTokenKindIsNotNullTest() {
         Assertions.assertThrows(
             UnexpectedTokenKindException.class,
-            () -> tokenKindAsserter.assertTokenIsNotNull(null)
+            () -> tokenKindAsserter.assertTokenIsNotNull(Optional.empty())
         );
     }
 

@@ -5,6 +5,7 @@ import com.soapdogg.lispInterpreter.datamodels.TokenKind;
 import com.soapdogg.lispInterpreter.exceptions.UnexpectedTokenKindException;
 import lombok.AllArgsConstructor;
 
+import java.util.Optional;
 import java.util.Set;
 
 @AllArgsConstructor(staticName = "newInstance")
@@ -12,13 +13,14 @@ public class TokenKindAsserter {
 
     private final Set<TokenKind> startingTokenKindSet;
 
-    public void assertTokenIsNotNull(
-        final Token token
+    public Token assertTokenIsNotNull(
+        final Optional<Token> optionalToken
     ) throws UnexpectedTokenKindException {
-        if (token == null) {
+        if (optionalToken.isEmpty()) {
             String errorMessage = "Expected a token.\nActual: null\n";
             throw new UnexpectedTokenKindException(errorMessage);
         }
+        return optionalToken.get();
     }
 
     public void assertTokenIsAtomOrOpen(

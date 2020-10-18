@@ -1,7 +1,7 @@
 package regression;
 
 import com.soapdogg.lispInterpreter.datamodels.Node;
-import com.soapdogg.lispInterpreter.parser.Parser;
+import com.soapdogg.lispInterpreter.parser.RootParser;
 import com.soapdogg.lispInterpreter.printer.DotNotationPrinter;
 import com.soapdogg.lispInterpreter.singleton.ParserSingleton;
 import com.soapdogg.lispInterpreter.singleton.PrinterSingleton;
@@ -82,13 +82,13 @@ public class ParserTest
 
     private static void parserTest(String programFile, String expectedFile){
         Tokenizer tokenizer = TokenizerSingleton.INSTANCE.getTokenizer();
-        Parser parser = ParserSingleton.INSTANCE.getParser();
+        RootParser rootParser = ParserSingleton.INSTANCE.getRootParser();
         DotNotationPrinter dotNotationPrinter = PrinterSingleton.INSTANCE.getDotNotationPrinter();
         String actual;
         try{
             Scanner in = getScannerFromFilePath(programFile);
             Queue<Token> tokens = tokenizer.tokenize(in);
-            List<Node> nodes = parser.parse(tokens);
+            List<Node> nodes = rootParser.parse(tokens);
             actual = dotNotationPrinter.printInDotNotation(nodes);
         } catch (Exception e){
             actual = e.getMessage();

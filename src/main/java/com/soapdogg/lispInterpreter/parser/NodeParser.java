@@ -3,52 +3,47 @@ package com.soapdogg.lispInterpreter.parser;
 import com.soapdogg.lispInterpreter.asserter.TokenKindAsserter;
 import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants;
 import com.soapdogg.lispInterpreter.datamodels.Node;
+import com.soapdogg.lispInterpreter.datamodels.ParserResult;
 import com.soapdogg.lispInterpreter.datamodels.Token;
 import com.soapdogg.lispInterpreter.datamodels.TokenKind;
 import com.soapdogg.lispInterpreter.generator.NodeGenerator;
 import lombok.AllArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 import java.util.Queue;
 
 @AllArgsConstructor(staticName = "newInstance")
-public class Parser {
+public class NodeParser {
 
     private final TokenKindAsserter tokenKindAsserter;
     private final NodeGenerator nodeGenerator;
 
-    public List<Node> parse(Queue<Token> tokens) throws Exception {
-
-        List<Node> rootNodes = new ArrayList<>();
-        while (!tokens.isEmpty()) {
-            Node root = parseIntoNode(tokens);
-            rootNodes.add(root);
-        }
-        return rootNodes;
-    }
-
-    private Node parseIntoNode(
+    public ParserResult parseIntoNode(
         Queue<Token> tokens
     ) throws Exception {
-        Token token = tokens.peek();
-        tokenKindAsserter.assertTokenIsNotNull(token);
+        Optional<Token> optionalToken = Optional.ofNullable(tokens.peek());
+        Token token = tokenKindAsserter.assertTokenIsNotNull(optionalToken);
         tokenKindAsserter.assertTokenIsAtomOrOpen(token);
         TokenKind currentTokenKind = token.getTokenKind();
         boolean isOpen = currentTokenKind == TokenKind.OPEN_TOKEN;
         if (isOpen) {
             tokens.remove();
             Node result = parseExpressionNode(tokens);
-            Token closeToken = tokens.peek();
-            tokenKindAsserter.assertTokenIsNotNull(closeToken);
+            Optional<Token> closeTokenOptional = Optional.ofNullable(tokens.peek());
+            Token closeToken = tokenKindAsserter.assertTokenIsNotNull(closeTokenOptional);
             tokenKindAsserter.assertTokenIsClose(closeToken);
             tokens.remove();
-            return result;
+            return ParserResult.newInstance(
+                result,
+                tokens
+            );
         } else {
             token = tokens.remove();
             String value = token.getValue();
-            return nodeGenerator.generateAtomNode(
-                value
+            Node atomNode = nodeGenerator.generateAtomNode(value);
+            return ParserResult.newInstance(
+                atomNode,
+                tokens
             );
         }
     }
@@ -56,22 +51,20 @@ public class Parser {
     private Node parseExpressionNode(
         Queue<Token> tokens
     ) throws Exception {
-        tokenKindAsserter.assertTokenIsNotNull(tokens.peek());
-        boolean isClose = tokens.peek().getTokenKind() == TokenKind.CLOSE_TOKEN;
+        Optional<Token> tokenOptional = Optional.ofNullable(tokens.peek());
+        Token token = tokenKindAsserter.assertTokenIsNotNull(tokenOptional);
+        boolean isClose = token.getTokenKind() == TokenKind.CLOSE_TOKEN;
         Node result;
         if (isClose) result = nodeGenerator.generateAtomNode(ReservedValuesConstants.NIL);
         else {
             Node address;
-            Token token = tokens.peek();
-            tokenKindAsserter.assertTokenIsNotNull(token);
-            tokenKindAsserter.assertTokenIsAtomOrOpen(token);
             TokenKind currentTokenKind = token.getTokenKind();
             boolean isOpen = currentTokenKind == TokenKind.OPEN_TOKEN;
             if (isOpen) {
                 tokens.remove();
                 Node t = parseExpressionNode(tokens);
-                Token closeToken = tokens.peek();
-                tokenKindAsserter.assertTokenIsNotNull(closeToken);
+                Optional<Token> closeTokenOptional = Optional.ofNullable(tokens.peek());
+                Token closeToken = tokenKindAsserter.assertTokenIsNotNull(closeTokenOptional);
                 tokenKindAsserter.assertTokenIsClose(closeToken);
                 tokens.remove();
                 address = t;

@@ -15,7 +15,7 @@ public enum InterpreterSingleton {
         rootNodePartitioner = RootNodePartitioner.newInstance();
         interpreter = Interpreter.newInstance(
             TokenizerSingleton.INSTANCE.getTokenizer(),
-            ParserSingleton.INSTANCE.getParser(),
+            ParserSingleton.INSTANCE.getRootParser(),
             EvaluatorSingleton.INSTANCE.getProgramEvaluator(),
             rootNodePartitioner,
             GeneratorSingleton.INSTANCE.getUserDefinedFunctionGenerator(),
