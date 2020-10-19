@@ -14,10 +14,6 @@ import java.util.Queue;
 
 public class AtomNodeParserTest {
 
-    private NodeGenerator nodeGenerator;
-
-    private String value;
-    private Token headToken;
     private Queue<Token> tokens;
 
     private AtomNode atomNode;
@@ -26,10 +22,10 @@ public class AtomNodeParserTest {
 
     @BeforeEach
     void setup() {
-        nodeGenerator = Mockito.mock(NodeGenerator.class);
+        NodeGenerator nodeGenerator = Mockito.mock(NodeGenerator.class);
 
-        value = "value";
-        headToken = Mockito.mock(Token.class);
+        String value = "value";
+        Token headToken = Mockito.mock(Token.class);
         Mockito.when(headToken.getValue()).thenReturn(value);
 
         atomNode = Mockito.mock(AtomNode.class);
