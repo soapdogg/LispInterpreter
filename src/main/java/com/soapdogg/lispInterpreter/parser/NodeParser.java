@@ -17,6 +17,7 @@ public class NodeParser {
 
     private final TokenKindAsserter tokenKindAsserter;
     private final NodeGenerator nodeGenerator;
+    private final AtomNodeParser atomNodeParser;
 
     public ParserResult parseIntoNode(
         Queue<Token> tokens
@@ -28,27 +29,24 @@ public class NodeParser {
         boolean isOpen = currentTokenKind == TokenKind.OPEN_TOKEN;
         if (isOpen) {
             tokens.remove();
-            Node result = parseExpressionNode(tokens);
+            ParserResult result = parseExpressionNode(tokens);
+            tokens = result.getRemainingTokens();
             Optional<Token> closeTokenOptional = Optional.ofNullable(tokens.peek());
             Token closeToken = tokenKindAsserter.assertTokenIsNotNull(closeTokenOptional);
             tokenKindAsserter.assertTokenIsClose(closeToken);
             tokens.remove();
             return ParserResult.newInstance(
-                result,
+                result.getResultingNode(),
                 tokens
             );
         } else {
-            token = tokens.remove();
-            String value = token.getValue();
-            Node atomNode = nodeGenerator.generateAtomNode(value);
-            return ParserResult.newInstance(
-                atomNode,
+            return atomNodeParser.parseAtomNode(
                 tokens
             );
         }
     }
 
-    private Node parseExpressionNode(
+    private ParserResult parseExpressionNode(
         Queue<Token> tokens
     ) throws Exception {
         Optional<Token> tokenOptional = Optional.ofNullable(tokens.peek());
@@ -62,26 +60,28 @@ public class NodeParser {
             boolean isOpen = currentTokenKind == TokenKind.OPEN_TOKEN;
             if (isOpen) {
                 tokens.remove();
-                Node t = parseExpressionNode(tokens);
+                ParserResult t = parseExpressionNode(tokens);
+                tokens = t.getRemainingTokens();
                 Optional<Token> closeTokenOptional = Optional.ofNullable(tokens.peek());
                 Token closeToken = tokenKindAsserter.assertTokenIsNotNull(closeTokenOptional);
                 tokenKindAsserter.assertTokenIsClose(closeToken);
                 tokens.remove();
-                address = t;
+                address = t.getResultingNode();
             } else {
-                token = tokens.remove();
-                String value = token.getValue();
-                address = nodeGenerator.generateAtomNode(
-                    value
-                );
+                ParserResult t = atomNodeParser.parseAtomNode(tokens);
+                address = t.getResultingNode();
+                tokens = t.getRemainingTokens();
             }
-            Node data = parseExpressionNode(tokens);
+            ParserResult data = parseExpressionNode(tokens);
             result = nodeGenerator.generateExpressionNode(
                 address,
-                data
+                data.getResultingNode()
             );
         }
-        return result;
+        return ParserResult.newInstance(
+            result,
+            tokens
+        );
     }
 
 }
