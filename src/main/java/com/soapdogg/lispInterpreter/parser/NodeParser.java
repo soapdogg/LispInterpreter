@@ -14,6 +14,7 @@ public class NodeParser {
 
     private final TokenKindAsserter tokenKindAsserter;
     private final ExpressionNodeParser expressionNodeParser;
+    private final ExpressionNodeFinisher expressionNodeFinisher;
     private final AtomNodeParser atomNodeParser;
 
     public ParserResult parseIntoNode(
@@ -27,14 +28,7 @@ public class NodeParser {
         if (isOpen) {
             tokens.remove();
             final ParserResult result = expressionNodeParser.parseExpressionNode(tokens);
-            final Queue<Token> remainingTokens = result.getRemainingTokens();
-            final Optional<Token> closeTokenOptional = Optional.ofNullable(remainingTokens.poll());
-            final Token closeToken = tokenKindAsserter.assertTokenIsNotNull(closeTokenOptional);
-            tokenKindAsserter.assertTokenIsClose(closeToken);
-            return ParserResult.newInstance(
-                result.getResultingNode(),
-                remainingTokens
-            );
+            return expressionNodeFinisher.finishParsingExpressionNode(result);
         } else {
             return atomNodeParser.parseAtomNode(
                 tokens

@@ -12,6 +12,7 @@ import java.util.Queue;
 public class AtomNodeParser {
 
     private final NodeGenerator nodeGenerator;
+    private final ParserResultBuilder parserResultBuilder;
 
     public ParserResult parseAtomNode(
         final Queue<Token> tokens
@@ -19,7 +20,7 @@ public class AtomNodeParser {
         final Token token = tokens.remove();
         final String value = token.getValue();
         final Node atomNode = nodeGenerator.generateAtomNode(value);
-        return ParserResult.newInstance(
+        return parserResultBuilder.buildParserResult(
             atomNode,
             tokens
         );

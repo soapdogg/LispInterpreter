@@ -1,7 +1,6 @@
 package com.soapdogg.lispInterpreter.parser;
 
 import com.soapdogg.lispInterpreter.asserter.TokenKindAsserter;
-import com.soapdogg.lispInterpreter.datamodels.Node;
 import com.soapdogg.lispInterpreter.datamodels.ParserResult;
 import com.soapdogg.lispInterpreter.datamodels.Token;
 import com.soapdogg.lispInterpreter.datamodels.TokenKind;
@@ -16,8 +15,8 @@ import java.util.Queue;
 
 public class NodeParserTest {
 
-    private TokenKindAsserter tokenKindAsserter;
     private ExpressionNodeParser expressionNodeParser;
+    private ExpressionNodeFinisher expressionNodeFinisher;
     private AtomNodeParser atomNodeParser;
 
     private Token headToken;
@@ -27,8 +26,9 @@ public class NodeParserTest {
 
     @BeforeEach
     void setup() throws Exception {
-        tokenKindAsserter = Mockito.mock(TokenKindAsserter.class);
+        TokenKindAsserter tokenKindAsserter = Mockito.mock(TokenKindAsserter.class);
         expressionNodeParser = Mockito.mock(ExpressionNodeParser.class);
+        expressionNodeFinisher = Mockito.mock(ExpressionNodeFinisher.class);
         atomNodeParser = Mockito.mock(AtomNodeParser.class);
 
         headToken = Mockito.mock(Token.class);
@@ -44,6 +44,7 @@ public class NodeParserTest {
         nodeParser = NodeParser.newInstance(
             tokenKindAsserter,
             expressionNodeParser,
+            expressionNodeFinisher,
             atomNodeParser
         );
     }
@@ -55,21 +56,12 @@ public class NodeParserTest {
         final ParserResult result = Mockito.mock(ParserResult.class);
         Mockito.when(expressionNodeParser.parseExpressionNode(new LinkedList<>())).thenReturn(result);
 
-        final Token closeToken = Mockito.mock(Token.class);
-        final Queue<Token> remainingTokens = new LinkedList<>();
-
-        remainingTokens.add(closeToken);
-        Mockito.when(tokenKindAsserter.assertTokenIsNotNull(Optional.of(closeToken))).thenReturn(closeToken);
-        Mockito.doNothing().when(tokenKindAsserter).assertTokenIsClose(closeToken);
-
-        Node resultingNode = Mockito.mock(Node.class);
-        Mockito.when(result.getResultingNode()).thenReturn(resultingNode);
-        Mockito.when(result.getRemainingTokens()).thenReturn(remainingTokens);
+        final ParserResult expected = Mockito.mock(ParserResult.class);
+        Mockito.when(expressionNodeFinisher.finishParsingExpressionNode(result)).thenReturn(expected);
 
         final ParserResult actual = nodeParser.parseIntoNode(tokens);
 
-        Assertions.assertEquals(resultingNode, actual.getResultingNode());
-        Assertions.assertTrue(actual.getRemainingTokens().isEmpty());
+        Assertions.assertEquals(expected, actual);
 
         Mockito.verifyNoInteractions(atomNodeParser);
     }

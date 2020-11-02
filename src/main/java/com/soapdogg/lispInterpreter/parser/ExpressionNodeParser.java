@@ -2,6 +2,7 @@ package com.soapdogg.lispInterpreter.parser;
 
 import com.soapdogg.lispInterpreter.asserter.TokenKindAsserter;
 import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants;
+import com.soapdogg.lispInterpreter.datamodels.ExpressionNode;
 import com.soapdogg.lispInterpreter.datamodels.Node;
 import com.soapdogg.lispInterpreter.datamodels.ParserResult;
 import com.soapdogg.lispInterpreter.datamodels.Token;
@@ -17,46 +18,44 @@ public class ExpressionNodeParser {
 
     private final TokenKindAsserter tokenKindAsserter;
     private final NodeGenerator nodeGenerator;
+    private final ExpressionNodeFinisher expressionNodeFinisher;
     private final AtomNodeParser atomNodeParser;
+    private final ParserResultBuilder parserResultBuilder;
 
     public ParserResult parseExpressionNode(
-        Queue<Token> tokens
+        final Queue<Token> tokens
     ) throws Exception {
-        Optional<Token> tokenOptional = Optional.ofNullable(tokens.peek());
-        Token token = tokenKindAsserter.assertTokenIsNotNull(tokenOptional);
-        boolean isClose = token.getTokenKind() == TokenKind.CLOSE_TOKEN;
-        Node result;
+        final Optional<Token> tokenOptional = Optional.ofNullable(tokens.peek());
+        final Token token = tokenKindAsserter.assertTokenIsNotNull(tokenOptional);
+        final boolean isClose = token.getTokenKind() == TokenKind.CLOSE_TOKEN;
         if (isClose) {
-            result = nodeGenerator.generateAtomNode(ReservedValuesConstants.NIL);
-            return ParserResult.newInstance(
+            final Node result = nodeGenerator.generateAtomNode(ReservedValuesConstants.NIL);
+            return parserResultBuilder.buildParserResult(
                 result,
                 tokens
             );
         }
         else {
-            Node address;
-            Queue<Token> remainingTokens;
-            TokenKind currentTokenKind = token.getTokenKind();
-            boolean isOpen = currentTokenKind == TokenKind.OPEN_TOKEN;
+            ParserResult addressParserResult;
+            final TokenKind currentTokenKind = token.getTokenKind();
+            final boolean isOpen = currentTokenKind == TokenKind.OPEN_TOKEN;
             if (isOpen) {
                 tokens.remove();
-                ParserResult t = parseExpressionNode(tokens);
-                remainingTokens = t.getRemainingTokens();
-                Optional<Token> closeTokenOptional = Optional.ofNullable(remainingTokens.poll());
-                Token closeToken = tokenKindAsserter.assertTokenIsNotNull(closeTokenOptional);
-                tokenKindAsserter.assertTokenIsClose(closeToken);
-                address = t.getResultingNode();
+                final ParserResult t = parseExpressionNode(tokens);
+                addressParserResult = expressionNodeFinisher.finishParsingExpressionNode(t);
             } else {
-                ParserResult t = atomNodeParser.parseAtomNode(tokens);
-                address = t.getResultingNode();
-                remainingTokens = t.getRemainingTokens();
+                addressParserResult = atomNodeParser.parseAtomNode(tokens);
             }
-            ParserResult data = parseExpressionNode(remainingTokens);
-            result = nodeGenerator.generateExpressionNode(
-                address,
-                data.getResultingNode()
+            final ParserResult data = parseExpressionNode(addressParserResult.getRemainingTokens());
+            final var addressResultingNode = addressParserResult.getResultingNode();
+            final var dataResultingNode = data.getResultingNode();
+
+            final ExpressionNode result = nodeGenerator.generateExpressionNode(
+                addressResultingNode,
+                dataResultingNode
             );
-            return ParserResult.newInstance(
+
+            return parserResultBuilder.buildParserResult(
                 result,
                 data.getRemainingTokens()
             );

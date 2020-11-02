@@ -16,32 +16,43 @@ public class AtomNodeParserTest {
 
     private Queue<Token> tokens;
 
-    private AtomNode atomNode;
+    private ParserResult expected;
 
     private AtomNodeParser atomNodeParser;
 
     @BeforeEach
     void setup() {
         NodeGenerator nodeGenerator = Mockito.mock(NodeGenerator.class);
+        ParserResultBuilder parserResultBuilder = Mockito.mock(ParserResultBuilder.class);
 
         String value = "value";
         Token headToken = Mockito.mock(Token.class);
         Mockito.when(headToken.getValue()).thenReturn(value);
 
-        atomNode = Mockito.mock(AtomNode.class);
+        AtomNode atomNode = Mockito.mock(AtomNode.class);
         Mockito.when(nodeGenerator.generateAtomNode(value)).thenReturn(atomNode);
 
         tokens = new LinkedList<>();
         tokens.add(headToken);
 
-        atomNodeParser = AtomNodeParser.newInstance(nodeGenerator);
+        expected = Mockito.mock(ParserResult.class);
+        Mockito.when(
+            parserResultBuilder.buildParserResult(
+                atomNode,
+                tokens
+            )
+        ).thenReturn(expected);
+
+        atomNodeParser = AtomNodeParser.newInstance(
+            nodeGenerator,
+            parserResultBuilder
+        );
     }
 
     @Test
     void atomNodeParserTest() {
         ParserResult actual = atomNodeParser.parseAtomNode(tokens);
 
-        Assertions.assertEquals(atomNode, actual.getResultingNode());
-        Assertions.assertTrue(actual.getRemainingTokens().isEmpty());
+        Assertions.assertEquals(expected, actual);
     }
 }
