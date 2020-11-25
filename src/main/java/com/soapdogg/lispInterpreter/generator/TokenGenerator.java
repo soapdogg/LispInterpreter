@@ -9,14 +9,14 @@ import lombok.AllArgsConstructor;
 public class TokenGenerator {
 
     public Token generateCloseToken() {
-        return Token.newInstance(
+        return new Token(
             TokenKind.CLOSE_TOKEN,
             String.valueOf(TokenValueConstants.CLOSE_PARENTHESES)
         );
     }
 
     public Token generateOpenToken() {
-        return Token.newInstance(
+        return new Token(
             TokenKind.OPEN_TOKEN,
             String.valueOf(TokenValueConstants.OPEN_PARENTHESES)
         );
@@ -25,7 +25,7 @@ public class TokenGenerator {
     public Token generateNumericToken(
         String value
     ) {
-        return Token.newInstance(
+        return new Token(
             TokenKind.NUMERIC_TOKEN,
             value
         );
@@ -34,7 +34,7 @@ public class TokenGenerator {
     public Token generateLiteralToken(
         String value
     ) {
-        return Token.newInstance(
+        return new Token(
             TokenKind.LITERAL_TOKEN,
             value
         );

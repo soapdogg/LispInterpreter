@@ -13,7 +13,7 @@ public class NodeGenerator {
         final boolean value
     ) {
         String t = value ? ReservedValuesConstants.T : ReservedValuesConstants.NIL;
-        return AtomNode.newInstance(
+        return new AtomNode(
             t
         );
     }
@@ -22,7 +22,7 @@ public class NodeGenerator {
         final int value
     ) {
         String t = Integer.toString(value);
-        return AtomNode.newInstance(
+        return new AtomNode(
             t
         );
     }
@@ -30,14 +30,14 @@ public class NodeGenerator {
     public AtomNode generateAtomNode(
         final String value
     ) {
-        return AtomNode.newInstance(value);
+        return new AtomNode(value);
     }
 
     public ExpressionNode generateExpressionNode(
         final Node address,
         final Node data
     ) {
-        return ExpressionNode.newInstance(
+        return new ExpressionNode(
             address,
             data
         );
