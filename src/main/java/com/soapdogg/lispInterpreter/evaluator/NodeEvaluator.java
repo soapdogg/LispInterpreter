@@ -65,8 +65,7 @@ public class NodeEvaluator {
                     userDefinedFunction.getFormalParameters().size() + 1,
                     params
                 );
-                Map<String, Node> newVariables = new HashMap<>();
-                newVariables.putAll(variableNameToValueMap);
+                Map<String, Node> newVariables = new HashMap<>(variableNameToValueMap);
                 for (String formal: userDefinedFunction.getFormalParameters()) {
                     ExpressionNode temp = (ExpressionNode)params;
                     Node evaluatedAddress = evaluate(

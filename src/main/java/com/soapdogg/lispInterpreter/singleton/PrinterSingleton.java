@@ -14,7 +14,7 @@ public enum PrinterSingleton {
     private final ListNotationPrinter listNotationPrinter;
 
     PrinterSingleton() {
-        atomNodePrinter = AtomNodePrinter.newInstance();
+        atomNodePrinter = new AtomNodePrinter();
         dotNotationExpressionNodePrinter = DotNotationExpressionNodePrinter.newInstance(
             DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer(),
             atomNodePrinter

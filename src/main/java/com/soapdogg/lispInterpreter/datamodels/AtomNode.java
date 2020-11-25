@@ -8,4 +8,8 @@ import lombok.Getter;
 public class AtomNode implements Node {
 
 	private final String value;
+
+	public String getValue() {
+	    return value;
+    }
 }

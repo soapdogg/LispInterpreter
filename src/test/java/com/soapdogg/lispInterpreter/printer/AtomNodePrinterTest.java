@@ -12,7 +12,7 @@ class AtomNodePrinterTest {
 
     @BeforeEach
     void setup() {
-        atomNodePrinter = AtomNodePrinter.newInstance();
+        atomNodePrinter = new AtomNodePrinter();
     }
 
     @Test

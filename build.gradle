@@ -7,6 +7,7 @@ plugins {
     id 'maven-publish'
     id "io.freefair.lombok" version "5.2.1"
     id 'jacoco'
+    id 'org.jetbrains.kotlin.jvm' version '1.4.20'
 }
 
 repositories {
@@ -19,13 +20,13 @@ repositories {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.6.2'
     implementation 'org.projectlombok:lombok:1.18.16'
-    testImplementation 'org.mockito:mockito-core:3.5.11'
+    testImplementation 'org.mockito:mockito-core:3.6.0'
+    testImplementation 'org.mockito:mockito-inline:3.6.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
-group = 'edu.osu.cse6341.lispInterpreter'
+group = 'com.soapdogg.lispInterpreter'
 version = '1.0-SNAPSHOT'
-sourceCompatibility = 1.14
-targetCompatibility = 1.14
 
 publishing {
     publications {
@@ -41,5 +42,15 @@ test {
 }
 jacocoTestReport {
     dependsOn test // tests are required to run before generating the report
+}
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "14"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "14"
+    }
 }
 
