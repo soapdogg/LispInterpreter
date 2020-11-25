@@ -6,7 +6,7 @@ import com.soapdogg.lispInterpreter.datamodels.Token;
 import com.soapdogg.lispInterpreter.generator.NodeGenerator;
 import lombok.AllArgsConstructor;
 
-import java.util.Queue;
+import java.util.List;
 
 @AllArgsConstructor(staticName = "newInstance")
 public class AtomNodeParser {
@@ -15,9 +15,9 @@ public class AtomNodeParser {
     private final ParserResultBuilder parserResultBuilder;
 
     public ParserResult parseAtomNode(
-        final Queue<Token> tokens
+        final List<Token> tokens
     ) {
-        final Token token = tokens.remove();
+        final Token token = tokens.remove(0);
         final String value = token.getValue();
         final Node atomNode = nodeGenerator.generateAtomNode(value);
         return parserResultBuilder.buildParserResult(

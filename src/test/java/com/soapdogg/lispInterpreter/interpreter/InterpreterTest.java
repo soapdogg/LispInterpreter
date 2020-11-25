@@ -52,7 +52,7 @@ class InterpreterTest {
 
     @Test
     void interpretTest() throws Exception {
-        Queue<Token> tokens = new LinkedList<>();
+        List<Token> tokens = new LinkedList<>();
         Mockito.when(tokenizer.tokenize(in)).thenReturn(tokens);
 
         List<Node> rootNodes = Collections.emptyList();

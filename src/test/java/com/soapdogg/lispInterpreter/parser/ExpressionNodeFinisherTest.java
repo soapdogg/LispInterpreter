@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
-import java.util.Queue;
 
 class ExpressionNodeFinisherTest {
 
@@ -32,7 +32,7 @@ class ExpressionNodeFinisherTest {
         Mockito.when(result.getResultingNode()).thenReturn(resultingNode);
 
         Token headToken = Mockito.mock(Token.class);
-        Queue<Token> remainingTokens = new LinkedList<>();
+        List<Token> remainingTokens = new LinkedList<>();
         remainingTokens.add(headToken);
         Mockito.when(result.getRemainingTokens()).thenReturn(remainingTokens);
 

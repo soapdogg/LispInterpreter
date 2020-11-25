@@ -7,20 +7,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ParserResultBuilderTest {
 
     private Node resultingNode;
-    private Queue<Token> remainingTokens;
+    private List<Token> remainingTokens;
 
     private ParserResultBuilder parserResultBuilder;
 
     @BeforeEach
     void setup() {
         resultingNode = Mockito.mock(Node.class);
-        remainingTokens = new PriorityQueue<>();
+        remainingTokens = new ArrayList<>();
 
         parserResultBuilder = ParserResultBuilder.newInstance();
     }

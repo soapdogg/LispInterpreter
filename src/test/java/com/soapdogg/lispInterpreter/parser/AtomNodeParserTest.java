@@ -10,11 +10,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.LinkedList;
-import java.util.Queue;
+import java.util.List;
 
 public class AtomNodeParserTest {
 
-    private Queue<Token> tokens;
+    private List<Token> tokens;
 
     private ParserResult expected;
 

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.util.Queue;
+import java.util.List;
 
 class WordTokenizerTest {
 
@@ -40,10 +40,10 @@ class WordTokenizerTest {
         Mockito.when(closeToken.getValue()).thenReturn(word);
 
         Mockito.when(tokenGenerator.generateCloseToken()).thenReturn(closeToken);
-        Queue<Token> actual = wordTokenizer.tokenizeWord(word);
+        List<Token> actual = wordTokenizer.tokenizeWord(word);
 
         Assertions.assertEquals(1, actual.size());
-        Assertions.assertEquals(closeToken, actual.peek());
+        Assertions.assertEquals(closeToken, actual.get(0));
 
         Mockito.verifyNoInteractions(numericTokenValueEndIndexDeterminer);
         Mockito.verifyNoInteractions(literalTokenValueEndIndexDeterminer);
@@ -57,10 +57,10 @@ class WordTokenizerTest {
         Mockito.when(openToken.getValue()).thenReturn(word);
 
         Mockito.when(tokenGenerator.generateOpenToken()).thenReturn(openToken);
-        Queue<Token> actual = wordTokenizer.tokenizeWord(word);
+        List<Token> actual = wordTokenizer.tokenizeWord(word);
 
         Assertions.assertEquals(1, actual.size());
-        Assertions.assertEquals(openToken, actual.peek());
+        Assertions.assertEquals(openToken, actual.get(0));
 
         Mockito.verifyNoInteractions(numericTokenValueEndIndexDeterminer);
         Mockito.verifyNoInteractions(literalTokenValueEndIndexDeterminer);
@@ -82,10 +82,10 @@ class WordTokenizerTest {
         Mockito.when(numericToken.getValue()).thenReturn(word);
 
         Mockito.when(tokenGenerator.generateNumericToken(word)).thenReturn(numericToken);
-        Queue<Token> actual = wordTokenizer.tokenizeWord(word);
+        List<Token> actual = wordTokenizer.tokenizeWord(word);
 
         Assertions.assertEquals(1, actual.size());
-        Assertions.assertEquals(numericToken, actual.peek());
+        Assertions.assertEquals(numericToken, actual.get(0));
 
         Mockito.verifyNoInteractions(literalTokenValueEndIndexDeterminer);
     }
@@ -106,10 +106,10 @@ class WordTokenizerTest {
         Mockito.when(literalToken.getValue()).thenReturn(word);
 
         Mockito.when(tokenGenerator.generateLiteralToken(word)).thenReturn(literalToken);
-        Queue<Token> actual = wordTokenizer.tokenizeWord(word);
+        List<Token> actual = wordTokenizer.tokenizeWord(word);
 
         Assertions.assertEquals(1, actual.size());
-        Assertions.assertEquals(literalToken, actual.peek());
+        Assertions.assertEquals(literalToken, actual.get(0));
 
         Mockito.verifyNoInteractions(numericTokenValueEndIndexDeterminer);
     }

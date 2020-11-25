@@ -1,15 +1,16 @@
 package regression;
 
 import com.soapdogg.lispInterpreter.datamodels.ProcessedTokensResult;
+import com.soapdogg.lispInterpreter.datamodels.Token;
 import com.soapdogg.lispInterpreter.singleton.TokenizerSingleton;
 import com.soapdogg.lispInterpreter.tokenizer.Tokenizer;
-import com.soapdogg.lispInterpreter.datamodels.Token;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
 
@@ -80,7 +81,7 @@ public class TokenizerTest
         String actual;
         try {
             Scanner in = getScannerFromFilePath(programFile);
-            Queue<Token> tokens = tokenizer.tokenize(in);
+            List<Token> tokens = tokenizer.tokenize(in);
             ProcessedTokensResult processedTokensResult = processTokens(tokens);
             actual = getTokenizedResults(
                 processedTokensResult
@@ -104,7 +105,7 @@ public class TokenizerTest
         return in;
     }
 
-    private static ProcessedTokensResult processTokens(Queue<Token> tokens) {
+    private static ProcessedTokensResult processTokens(List<Token> tokens) {
         Queue<String> literalAtoms = new LinkedList<>();
         int openCount = 0;
         int closingCount = 0;

@@ -10,8 +10,8 @@ import com.soapdogg.lispInterpreter.datamodels.TokenKind;
 import com.soapdogg.lispInterpreter.generator.NodeGenerator;
 import lombok.AllArgsConstructor;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Queue;
 
 @AllArgsConstructor(staticName = "newInstance")
 public class ExpressionNodeParser {
@@ -23,9 +23,9 @@ public class ExpressionNodeParser {
     private final ParserResultBuilder parserResultBuilder;
 
     public ParserResult parseExpressionNode(
-        final Queue<Token> tokens
+        final List<Token> tokens
     ) throws Exception {
-        final Optional<Token> tokenOptional = Optional.ofNullable(tokens.peek());
+        final Optional<Token> tokenOptional = tokens.isEmpty() ? Optional.empty() : Optional.of(tokens.get(0));
         final Token token = tokenKindAsserter.assertTokenIsNotNull(tokenOptional);
         final boolean isClose = token.getTokenKind() == TokenKind.CLOSE_TOKEN;
         if (isClose) {
@@ -40,7 +40,7 @@ public class ExpressionNodeParser {
             final TokenKind currentTokenKind = token.getTokenKind();
             final boolean isOpen = currentTokenKind == TokenKind.OPEN_TOKEN;
             if (isOpen) {
-                tokens.remove();
+                tokens.remove(0);
                 final ParserResult t = parseExpressionNode(tokens);
                 addressParserResult = expressionNodeFinisher.finishParsingExpressionNode(t);
             } else {

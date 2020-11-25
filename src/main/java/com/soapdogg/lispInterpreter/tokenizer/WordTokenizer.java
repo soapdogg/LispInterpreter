@@ -1,14 +1,14 @@
 package com.soapdogg.lispInterpreter.tokenizer;
 
+import com.soapdogg.lispInterpreter.constants.TokenValueConstants;
 import com.soapdogg.lispInterpreter.datamodels.Token;
 import com.soapdogg.lispInterpreter.determiner.LiteralTokenValueEndIndexDeterminer;
 import com.soapdogg.lispInterpreter.determiner.NumericTokenValueEndIndexDeterminer;
-import com.soapdogg.lispInterpreter.constants.TokenValueConstants;
 import com.soapdogg.lispInterpreter.generator.TokenGenerator;
 import lombok.AllArgsConstructor;
 
 import java.util.LinkedList;
-import java.util.Queue;
+import java.util.List;
 
 @AllArgsConstructor(staticName = "newInstance")
 public class WordTokenizer {
@@ -17,9 +17,9 @@ public class WordTokenizer {
     private final NumericTokenValueEndIndexDeterminer numericTokenValueEndIndexDeterminer;
     private final LiteralTokenValueEndIndexDeterminer literalTokenValueEndIndexDeterminer;
 
-    public Queue<Token> tokenizeWord(String word) {
+    public List<Token> tokenizeWord(String word) {
 
-        Queue<Token> tokens = new LinkedList<>();
+        List<Token> tokens = new LinkedList<>();
         int startingPos = 0;
 
         while (startingPos < word.length()) {

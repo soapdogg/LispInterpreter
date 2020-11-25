@@ -10,11 +10,10 @@ import org.mockito.Mockito;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 public class RootParserTest {
 
-    private Queue<Token> tokens;
+    private List<Token> tokens;
 
     private Node resultingNode;
 
@@ -29,7 +28,7 @@ public class RootParserTest {
         tokens.add(headToken);
 
         resultingNode = Mockito.mock(Node.class);
-        Queue<Token> remainingTokens = new LinkedList<>();
+        List<Token> remainingTokens = new LinkedList<>();
 
         ParserResult parserResult = Mockito.mock(ParserResult.class);
         Mockito.when(parserResult.getResultingNode()).thenReturn(resultingNode);

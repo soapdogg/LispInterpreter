@@ -16,16 +16,16 @@ public enum TokenizerSingleton {
     private final Tokenizer tokenizer;
 
     TokenizerSingleton() {
-        scannerToLineTransformer = ScannerToLineTransformer.newInstance();
+    scannerToLineTransformer = new ScannerToLineTransformer();
         wordTokenizer = WordTokenizer.newInstance(
             GeneratorSingleton.INSTANCE.getTokenGenerator(),
             DeterminerSingleton.INSTANCE.getNumericTokenValueEndIndexDeterminer(),
             DeterminerSingleton.INSTANCE.getLiteralTokenValueEndIndexDeterminer()
         );
-        lineTokenizer = LineTokenizer.newInstance(
+        lineTokenizer = new LineTokenizer(
             wordTokenizer
         );
-        tokenizer = Tokenizer.newInstance(
+        tokenizer = new Tokenizer(
             scannerToLineTransformer,
             AsserterSingleton.INSTANCE.getLineFormatAsserter(),
             lineTokenizer

@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
-import java.util.Queue;
 
 public class NodeParserTest {
 
@@ -20,7 +20,7 @@ public class NodeParserTest {
     private AtomNodeParser atomNodeParser;
 
     private Token headToken;
-    private Queue<Token> tokens;
+    private List<Token> tokens;
 
     private NodeParser nodeParser;
 

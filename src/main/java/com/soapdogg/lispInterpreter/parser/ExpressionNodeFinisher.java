@@ -5,8 +5,8 @@ import com.soapdogg.lispInterpreter.datamodels.ParserResult;
 import com.soapdogg.lispInterpreter.datamodels.Token;
 import lombok.AllArgsConstructor;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Queue;
 
 @AllArgsConstructor(staticName = "newInstance")
 public class ExpressionNodeFinisher {
@@ -17,8 +17,8 @@ public class ExpressionNodeFinisher {
     public ParserResult finishParsingExpressionNode(
         final ParserResult result
     ) throws Exception {
-        final Queue<Token> remainingTokens = result.getRemainingTokens();
-        final Optional<Token> closeTokenOptional = Optional.ofNullable(remainingTokens.poll());
+        final List<Token> remainingTokens = result.getRemainingTokens();
+        final Optional<Token> closeTokenOptional = Optional.ofNullable(remainingTokens.remove(0));
         final Token closeToken = tokenKindAsserter.assertTokenIsNotNull(closeTokenOptional);
         tokenKindAsserter.assertTokenIsClose(closeToken);
         return parserResultBuilder.buildParserResult(

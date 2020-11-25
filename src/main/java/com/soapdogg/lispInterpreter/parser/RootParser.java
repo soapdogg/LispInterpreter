@@ -14,7 +14,7 @@ public class RootParser {
 
     private final NodeParser nodeParser;
 
-    public List<Node> parse(Queue<Token> tokens) throws Exception {
+    public List<Node> parse(List<Token> tokens) throws Exception {
 
         List<Node> rootNodes = new ArrayList<>();
         while (!tokens.isEmpty()) {

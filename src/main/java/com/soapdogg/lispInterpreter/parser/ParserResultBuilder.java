@@ -5,14 +5,14 @@ import com.soapdogg.lispInterpreter.datamodels.ParserResult;
 import com.soapdogg.lispInterpreter.datamodels.Token;
 import lombok.AllArgsConstructor;
 
-import java.util.Queue;
+import java.util.List;
 
 @AllArgsConstructor(staticName = "newInstance")
 public class ParserResultBuilder {
 
     public ParserResult buildParserResult(
         final Node resultingNode,
-        final Queue<Token> remainingTokens
+        final List<Token> remainingTokens
     ) {
         return ParserResult.newInstance(
             resultingNode,

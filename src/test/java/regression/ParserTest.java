@@ -1,20 +1,19 @@
 package regression;
 
 import com.soapdogg.lispInterpreter.datamodels.Node;
+import com.soapdogg.lispInterpreter.datamodels.Token;
 import com.soapdogg.lispInterpreter.parser.RootParser;
 import com.soapdogg.lispInterpreter.printer.DotNotationPrinter;
 import com.soapdogg.lispInterpreter.singleton.ParserSingleton;
 import com.soapdogg.lispInterpreter.singleton.PrinterSingleton;
 import com.soapdogg.lispInterpreter.singleton.TokenizerSingleton;
 import com.soapdogg.lispInterpreter.tokenizer.Tokenizer;
-import com.soapdogg.lispInterpreter.datamodels.Token;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Queue;
 import java.util.Scanner;
 
 public class ParserTest
@@ -87,7 +86,7 @@ public class ParserTest
         String actual;
         try{
             Scanner in = getScannerFromFilePath(programFile);
-            Queue<Token> tokens = tokenizer.tokenize(in);
+            List<Token> tokens = tokenizer.tokenize(in);
             List<Node> nodes = rootParser.parse(tokens);
             actual = dotNotationPrinter.printInDotNotation(nodes);
         } catch (Exception e){
