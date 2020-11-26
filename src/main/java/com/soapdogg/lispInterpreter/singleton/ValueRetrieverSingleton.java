@@ -14,15 +14,15 @@ public enum ValueRetrieverSingleton {
     private final NumericValueRetriever numericValueRetriever;
 
     ValueRetrieverSingleton() {
-        atomicValueRetriever = AtomicValueRetriever.newInstance(
+        atomicValueRetriever = new AtomicValueRetriever(
             DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer(),
             PrinterSingleton.INSTANCE.getListNotationPrinter()
         );
-        listValueRetriever = ListValueRetriever.newInstance(
+        listValueRetriever = new ListValueRetriever(
             DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer(),
             PrinterSingleton.INSTANCE.getDotNotationPrinter()
         );
-        numericValueRetriever = NumericValueRetriever.newInstance(
+        numericValueRetriever = new NumericValueRetriever(
             atomicValueRetriever,
             DeterminerSingleton.INSTANCE.getNumericStringDeterminer(),
             PrinterSingleton.INSTANCE.getListNotationPrinter()

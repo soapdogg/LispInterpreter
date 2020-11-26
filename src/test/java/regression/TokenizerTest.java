@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import java.util.Scanner;
 
 public class TokenizerTest
@@ -106,7 +105,7 @@ public class TokenizerTest
     }
 
     private static ProcessedTokensResult processTokens(List<Token> tokens) {
-        Queue<String> literalAtoms = new LinkedList<>();
+        List<String> literalAtoms = new LinkedList<>();
         int openCount = 0;
         int closingCount = 0;
         int numericAtomsSum = 0;
@@ -129,7 +128,7 @@ public class TokenizerTest
                     break;
             }
         }
-        return ProcessedTokensResult.newInstance(
+        return new ProcessedTokensResult(
             literalAtoms,
             openCount,
             closingCount,

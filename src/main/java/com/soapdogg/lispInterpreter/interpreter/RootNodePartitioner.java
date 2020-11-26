@@ -35,7 +35,7 @@ public class RootNodePartitioner {
                     }
                 )
             );
-        return PartitionedRootNodes.newInstance(
+        return new PartitionedRootNodes(
             defunAndExecutables.get(true),
             defunAndExecutables.get(false)
         );

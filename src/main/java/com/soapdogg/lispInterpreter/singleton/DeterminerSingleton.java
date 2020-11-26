@@ -16,8 +16,8 @@ public enum DeterminerSingleton {
     private final NumericTokenValueEndIndexDeterminer numericTokenValueEndIndexDeterminer;
 
     DeterminerSingleton() {
-        numericStringDeterminer = NumericStringDeterminer.newInstance();
-        expressionNodeDeterminer = ExpressionNodeDeterminer.newInstance();
+        numericStringDeterminer = new NumericStringDeterminer();
+        expressionNodeDeterminer = new ExpressionNodeDeterminer();
         functionLengthDeterminer = FunctionLengthDeterminer.newInstance();
 
         invalidNameDeterminer = InvalidNameDeterminer.newInstance(
