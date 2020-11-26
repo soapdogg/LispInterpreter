@@ -1,0 +1,42 @@
+package com.soapdogg.lispInterpreter.generator
+
+import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
+import com.soapdogg.lispInterpreter.datamodels.AtomNode
+import com.soapdogg.lispInterpreter.datamodels.ExpressionNode
+import com.soapdogg.lispInterpreter.datamodels.Node
+
+class NodeGenerator {
+    fun generateAtomNode(
+        value: Boolean
+    ): AtomNode {
+        val t = if (value) ReservedValuesConstants.T else ReservedValuesConstants.NIL
+        return AtomNode(
+            t
+        )
+    }
+
+    fun generateAtomNode(
+        value: Int
+    ): AtomNode {
+        val t = value.toString()
+        return AtomNode(
+            t
+        )
+    }
+
+    fun generateAtomNode(
+        value: String
+    ): AtomNode {
+        return AtomNode(value)
+    }
+
+    fun generateExpressionNode(
+        address: Node,
+        data: Node
+    ): ExpressionNode {
+        return ExpressionNode(
+            address,
+            data
+        )
+    }
+}

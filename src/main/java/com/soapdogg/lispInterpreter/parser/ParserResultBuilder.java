@@ -14,7 +14,7 @@ public class ParserResultBuilder {
         final Node resultingNode,
         final List<Token> remainingTokens
     ) {
-        return ParserResult.newInstance(
+        return new ParserResult(
             resultingNode,
             remainingTokens
         );

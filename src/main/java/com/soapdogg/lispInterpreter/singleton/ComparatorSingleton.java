@@ -10,6 +10,6 @@ public enum  ComparatorSingleton {
     private final NodeValueComparator nodeValueComparator;
 
     ComparatorSingleton() {
-        nodeValueComparator = NodeValueComparator.newInstance();
+        nodeValueComparator = new NodeValueComparator();
     }
 }

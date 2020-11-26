@@ -17,8 +17,8 @@ public enum GeneratorSingleton {
     private final TokenGenerator tokenGenerator;
 
     GeneratorSingleton() {
-        nodeGenerator = NodeGenerator.newInstance();
-        userDefinedFunctionFormalParameterGenerator = UserDefinedFunctionFormalParameterGenerator.newInstance(
+        nodeGenerator = new NodeGenerator();
+        userDefinedFunctionFormalParameterGenerator = new UserDefinedFunctionFormalParameterGenerator(
             DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer(),
             ValueRetrieverSingleton.INSTANCE.getListValueRetriever(),
             ValueRetrieverSingleton.INSTANCE.getAtomicValueRetriever()
@@ -31,9 +31,9 @@ public enum GeneratorSingleton {
             userDefinedFunctionFormalParameterGenerator,
             AsserterSingleton.INSTANCE.getUserDefinedFormalParametersAsserter()
         );
-        userDefinedFunctionGenerator = UserDefinedFunctionGenerator.newInstance(
+        userDefinedFunctionGenerator = new UserDefinedFunctionGenerator(
             defunFunction
         );
-        tokenGenerator = TokenGenerator.newInstance();
+        tokenGenerator = new TokenGenerator();
     }
 }

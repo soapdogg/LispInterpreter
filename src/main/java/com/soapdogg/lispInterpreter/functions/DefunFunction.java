@@ -61,7 +61,7 @@ public class DefunFunction  {
 
         Node body = tempNode.getData();
 
-        return UserDefinedFunction.newInstance(
+        return new UserDefinedFunction(
             formalParameters,
             body,
             functionName
