@@ -18,14 +18,14 @@ public enum DeterminerSingleton {
     DeterminerSingleton() {
         numericStringDeterminer = new NumericStringDeterminer();
         expressionNodeDeterminer = new ExpressionNodeDeterminer();
-        functionLengthDeterminer = FunctionLengthDeterminer.newInstance();
+        functionLengthDeterminer = new FunctionLengthDeterminer();
 
-        invalidNameDeterminer = InvalidNameDeterminer.newInstance(
+        invalidNameDeterminer = new InvalidNameDeterminer(
             InvalidUserDefinedNameConstants.InvalidNames,
             numericStringDeterminer
         );
-        userDefinedFunctionNameDeterminer = UserDefinedFunctionNameDeterminer.newInstance();
-        literalTokenValueEndIndexDeterminer = LiteralTokenValueEndIndexDeterminer.newInstance();
-        numericTokenValueEndIndexDeterminer = NumericTokenValueEndIndexDeterminer.newInstance();
+        userDefinedFunctionNameDeterminer = new UserDefinedFunctionNameDeterminer();
+        literalTokenValueEndIndexDeterminer = new LiteralTokenValueEndIndexDeterminer();
+        numericTokenValueEndIndexDeterminer = new NumericTokenValueEndIndexDeterminer();
     }
 }
