@@ -50,7 +50,7 @@ class NullFunctionTest {
         nodeValueComparator = Mockito.mock(NodeValueComparator.class);
         nodeGenerator = Mockito.mock(NodeGenerator.class);
 
-        nullFunction = NullFunction.newInstance(
+        nullFunction = new NullFunction(
             functionLengthAsserter,
             nodeEvaluator,
             expressionNodeDeterminer,

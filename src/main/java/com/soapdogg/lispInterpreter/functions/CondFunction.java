@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 import java.util.List;
 import java.util.Map;
 
-@AllArgsConstructor(staticName = "newInstance")
+@AllArgsConstructor()
 public class CondFunction implements LispFunction {
 
     private final CondFunctionParameterAsserter condFunctionParameterAsserter;
@@ -19,7 +19,7 @@ public class CondFunction implements LispFunction {
     public Node evaluateLispFunction(
         final Node params,
         final List<UserDefinedFunction> userDefinedFunctions,
-        final Map<String, Node> variableNameToValueMap
+        final Map<String, ? extends Node> variableNameToValueMap
     ) throws Exception {
         condFunctionParameterAsserter.assertCondFunctionParameters(
             params,

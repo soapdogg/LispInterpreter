@@ -12,7 +12,7 @@ import lombok.AllArgsConstructor;
 import java.util.List;
 import java.util.Map;
 
-@AllArgsConstructor(staticName = "newInstance")
+@AllArgsConstructor()
 public class QuoteFunction implements LispFunction {
 
     private final FunctionLengthAsserter functionLengthAsserter;
@@ -22,8 +22,8 @@ public class QuoteFunction implements LispFunction {
     public Node evaluateLispFunction(
         final Node params,
         final List<UserDefinedFunction> userDefinedFunctions,
-        final Map<String, Node> variableNameToValueMap
-    ) throws Exception {
+        final Map<String, ? extends Node> variableNameToValueMap
+    ) {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.QUOTE,
             FunctionLengthConstants.TWO,

@@ -47,7 +47,7 @@ class EqFunctionTest {
         listValueRetriever = Mockito.mock(ListValueRetriever.class);
         nodeGenerator = Mockito.mock(NodeGenerator.class);
 
-        eqFunction = EqFunction.newInstance(
+        eqFunction = new EqFunction(
             functionLengthAsserter,
             nodeEvaluator,
             atomicValueRetriever,

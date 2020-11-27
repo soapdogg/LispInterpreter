@@ -23,7 +23,7 @@ public class CondFunctionEvaluator {
     public Node evaluateCondFunction(
         final Node params,
         final List<UserDefinedFunction> userDefinedFunctions,
-        final Map<String, Node> variableNameToValueMap
+        final Map<String, ? extends Node> variableNameToValueMap
     ) throws Exception {
         if (params instanceof AtomNode) {
             throw new NotAListException("Error! None of the conditions in the COND function evaluated to true.\n");

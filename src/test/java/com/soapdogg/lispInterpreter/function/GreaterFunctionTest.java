@@ -47,7 +47,7 @@ class GreaterFunctionTest {
         listValueRetriever = Mockito.mock(ListValueRetriever.class);
         nodeGenerator = Mockito.mock(NodeGenerator.class);
 
-        greaterFunction = GreaterFunction.newInstance(
+        greaterFunction = new GreaterFunction(
             functionLengthAsserter,
             nodeEvaluator,
             numericValueRetriever,

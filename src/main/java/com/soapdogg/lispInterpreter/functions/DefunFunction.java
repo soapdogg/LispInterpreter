@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 
 import java.util.*;
 
-@AllArgsConstructor(staticName = "newInstance")
+@AllArgsConstructor()
 public class DefunFunction  {
 
     private final FunctionLengthAsserter functionLengthAsserter;
@@ -27,7 +27,7 @@ public class DefunFunction  {
 
     public UserDefinedFunction evaluateLispFunction(
         final Node params
-    ) throws Exception {
+    ) {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.DEFUN,
             FunctionLengthConstants.FOUR,

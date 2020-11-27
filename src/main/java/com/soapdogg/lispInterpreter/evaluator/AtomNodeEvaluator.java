@@ -11,7 +11,7 @@ public class AtomNodeEvaluator {
 
     public Node evaluate(
         final AtomNode atomNode,
-        final Map<String, Node> variableNameToValueMap
+        final Map<String, ? extends Node> variableNameToValueMap
     ) {
         String value = atomNode.getValue();
         if (variableNameToValueMap.containsKey(value)) return variableNameToValueMap.get(value);

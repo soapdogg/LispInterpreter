@@ -49,7 +49,7 @@ class IntFunctionTest {
         numericStringDeterminer = Mockito.mock(NumericStringDeterminer.class);
         nodeGenerator = Mockito.mock(NodeGenerator.class);
 
-        intFunction = IntFunction.newInstance(
+        intFunction = new IntFunction(
             functionLengthAsserter,
             nodeEvaluator,
             expressionNodeDeterminer,

@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 import java.util.List;
 import java.util.Map;
 
-@AllArgsConstructor(staticName = "newInstance")
+@AllArgsConstructor()
 public class NullFunction implements LispFunction {
 
     private final FunctionLengthAsserter functionLengthAsserter;
@@ -29,7 +29,7 @@ public class NullFunction implements LispFunction {
     public Node evaluateLispFunction(
         final Node params,
         final List<UserDefinedFunction> userDefinedFunctions,
-        final Map<String, Node> variableNameToValueMap
+        final Map<String, ? extends Node> variableNameToValueMap
     ) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.NULL,

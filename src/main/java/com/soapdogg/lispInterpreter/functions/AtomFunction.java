@@ -1,19 +1,19 @@
 package com.soapdogg.lispInterpreter.functions;
 
+import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter;
+import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants;
+import com.soapdogg.lispInterpreter.constants.FunctionNameConstants;
 import com.soapdogg.lispInterpreter.datamodels.Node;
 import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction;
 import com.soapdogg.lispInterpreter.determiner.ExpressionNodeDeterminer;
-import com.soapdogg.lispInterpreter.generator.NodeGenerator;
-import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants;
-import com.soapdogg.lispInterpreter.constants.FunctionNameConstants;
 import com.soapdogg.lispInterpreter.evaluator.NodeEvaluator;
-import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter;
+import com.soapdogg.lispInterpreter.generator.NodeGenerator;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
 import java.util.Map;
 
-@AllArgsConstructor(staticName = "newInstance")
+@AllArgsConstructor()
 public class AtomFunction implements LispFunction {
 
     private final FunctionLengthAsserter functionLengthAsserter;
@@ -25,7 +25,7 @@ public class AtomFunction implements LispFunction {
     public Node evaluateLispFunction(
         final Node params,
         final List<UserDefinedFunction> userDefinedFunctions,
-        final Map<String, Node> variableNameToValueMap
+        final Map<String, ? extends Node> variableNameToValueMap
     ) throws Exception {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.ATOM,

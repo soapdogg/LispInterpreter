@@ -47,7 +47,7 @@ class LessFunctionTest {
         listValueRetriever = Mockito.mock(ListValueRetriever.class);
         nodeGenerator = Mockito.mock(NodeGenerator.class);
 
-        lessFunction = LessFunction.newInstance(
+        lessFunction = new LessFunction(
             functionLengthAsserter,
             nodeEvaluator,
             numericValueRetriever,

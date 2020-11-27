@@ -47,7 +47,7 @@ class TimesFunctionTest {
         listValueRetriever = Mockito.mock(ListValueRetriever.class);
         nodeGenerator = Mockito.mock(NodeGenerator.class);
 
-        timesFunction = TimesFunction.newInstance(
+        timesFunction = new TimesFunction(
             functionLengthAsserter,
             nodeEvaluator,
             numericValueRetriever,

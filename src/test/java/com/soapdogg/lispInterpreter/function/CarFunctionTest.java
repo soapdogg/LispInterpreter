@@ -40,7 +40,7 @@ class CarFunctionTest {
         listValueRetriever = Mockito.mock(ListValueRetriever.class);
         nodeEvaluator = Mockito.mock(NodeEvaluator.class);
 
-        carFunction = CarFunction.newInstance(
+        carFunction = new CarFunction(
             functionLengthAsserter,
             listValueRetriever,
             nodeEvaluator

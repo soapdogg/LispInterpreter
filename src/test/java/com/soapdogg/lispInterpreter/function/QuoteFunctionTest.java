@@ -37,14 +37,14 @@ class QuoteFunctionTest {
         functionLengthAsserter = Mockito.mock(FunctionLengthAsserter.class);
         listValueRetriever = Mockito.mock(ListValueRetriever.class);
 
-        quoteFunction = QuoteFunction.newInstance(
+        quoteFunction = new QuoteFunction(
             functionLengthAsserter,
             listValueRetriever
         );
     }
 
     @Test
-    void quoteFunctionTest() throws Exception {
+    void quoteFunctionTest()  {
         ExpressionNode expressionNodeParams = Mockito.mock(ExpressionNode.class);
         Mockito.when(
             listValueRetriever.retrieveListValue(

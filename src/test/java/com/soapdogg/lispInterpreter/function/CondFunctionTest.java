@@ -34,7 +34,7 @@ class CondFunctionTest {
         condFunctionParameterAsserter = Mockito.mock(CondFunctionParameterAsserter.class);
         condFunctionEvaluator = Mockito.mock(CondFunctionEvaluator.class);
 
-        condFunction = CondFunction.newInstance(
+        condFunction = new CondFunction(
             condFunctionParameterAsserter,
             condFunctionEvaluator
         );

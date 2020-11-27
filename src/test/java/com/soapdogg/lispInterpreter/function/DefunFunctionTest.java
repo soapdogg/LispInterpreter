@@ -44,7 +44,7 @@ class DefunFunctionTest {
         userDefinedFunctionFormalParameterGenerator = Mockito.mock(UserDefinedFunctionFormalParameterGenerator.class);
         userDefinedFormalParametersAsserter = Mockito.mock(UserDefinedFormalParametersAsserter.class);
 
-        defunFunction = DefunFunction.newInstance(
+        defunFunction = new DefunFunction(
             functionLengthAsserter,
             atomicValueRetriever,
             listValueRetriever,

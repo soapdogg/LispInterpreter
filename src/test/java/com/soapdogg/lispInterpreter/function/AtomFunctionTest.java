@@ -43,7 +43,7 @@ class AtomFunctionTest {
         expressionNodeDeterminer = Mockito.mock(ExpressionNodeDeterminer.class);
         nodeGenerator = Mockito.mock(NodeGenerator.class);
 
-        atomFunction = AtomFunction.newInstance(
+        atomFunction = new AtomFunction(
             functionLengthAsserter,
             nodeEvaluator,
             expressionNodeDeterminer,

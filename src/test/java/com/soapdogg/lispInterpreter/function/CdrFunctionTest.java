@@ -40,7 +40,7 @@ class CdrFunctionTest {
         listValueRetriever = Mockito.mock(ListValueRetriever.class);
         nodeEvaluator = Mockito.mock(NodeEvaluator.class);
 
-        cdrFunction = CdrFunction.newInstance(
+        cdrFunction = new CdrFunction(
             functionLengthAsserter,
             listValueRetriever,
             nodeEvaluator

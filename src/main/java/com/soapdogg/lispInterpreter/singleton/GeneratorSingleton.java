@@ -23,7 +23,7 @@ public enum GeneratorSingleton {
             ValueRetrieverSingleton.INSTANCE.getListValueRetriever(),
             ValueRetrieverSingleton.INSTANCE.getAtomicValueRetriever()
         );
-        DefunFunction defunFunction = DefunFunction.newInstance(
+        DefunFunction defunFunction = new DefunFunction(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
             ValueRetrieverSingleton.INSTANCE.getAtomicValueRetriever(),
             ValueRetrieverSingleton.INSTANCE.getListValueRetriever(),

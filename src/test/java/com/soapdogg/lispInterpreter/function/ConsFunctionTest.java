@@ -43,7 +43,7 @@ class ConsFunctionTest {
         nodeEvaluator = Mockito.mock(NodeEvaluator.class);
         nodeGenerator = Mockito.mock(NodeGenerator.class);
 
-        consFunction = ConsFunction.newInstance(
+        consFunction = new ConsFunction(
             functionLengthAsserter,
             listValueRetriever,
             nodeEvaluator,

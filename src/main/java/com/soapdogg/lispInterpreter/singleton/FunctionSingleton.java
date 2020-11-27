@@ -24,48 +24,47 @@ public enum  FunctionSingleton {
 
 
     FunctionSingleton() {
-        atomFunction = AtomFunction.newInstance(
+        atomFunction = new AtomFunction(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
             EvaluatorSingleton.INSTANCE.getNodeEvaluator(),
             DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer(),
             GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
-        carFunction = CarFunction.newInstance(
+        carFunction = new CarFunction(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
             ValueRetrieverSingleton.INSTANCE.getListValueRetriever(),
             EvaluatorSingleton.INSTANCE.getNodeEvaluator()
         );
-        cdrFunction = CdrFunction.newInstance(
+        cdrFunction = new CdrFunction(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
             ValueRetrieverSingleton.INSTANCE.getListValueRetriever(),
             EvaluatorSingleton.INSTANCE.getNodeEvaluator()
         );
-        condFunction = CondFunction.newInstance(
+        condFunction = new CondFunction(
             AsserterSingleton.INSTANCE.getCondFunctionParameterAsserter(),
             EvaluatorSingleton.INSTANCE.getCondFunctionEvaluator()
         );
-        consFunction = ConsFunction.newInstance(
+        consFunction = new ConsFunction(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
             ValueRetrieverSingleton.INSTANCE.getListValueRetriever(),
             EvaluatorSingleton.INSTANCE.getNodeEvaluator(),
             GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
-
-        eqFunction = EqFunction.newInstance(
+        eqFunction = new EqFunction(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
             EvaluatorSingleton.INSTANCE.getNodeEvaluator(),
             ValueRetrieverSingleton.INSTANCE.getAtomicValueRetriever(),
             ValueRetrieverSingleton.INSTANCE.getListValueRetriever(),
             GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
-        greaterFunction = GreaterFunction.newInstance(
+        greaterFunction = new GreaterFunction(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
             EvaluatorSingleton.INSTANCE.getNodeEvaluator(),
             ValueRetrieverSingleton.INSTANCE.getNumericValueRetriever(),
             ValueRetrieverSingleton.INSTANCE.getListValueRetriever(),
             GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
-        intFunction = IntFunction.newInstance(
+        intFunction = new IntFunction(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
             EvaluatorSingleton.INSTANCE.getNodeEvaluator(),
             DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer(),
@@ -73,21 +72,21 @@ public enum  FunctionSingleton {
             DeterminerSingleton.INSTANCE.getNumericStringDeterminer(),
             GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
-        lessFunction = LessFunction.newInstance(
+        lessFunction = new LessFunction(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
             EvaluatorSingleton.INSTANCE.getNodeEvaluator(),
             ValueRetrieverSingleton.INSTANCE.getNumericValueRetriever(),
             ValueRetrieverSingleton.INSTANCE.getListValueRetriever(),
             GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
-        minusFunction = MinusFunction.newInstance(
+        minusFunction = new MinusFunction(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
             EvaluatorSingleton.INSTANCE.getNodeEvaluator(),
             ValueRetrieverSingleton.INSTANCE.getNumericValueRetriever(),
             ValueRetrieverSingleton.INSTANCE.getListValueRetriever(),
             GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
-        nullFunction = NullFunction.newInstance(
+        nullFunction = new NullFunction(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
             EvaluatorSingleton.INSTANCE.getNodeEvaluator(),
             DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer(),
@@ -95,18 +94,18 @@ public enum  FunctionSingleton {
             ComparatorSingleton.INSTANCE.getNodeValueComparator(),
             GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
-        plusFunction = PlusFunction.newInstance(
+        plusFunction = new PlusFunction(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
             EvaluatorSingleton.INSTANCE.getNodeEvaluator(),
             ValueRetrieverSingleton.INSTANCE.getNumericValueRetriever(),
             ValueRetrieverSingleton.INSTANCE.getListValueRetriever(),
             GeneratorSingleton.INSTANCE.getNodeGenerator()
         );
-        quoteFunction = QuoteFunction.newInstance(
+        quoteFunction = new QuoteFunction(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
             ValueRetrieverSingleton.INSTANCE.getListValueRetriever()
         );
-        timesFunction = TimesFunction.newInstance(
+        timesFunction = new TimesFunction(
             AsserterSingleton.INSTANCE.getFunctionLengthAsserter(),
             EvaluatorSingleton.INSTANCE.getNodeEvaluator(),
             ValueRetrieverSingleton.INSTANCE.getNumericValueRetriever(),

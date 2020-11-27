@@ -47,7 +47,7 @@ class PlusFunctionTest {
         listValueRetriever = Mockito.mock(ListValueRetriever.class);
         nodeGenerator = Mockito.mock(NodeGenerator.class);
 
-        plusFunction = PlusFunction.newInstance(
+        plusFunction = new PlusFunction(
             functionLengthAsserter,
             nodeEvaluator,
             numericValueRetriever,

@@ -26,7 +26,7 @@ public class NodeEvaluator {
     public Node evaluate(
         final Node node,
         final List<UserDefinedFunction> userDefinedFunctions,
-        final Map<String, Node> variableNameToValueMap,
+        final Map<String, ? extends Node> variableNameToValueMap,
         final boolean areLiteralsAllowed
     ) throws Exception {
         if (node instanceof AtomNode) return atomNodeEvaluator.evaluate(
@@ -44,7 +44,7 @@ public class NodeEvaluator {
     private Node evaluate(
         final ExpressionNode expressionNode,
         final List<UserDefinedFunction> userDefinedFunctions,
-        final Map<String, Node> variableNameToValueMap,
+        final Map<String,? extends Node> variableNameToValueMap,
         final boolean areLiteralsAllowed
     ) throws Exception {
         Node address = expressionNode.getAddress();
