@@ -12,8 +12,8 @@ public enum InterpreterSingleton {
     private final Interpreter interpreter;
 
     InterpreterSingleton() {
-        rootNodePartitioner = RootNodePartitioner.newInstance();
-        interpreter = Interpreter.newInstance(
+        rootNodePartitioner = new RootNodePartitioner();
+        interpreter = new Interpreter(
             TokenizerSingleton.INSTANCE.getTokenizer(),
             ParserSingleton.INSTANCE.getRootParser(),
             EvaluatorSingleton.INSTANCE.getProgramEvaluator(),
