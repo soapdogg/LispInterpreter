@@ -15,21 +15,21 @@ public enum PrinterSingleton {
 
     PrinterSingleton() {
         atomNodePrinter = new AtomNodePrinter();
-        dotNotationExpressionNodePrinter = DotNotationExpressionNodePrinter.newInstance(
+        dotNotationExpressionNodePrinter = new DotNotationExpressionNodePrinter(
             DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer(),
             atomNodePrinter
         );
-        dotNotationPrinter = DotNotationPrinter.newInstance(
+        dotNotationPrinter = new DotNotationPrinter(
             DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer(),
             atomNodePrinter,
             dotNotationExpressionNodePrinter
         );
-        listNotationExpressionNodePrinter = ListNotationExpressionNodePrinter.newInstance(
+        listNotationExpressionNodePrinter = new ListNotationExpressionNodePrinter(
             DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer(),
             ComparatorSingleton.INSTANCE.getNodeValueComparator(),
             atomNodePrinter
         );
-        listNotationPrinter = ListNotationPrinter.newInstance(
+        listNotationPrinter = new ListNotationPrinter(
             DeterminerSingleton.INSTANCE.getExpressionNodeDeterminer(),
             atomNodePrinter,
             listNotationExpressionNodePrinter

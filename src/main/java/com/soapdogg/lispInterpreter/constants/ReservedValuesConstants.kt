@@ -6,4 +6,5 @@ object ReservedValuesConstants {
     const val LIST_DELIMITER = " . "
     const val SPACE = ' '
     const val EMPTY = ""
+    const val NEW_LINE = '\n'
 }
