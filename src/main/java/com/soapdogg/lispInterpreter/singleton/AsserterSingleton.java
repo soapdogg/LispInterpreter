@@ -21,7 +21,7 @@ public enum AsserterSingleton {
     private final LineFormatAsserter lineFormatAsserter;
 
     AsserterSingleton() {
-        functionLengthAsserter = FunctionLengthAsserter.newInstance(
+        functionLengthAsserter = new FunctionLengthAsserter(
             DeterminerSingleton.INSTANCE.getFunctionLengthDeterminer()
         );
 
@@ -30,25 +30,25 @@ public enum AsserterSingleton {
             TokenKind.NUMERIC_TOKEN,
             TokenKind.LITERAL_TOKEN
         );
-        tokenKindAsserter = TokenKindAsserter.newInstance(
+        tokenKindAsserter = new TokenKindAsserter(
             startingTokenKindSet
         );
-        condFunctionParameterAsserter = CondFunctionParameterAsserter.newInstance(
+        condFunctionParameterAsserter = new CondFunctionParameterAsserter(
             ComparatorSingleton.INSTANCE.getNodeValueComparator(),
             ValueRetrieverSingleton.INSTANCE.getListValueRetriever(),
             functionLengthAsserter
         );
-        userDefinedFormalParametersAsserter = UserDefinedFormalParametersAsserter.newInstance(
+        userDefinedFormalParametersAsserter = new UserDefinedFormalParametersAsserter(
             InvalidUserDefinedNameConstants.InvalidNames
         );
-        userDefinedFunctionNameAsserter = UserDefinedFunctionNameAsserter.newInstance(
+        userDefinedFunctionNameAsserter = new UserDefinedFunctionNameAsserter(
             DeterminerSingleton.INSTANCE.getInvalidNameDeterminer()
         );
-        atomRootNodeAsserter = AtomRootNodeAsserter.newInstance(
+        atomRootNodeAsserter = new AtomRootNodeAsserter(
             DeterminerSingleton.INSTANCE.getNumericStringDeterminer(),
             ComparatorSingleton.INSTANCE.getNodeValueComparator()
         );
-        lineFormatAsserter = LineFormatAsserter.newInstance(
+        lineFormatAsserter = new LineFormatAsserter(
             TokenValueConstants.ERROR_STATE_PATTERN
         );
     }
