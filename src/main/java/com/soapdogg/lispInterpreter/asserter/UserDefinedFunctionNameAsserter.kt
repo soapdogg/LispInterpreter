@@ -2,7 +2,6 @@ package com.soapdogg.lispInterpreter.asserter
 
 import com.soapdogg.lispInterpreter.determiner.InvalidNameDeterminer
 import com.soapdogg.lispInterpreter.exceptions.InvalidUserDefinedNameException
-import lombok.AllArgsConstructor
 
 class UserDefinedFunctionNameAsserter(
     private val invalidNameDeterminer: InvalidNameDeterminer

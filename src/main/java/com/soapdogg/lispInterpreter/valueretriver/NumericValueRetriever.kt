@@ -4,9 +4,7 @@ import com.soapdogg.lispInterpreter.datamodels.Node
 import com.soapdogg.lispInterpreter.determiner.NumericStringDeterminer
 import com.soapdogg.lispInterpreter.exceptions.NotNumericException
 import com.soapdogg.lispInterpreter.printer.ListNotationPrinter
-import lombok.AllArgsConstructor
 
-@AllArgsConstructor(staticName = "newInstance")
 class NumericValueRetriever(
     private val atomicValueRetriever: AtomicValueRetriever,
     private val numericStringDeterminer: NumericStringDeterminer,

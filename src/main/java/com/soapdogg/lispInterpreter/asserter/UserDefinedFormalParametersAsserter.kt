@@ -1,10 +1,8 @@
 package com.soapdogg.lispInterpreter.asserter
 
 import com.soapdogg.lispInterpreter.exceptions.InvalidUserDefinedNameException
-import lombok.AllArgsConstructor
 import java.util.*
 
-@AllArgsConstructor(staticName = "newInstance")
 class UserDefinedFormalParametersAsserter(
     private val invalidNamesSet: Set<String>
 ) {
