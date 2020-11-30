@@ -20,7 +20,7 @@ public class RootParserTest {
     private RootParser rootParser;
 
     @BeforeEach
-    void setup() throws Exception {
+    void setup() {
         NodeParser nodeParser = Mockito.mock(NodeParser.class);
 
         Token headToken = Mockito.mock(Token.class);
@@ -36,11 +36,11 @@ public class RootParserTest {
 
         Mockito.when(nodeParser.parseIntoNode(tokens)).thenReturn(parserResult);
 
-        rootParser = RootParser.newInstance(nodeParser);
+        rootParser = new RootParser(nodeParser);
     }
 
     @Test
-    void rootParserTest() throws Exception {
+    void rootParserTest() {
         List<Node> actual = rootParser.parse(tokens);
 
         Assertions.assertEquals(1, actual.size());

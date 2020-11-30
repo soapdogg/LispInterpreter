@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.util.LinkedList;
+import java.util.Collections;
 import java.util.List;
 
 public class AtomNodeParserTest {
@@ -32,18 +32,17 @@ public class AtomNodeParserTest {
         AtomNode atomNode = Mockito.mock(AtomNode.class);
         Mockito.when(nodeGenerator.generateAtomNode(value)).thenReturn(atomNode);
 
-        tokens = new LinkedList<>();
-        tokens.add(headToken);
+        tokens = Collections.singletonList(headToken);
 
         expected = Mockito.mock(ParserResult.class);
         Mockito.when(
             parserResultBuilder.buildParserResult(
                 atomNode,
-                tokens
+                Collections.emptyList()
             )
         ).thenReturn(expected);
 
-        atomNodeParser = AtomNodeParser.newInstance(
+        atomNodeParser = new AtomNodeParser(
             nodeGenerator,
             parserResultBuilder
         );

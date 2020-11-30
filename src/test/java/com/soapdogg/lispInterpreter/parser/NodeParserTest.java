@@ -25,7 +25,7 @@ public class NodeParserTest {
     private NodeParser nodeParser;
 
     @BeforeEach
-    void setup() throws Exception {
+    void setup() {
         TokenKindAsserter tokenKindAsserter = Mockito.mock(TokenKindAsserter.class);
         expressionNodeParser = Mockito.mock(ExpressionNodeParser.class);
         expressionNodeFinisher = Mockito.mock(ExpressionNodeFinisher.class);
@@ -41,7 +41,7 @@ public class NodeParserTest {
 
         Mockito.doNothing().when(tokenKindAsserter).assertTokenIsAtomOrOpen(headToken);
 
-        nodeParser = NodeParser.newInstance(
+        nodeParser = new NodeParser(
             tokenKindAsserter,
             expressionNodeParser,
             expressionNodeFinisher,
@@ -50,7 +50,7 @@ public class NodeParserTest {
     }
 
     @Test
-    void parseIntoExpressionNodeTest() throws Exception {
+    void parseIntoExpressionNodeTest() {
         Mockito.when(headToken.getTokenKind()).thenReturn(TokenKind.OPEN_TOKEN);
 
         final ParserResult result = Mockito.mock(ParserResult.class);
@@ -67,7 +67,7 @@ public class NodeParserTest {
     }
 
     @Test
-    void parseIntoAtomNodeTest() throws Exception {
+    void parseIntoAtomNodeTest() {
         Mockito.when(headToken.getTokenKind()).thenReturn(TokenKind.NUMERIC_TOKEN);
 
         final ParserResult expected = Mockito.mock(ParserResult.class);
@@ -81,5 +81,4 @@ public class NodeParserTest {
 
         Mockito.verifyNoInteractions(expressionNodeParser);
     }
-
 }

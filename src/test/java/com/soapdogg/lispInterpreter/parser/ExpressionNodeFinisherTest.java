@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +21,7 @@ class ExpressionNodeFinisherTest {
     private ExpressionNodeFinisher expressionNodeFinisher;
 
     @BeforeEach
-    void setup() throws Exception {
+    void setup() {
         TokenKindAsserter tokenKindAsserter = Mockito.mock(TokenKindAsserter.class);
         ParserResultBuilder parserResultBuilder = Mockito.mock(ParserResultBuilder.class);
 
@@ -32,8 +31,7 @@ class ExpressionNodeFinisherTest {
         Mockito.when(result.getResultingNode()).thenReturn(resultingNode);
 
         Token headToken = Mockito.mock(Token.class);
-        List<Token> remainingTokens = new LinkedList<>();
-        remainingTokens.add(headToken);
+        List<Token> remainingTokens = List.of(headToken);
         Mockito.when(result.getRemainingTokens()).thenReturn(remainingTokens);
 
         Mockito.when(tokenKindAsserter.assertTokenIsNotNull(Optional.of(headToken))).thenReturn(headToken);
@@ -44,18 +42,18 @@ class ExpressionNodeFinisherTest {
         Mockito.when(
             parserResultBuilder.buildParserResult(
                 resultingNode,
-                remainingTokens
+                List.of()
             )
         ).thenReturn(expected);
 
-        expressionNodeFinisher = ExpressionNodeFinisher.newInstance(
+        expressionNodeFinisher = new ExpressionNodeFinisher(
             tokenKindAsserter,
             parserResultBuilder
         );
     }
 
     @Test
-    void finishParsingExpressionNodeTest() throws Exception {
+    void finishParsingExpressionNodeTest() {
         final var actual = expressionNodeFinisher.finishParsingExpressionNode(result);
 
         Assertions.assertEquals(expected, actual);

@@ -8,11 +8,11 @@ import com.soapdogg.lispInterpreter.datamodels.Node;
 import com.soapdogg.lispInterpreter.datamodels.ParserResult;
 import com.soapdogg.lispInterpreter.datamodels.Token;
 import com.soapdogg.lispInterpreter.datamodels.TokenKind;
-import com.soapdogg.lispInterpreter.exceptions.UnexpectedTokenKindException;
 import com.soapdogg.lispInterpreter.generator.NodeGenerator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ class ExpressionNodeParserTest {
     private ExpressionNodeParser expressionNodeParser;
 
     @BeforeEach
-    void setup() throws UnexpectedTokenKindException {
+    void setup() {
         tokenKindAsserter = Mockito.mock(TokenKindAsserter.class);
         nodeGenerator = Mockito.mock(NodeGenerator.class);
         expressionNodeFinisher = Mockito.mock(ExpressionNodeFinisher.class);
@@ -49,7 +49,7 @@ class ExpressionNodeParserTest {
             tokenKindAsserter.assertTokenIsNotNull(Optional.of(headToken))
         ).thenReturn(headToken);
 
-        expressionNodeParser = ExpressionNodeParser.newInstance(
+        expressionNodeParser = new ExpressionNodeParser(
             tokenKindAsserter,
             nodeGenerator,
             expressionNodeFinisher,
@@ -59,7 +59,7 @@ class ExpressionNodeParserTest {
     }
 
     @Test
-    void headTokenIsCloseTest() throws Exception {
+    void headTokenIsCloseTest() {
         Mockito.when(headToken.getTokenKind()).thenReturn(TokenKind.CLOSE_TOKEN);
 
         final AtomNode result = Mockito.mock(AtomNode.class);
@@ -82,8 +82,8 @@ class ExpressionNodeParserTest {
         Mockito.verifyNoInteractions(atomNodeParser);
     }
 
-    /*@Test
-    void headTokenIsOpenTest() throws Exception {
+    @Test
+    void headTokenIsOpenTest()  {
         Mockito.when(headToken.getTokenKind()).thenReturn(TokenKind.OPEN_TOKEN);
 
         Token closeToken = Mockito.mock(Token.class);
@@ -105,9 +105,10 @@ class ExpressionNodeParserTest {
             )
         ).thenReturn(closeTokenParserResult);
 
+
         final ParserResult addressParserResult = Mockito.mock(ParserResult.class);
         Mockito.when(
-            expressionNodeFinisher.finishParsingExpressionNode(closeTokenParserResult)
+            expressionNodeFinisher.finishParsingExpressionNode(ArgumentMatchers.any(ParserResult.class))
         ).thenReturn(addressParserResult);
 
         final Node addressResultingNode = Mockito.mock(Node.class);
@@ -156,10 +157,10 @@ class ExpressionNodeParserTest {
 
         Assertions.assertEquals(expected, actual);
 
-    }*/
+    }
 
     @Test
-    void headTokenIsNumericTest() throws Exception {
+    void headTokenIsNumericTest() {
         Mockito.when(headToken.getTokenKind()).thenReturn(TokenKind.NUMERIC_TOKEN);
 
         Token closeToken = Mockito.mock(Token.class);

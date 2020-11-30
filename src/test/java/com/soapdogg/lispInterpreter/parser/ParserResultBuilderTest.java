@@ -22,7 +22,7 @@ public class ParserResultBuilderTest {
         resultingNode = Mockito.mock(Node.class);
         remainingTokens = new ArrayList<>();
 
-        parserResultBuilder = ParserResultBuilder.newInstance();
+        parserResultBuilder = new ParserResultBuilder();
     }
 
     @Test

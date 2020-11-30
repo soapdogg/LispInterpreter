@@ -20,16 +20,16 @@ public enum ParserSingleton {
     private final RootParser rootParser;
 
     ParserSingleton() {
-        parserResultBuilder = ParserResultBuilder.newInstance();
-        atomNodeParser = AtomNodeParser.newInstance(
+        parserResultBuilder = new ParserResultBuilder();
+        atomNodeParser = new AtomNodeParser(
             GeneratorSingleton.INSTANCE.getNodeGenerator(),
             parserResultBuilder
         );
-        expressionNodeFinisher = ExpressionNodeFinisher.newInstance(
+        expressionNodeFinisher = new ExpressionNodeFinisher(
             AsserterSingleton.INSTANCE.getTokenKindAsserter(),
             parserResultBuilder
         );
-        expressionNodeParser = ExpressionNodeParser.newInstance(
+        expressionNodeParser = new ExpressionNodeParser(
             AsserterSingleton.INSTANCE.getTokenKindAsserter(),
             GeneratorSingleton.INSTANCE.getNodeGenerator(),
             expressionNodeFinisher,
@@ -37,13 +37,13 @@ public enum ParserSingleton {
             parserResultBuilder
         );
 
-        nodeParser = NodeParser.newInstance(
+        nodeParser = new NodeParser(
             AsserterSingleton.INSTANCE.getTokenKindAsserter(),
             expressionNodeParser,
             expressionNodeFinisher,
             atomNodeParser
         );
-        rootParser = RootParser.newInstance(
+        rootParser = new RootParser(
             nodeParser
         );
     }
