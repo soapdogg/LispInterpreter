@@ -38,6 +38,7 @@ class ProgramEvaluatorTest {
                 false
             )
         ).thenReturn(evaluatedNode)
+
         val actual = programEvaluator.evaluate(
             rootNodes,
             userDefinedFunctions,
