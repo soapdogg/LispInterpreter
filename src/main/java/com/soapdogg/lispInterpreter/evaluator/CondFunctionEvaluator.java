@@ -1,24 +1,33 @@
 package com.soapdogg.lispInterpreter.evaluator;
 
 import com.soapdogg.lispInterpreter.comparator.NodeValueComparator;
+import com.soapdogg.lispInterpreter.constants.FunctionNameConstants;
 import com.soapdogg.lispInterpreter.datamodels.AtomNode;
 import com.soapdogg.lispInterpreter.datamodels.ExpressionNode;
 import com.soapdogg.lispInterpreter.datamodels.Node;
 import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction;
 import com.soapdogg.lispInterpreter.exceptions.NotAListException;
 import com.soapdogg.lispInterpreter.valueretriver.ListValueRetriever;
-import com.soapdogg.lispInterpreter.constants.FunctionNameConstants;
-import lombok.AllArgsConstructor;
 
 import java.util.List;
 import java.util.Map;
 
-@AllArgsConstructor(staticName = "newInstance")
+
 public class CondFunctionEvaluator {
 
     private final ListValueRetriever listValueRetriever;
     private final NodeEvaluator nodeEvaluator;
     private final NodeValueComparator nodeValueComparator;
+
+    public CondFunctionEvaluator(
+        ListValueRetriever listValueRetriever,
+        NodeEvaluator nodeEvaluator,
+        NodeValueComparator nodeValueComparator
+    ) {
+        this.listValueRetriever = listValueRetriever;
+        this.nodeEvaluator = nodeEvaluator;
+        this.nodeValueComparator = nodeValueComparator;
+    }
 
     public Node evaluateCondFunction(
         final Node params,

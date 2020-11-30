@@ -28,7 +28,7 @@ class AtomNodeEvaluatorTest {
 
         variableNameToValueMap = Collections.singletonMap(variableName, variableValue);
 
-        atomNodeEvaluator = AtomNodeEvaluator.newInstance();
+        atomNodeEvaluator = new AtomNodeEvaluator();
     }
 
     @Test

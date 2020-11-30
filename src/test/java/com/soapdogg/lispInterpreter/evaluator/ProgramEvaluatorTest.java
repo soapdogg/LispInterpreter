@@ -36,7 +36,7 @@ class ProgramEvaluatorTest {
         atomRootNodeAsserter = Mockito.mock(AtomRootNodeAsserter.class);
         nodeEvaluator = Mockito.mock(NodeEvaluator.class);
 
-        programEvaluator = ProgramEvaluator.newInstance(
+        programEvaluator = new ProgramEvaluator(
             expressionNodeDeterminer,
             atomRootNodeAsserter,
             nodeEvaluator

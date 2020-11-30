@@ -38,7 +38,7 @@ class CondFunctionEvaluatorTest {
         nodeEvaluator = Mockito.mock(NodeEvaluator.class);
         nodeValueComparator = Mockito.mock(NodeValueComparator.class);
 
-        condFunctionEvaluator = CondFunctionEvaluator.newInstance(
+        condFunctionEvaluator = new CondFunctionEvaluator(
             listValueRetriever,
             nodeEvaluator,
             nodeValueComparator

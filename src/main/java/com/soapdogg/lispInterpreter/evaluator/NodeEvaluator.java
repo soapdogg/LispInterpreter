@@ -1,5 +1,7 @@
 package com.soapdogg.lispInterpreter.evaluator;
 
+import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter;
+import com.soapdogg.lispInterpreter.constants.FunctionsConstants;
 import com.soapdogg.lispInterpreter.datamodels.AtomNode;
 import com.soapdogg.lispInterpreter.datamodels.ExpressionNode;
 import com.soapdogg.lispInterpreter.datamodels.Node;
@@ -7,21 +9,29 @@ import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction;
 import com.soapdogg.lispInterpreter.determiner.ExpressionNodeDeterminer;
 import com.soapdogg.lispInterpreter.determiner.UserDefinedFunctionNameDeterminer;
 import com.soapdogg.lispInterpreter.functions.LispFunction;
-import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter;
-import com.soapdogg.lispInterpreter.constants.FunctionsConstants;
-import lombok.AllArgsConstructor;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@AllArgsConstructor(staticName = "newInstance")
 public class NodeEvaluator {
 
     private final AtomNodeEvaluator atomNodeEvaluator;
     private final ExpressionNodeDeterminer expressionNodeDeterminer;
     private final UserDefinedFunctionNameDeterminer userDefinedFunctionNameDeterminer;
     private final FunctionLengthAsserter functionLengthAsserter;
+
+    public NodeEvaluator(
+        AtomNodeEvaluator atomNodeEvaluator,
+        ExpressionNodeDeterminer expressionNodeDeterminer,
+        UserDefinedFunctionNameDeterminer userDefinedFunctionNameDeterminer,
+        FunctionLengthAsserter functionLengthAsserter
+    ) {
+        this.atomNodeEvaluator = atomNodeEvaluator;
+        this.expressionNodeDeterminer = expressionNodeDeterminer;
+        this.userDefinedFunctionNameDeterminer = userDefinedFunctionNameDeterminer;
+        this.functionLengthAsserter = functionLengthAsserter;
+    }
 
     public Node evaluate(
         final Node node,
