@@ -3,7 +3,7 @@ package com.soapdogg.lispInterpreter.asserter
 import com.soapdogg.lispInterpreter.datamodels.Token
 import com.soapdogg.lispInterpreter.datamodels.TokenKind
 import com.soapdogg.lispInterpreter.exceptions.UnexpectedTokenKindException
-import java.util.*
+import java.util.Optional
 
 class TokenKindAsserter(
     private val startingTokenKindSet: Set<TokenKind>
@@ -12,7 +12,7 @@ class TokenKindAsserter(
     fun assertTokenIsNotNull(
         optionalToken: Optional<Token>
     ): Token {
-        if (optionalToken.isEmpty) {
+        if (!optionalToken.isPresent) {
             val errorMessage = "Expected a token.\nActual: null\n"
             throw UnexpectedTokenKindException(errorMessage)
         }

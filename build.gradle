@@ -42,13 +42,9 @@ jacocoTestReport {
     dependsOn test // tests are required to run before generating the report
 }
 compileKotlin {
-    kotlinOptions {
-        jvmTarget = "14"
-    }
+
 }
 compileTestKotlin {
-    kotlinOptions {
-        jvmTarget = "14"
-    }
+
 }
 

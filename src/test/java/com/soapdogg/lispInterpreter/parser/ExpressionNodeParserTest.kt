@@ -124,7 +124,7 @@ class ExpressionNodeParserTest {
         ).thenReturn(headToken)
         val closeToken = Mockito.mock(Token::class.java)
         Mockito.`when`(closeToken.tokenKind).thenReturn(TokenKind.CLOSE_TOKEN)
-        val tokens = java.util.List.of(
+        val tokens = listOf(
             headToken,
             closeToken
         )
