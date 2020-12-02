@@ -3,16 +3,15 @@ package com.soapdogg.lispInterpreter.functions
 import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
 import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
+import com.soapdogg.lispInterpreter.datamodels.ExpressionNode
 import com.soapdogg.lispInterpreter.datamodels.Node
 import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
-import com.soapdogg.lispInterpreter.determiner.ExpressionNodeDeterminer
 import com.soapdogg.lispInterpreter.evaluator.NodeEvaluator
 import com.soapdogg.lispInterpreter.generator.NodeGenerator
 
 class AtomFunction (
     private val functionLengthAsserter: FunctionLengthAsserter,
     private val nodeEvaluator: NodeEvaluator,
-    private val expressionNodeDeterminer: ExpressionNodeDeterminer,
     private val nodeGenerator: NodeGenerator
 ): LispFunction {
 
@@ -32,7 +31,7 @@ class AtomFunction (
             variableNameToValueMap,
             true
         )
-        val result = !expressionNodeDeterminer.isExpressionNode(evaluatedResult)
+        val result = evaluatedResult !is ExpressionNode
         return nodeGenerator.generateAtomNode(result)
     }
 }

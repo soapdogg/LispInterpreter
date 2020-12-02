@@ -8,7 +8,6 @@ enum class FunctionSingleton {
     val atomFunction: AtomFunction = AtomFunction(
         AsserterSingleton.INSTANCE.functionLengthAsserter,
         EvaluatorSingleton.INSTANCE.nodeEvaluator,
-        DeterminerSingleton.INSTANCE.expressionNodeDeterminer,
         GeneratorSingleton.INSTANCE.nodeGenerator
     )
     val carFunction: CarFunction = CarFunction(
@@ -48,7 +47,6 @@ enum class FunctionSingleton {
     val intFunction: IntFunction = IntFunction(
         AsserterSingleton.INSTANCE.functionLengthAsserter,
         EvaluatorSingleton.INSTANCE.nodeEvaluator,
-        DeterminerSingleton.INSTANCE.expressionNodeDeterminer,
         ValueRetrieverSingleton.INSTANCE.atomicValueRetriever,
         DeterminerSingleton.INSTANCE.numericStringDeterminer,
         GeneratorSingleton.INSTANCE.nodeGenerator
@@ -70,7 +68,6 @@ enum class FunctionSingleton {
     val nullFunction: NullFunction = NullFunction(
         AsserterSingleton.INSTANCE.functionLengthAsserter,
         EvaluatorSingleton.INSTANCE.nodeEvaluator,
-        DeterminerSingleton.INSTANCE.expressionNodeDeterminer,
         ValueRetrieverSingleton.INSTANCE.atomicValueRetriever,
         ComparatorSingleton.INSTANCE.nodeValueComparator,
         GeneratorSingleton.INSTANCE.nodeGenerator

@@ -1,13 +1,12 @@
 package com.soapdogg.lispInterpreter.generator
 
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
+import com.soapdogg.lispInterpreter.datamodels.AtomNode
 import com.soapdogg.lispInterpreter.datamodels.Node
-import com.soapdogg.lispInterpreter.determiner.ExpressionNodeDeterminer
 import com.soapdogg.lispInterpreter.valueretriver.AtomicValueRetriever
 import com.soapdogg.lispInterpreter.valueretriver.ListValueRetriever
 
 class UserDefinedFunctionFormalParameterGenerator (
-    private val expressionNodeDeterminer: ExpressionNodeDeterminer,
     private val listValueRetriever: ListValueRetriever,
     private val atomicValueRetriever: AtomicValueRetriever
 ){
@@ -17,8 +16,7 @@ class UserDefinedFunctionFormalParameterGenerator (
         parameterCounter: Int,
         variableNameToValueMap: Map<String, Node>
     ): List<String> {
-        val isExpressionNode = expressionNodeDeterminer.isExpressionNode(formalParametersNode)
-        if (!isExpressionNode) {
+        if (formalParametersNode is AtomNode) {
             return listOf()
         }
         val formalNode = listValueRetriever.retrieveListValue(

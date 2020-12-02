@@ -4,11 +4,8 @@ import com.soapdogg.lispInterpreter.asserter.AtomRootNodeAsserter
 import com.soapdogg.lispInterpreter.datamodels.AtomNode
 import com.soapdogg.lispInterpreter.datamodels.Node
 import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
-import com.soapdogg.lispInterpreter.determiner.ExpressionNodeDeterminer
-import java.util.*
 
 class ProgramEvaluator(
-    private val expressionNodeDeterminer: ExpressionNodeDeterminer,
     private val atomRootNodeAsserter: AtomRootNodeAsserter,
     private val nodeEvaluator: NodeEvaluator
 ) {
@@ -18,10 +15,8 @@ class ProgramEvaluator(
         variableNameToValueMap: Map<String, Node>
     ): List<Node> {
         return rootNodes.map {
-            val isNotList = !expressionNodeDeterminer.isExpressionNode(it)
-            if (isNotList) {
-                val atomNode = it as AtomNode
-                atomRootNodeAsserter.assertAtomRootNode(atomNode)
+            if (it is AtomNode) {
+                atomRootNodeAsserter.assertAtomRootNode(it)
             }
             nodeEvaluator.evaluate(
                 it,

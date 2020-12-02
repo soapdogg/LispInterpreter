@@ -5,9 +5,9 @@ import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
 import com.soapdogg.lispInterpreter.datamodels.AtomNode
+import com.soapdogg.lispInterpreter.datamodels.ExpressionNode
 import com.soapdogg.lispInterpreter.datamodels.Node
 import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
-import com.soapdogg.lispInterpreter.determiner.ExpressionNodeDeterminer
 import com.soapdogg.lispInterpreter.determiner.NumericStringDeterminer
 import com.soapdogg.lispInterpreter.evaluator.NodeEvaluator
 import com.soapdogg.lispInterpreter.functions.IntFunction
@@ -24,7 +24,6 @@ class IntFunctionTest {
 
     private val functionLengthAsserter = Mockito.mock(FunctionLengthAsserter::class.java)
     private val nodeEvaluator = Mockito.mock(NodeEvaluator::class.java)
-    private val expressionNodeDeterminer = Mockito.mock(ExpressionNodeDeterminer::class.java)
     private val atomicValueRetriever = Mockito.mock(AtomicValueRetriever::class.java)
     private val numericStringDeterminer = Mockito.mock(NumericStringDeterminer::class.java)
     private val nodeGenerator = Mockito.mock(NodeGenerator::class.java)
@@ -32,7 +31,6 @@ class IntFunctionTest {
     private val intFunction = IntFunction(
         functionLengthAsserter,
         nodeEvaluator,
-        expressionNodeDeterminer,
         atomicValueRetriever,
         numericStringDeterminer,
         nodeGenerator
@@ -49,7 +47,6 @@ class IntFunctionTest {
                 true
             )
         ).thenReturn(evaluatedResult)
-        Mockito.`when`(expressionNodeDeterminer.isExpressionNode(evaluatedResult)).thenReturn(false)
         val value = ReservedValuesConstants.NIL
         Mockito.`when`(
             atomicValueRetriever.retrieveAtomicValue(
@@ -77,7 +74,7 @@ class IntFunctionTest {
 
     @Test
     fun intFunctionIsListTest() {
-        val evaluatedResult = Mockito.mock(Node::class.java)
+        val evaluatedResult = Mockito.mock(ExpressionNode::class.java)
         Mockito.`when`(
             nodeEvaluator.evaluate(
                 params,
@@ -86,7 +83,6 @@ class IntFunctionTest {
                 true
             )
         ).thenReturn(evaluatedResult)
-        Mockito.`when`(expressionNodeDeterminer.isExpressionNode(evaluatedResult)).thenReturn(true)
         val expected = Mockito.mock(AtomNode::class.java)
         Mockito.`when`(nodeGenerator.generateAtomNode(false)).thenReturn(expected)
         val actual = intFunction.evaluateLispFunction(

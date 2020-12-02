@@ -1,13 +1,12 @@
 package com.soapdogg.lispInterpreter.valueretriver
 
 import com.soapdogg.lispInterpreter.datamodels.AtomNode
+import com.soapdogg.lispInterpreter.datamodels.ExpressionNode
 import com.soapdogg.lispInterpreter.datamodels.Node
-import com.soapdogg.lispInterpreter.determiner.ExpressionNodeDeterminer
 import com.soapdogg.lispInterpreter.exceptions.NotAtomicException
 import com.soapdogg.lispInterpreter.printer.ListNotationPrinter
 
 class AtomicValueRetriever (
-    private val expressionNodeDeterminer: ExpressionNodeDeterminer,
     private val listNotationPrinter: ListNotationPrinter
 ){
     fun retrieveAtomicValue(
@@ -15,8 +14,7 @@ class AtomicValueRetriever (
         position: Int,
         functionName: String
     ): String {
-        val isList = expressionNodeDeterminer.isExpressionNode(node)
-        if (isList) {
+        if (node is ExpressionNode) {
             val listNotation = listNotationPrinter.printInListNotation(
                 node
             )

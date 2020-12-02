@@ -13,21 +13,17 @@ enum class PrinterSingleton {
 
     init {
         dotNotationExpressionNodePrinter = DotNotationExpressionNodePrinter(
-            DeterminerSingleton.INSTANCE.expressionNodeDeterminer,
             atomNodePrinter
         )
         dotNotationPrinter = DotNotationPrinter(
-            DeterminerSingleton.INSTANCE.expressionNodeDeterminer,
             atomNodePrinter,
             dotNotationExpressionNodePrinter
         )
         listNotationExpressionNodePrinter = ListNotationExpressionNodePrinter(
-            DeterminerSingleton.INSTANCE.expressionNodeDeterminer,
             ComparatorSingleton.INSTANCE.nodeValueComparator,
             atomNodePrinter
         )
         listNotationPrinter = ListNotationPrinter(
-            DeterminerSingleton.INSTANCE.expressionNodeDeterminer,
             atomNodePrinter,
             listNotationExpressionNodePrinter
         )

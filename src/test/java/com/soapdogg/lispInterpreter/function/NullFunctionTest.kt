@@ -6,9 +6,9 @@ import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
 import com.soapdogg.lispInterpreter.datamodels.AtomNode
+import com.soapdogg.lispInterpreter.datamodels.ExpressionNode
 import com.soapdogg.lispInterpreter.datamodels.Node
 import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
-import com.soapdogg.lispInterpreter.determiner.ExpressionNodeDeterminer
 import com.soapdogg.lispInterpreter.evaluator.NodeEvaluator
 import com.soapdogg.lispInterpreter.functions.NullFunction
 import com.soapdogg.lispInterpreter.generator.NodeGenerator
@@ -24,7 +24,7 @@ class NullFunctionTest {
 
     private val functionLengthAsserter = Mockito.mock(FunctionLengthAsserter::class.java)
     private val nodeEvaluator = Mockito.mock(NodeEvaluator::class.java)
-    private val expressionNodeDeterminer = Mockito.mock(ExpressionNodeDeterminer::class.java)
+
     private val atomicValueRetriever = Mockito.mock(AtomicValueRetriever::class.java)
     private val nodeValueComparator = Mockito.mock(NodeValueComparator::class.java)
     private val nodeGenerator = Mockito.mock(NodeGenerator::class.java)
@@ -32,7 +32,6 @@ class NullFunctionTest {
     private val nullFunction = NullFunction(
         functionLengthAsserter,
         nodeEvaluator,
-        expressionNodeDeterminer,
         atomicValueRetriever,
         nodeValueComparator,
         nodeGenerator
@@ -49,7 +48,6 @@ class NullFunctionTest {
                 true
             )
         ).thenReturn(evaluatedResult)
-        Mockito.`when`(expressionNodeDeterminer.isExpressionNode(evaluatedResult)).thenReturn(false)
 
         val value = ReservedValuesConstants.NIL
         Mockito.`when`(
@@ -81,7 +79,7 @@ class NullFunctionTest {
 
     @Test
     fun nullFunctionIsListTest() {
-        val evaluatedResult = Mockito.mock(Node::class.java)
+        val evaluatedResult = Mockito.mock(ExpressionNode::class.java)
         Mockito.`when`(
             nodeEvaluator.evaluate(
                 params,
@@ -90,7 +88,6 @@ class NullFunctionTest {
                 true
             )
         ).thenReturn(evaluatedResult)
-        Mockito.`when`(expressionNodeDeterminer.isExpressionNode(evaluatedResult)).thenReturn(true)
 
         val expected = Mockito.mock(AtomNode::class.java)
         Mockito.`when`(nodeGenerator.generateAtomNode(false)).thenReturn(expected)

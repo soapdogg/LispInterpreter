@@ -7,7 +7,6 @@ enum class DeterminerSingleton {
     INSTANCE;
 
     val numericStringDeterminer: NumericStringDeterminer = NumericStringDeterminer()
-    val expressionNodeDeterminer: ExpressionNodeDeterminer = ExpressionNodeDeterminer()
     val functionLengthDeterminer: FunctionLengthDeterminer = FunctionLengthDeterminer()
     val invalidNameDeterminer: InvalidNameDeterminer
     val userDefinedFunctionNameDeterminer: UserDefinedFunctionNameDeterminer

@@ -6,13 +6,11 @@ import com.soapdogg.lispInterpreter.datamodels.AtomNode
 import com.soapdogg.lispInterpreter.datamodels.ExpressionNode
 import com.soapdogg.lispInterpreter.datamodels.Node
 import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
-import com.soapdogg.lispInterpreter.determiner.ExpressionNodeDeterminer
 import com.soapdogg.lispInterpreter.determiner.UserDefinedFunctionNameDeterminer
 import java.util.*
 
 class NodeEvaluator(
     private val atomNodeEvaluator: AtomNodeEvaluator,
-    private val expressionNodeDeterminer: ExpressionNodeDeterminer,
     private val userDefinedFunctionNameDeterminer: UserDefinedFunctionNameDeterminer,
     private val functionLengthAsserter: FunctionLengthAsserter
 ) {
@@ -41,8 +39,8 @@ class NodeEvaluator(
         areLiteralsAllowed: Boolean
     ): Node {
         val address = expressionNode.address
-        if (!expressionNodeDeterminer.isExpressionNode(address)) {
-            val addressValue = (address as AtomNode).value
+        if (address is AtomNode) {
+            val addressValue = address.value
             val isFunctionName = userDefinedFunctionNameDeterminer.determineIfUserDefinedFunctionName(
                 userDefinedFunctions,
                 addressValue

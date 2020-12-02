@@ -8,11 +8,9 @@ enum class ValueRetrieverSingleton {
     INSTANCE;
 
     val atomicValueRetriever: AtomicValueRetriever = AtomicValueRetriever(
-        DeterminerSingleton.INSTANCE.expressionNodeDeterminer,
         PrinterSingleton.INSTANCE.listNotationPrinter
     )
     val listValueRetriever: ListValueRetriever = ListValueRetriever(
-        DeterminerSingleton.INSTANCE.expressionNodeDeterminer,
         PrinterSingleton.INSTANCE.dotNotationPrinter
     )
     val numericValueRetriever: NumericValueRetriever

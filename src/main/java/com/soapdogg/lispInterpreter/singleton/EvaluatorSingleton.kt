@@ -16,7 +16,6 @@ enum class EvaluatorSingleton {
     init {
         nodeEvaluator = NodeEvaluator(
             atomNodeEvaluator,
-            DeterminerSingleton.INSTANCE.expressionNodeDeterminer,
             DeterminerSingleton.INSTANCE.userDefinedFunctionNameDeterminer,
             AsserterSingleton.INSTANCE.functionLengthAsserter
         )
@@ -26,7 +25,6 @@ enum class EvaluatorSingleton {
             ComparatorSingleton.INSTANCE.nodeValueComparator
         )
         programEvaluator = ProgramEvaluator(
-            DeterminerSingleton.INSTANCE.expressionNodeDeterminer,
             AsserterSingleton.INSTANCE.atomRootNodeAsserter,
             nodeEvaluator
         )

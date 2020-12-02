@@ -12,7 +12,6 @@ enum class GeneratorSingleton {
     val nodeGenerator: NodeGenerator = NodeGenerator()
     val userDefinedFunctionGenerator: UserDefinedFunctionGenerator
     val userDefinedFunctionFormalParameterGenerator: UserDefinedFunctionFormalParameterGenerator = UserDefinedFunctionFormalParameterGenerator(
-        DeterminerSingleton.INSTANCE.expressionNodeDeterminer,
         ValueRetrieverSingleton.INSTANCE.listValueRetriever,
         ValueRetrieverSingleton.INSTANCE.atomicValueRetriever
     )

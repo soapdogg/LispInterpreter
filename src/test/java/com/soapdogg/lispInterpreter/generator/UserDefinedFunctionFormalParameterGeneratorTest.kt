@@ -4,7 +4,6 @@ import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.datamodels.AtomNode
 import com.soapdogg.lispInterpreter.datamodels.ExpressionNode
 import com.soapdogg.lispInterpreter.datamodels.Node
-import com.soapdogg.lispInterpreter.determiner.ExpressionNodeDeterminer
 import com.soapdogg.lispInterpreter.valueretriver.AtomicValueRetriever
 import com.soapdogg.lispInterpreter.valueretriver.ListValueRetriever
 import org.junit.jupiter.api.Assertions
@@ -15,11 +14,9 @@ class UserDefinedFunctionFormalParameterGeneratorTest {
 
     private val parameterCounter = 1
     private val variableNameToValueMap: Map<String, Node> = mapOf()
-    private val expressionNodeDeterminer = Mockito.mock(ExpressionNodeDeterminer::class.java)
     private val listValueRetriever = Mockito.mock(ListValueRetriever::class.java)
     private val atomicValueRetriever = Mockito.mock(AtomicValueRetriever::class.java)
     private val userDefinedFunctionFormalParameterGenerator = UserDefinedFunctionFormalParameterGenerator(
-        expressionNodeDeterminer,
         listValueRetriever,
         atomicValueRetriever
     )
@@ -27,7 +24,6 @@ class UserDefinedFunctionFormalParameterGeneratorTest {
     @Test
     fun formalParameterIsAtomNodeTest() {
         val formalParametersNode = Mockito.mock(AtomNode::class.java)
-        Mockito.`when`(expressionNodeDeterminer.isExpressionNode(formalParametersNode)).thenReturn(false)
         val actual = userDefinedFunctionFormalParameterGenerator.getFormalParameters(
             formalParametersNode,
             parameterCounter,
@@ -41,7 +37,6 @@ class UserDefinedFunctionFormalParameterGeneratorTest {
     @Test
     fun formalParameterIsExpressionNodeTest() {
         val formalParametersNode = Mockito.mock(ExpressionNode::class.java)
-        Mockito.`when`(expressionNodeDeterminer.isExpressionNode(formalParametersNode)).thenReturn(true)
 
         val formalParametersExpressionNode = Mockito.mock(ExpressionNode::class.java)
         Mockito.`when`(
@@ -63,9 +58,8 @@ class UserDefinedFunctionFormalParameterGeneratorTest {
             )
         ).thenReturn(formalId)
 
-        val data = Mockito.mock(Node::class.java)
+        val data = Mockito.mock(AtomNode::class.java)
         Mockito.`when`(formalParametersExpressionNode.data).thenReturn(data)
-        Mockito.`when`(expressionNodeDeterminer.isExpressionNode(data)).thenReturn(false)
 
         val actual = userDefinedFunctionFormalParameterGenerator.getFormalParameters(
             formalParametersNode,
