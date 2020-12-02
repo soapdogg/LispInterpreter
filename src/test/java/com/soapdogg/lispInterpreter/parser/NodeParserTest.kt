@@ -23,7 +23,7 @@ class NodeParserTest {
         val result = Mockito.mock(ParserResult::class.java)
         Mockito.`when`(expressionListNodeParser.parseExpressionListNode(tokens, 0)).thenReturn(result)
 
-        val resultingNode = Mockito.mock(NodeV2::class.java)
+        val resultingNode = Mockito.mock(ExpressionListNode::class.java)
         Mockito.`when`(result.resultingNode).thenReturn(resultingNode)
 
         val expected = Mockito.mock(Node::class.java)

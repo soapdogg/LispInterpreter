@@ -9,7 +9,11 @@ class NodeConverter {
         val expressionListNode = version2Node as ExpressionListNode
         val convertedAddress = convertNodeV2ToNode(expressionListNode.children[0])
         return if (expressionListNode.children.size > 1) {
-            val convertedData = convertNodeV2ToNode(ExpressionListNode(expressionListNode.children.subList(1, expressionListNode.children.size)))
+            val convertedData = convertNodeV2ToNode(
+                ExpressionListNode(
+                    expressionListNode.children.subList(1, expressionListNode.children.size)
+                )
+            )
             ExpressionNode(convertedAddress, convertedData)
         } else {
             convertedAddress
