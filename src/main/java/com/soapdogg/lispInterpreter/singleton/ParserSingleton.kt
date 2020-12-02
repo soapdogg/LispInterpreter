@@ -15,7 +15,6 @@ enum class ParserSingleton {
         atomNodeParser = AtomNodeParser(
             GeneratorSingleton.INSTANCE.nodeGenerator,
             ConverterSingleton.INSTANCE.nodeConverter,
-            parserResultBuilder
         )
 
         expressionNodeParser = ExpressionNodeParser(

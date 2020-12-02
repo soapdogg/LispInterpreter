@@ -126,9 +126,18 @@ class ExpressionNodeParserTest {
                 tokens
             )
         ).thenReturn(closeTokenParserResult)
+
+        val t = Mockito.mock(AtomNode::class.java)
+        Mockito.`when`(
+            atomNodeParser.parseAtomNode(headToken)
+        ).thenReturn(t)
+
         val addressParserResult = Mockito.mock(ParserResult::class.java)
         Mockito.`when`(
-            atomNodeParser.parseAtomNode(tokens)
+            parserResultBuilder.buildParserResult(
+                t,
+                tokens.subList(1, tokens.size)
+            )
         ).thenReturn(addressParserResult)
         val addressResultingNode = Mockito.mock(Node::class.java)
         Mockito.`when`(

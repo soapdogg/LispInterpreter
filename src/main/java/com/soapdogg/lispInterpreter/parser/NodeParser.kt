@@ -24,8 +24,12 @@ class NodeParser (
                 result.remainingTokens.subList(1, result.remainingTokens.size)
             )
         } else {
-            atomNodeParser.parseAtomNode(
-                tokens
+            val t = atomNodeParser.parseAtomNode(
+                tokens[0]
+            )
+            parserResultBuilder.buildParserResult(
+                t,
+                tokens.subList(1, tokens.size)
             )
         }
     }

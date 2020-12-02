@@ -1,9 +1,6 @@
 package com.soapdogg.lispInterpreter.parser
 
-import com.soapdogg.lispInterpreter.datamodels.Node
-import com.soapdogg.lispInterpreter.datamodels.ParserResult
-import com.soapdogg.lispInterpreter.datamodels.Token
-import com.soapdogg.lispInterpreter.datamodels.TokenKind
+import com.soapdogg.lispInterpreter.datamodels.*
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
@@ -52,9 +49,17 @@ class NodeParserTest {
         val tokens = listOf(headToken)
         Mockito.`when`(headToken.tokenKind).thenReturn(TokenKind.NUMERIC_TOKEN)
 
+        val t = Mockito.mock(AtomNode::class.java)
+        Mockito.`when`(
+            atomNodeParser.parseAtomNode(headToken)
+        ).thenReturn(t)
+
         val expected = Mockito.mock(ParserResult::class.java)
         Mockito.`when`(
-            atomNodeParser.parseAtomNode(tokens)
+            parserResultBuilder.buildParserResult(
+                t,
+                emptyList()
+            )
         ).thenReturn(expected)
 
         val actual = nodeParser.parseIntoNode(tokens)

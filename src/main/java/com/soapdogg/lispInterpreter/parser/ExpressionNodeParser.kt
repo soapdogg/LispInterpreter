@@ -33,7 +33,11 @@ class ExpressionNodeParser (
                     t.remainingTokens.subList(1, t.remainingTokens.size)
                 )
             } else {
-                atomNodeParser.parseAtomNode(tokens)
+                val t = atomNodeParser.parseAtomNode(tokens[0])
+                parserResultBuilder.buildParserResult(
+                    t,
+                    tokens.subList(1, tokens.size)
+                )
             }
             val dataParserResult = parseExpressionNode(addressParserResult.remainingTokens)
             val result = nodeGenerator.generateExpressionNode(

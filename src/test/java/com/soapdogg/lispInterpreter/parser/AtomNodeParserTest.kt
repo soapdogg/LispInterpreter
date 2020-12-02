@@ -12,11 +12,9 @@ import org.mockito.Mockito
 class AtomNodeParserTest {
     private val nodeGenerator = Mockito.mock(NodeGenerator::class.java)
     private val nodeConverter = Mockito.mock(NodeConverter::class.java)
-    private val parserResultBuilder = Mockito.mock(ParserResultBuilder::class.java)
     private val atomNodeParser = AtomNodeParser(
         nodeGenerator,
-        nodeConverter,
-        parserResultBuilder
+        nodeConverter
     )
 
     @Test
@@ -30,14 +28,7 @@ class AtomNodeParserTest {
 
         Mockito.`when`(nodeConverter.convertNodeV2ToNode(atomNode)).thenReturn(atomNode)
 
-        val tokens = listOf(headToken)
-        val expected = Mockito.mock(ParserResult::class.java)
-        Mockito.`when`(
-            parserResultBuilder.buildParserResult(
-                atomNode, emptyList())
-        ).thenReturn(expected)
-
-        val actual = atomNodeParser.parseAtomNode(tokens)
-        Assertions.assertEquals(expected, actual)
+        val actual = atomNodeParser.parseAtomNode(headToken)
+        Assertions.assertEquals(atomNode, actual)
     }
 }
