@@ -1,5 +1,6 @@
 package com.soapdogg.lispInterpreter.parser
 
+import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
 import com.soapdogg.lispInterpreter.datamodels.*
 import com.soapdogg.lispInterpreter.generator.NodeGenerator
 import com.soapdogg.lispInterpreter.generator.ParserResultGenerator
@@ -16,9 +17,7 @@ class ExpressionListNodeParser(
         return if (tokens.size == 1) {
             parserResultGenerator.generateParserResultForAtomNode(tokens[0].value)
         }
-        else if (tokens[startingPoint + 1].tokenKind == TokenKind.CLOSE_TOKEN) {
-            parserResultGenerator.generateParserResultForNilAtomNode(startingPoint)
-        } else {
+        else {
             val result = ArrayList<NodeV2>()
             var i = startingPoint + 1
             loop@ while (i < tokens.size) {
@@ -30,6 +29,8 @@ class ExpressionListNodeParser(
                         i = nodeV2.nextIndex
                     }
                     TokenKind.CLOSE_TOKEN -> {
+                        val nodeV2 = nodeGenerator.generateAtomNode(ReservedValuesConstants.NIL)
+                        result += nodeV2
                         ++i
                         break@loop
                     }

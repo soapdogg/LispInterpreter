@@ -1,6 +1,5 @@
 package com.soapdogg.lispInterpreter.converter
 
-import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
 import com.soapdogg.lispInterpreter.datamodels.*
 
 class NodeConverter {
@@ -9,12 +8,12 @@ class NodeConverter {
         if (version2Node is AtomNode) return version2Node
         val expressionListNode = version2Node as ExpressionListNode
         val convertedAddress = convertNodeV2ToNode(expressionListNode.children[0])
-        val convertedData = if (expressionListNode.children.size > 1) {
-            convertNodeV2ToNode(ExpressionListNode(expressionListNode.children.subList(1, expressionListNode.children.size)))
+        if (expressionListNode.children.size > 1) {
+            val convertedData = convertNodeV2ToNode(ExpressionListNode(expressionListNode.children.subList(1, expressionListNode.children.size)))
+            return ExpressionNode(convertedAddress, convertedData)
         } else {
-            AtomNode(ReservedValuesConstants.NIL)
+            return convertedAddress
         }
-        return ExpressionNode(convertedAddress, convertedData)
     }
 
     fun convertNodeToNodeV2(version1Node: Node): NodeV2 {

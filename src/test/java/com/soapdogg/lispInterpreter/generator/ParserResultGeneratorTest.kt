@@ -13,16 +13,6 @@ class ParserResultGeneratorTest {
     private val nodeGenerator = Mockito.mock(NodeGenerator::class.java)
     private val parserResultGenerator = ParserResultGenerator(nodeGenerator)
 
-    @Test
-    fun generateNilParserResultTest() {
-        val nilAtomNode = Mockito.mock(AtomNode::class.java)
-        Mockito.`when`(nodeGenerator.generateAtomNode(ReservedValuesConstants.NIL)).thenReturn(nilAtomNode)
-
-        val actual = parserResultGenerator.generateParserResultForNilAtomNode(0)
-
-        Assertions.assertEquals(nilAtomNode, actual.resultingNode)
-        Assertions.assertEquals(2, actual.nextIndex)
-    }
 
     @Test
     fun generateParserResultForAtomNodeTest() {
