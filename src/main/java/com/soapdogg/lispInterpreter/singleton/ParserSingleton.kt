@@ -11,7 +11,8 @@ enum class ParserSingleton {
 
     init {
         expressionListNodeParser = ExpressionListNodeParser(
-            GeneratorSingleton.INSTANCE.nodeGenerator
+            GeneratorSingleton.INSTANCE.nodeGenerator,
+            GeneratorSingleton.INSTANCE.parserResultGenerator
         )
         nodeParser = NodeParser(
             expressionListNodeParser,

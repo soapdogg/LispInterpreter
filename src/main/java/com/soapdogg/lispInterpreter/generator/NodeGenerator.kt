@@ -1,9 +1,7 @@
 package com.soapdogg.lispInterpreter.generator
 
 import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
-import com.soapdogg.lispInterpreter.datamodels.AtomNode
-import com.soapdogg.lispInterpreter.datamodels.ExpressionNode
-import com.soapdogg.lispInterpreter.datamodels.Node
+import com.soapdogg.lispInterpreter.datamodels.*
 
 class NodeGenerator {
     fun generateAtomNode(
@@ -37,6 +35,14 @@ class NodeGenerator {
         return ExpressionNode(
             address,
             data
+        )
+    }
+
+    fun generateExpressionListNode(
+        children: List<NodeV2>
+    ): ExpressionListNode {
+        return ExpressionListNode(
+            children
         )
     }
 }

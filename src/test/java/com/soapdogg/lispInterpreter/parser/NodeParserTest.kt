@@ -15,12 +15,12 @@ class NodeParserTest {
     )
 
     @Test
-    fun parseIntoExpressionNodeTest() {
+    fun parseIntoNodeTest() {
         val headToken = Mockito.mock(Token::class.java)
         val tokens = listOf(headToken)
         Mockito.`when`(headToken.tokenKind).thenReturn(TokenKind.OPEN_TOKEN)
 
-        val result = Mockito.mock(ParserResultV2::class.java)
+        val result = Mockito.mock(ParserResult::class.java)
         Mockito.`when`(expressionListNodeParser.parseExpressionListNode(tokens, 0)).thenReturn(result)
 
         val resultingNode = Mockito.mock(NodeV2::class.java)

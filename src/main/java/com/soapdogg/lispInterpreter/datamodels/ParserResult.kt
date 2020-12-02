@@ -1,6 +1,6 @@
 package com.soapdogg.lispInterpreter.datamodels
 
-data class ParserResultV2(
+data class ParserResult(
     val resultingNode: NodeV2,
     val nextIndex: Int
 )

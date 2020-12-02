@@ -1,15 +1,13 @@
 package com.soapdogg.lispInterpreter.singleton
 
-import com.soapdogg.lispInterpreter.generator.NodeGenerator
-import com.soapdogg.lispInterpreter.generator.UserDefinedFunctionGenerator
-import com.soapdogg.lispInterpreter.generator.UserDefinedFunctionFormalParameterGenerator
-import com.soapdogg.lispInterpreter.generator.TokenGenerator
 import com.soapdogg.lispInterpreter.functions.DefunFunction
+import com.soapdogg.lispInterpreter.generator.*
 
 enum class GeneratorSingleton {
     INSTANCE;
 
     val nodeGenerator: NodeGenerator = NodeGenerator()
+    val parserResultGenerator: ParserResultGenerator
     val userDefinedFunctionGenerator: UserDefinedFunctionGenerator
     val userDefinedFunctionFormalParameterGenerator: UserDefinedFunctionFormalParameterGenerator = UserDefinedFunctionFormalParameterGenerator(
         ValueRetrieverSingleton.INSTANCE.listValueRetriever,
@@ -18,6 +16,7 @@ enum class GeneratorSingleton {
     val tokenGenerator: TokenGenerator
 
     init {
+        parserResultGenerator = ParserResultGenerator(nodeGenerator)
         val defunFunction = DefunFunction(
             AsserterSingleton.INSTANCE.functionLengthAsserter,
             ValueRetrieverSingleton.INSTANCE.atomicValueRetriever,

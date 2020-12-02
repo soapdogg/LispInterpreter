@@ -2,12 +2,13 @@ package com.soapdogg.lispInterpreter.generator
 
 import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
 import com.soapdogg.lispInterpreter.datamodels.Node
+import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 
 class NodeGeneratorTest {
-    private var nodeGenerator: NodeGenerator = NodeGenerator()
+    private val nodeGenerator: NodeGenerator = NodeGenerator()
 
     @Test
     fun generateTAtomNodeTest() {
@@ -45,5 +46,14 @@ class NodeGeneratorTest {
         )
         Assertions.assertEquals(address, address1)
         Assertions.assertEquals(data, data1)
+    }
+
+    @Test
+    fun generateParserResultForExpressionListNodeTest() {
+        val children = emptyList<NodeV2>()
+
+        val actual = nodeGenerator.generateExpressionListNode(children)
+
+        Assertions.assertEquals(children, actual.children)
     }
 }

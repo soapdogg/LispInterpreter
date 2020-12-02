@@ -1,44 +1,49 @@
 package com.soapdogg.lispInterpreter.parser
 
-import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
 import com.soapdogg.lispInterpreter.datamodels.*
 import com.soapdogg.lispInterpreter.generator.NodeGenerator
+import com.soapdogg.lispInterpreter.generator.ParserResultGenerator
 
 class ExpressionListNodeParser(
-    private val nodeGenerator: NodeGenerator
+    private val nodeGenerator: NodeGenerator,
+    private val parserResultGenerator: ParserResultGenerator
 ) {
 
     fun parseExpressionListNode(
         tokens: List<Token>,
         startingPoint: Int
-    ): ParserResultV2 {
-        if (tokens.size == 1) {
-            val resultingNode = nodeGenerator.generateAtomNode(tokens[0].value)
-            return ParserResultV2(
-                resultingNode,
-                1
+    ): ParserResult {
+        return if (tokens.size == 1) {
+            parserResultGenerator.generateParserResultForAtomNode(tokens[0].value)
+        }
+        else if (tokens[startingPoint + 1].tokenKind == TokenKind.CLOSE_TOKEN) {
+            parserResultGenerator.generateParserResultForNilAtomNode(startingPoint)
+        } else {
+            val result = ArrayList<NodeV2>()
+            var i = startingPoint + 1
+            loop@ while (i < tokens.size) {
+                val token = tokens[i]
+                when (token.tokenKind) {
+                    TokenKind.OPEN_TOKEN -> {
+                        val nodeV2 = parseExpressionListNode(tokens, i)
+                        result += nodeV2.resultingNode
+                        i = nodeV2.nextIndex
+                    }
+                    TokenKind.CLOSE_TOKEN -> {
+                        ++i
+                        break@loop
+                    }
+                    else -> {
+                        val nodeV2 = nodeGenerator.generateAtomNode(token.value)
+                        result += nodeV2
+                        ++i
+                    }
+                }
+            }
+            parserResultGenerator.generateParserResultForExpressionListNode(
+                result,
+                i
             )
         }
-        if (tokens[startingPoint + 1].tokenKind == TokenKind.CLOSE_TOKEN) {
-            return ParserResultV2(nodeGenerator.generateAtomNode(ReservedValuesConstants.NIL), startingPoint + 2)
-        }
-        val result = ArrayList<NodeV2>()
-        var i = startingPoint + 1
-        while(i < tokens.size) {
-            val token = tokens[i]
-            if (token.tokenKind == TokenKind.OPEN_TOKEN) {
-                val nodeV2 = parseExpressionListNode(tokens, i)
-                i = nodeV2.nextIndex
-                result.add(nodeV2.resultingNode)
-            } else if (token.tokenKind == TokenKind.CLOSE_TOKEN) {
-                ++i
-                break
-            } else {
-                val nodeV2 = nodeGenerator.generateAtomNode(token.value)
-                result.add(nodeV2)
-                ++i
-            }
-        }
-        return ParserResultV2(ExpressionListNode(result), i)
     }
 }
