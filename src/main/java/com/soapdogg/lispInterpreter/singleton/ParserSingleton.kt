@@ -24,7 +24,6 @@ enum class ParserSingleton {
         )
         nodeParser = NodeParser(
             expressionNodeParser,
-            parserResultBuilder,
             atomNodeParser
         )
         rootParser = RootParser(

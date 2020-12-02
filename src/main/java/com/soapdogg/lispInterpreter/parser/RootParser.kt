@@ -34,6 +34,6 @@ class RootParser (
             throw UnexpectedTokenKindException(errorMessage)
         }
 
-        return listOfLists.map { nodeParser.parseIntoNode(it).resultingNode }
+        return listOfLists.map { nodeParser.parseIntoNode(it) }
     }
 }
