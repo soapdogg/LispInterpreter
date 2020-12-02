@@ -12,6 +12,13 @@ class ExpressionListNodeParser(
         tokens: List<Token>,
         startingPoint: Int
     ): ParserResultV2 {
+        if (tokens.size == 1) {
+            val resultingNode = nodeGenerator.generateAtomNode(tokens[0].value)
+            return ParserResultV2(
+                resultingNode,
+                1
+            )
+        }
         if (tokens[startingPoint + 1].tokenKind == TokenKind.CLOSE_TOKEN) {
             return ParserResultV2(nodeGenerator.generateAtomNode(ReservedValuesConstants.NIL), startingPoint + 2)
         }

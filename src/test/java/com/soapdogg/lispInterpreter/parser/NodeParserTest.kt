@@ -9,11 +9,9 @@ import org.mockito.Mockito
 class NodeParserTest {
     private val expressionListNodeParser = Mockito.mock(ExpressionListNodeParser::class.java)
     private val nodeConverter = Mockito.mock(NodeConverter::class.java)
-    private val atomNodeParser = Mockito.mock(AtomNodeParser::class.java)
     private val nodeParser = NodeParser(
         expressionListNodeParser,
-        nodeConverter,
-        atomNodeParser
+        nodeConverter
     )
 
     @Test
@@ -33,23 +31,5 @@ class NodeParserTest {
 
         val actual = nodeParser.parseIntoNode(tokens)
         Assertions.assertEquals(expected, actual)
-        Mockito.verifyNoInteractions(atomNodeParser)
-    }
-
-    @Test
-    fun parseIntoAtomNodeTest() {
-        val headToken = Mockito.mock(Token::class.java)
-        val tokens = listOf(headToken)
-        Mockito.`when`(headToken.tokenKind).thenReturn(TokenKind.NUMERIC_TOKEN)
-
-        val t = Mockito.mock(AtomNode::class.java)
-        Mockito.`when`(
-            atomNodeParser.parseAtomNode(headToken)
-        ).thenReturn(t)
-
-        val actual = nodeParser.parseIntoNode(tokens)
-        Assertions.assertEquals(t, actual)
-        Mockito.verifyNoInteractions(expressionListNodeParser)
-        Mockito.verifyNoInteractions(nodeConverter)
     }
 }
