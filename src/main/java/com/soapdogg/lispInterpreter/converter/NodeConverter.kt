@@ -8,11 +8,11 @@ class NodeConverter {
         if (version2Node is AtomNode) return version2Node
         val expressionListNode = version2Node as ExpressionListNode
         val convertedAddress = convertNodeV2ToNode(expressionListNode.children[0])
-        if (expressionListNode.children.size > 1) {
+        return if (expressionListNode.children.size > 1) {
             val convertedData = convertNodeV2ToNode(ExpressionListNode(expressionListNode.children.subList(1, expressionListNode.children.size)))
-            return ExpressionNode(convertedAddress, convertedData)
+            ExpressionNode(convertedAddress, convertedData)
         } else {
-            return convertedAddress
+            convertedAddress
         }
     }
 
