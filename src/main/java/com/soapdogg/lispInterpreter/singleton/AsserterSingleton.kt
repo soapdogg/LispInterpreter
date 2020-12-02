@@ -3,7 +3,6 @@ package com.soapdogg.lispInterpreter.singleton
 import com.soapdogg.lispInterpreter.asserter.*
 import com.soapdogg.lispInterpreter.constants.InvalidUserDefinedNameConstants
 import com.soapdogg.lispInterpreter.constants.TokenValueConstants
-import com.soapdogg.lispInterpreter.datamodels.TokenKind
 
 enum class AsserterSingleton {
     INSTANCE;
@@ -11,7 +10,6 @@ enum class AsserterSingleton {
     val functionLengthAsserter: FunctionLengthAsserter = FunctionLengthAsserter(
         DeterminerSingleton.INSTANCE.functionLengthDeterminer
     )
-    val tokenKindAsserter: TokenKindAsserter
     val condFunctionParameterAsserter: CondFunctionParameterAsserter
     val userDefinedFormalParametersAsserter: UserDefinedFormalParametersAsserter
     val userDefinedFunctionNameAsserter: UserDefinedFunctionNameAsserter
@@ -19,14 +17,6 @@ enum class AsserterSingleton {
     val lineFormatAsserter: LineFormatAsserter
 
     init {
-        val startingTokenKindSet = setOf(
-            TokenKind.OPEN_TOKEN,
-            TokenKind.NUMERIC_TOKEN,
-            TokenKind.LITERAL_TOKEN
-        )
-        tokenKindAsserter = TokenKindAsserter(
-            startingTokenKindSet
-        )
         condFunctionParameterAsserter = CondFunctionParameterAsserter(
             ComparatorSingleton.INSTANCE.nodeValueComparator,
             ValueRetrieverSingleton.INSTANCE.listValueRetriever,

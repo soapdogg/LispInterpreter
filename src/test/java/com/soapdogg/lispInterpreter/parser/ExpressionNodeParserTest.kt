@@ -1,23 +1,19 @@
 package com.soapdogg.lispInterpreter.parser
 
-import com.soapdogg.lispInterpreter.asserter.TokenKindAsserter
 import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
 import com.soapdogg.lispInterpreter.datamodels.*
 import com.soapdogg.lispInterpreter.generator.NodeGenerator
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
 import java.util.*
 
 class ExpressionNodeParserTest {
-    private val tokenKindAsserter = Mockito.mock(TokenKindAsserter::class.java)
     private val nodeGenerator = Mockito.mock(NodeGenerator::class.java)
     private val expressionNodeFinisher = Mockito.mock(ExpressionNodeFinisher::class.java)
     private val atomNodeParser = Mockito.mock(AtomNodeParser::class.java)
     private val parserResultBuilder = Mockito.mock(ParserResultBuilder::class.java)
     private val expressionNodeParser = ExpressionNodeParser(
-        tokenKindAsserter,
         nodeGenerator,
         expressionNodeFinisher,
         atomNodeParser,
@@ -29,9 +25,6 @@ class ExpressionNodeParserTest {
         val headToken = Mockito.mock(Token::class.java)
         val tokens = listOf(headToken)
         Mockito.`when`(headToken.tokenKind).thenReturn(TokenKind.CLOSE_TOKEN)
-        Mockito.`when`(
-            tokenKindAsserter.assertTokenIsNotNull(Optional.of(headToken))
-        ).thenReturn(headToken)
         val result = Mockito.mock(AtomNode::class.java)
         Mockito.`when`(nodeGenerator.generateAtomNode(ReservedValuesConstants.NIL)).thenReturn(result)
         val expected = Mockito.mock(ParserResult::class.java)
@@ -119,18 +112,13 @@ class ExpressionNodeParserTest {
     fun headTokenIsNumericTest() {
         val headToken = Mockito.mock(Token::class.java)
         Mockito.`when`(headToken.tokenKind).thenReturn(TokenKind.NUMERIC_TOKEN)
-        Mockito.`when`(
-            tokenKindAsserter.assertTokenIsNotNull(Optional.of(headToken))
-        ).thenReturn(headToken)
         val closeToken = Mockito.mock(Token::class.java)
         Mockito.`when`(closeToken.tokenKind).thenReturn(TokenKind.CLOSE_TOKEN)
         val tokens = listOf(
             headToken,
             closeToken
         )
-        Mockito.`when`(
-            tokenKindAsserter.assertTokenIsNotNull(Optional.of(closeToken))
-        ).thenReturn(closeToken)
+
         val closeTokenResult = Mockito.mock(AtomNode::class.java)
         Mockito.`when`(nodeGenerator.generateAtomNode(ReservedValuesConstants.NIL)).thenReturn(closeTokenResult)
         val closeTokenParserResult = Mockito.mock(ParserResult::class.java)

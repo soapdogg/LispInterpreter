@@ -1,6 +1,5 @@
 package com.soapdogg.lispInterpreter.parser
 
-import com.soapdogg.lispInterpreter.asserter.TokenKindAsserter
 import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
 import com.soapdogg.lispInterpreter.datamodels.Node
 import com.soapdogg.lispInterpreter.datamodels.ParserResult
@@ -10,7 +9,6 @@ import com.soapdogg.lispInterpreter.generator.NodeGenerator
 import java.util.*
 
 class ExpressionNodeParser (
-  private val tokenKindAsserter: TokenKindAsserter,
   private val nodeGenerator: NodeGenerator,
   private val expressionNodeFinisher: ExpressionNodeFinisher,
   private val atomNodeParser: AtomNodeParser,
@@ -20,8 +18,7 @@ class ExpressionNodeParser (
     fun parseExpressionNode(
         tokens: List<Token>
     ): ParserResult {
-        val tokenOptional = if (tokens.isEmpty()) Optional.empty() else Optional.of(tokens[0])
-        val currentToken = tokenKindAsserter.assertTokenIsNotNull(tokenOptional)
+        val currentToken = tokens[0]
         val isClose = currentToken.tokenKind === TokenKind.CLOSE_TOKEN
         return if (isClose) {
             val result: Node = nodeGenerator.generateAtomNode(ReservedValuesConstants.NIL)

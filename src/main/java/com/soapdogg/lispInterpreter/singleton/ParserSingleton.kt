@@ -19,18 +19,15 @@ enum class ParserSingleton {
             parserResultBuilder
         )
         expressionNodeFinisher = ExpressionNodeFinisher(
-            AsserterSingleton.INSTANCE.tokenKindAsserter,
             parserResultBuilder
         )
         expressionNodeParser = ExpressionNodeParser(
-            AsserterSingleton.INSTANCE.tokenKindAsserter,
             GeneratorSingleton.INSTANCE.nodeGenerator,
             expressionNodeFinisher,
             atomNodeParser,
             parserResultBuilder
         )
         nodeParser = NodeParser(
-            AsserterSingleton.INSTANCE.tokenKindAsserter,
             expressionNodeParser,
             expressionNodeFinisher,
             atomNodeParser
