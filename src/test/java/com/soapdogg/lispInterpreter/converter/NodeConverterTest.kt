@@ -33,7 +33,7 @@ class NodeConverterTest {
         Mockito.`when`(expressionListNode.children).thenReturn(
             listOf(address, data)
         )
-        
+
         val actual = nodeConverter.convertNodeV2ToNode(expressionListNode)
 
         Assertions.assertTrue(actual is ExpressionNode)
@@ -53,8 +53,24 @@ class NodeConverterTest {
     fun convertExpressionNodeToNodeV2Test() {
         val expressionNode = Mockito.mock(ExpressionNode::class.java)
 
-        Assertions.assertThrows(
-            NotImplementedError::class.java,
-        ) {nodeConverter.convertNodeToNodeV2(expressionNode)}
+        val address = Mockito.mock(AtomNode::class.java)
+        Mockito.`when`(expressionNode.address).thenReturn(address)
+
+        val data = Mockito.mock(ExpressionNode::class.java)
+        Mockito.`when`(expressionNode.data).thenReturn(data)
+
+        val a = Mockito.mock(AtomNode::class.java)
+        Mockito.`when`(data.address).thenReturn(a)
+
+        val d = Mockito.mock(AtomNode::class.java)
+        Mockito.`when`(data.data).thenReturn(d)
+
+        val actual = nodeConverter.convertNodeToNodeV2(expressionNode)
+
+        Assertions.assertTrue(actual is ExpressionListNode)
+        Assertions.assertEquals(3, (actual as ExpressionListNode).children.size)
+        Assertions.assertEquals(address, actual.children[0])
+        Assertions.assertEquals(a, actual.children[1])
+        Assertions.assertEquals(d, actual.children[2])
     }
 }

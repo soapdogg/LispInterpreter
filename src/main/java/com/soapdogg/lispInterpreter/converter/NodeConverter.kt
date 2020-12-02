@@ -22,6 +22,15 @@ class NodeConverter {
 
     fun convertNodeToNodeV2(version1Node: Node): NodeV2 {
         if (version1Node is AtomNode) return version1Node
-        throw NotImplementedError()
+        val expressionNode = version1Node as ExpressionNode
+        val convertedAddress = convertNodeToNodeV2(expressionNode.address)
+        val convertedData = convertNodeToNodeV2(expressionNode.data)
+        val children = mutableListOf(convertedAddress)
+        if (convertedData is ExpressionListNode) {
+            children.addAll(convertedData.children)
+        } else {
+            children.add(convertedData)
+        }
+        return ExpressionListNode(children)
     }
 }
