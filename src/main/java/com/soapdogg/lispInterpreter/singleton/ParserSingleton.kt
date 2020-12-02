@@ -15,6 +15,7 @@ enum class ParserSingleton {
     init {
         atomNodeParser = AtomNodeParser(
             GeneratorSingleton.INSTANCE.nodeGenerator,
+            ConverterSingleton.INSTANCE.nodeConverter,
             parserResultBuilder
         )
         expressionNodeFinisher = ExpressionNodeFinisher(
