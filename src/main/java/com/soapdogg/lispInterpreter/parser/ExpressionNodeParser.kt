@@ -6,11 +6,9 @@ import com.soapdogg.lispInterpreter.datamodels.ParserResult
 import com.soapdogg.lispInterpreter.datamodels.Token
 import com.soapdogg.lispInterpreter.datamodels.TokenKind
 import com.soapdogg.lispInterpreter.generator.NodeGenerator
-import java.util.*
 
 class ExpressionNodeParser (
   private val nodeGenerator: NodeGenerator,
-  private val expressionNodeFinisher: ExpressionNodeFinisher,
   private val atomNodeParser: AtomNodeParser,
   private val parserResultBuilder: ParserResultBuilder
 ) {
@@ -27,18 +25,19 @@ class ExpressionNodeParser (
                 tokens
             )
         } else {
-            val addressParserResult: ParserResult
             val isOpen = currentToken.tokenKind === TokenKind.OPEN_TOKEN
-            addressParserResult = if (isOpen) {
+            val addressParserResult = if (isOpen) {
                 val t = parseExpressionNode(tokens.subList(1, tokens.size))
-                expressionNodeFinisher.finishParsingExpressionNode(t)
+                parserResultBuilder.buildParserResult(
+                    t.resultingNode,
+                    t.remainingTokens.subList(1, t.remainingTokens.size)
+                )
             } else {
                 atomNodeParser.parseAtomNode(tokens)
             }
             val dataParserResult = parseExpressionNode(addressParserResult.remainingTokens)
-            val addressResultingNode = addressParserResult.resultingNode
             val result = nodeGenerator.generateExpressionNode(
-                addressResultingNode,
+                addressParserResult.resultingNode,
                 dataParserResult.resultingNode
             )
             parserResultBuilder.buildParserResult(

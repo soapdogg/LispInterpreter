@@ -10,12 +10,10 @@ import java.util.*
 
 class ExpressionNodeParserTest {
     private val nodeGenerator = Mockito.mock(NodeGenerator::class.java)
-    private val expressionNodeFinisher = Mockito.mock(ExpressionNodeFinisher::class.java)
     private val atomNodeParser = Mockito.mock(AtomNodeParser::class.java)
     private val parserResultBuilder = Mockito.mock(ParserResultBuilder::class.java)
     private val expressionNodeParser = ExpressionNodeParser(
         nodeGenerator,
-        expressionNodeFinisher,
         atomNodeParser,
         parserResultBuilder
     )

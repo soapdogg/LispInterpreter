@@ -1,5 +1,6 @@
 package com.soapdogg.lispInterpreter.parser
 
+import com.soapdogg.lispInterpreter.datamodels.Node
 import com.soapdogg.lispInterpreter.datamodels.ParserResult
 import com.soapdogg.lispInterpreter.datamodels.Token
 import com.soapdogg.lispInterpreter.datamodels.TokenKind
@@ -10,11 +11,11 @@ import java.util.*
 
 class NodeParserTest {
     private val expressionNodeParser = Mockito.mock(ExpressionNodeParser::class.java)
-    private val expressionNodeFinisher = Mockito.mock(ExpressionNodeFinisher::class.java)
+    private val parserResultBuilder = Mockito.mock(ParserResultBuilder::class.java)
     private val atomNodeParser = Mockito.mock(AtomNodeParser::class.java)
     private val nodeParser = NodeParser(
         expressionNodeParser,
-        expressionNodeFinisher,
+        parserResultBuilder,
         atomNodeParser
     )
 
@@ -27,8 +28,18 @@ class NodeParserTest {
         val result = Mockito.mock(ParserResult::class.java)
         Mockito.`when`(expressionNodeParser.parseExpressionNode(LinkedList())).thenReturn(result)
 
+        val resultingNode = Mockito.mock(Node::class.java)
+        Mockito.`when`(result.resultingNode).thenReturn(resultingNode)
+
+        Mockito.`when`(result.remainingTokens).thenReturn(tokens)
+
         val expected = Mockito.mock(ParserResult::class.java)
-        Mockito.`when`(expressionNodeFinisher.finishParsingExpressionNode(result)).thenReturn(expected)
+        Mockito.`when`(
+            parserResultBuilder.buildParserResult(
+                resultingNode,
+                emptyList()
+            )
+        ).thenReturn(expected)
 
         val actual = nodeParser.parseIntoNode(tokens)
         Assertions.assertEquals(expected, actual)

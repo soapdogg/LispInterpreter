@@ -6,7 +6,7 @@ import com.soapdogg.lispInterpreter.datamodels.TokenKind
 
 class NodeParser (
   private val expressionNodeParser: ExpressionNodeParser,
-  private val expressionNodeFinisher: ExpressionNodeFinisher,
+  private val parserResultBuilder: ParserResultBuilder,
   private val atomNodeParser: AtomNodeParser
 ) {
 
@@ -19,7 +19,10 @@ class NodeParser (
         return if (isOpen) {
             val remaining = tokens.subList(1, tokens.size)
             val result = expressionNodeParser.parseExpressionNode(remaining)
-            expressionNodeFinisher.finishParsingExpressionNode(result)
+            parserResultBuilder.buildParserResult(
+                result.resultingNode,
+                result.remainingTokens.subList(1, result.remainingTokens.size)
+            )
         } else {
             atomNodeParser.parseAtomNode(
                 tokens
