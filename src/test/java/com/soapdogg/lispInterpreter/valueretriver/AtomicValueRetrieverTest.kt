@@ -1,6 +1,7 @@
 package com.soapdogg.lispInterpreter.valueretriver
 
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
+import com.soapdogg.lispInterpreter.converter.NodeConverter
 import com.soapdogg.lispInterpreter.datamodels.AtomNode
 import com.soapdogg.lispInterpreter.datamodels.ExpressionNode
 import com.soapdogg.lispInterpreter.exceptions.NotAtomicException
@@ -13,8 +14,10 @@ class AtomicValueRetrieverTest {
     private val position = 1
     private val functionName = FunctionNameConstants.TIMES
     private val listNotationPrinter = Mockito.mock(ListNotationPrinter::class.java)
+    private val nodeConverter = Mockito.mock(NodeConverter::class.java)
     private val atomicValueRetriever = AtomicValueRetriever(
-        listNotationPrinter
+        listNotationPrinter,
+        nodeConverter
     )
 
     @Test

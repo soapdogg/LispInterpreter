@@ -1,5 +1,6 @@
 package com.soapdogg.lispInterpreter.interpreter
 
+import com.soapdogg.lispInterpreter.converter.NodeConverter
 import com.soapdogg.lispInterpreter.evaluator.ProgramEvaluator
 import com.soapdogg.lispInterpreter.generator.UserDefinedFunctionGenerator
 import com.soapdogg.lispInterpreter.parser.RootParser
@@ -13,12 +14,14 @@ class Interpreter (
     private val program: ProgramEvaluator,
     private val rootNodePartitioner: RootNodePartitioner,
     private val userDefinedFunctionGenerator: UserDefinedFunctionGenerator,
+    private val nodeConverter: NodeConverter,
     private val listNotationPrinter: ListNotationPrinter
 ){
 
     fun interpret(scanner: Scanner): String {
         val tokens = tokenizer.tokenize(scanner)
         val rootNodes = rootParser.parse(tokens)
+
         val partitionedRootNodes = rootNodePartitioner.partitionRootNodes(
             rootNodes
         )
@@ -30,6 +33,7 @@ class Interpreter (
             userDefinedFunctions,
             HashMap()
         )
-        return listNotationPrinter.printInListNotation(evaluatedNodes)
+        val convertedNodes = evaluatedNodes.map { nodeConverter.convertNodeToNodeV2(it) }
+        return listNotationPrinter.printInListNotation(convertedNodes)
     }
 }

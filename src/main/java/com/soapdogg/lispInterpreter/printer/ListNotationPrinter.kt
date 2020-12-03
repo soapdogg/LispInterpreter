@@ -2,34 +2,23 @@ package com.soapdogg.lispInterpreter.printer
 
 import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
 import com.soapdogg.lispInterpreter.constants.TokenValueConstants
-import com.soapdogg.lispInterpreter.converter.NodeConverter
 import com.soapdogg.lispInterpreter.datamodels.*
 import java.lang.StringBuilder
 
 class ListNotationPrinter (
-    private val atomNodePrinter: AtomNodePrinter,
-    private val nodeConverter: NodeConverter
+    private val atomNodePrinter: AtomNodePrinter
 ){
 
     fun printInListNotation(
-        nodes: List<Node>
+        nodes: List<NodeV2>
     ): String {
-        return nodes.map {
-            nodeConverter.convertNodeToNodeV2(it)
-        }.joinToString(
+        return nodes.joinToString(
             ReservedValuesConstants.NEW_LINE.toString(),
             ReservedValuesConstants.EMPTY,
             ReservedValuesConstants.NEW_LINE.toString()
         ) { nodeV2 ->
             printInListNotation(nodeV2)
         }
-    }
-
-    fun printInListNotation(
-        node: Node
-    ): String {
-        val nodeV2 = nodeConverter.convertNodeToNodeV2(node)
-        return printInListNotation(nodeV2)
     }
 
     fun printInListNotation(node: NodeV2):String {

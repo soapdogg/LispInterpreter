@@ -19,8 +19,7 @@ enum class PrinterSingleton {
             dotNotationExpressionNodePrinter
         )
         listNotationPrinter = ListNotationPrinter(
-            atomNodePrinter,
-            ConverterSingleton.INSTANCE.nodeConverter
+            atomNodePrinter
         )
     }
 }

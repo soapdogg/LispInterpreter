@@ -1,6 +1,7 @@
 package com.soapdogg.lispInterpreter.valueretriver
 
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
+import com.soapdogg.lispInterpreter.converter.NodeConverter
 import com.soapdogg.lispInterpreter.datamodels.Node
 import com.soapdogg.lispInterpreter.determiner.NumericStringDeterminer
 import com.soapdogg.lispInterpreter.exceptions.NotNumericException
@@ -15,10 +16,12 @@ class NumericValueRetrieverTest {
     private val functionName = FunctionNameConstants.QUOTE
     private val atomicValueRetriever = Mockito.mock(AtomicValueRetriever::class.java)
     private val numericStringDeterminer = Mockito.mock(NumericStringDeterminer::class.java)
+    private val nodeConverter = Mockito.mock(NodeConverter::class.java)
     private val listNotationPrinter = Mockito.mock(ListNotationPrinter::class.java)
     private val numericValueRetriever = NumericValueRetriever(
         atomicValueRetriever,
         numericStringDeterminer,
+        nodeConverter,
         listNotationPrinter
     )
 

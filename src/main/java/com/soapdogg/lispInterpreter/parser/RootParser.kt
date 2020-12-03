@@ -1,6 +1,6 @@
 package com.soapdogg.lispInterpreter.parser
 
-import com.soapdogg.lispInterpreter.datamodels.Node
+import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.Token
 import com.soapdogg.lispInterpreter.datamodels.TokenKind
 import com.soapdogg.lispInterpreter.exceptions.UnexpectedTokenKindException
@@ -10,7 +10,7 @@ class RootParser (
   private val nodeParser: NodeParser
 ) {
 
-    fun parse(tokens: List<Token>): List<Node> {
+    fun parse(tokens: List<Token>): List<NodeV2> {
         var openClose = 0
         val listOfLists: MutableList<MutableList<Token>> = ArrayList()
 

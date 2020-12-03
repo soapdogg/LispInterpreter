@@ -1,18 +1,18 @@
 package com.soapdogg.lispInterpreter.interpreter
 
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
-import com.soapdogg.lispInterpreter.datamodels.AtomNode
-import com.soapdogg.lispInterpreter.datamodels.ExpressionNode
-import com.soapdogg.lispInterpreter.datamodels.Node
-import com.soapdogg.lispInterpreter.datamodels.PartitionedRootNodes
+import com.soapdogg.lispInterpreter.converter.NodeConverter
+import com.soapdogg.lispInterpreter.datamodels.*
 
-class RootNodePartitioner {
+class RootNodePartitioner(
+    private val nodeConverter: NodeConverter
+) {
     fun partitionRootNodes(
-        rootNodes: List<Node>
+        rootNodes: List<NodeV2>
     ): PartitionedRootNodes {
         val (defun, executables) = rootNodes.partition {
-            rootNode: Node -> if (rootNode is ExpressionNode) {
-                val rootNodeAddress = rootNode.address
+            rootNode -> if (rootNode is ExpressionListNode) {
+                val rootNodeAddress = rootNode.children[0]
                 if (rootNodeAddress is AtomNode) {
                     return@partition rootNodeAddress.value == FunctionNameConstants.DEFUN
                 }
@@ -21,8 +21,8 @@ class RootNodePartitioner {
         }
 
         return PartitionedRootNodes(
-            defun,
-            executables
+            defun.map { nodeConverter.convertNodeV2ToNode(it) },
+            executables.map { nodeConverter.convertNodeV2ToNode(it) }
         )
     }
 }

@@ -1,6 +1,7 @@
 package com.soapdogg.lispInterpreter.parser
 
 import com.soapdogg.lispInterpreter.datamodels.Node
+import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.Token
 import com.soapdogg.lispInterpreter.datamodels.TokenKind
 import com.soapdogg.lispInterpreter.exceptions.UnexpectedTokenKindException
@@ -17,7 +18,7 @@ class RootParserTest {
         val headToken = Mockito.mock(Token::class.java)
         val tokens = listOf(headToken)
 
-        val resultingNode = Mockito.mock(Node::class.java)
+        val resultingNode = Mockito.mock(NodeV2::class.java)
         Mockito.`when`(nodeParser.parseIntoNode(tokens)).thenReturn(resultingNode)
 
         val actual = rootParser.parse(tokens)
