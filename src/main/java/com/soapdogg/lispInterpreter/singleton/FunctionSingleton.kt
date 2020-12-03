@@ -21,6 +21,7 @@ enum class FunctionSingleton {
         EvaluatorSingleton.INSTANCE.nodeEvaluator
     )
     val condFunction: CondFunction = CondFunction(
+        ConverterSingleton.INSTANCE.nodeConverter,
         AsserterSingleton.INSTANCE.condFunctionParameterAsserter,
         EvaluatorSingleton.INSTANCE.condFunctionEvaluator
     )

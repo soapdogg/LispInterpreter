@@ -1,1 +1,1 @@
-Error! Parameter of COND is not a list.    Actual: 34
+Error! COND parameter: 34 is not a list!
