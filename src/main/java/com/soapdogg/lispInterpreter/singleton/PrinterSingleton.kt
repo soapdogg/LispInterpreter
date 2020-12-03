@@ -8,7 +8,6 @@ enum class PrinterSingleton {
     val atomNodePrinter: AtomNodePrinter = AtomNodePrinter()
     val dotNotationExpressionNodePrinter: DotNotationExpressionNodePrinter
     val dotNotationPrinter: DotNotationPrinter
-    val listNotationExpressionNodePrinter: ListNotationExpressionNodePrinter
     val listNotationPrinter: ListNotationPrinter
 
     init {
@@ -19,13 +18,9 @@ enum class PrinterSingleton {
             atomNodePrinter,
             dotNotationExpressionNodePrinter
         )
-        listNotationExpressionNodePrinter = ListNotationExpressionNodePrinter(
-            ComparatorSingleton.INSTANCE.nodeValueComparator,
-            atomNodePrinter
-        )
         listNotationPrinter = ListNotationPrinter(
             atomNodePrinter,
-            listNotationExpressionNodePrinter
+            ConverterSingleton.INSTANCE.nodeConverter
         )
     }
 }
