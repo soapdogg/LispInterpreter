@@ -3,37 +3,33 @@ package com.soapdogg.lispInterpreter.functions
 import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
 import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
-import com.soapdogg.lispInterpreter.converter.NodeConverter
-import com.soapdogg.lispInterpreter.datamodels.ExpressionNode
-import com.soapdogg.lispInterpreter.datamodels.Node
-import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
+import com.soapdogg.lispInterpreter.datamodels.*
 import com.soapdogg.lispInterpreter.evaluator.NodeEvaluator
 import com.soapdogg.lispInterpreter.generator.NodeGenerator
 
 class AtomFunction (
     private val functionLengthAsserter: FunctionLengthAsserter,
     private val nodeEvaluator: NodeEvaluator,
-    private val nodeGenerator: NodeGenerator,
-    private val nodeConverter: NodeConverter
-): LispFunction {
+    private val nodeGenerator: NodeGenerator
+): LispFunctionV2 {
 
     override fun evaluateLispFunction(
-        params: Node,
+        params: ExpressionListNode,
         userDefinedFunctions: List<UserDefinedFunction>,
-        variableNameToValueMap: Map<String, Node>
-    ): Node {
+        variableNameToValueMap: Map<String, NodeV2>
+    ): NodeV2 {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.ATOM,
             FunctionLengthConstants.TWO,
             params
         )
-        val evaluatedResult = nodeEvaluator.evaluate(
-            nodeConverter.convertNodeToNodeV2(params),
+        val evaluatedResult = nodeEvaluator.evaluateV2(
+            params.children[1],
             userDefinedFunctions,
             variableNameToValueMap,
             true
         )
-        val result = evaluatedResult !is ExpressionNode
+        val result = evaluatedResult !is ExpressionListNode
         return nodeGenerator.generateAtomNode(result)
     }
 }

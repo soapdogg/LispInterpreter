@@ -1,6 +1,7 @@
 package com.soapdogg.lispInterpreter.evaluator
 
 import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
+import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.constants.FunctionsConstants
 import com.soapdogg.lispInterpreter.converter.NodeConverter
 import com.soapdogg.lispInterpreter.datamodels.*
@@ -13,6 +14,24 @@ class NodeEvaluator(
     private val functionLengthAsserter: FunctionLengthAsserter,
     private val nodeConverter: NodeConverter
 ) {
+
+    fun evaluateV2(
+        node: NodeV2,
+        userDefinedFunctions: List<UserDefinedFunction>,
+        variableNameToValueMap: Map<String, NodeV2>,
+        areLiteralsAllowed: Boolean
+    ): NodeV2 {
+        val convertedVariables = variableNameToValueMap.map {
+            Pair(it.key, nodeConverter.convertNodeV2ToNode(it.value))
+        }.toMap()
+        val v1 = evaluate(
+            node,
+            userDefinedFunctions,
+            convertedVariables,
+            areLiteralsAllowed
+        )
+        return nodeConverter.convertNodeToNodeV2(v1)
+    }
 
     fun evaluate(
         node: NodeV2,
@@ -73,11 +92,31 @@ class NodeEvaluator(
             }
             if (FunctionsConstants.functionMap!!.containsKey(addressValue)) {
                 val function = FunctionsConstants.functionMap[addressValue]
+                if (addressValue == FunctionNameConstants.QUOTE) {
+                    return function!!.evaluateLispFunction(
+                        expressionNode,
+                        userDefinedFunctions,
+                        variableNameToValueMap
+                    )
+                }
                 return function!!.evaluateLispFunction(
                     expressionNode.data,
                     userDefinedFunctions,
                     variableNameToValueMap
                 )
+            }
+            if (FunctionsConstants.functionV2Map!!.containsKey(addressValue)) {
+                val convertedParams = nodeConverter.convertNodeToNodeV2(expressionNode)
+                val convertedVariables = variableNameToValueMap.map {
+                    Pair(it.key, nodeConverter.convertNodeToNodeV2(it.value))
+                }.toMap()
+                val function = FunctionsConstants.functionV2Map[addressValue]
+                val evaluatedV2 = function!!.evaluateLispFunction(
+                    convertedParams as ExpressionListNode,
+                    userDefinedFunctions,
+                    convertedVariables
+                )
+                return nodeConverter.convertNodeV2ToNode(evaluatedV2)
             }
             if (!areLiteralsAllowed) throw Exception("Error! Invalid CAR value: $addressValue\n")
         }

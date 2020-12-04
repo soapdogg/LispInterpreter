@@ -8,8 +8,7 @@ enum class FunctionSingleton {
     val atomFunction: AtomFunction = AtomFunction(
         AsserterSingleton.INSTANCE.functionLengthAsserter,
         EvaluatorSingleton.INSTANCE.nodeEvaluator,
-        GeneratorSingleton.INSTANCE.nodeGenerator,
-        ConverterSingleton.INSTANCE.nodeConverter
+        GeneratorSingleton.INSTANCE.nodeGenerator
     )
     val carFunction: CarFunction = CarFunction(
         AsserterSingleton.INSTANCE.functionLengthAsserter,
@@ -92,8 +91,7 @@ enum class FunctionSingleton {
         ConverterSingleton.INSTANCE.nodeConverter
     )
     val quoteFunction: QuoteFunction = QuoteFunction(
-        AsserterSingleton.INSTANCE.functionLengthAsserter,
-        ValueRetrieverSingleton.INSTANCE.listValueRetriever
+        AsserterSingleton.INSTANCE.functionLengthAsserter
     )
     val timesFunction: TimesFunction = TimesFunction(
         AsserterSingleton.INSTANCE.functionLengthAsserter,

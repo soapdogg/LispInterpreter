@@ -3,30 +3,24 @@ package com.soapdogg.lispInterpreter.functions
 import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
 import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
-import com.soapdogg.lispInterpreter.datamodels.Node
+import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
+import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
-import com.soapdogg.lispInterpreter.valueretriver.ListValueRetriever
 
 class QuoteFunction(
-    private val functionLengthAsserter: FunctionLengthAsserter,
-    private val listValueRetriever: ListValueRetriever
-) : LispFunction {
+    private val functionLengthAsserter: FunctionLengthAsserter
+): LispFunctionV2 {
 
     override fun evaluateLispFunction(
-        params: Node,
+        params: ExpressionListNode,
         userDefinedFunctions: List<UserDefinedFunction>,
-        variableNameToValueMap: Map<String, Node>
-    ): Node {
+        variableNameToValueMap: Map<String, NodeV2>
+    ): NodeV2 {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.QUOTE,
             FunctionLengthConstants.TWO,
             params
         )
-        val expressionNodeParams = listValueRetriever.retrieveListValue(
-            params,
-            FunctionNameConstants.QUOTE,
-            variableNameToValueMap
-        )
-        return expressionNodeParams.address
+        return params.children[1]
     }
 }
