@@ -41,8 +41,7 @@ class IntFunctionTest {
             nodeEvaluator.evaluateV2(
                 child1,
                 userDefinedFunctions,
-                variableNameToValueMap,
-                true
+                variableNameToValueMap
             )
         ).thenReturn(evaluatedResult)
 
@@ -82,8 +81,7 @@ class IntFunctionTest {
             nodeEvaluator.evaluateV2(
                 child1,
                 userDefinedFunctions,
-                variableNameToValueMap,
-                true
+                variableNameToValueMap
             )
         ).thenReturn(evaluatedResult)
 

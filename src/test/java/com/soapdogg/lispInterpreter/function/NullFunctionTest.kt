@@ -41,8 +41,7 @@ class NullFunctionTest {
             nodeEvaluator.evaluateV2(
                 child1,
                 userDefinedFunctions,
-                variableNameToValueMap,
-                true
+                variableNameToValueMap
             )
         ).thenReturn(evaluatedResult)
 
@@ -80,8 +79,7 @@ class NullFunctionTest {
             nodeEvaluator.evaluateV2(
                 child1,
                 userDefinedFunctions,
-                variableNameToValueMap,
-                true
+                variableNameToValueMap
             )
         ).thenReturn(evaluatedResult)
 

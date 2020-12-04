@@ -28,8 +28,7 @@ class CarFunction (
         val evaluatedChild = nodeEvaluator.evaluateV2(
             params.children[1],
             userDefinedFunctions,
-            variableNameToValueMap,
-            false
+            variableNameToValueMap
         )
         val evaluatedChildExpressionListNode = listValueRetriever.retrieveListValue(
             evaluatedChild,

@@ -41,8 +41,7 @@ class CdrFunctionTest {
             nodeEvaluator.evaluateV2(
                 child1,
                 userDefinedFunctions,
-                variableNameToValueMap,
-                false
+                variableNameToValueMap
             )
         ).thenReturn(evaluatedChild)
 

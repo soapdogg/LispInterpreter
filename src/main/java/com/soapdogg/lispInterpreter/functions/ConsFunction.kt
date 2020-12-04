@@ -28,14 +28,12 @@ class ConsFunction(
         val evaluatedAddress = nodeEvaluator.evaluateV2(
             params.children[1],
             userDefinedFunctions,
-            variableNameToValueMap,
-            true
+            variableNameToValueMap
         )
         val evaluatedData = nodeEvaluator.evaluateV2(
             params.children[2],
             userDefinedFunctions,
-            variableNameToValueMap,
-            true
+            variableNameToValueMap
         )
         return nodeGenerator.generateExpressionListNode(
             listOf(evaluatedAddress, evaluatedData)

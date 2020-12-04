@@ -28,8 +28,7 @@ class IntFunction (
         val evaluatedResult = nodeEvaluator.evaluateV2(
             params.children[1],
             userDefinedFunctions,
-            variableNameToValueMap,
-            true
+            variableNameToValueMap
         )
         if (evaluatedResult is ExpressionListNode) {
             return nodeGenerator.generateAtomNode(false)

@@ -21,8 +21,7 @@ class ProgramEvaluator(
             nodeEvaluator.evaluateV2(
                 it,
                 userDefinedFunctions,
-                variableNameToValueMap,
-                false
+                variableNameToValueMap
             )
         }
     }

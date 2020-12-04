@@ -50,8 +50,7 @@ class CondFunctionTest {
             nodeEvaluator.evaluateV2(
                 c1,
                 userDefinedFunctions,
-                variableNameToValueMap,
-                true
+                variableNameToValueMap
             )
         ).thenReturn(evaluatedNode)
 
@@ -88,8 +87,7 @@ class CondFunctionTest {
             nodeEvaluator.evaluateV2(
                 c1,
                 userDefinedFunctions,
-                variableNameToValueMap,
-                true
+                variableNameToValueMap
             )
         ).thenReturn(evaluatedNode)
 
@@ -131,8 +129,7 @@ class CondFunctionTest {
             nodeEvaluator.evaluateV2(
                 c1,
                 userDefinedFunctions,
-                variableNameToValueMap,
-                true
+                variableNameToValueMap
             )
         ).thenReturn(evaluatedNode)
 
@@ -146,8 +143,7 @@ class CondFunctionTest {
             nodeEvaluator.evaluateV2(
                 c2,
                 userDefinedFunctions,
-                variableNameToValueMap,
-                true
+                variableNameToValueMap
             )
         ).thenReturn(expected)
 

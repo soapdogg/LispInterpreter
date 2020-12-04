@@ -27,8 +27,7 @@ class ProgramEvaluatorTest {
             nodeEvaluator.evaluateV2(
                 atomNode,
                 userDefinedFunctions,
-                variableNameToValueMap,
-                false
+                variableNameToValueMap
             )
         ).thenReturn(evaluatedNode)
 
@@ -51,8 +50,7 @@ class ProgramEvaluatorTest {
             nodeEvaluator.evaluateV2(
                 expressionNode,
                 userDefinedFunctions,
-                variableNameToValueMap,
-                false
+                variableNameToValueMap
             )
         ).thenReturn(evaluatedNode)
         val actual = programEvaluator.evaluate(

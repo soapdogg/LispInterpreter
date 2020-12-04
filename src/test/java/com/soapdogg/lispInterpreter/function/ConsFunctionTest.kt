@@ -38,8 +38,7 @@ class ConsFunctionTest {
             nodeEvaluator.evaluateV2(
                 child1,
                 userDefinedFunctions,
-                variableNameToValueMap,
-                true
+                variableNameToValueMap
             )
         ).thenReturn(evaluatedAddress)
 
@@ -48,8 +47,7 @@ class ConsFunctionTest {
             nodeEvaluator.evaluateV2(
                 child2,
                 userDefinedFunctions,
-                variableNameToValueMap,
-                true
+                variableNameToValueMap
             )
         ).thenReturn(evaluatedData)
 

@@ -26,8 +26,7 @@ class AtomFunction (
         val evaluatedResult = nodeEvaluator.evaluateV2(
             params.children[1],
             userDefinedFunctions,
-            variableNameToValueMap,
-            true
+            variableNameToValueMap
         )
         val result = evaluatedResult !is ExpressionListNode
         return nodeGenerator.generateAtomNode(result)

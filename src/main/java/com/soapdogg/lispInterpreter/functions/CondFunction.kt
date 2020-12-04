@@ -28,15 +28,13 @@ class CondFunction(
             val evaluatedNode = nodeEvaluator.evaluateV2(
                 it.children[0],
                 userDefinedFunctions,
-                variableNameToValueMap,
-                true
+                variableNameToValueMap
             )
             if (evaluatedNode is AtomNode && !nodeValueComparator.equalsNil(evaluatedNode.value)) {
                 return nodeEvaluator.evaluateV2(
                     it.children[1],
                     userDefinedFunctions,
-                    variableNameToValueMap,
-                    true
+                    variableNameToValueMap
                 )
             }
         }
