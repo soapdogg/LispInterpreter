@@ -3,6 +3,8 @@ package com.soapdogg.lispInterpreter.functions
 import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
 import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
+import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
+import com.soapdogg.lispInterpreter.datamodels.AtomNode
 import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
@@ -35,6 +37,11 @@ class ConsFunction(
             userDefinedFunctions,
             variableNameToValueMap
         )
+        if (evaluatedData is ExpressionListNode) {
+            return nodeGenerator.generateExpressionListNode(
+                listOf(evaluatedAddress) + evaluatedData.children
+            )
+        }
         return nodeGenerator.generateExpressionListNode(
             listOf(evaluatedAddress, evaluatedData)
         )

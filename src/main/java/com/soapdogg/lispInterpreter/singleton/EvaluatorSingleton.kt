@@ -8,19 +8,14 @@ enum class EvaluatorSingleton {
     INSTANCE;
 
     val atomNodeEvaluator: AtomNodeEvaluator = AtomNodeEvaluator()
-    val nodeEvaluator: NodeEvaluator
-    val programEvaluator: ProgramEvaluator
+    val nodeEvaluator: NodeEvaluator = NodeEvaluator(
+        atomNodeEvaluator,
+        DeterminerSingleton.INSTANCE.userDefinedFunctionNameDeterminer,
+        AsserterSingleton.INSTANCE.functionLengthAsserter
+    )
+    val programEvaluator: ProgramEvaluator = ProgramEvaluator(
+        AsserterSingleton.INSTANCE.atomRootNodeAsserter,
+        nodeEvaluator
+    )
 
-    init {
-        nodeEvaluator = NodeEvaluator(
-            atomNodeEvaluator,
-            DeterminerSingleton.INSTANCE.userDefinedFunctionNameDeterminer,
-            AsserterSingleton.INSTANCE.functionLengthAsserter,
-            ConverterSingleton.INSTANCE.nodeConverter
-        )
-        programEvaluator = ProgramEvaluator(
-            AsserterSingleton.INSTANCE.atomRootNodeAsserter,
-            nodeEvaluator
-        )
-    }
 }

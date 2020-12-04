@@ -37,6 +37,12 @@ class CdrFunction (
             FunctionNameConstants.CDR,
             variableNameToValueMap
         )
+        if (evaluatedChildExpressionList.children.size == 1) {
+            return evaluatedChildExpressionList.children[0]
+        }
+        if (evaluatedChildExpressionList.children.size == 2) {
+            return evaluatedChildExpressionList.children[1]
+        }
         return nodeGenerator.generateExpressionListNode(
             evaluatedChildExpressionList.children.subList(1, evaluatedChildExpressionList.children.size)
         )
