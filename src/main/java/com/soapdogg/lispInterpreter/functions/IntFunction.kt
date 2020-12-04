@@ -3,48 +3,38 @@ package com.soapdogg.lispInterpreter.functions
 import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
 import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
-import com.soapdogg.lispInterpreter.converter.NodeConverter
-import com.soapdogg.lispInterpreter.datamodels.ExpressionNode
-import com.soapdogg.lispInterpreter.datamodels.Node
-import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
+import com.soapdogg.lispInterpreter.datamodels.*
 import com.soapdogg.lispInterpreter.determiner.NumericStringDeterminer
 import com.soapdogg.lispInterpreter.evaluator.NodeEvaluator
 import com.soapdogg.lispInterpreter.generator.NodeGenerator
-import com.soapdogg.lispInterpreter.valueretriver.AtomicValueRetriever
 
 class IntFunction (
     private val functionLengthAsserter: FunctionLengthAsserter,
     private val nodeEvaluator: NodeEvaluator,
-    private val atomicValueRetriever: AtomicValueRetriever,
-    private val numericStringDeterminer: NumericStringDeterminer, 
-    private val nodeGenerator: NodeGenerator,
-    private val nodeConverter: NodeConverter
-): LispFunction {
+    private val numericStringDeterminer: NumericStringDeterminer,
+    private val nodeGenerator: NodeGenerator
+): LispFunctionV2 {
 
     override fun evaluateLispFunction(
-        params: Node,
+        params: ExpressionListNode,
         userDefinedFunctions: List<UserDefinedFunction>,
-        variableNameToValueMap: Map<String, Node>
-    ): Node {
+        variableNameToValueMap: Map<String, NodeV2>
+    ): NodeV2 {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.INT,
             FunctionLengthConstants.TWO,
             params
         )
-        val evaluatedResult = nodeEvaluator.evaluate(
-            nodeConverter.convertNodeToNodeV2(params),
+        val evaluatedResult = nodeEvaluator.evaluateV2(
+            params.children[1],
             userDefinedFunctions,
             variableNameToValueMap,
             true
         )
-        if (evaluatedResult is ExpressionNode) {
+        if (evaluatedResult is ExpressionListNode) {
             return nodeGenerator.generateAtomNode(false)
         }
-        val value = atomicValueRetriever.retrieveAtomicValue(
-            evaluatedResult,
-            1,
-            FunctionNameConstants.INT
-        )
+        val value = (evaluatedResult as AtomNode).value
         val result = numericStringDeterminer.isStringNumeric(value)
         return nodeGenerator.generateAtomNode(result)
     }

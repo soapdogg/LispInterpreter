@@ -23,9 +23,9 @@ enum class FunctionSingleton {
         ConverterSingleton.INSTANCE.nodeConverter
     )
     val condFunction: CondFunction = CondFunction(
-        ConverterSingleton.INSTANCE.nodeConverter,
         AsserterSingleton.INSTANCE.condFunctionParameterAsserter,
-        EvaluatorSingleton.INSTANCE.condFunctionEvaluator
+        EvaluatorSingleton.INSTANCE.nodeEvaluator,
+        ComparatorSingleton.INSTANCE.nodeValueComparator
     )
     val consFunction: ConsFunction = ConsFunction(
         AsserterSingleton.INSTANCE.functionLengthAsserter,
@@ -37,10 +37,8 @@ enum class FunctionSingleton {
     val eqFunction: EqFunction = EqFunction(
         AsserterSingleton.INSTANCE.functionLengthAsserter,
         EvaluatorSingleton.INSTANCE.nodeEvaluator,
-        ValueRetrieverSingleton.INSTANCE.atomicValueRetriever,
-        ValueRetrieverSingleton.INSTANCE.listValueRetriever,
-        GeneratorSingleton.INSTANCE.nodeGenerator,
-        ConverterSingleton.INSTANCE.nodeConverter
+        PrinterSingleton.INSTANCE.listNotationPrinter,
+        GeneratorSingleton.INSTANCE.nodeGenerator
     )
     val greaterFunction: GreaterFunction = GreaterFunction(
         ConverterSingleton.INSTANCE.nodeConverter,
@@ -53,10 +51,8 @@ enum class FunctionSingleton {
     val intFunction: IntFunction = IntFunction(
         AsserterSingleton.INSTANCE.functionLengthAsserter,
         EvaluatorSingleton.INSTANCE.nodeEvaluator,
-        ValueRetrieverSingleton.INSTANCE.atomicValueRetriever,
         DeterminerSingleton.INSTANCE.numericStringDeterminer,
-        GeneratorSingleton.INSTANCE.nodeGenerator,
-        ConverterSingleton.INSTANCE.nodeConverter
+        GeneratorSingleton.INSTANCE.nodeGenerator
     )
     val lessFunction: LessFunction = LessFunction(
         AsserterSingleton.INSTANCE.functionLengthAsserter,
@@ -77,10 +73,8 @@ enum class FunctionSingleton {
     val nullFunction: NullFunction = NullFunction(
         AsserterSingleton.INSTANCE.functionLengthAsserter,
         EvaluatorSingleton.INSTANCE.nodeEvaluator,
-        ValueRetrieverSingleton.INSTANCE.atomicValueRetriever,
         ComparatorSingleton.INSTANCE.nodeValueComparator,
-        GeneratorSingleton.INSTANCE.nodeGenerator,
-        ConverterSingleton.INSTANCE.nodeConverter
+        GeneratorSingleton.INSTANCE.nodeGenerator
     )
     val plusFunction: PlusFunction = PlusFunction(
         AsserterSingleton.INSTANCE.functionLengthAsserter,

@@ -13,20 +13,20 @@ class CondFunctionParameterAsserter(
 
     fun assertCondFunctionParameters(
         params: List<NodeV2>
-    ) {
-        params.forEach {
+    ): List<ExpressionListNode> {
+        return params.map {
             if (it is AtomNode) {
-                if (nodeValueComparator.equalsNil(it.value)) {
-                    return
-                } else {
+                if (!nodeValueComparator.equalsNil(it.value)) {
                     throw NotAListException("Error! COND parameter: ${it.value} is not a list!${'\n'}")
                 }
+            } else {
+                functionLengthAsserter.assertLengthIsAsExpected(
+                    FunctionNameConstants.COND,
+                    FunctionLengthConstants.TWO,
+                    it
+                )
             }
-            functionLengthAsserter.assertLengthIsAsExpected(
-                FunctionNameConstants.COND,
-                FunctionLengthConstants.TWO,
-                it
-            )
-        }
+            it
+        }.filterIsInstance<ExpressionListNode>()
     }
 }

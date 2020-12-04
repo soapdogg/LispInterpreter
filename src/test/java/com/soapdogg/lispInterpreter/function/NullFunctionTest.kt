@@ -5,47 +5,41 @@ import com.soapdogg.lispInterpreter.comparator.NodeValueComparator
 import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
-import com.soapdogg.lispInterpreter.converter.NodeConverter
-import com.soapdogg.lispInterpreter.datamodels.AtomNode
-import com.soapdogg.lispInterpreter.datamodels.ExpressionNode
-import com.soapdogg.lispInterpreter.datamodels.Node
-import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
+import com.soapdogg.lispInterpreter.datamodels.*
 import com.soapdogg.lispInterpreter.evaluator.NodeEvaluator
 import com.soapdogg.lispInterpreter.functions.NullFunction
 import com.soapdogg.lispInterpreter.generator.NodeGenerator
-import com.soapdogg.lispInterpreter.valueretriver.AtomicValueRetriever
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 
 class NullFunctionTest {
-    private val params = Mockito.mock(Node::class.java)
+    private val params = Mockito.mock(ExpressionListNode::class.java)
     private val userDefinedFunctions: List<UserDefinedFunction> = emptyList()
-    private val variableNameToValueMap: Map<String, Node> = emptyMap()
+    private val variableNameToValueMap: Map<String, NodeV2> = emptyMap()
 
     private val functionLengthAsserter = Mockito.mock(FunctionLengthAsserter::class.java)
     private val nodeEvaluator = Mockito.mock(NodeEvaluator::class.java)
-
-    private val atomicValueRetriever = Mockito.mock(AtomicValueRetriever::class.java)
     private val nodeValueComparator = Mockito.mock(NodeValueComparator::class.java)
     private val nodeGenerator = Mockito.mock(NodeGenerator::class.java)
-    private val nodeConverter = Mockito.mock(NodeConverter::class.java)
 
     private val nullFunction = NullFunction(
         functionLengthAsserter,
         nodeEvaluator,
-        atomicValueRetriever,
         nodeValueComparator,
-        nodeGenerator,
-        nodeConverter
+        nodeGenerator
     )
-/*
+
     @Test
     fun nullFunctionTest() {
-        val evaluatedResult = Mockito.mock(Node::class.java)
+        val child0 = Mockito.mock(NodeV2::class.java)
+        val child1 = Mockito.mock(NodeV2::class.java)
+        Mockito.`when`(params.children).thenReturn(listOf(child0, child1))
+
+        val evaluatedResult = Mockito.mock(AtomNode::class.java)
         Mockito.`when`(
-            nodeEvaluator.evaluate(
-                params,
+            nodeEvaluator.evaluateV2(
+                child1,
                 userDefinedFunctions,
                 variableNameToValueMap,
                 true
@@ -53,13 +47,7 @@ class NullFunctionTest {
         ).thenReturn(evaluatedResult)
 
         val value = ReservedValuesConstants.NIL
-        Mockito.`when`(
-            atomicValueRetriever.retrieveAtomicValue(
-                evaluatedResult,
-                1,
-                FunctionNameConstants.NULL
-            )
-        ).thenReturn(value)
+        Mockito.`when`(evaluatedResult.value).thenReturn(value)
 
         val result = true
         Mockito.`when`(nodeValueComparator.equalsNil(value)).thenReturn(result)
@@ -72,6 +60,7 @@ class NullFunctionTest {
             userDefinedFunctions,
             variableNameToValueMap
         )
+
         Assertions.assertEquals(expected, actual)
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
             FunctionNameConstants.NULL,
@@ -82,10 +71,14 @@ class NullFunctionTest {
 
     @Test
     fun nullFunctionIsListTest() {
-        val evaluatedResult = Mockito.mock(ExpressionNode::class.java)
+        val child0 = Mockito.mock(NodeV2::class.java)
+        val child1 = Mockito.mock(NodeV2::class.java)
+        Mockito.`when`(params.children).thenReturn(listOf(child0, child1))
+
+        val evaluatedResult = Mockito.mock(ExpressionListNode::class.java)
         Mockito.`when`(
-            nodeEvaluator.evaluate(
-                params,
+            nodeEvaluator.evaluateV2(
+                child1,
                 userDefinedFunctions,
                 variableNameToValueMap,
                 true
@@ -101,12 +94,12 @@ class NullFunctionTest {
             variableNameToValueMap
         )
         Assertions.assertEquals(expected, actual)
+
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
             FunctionNameConstants.NULL,
             FunctionLengthConstants.TWO,
             params
         )
-        Mockito.verifyNoInteractions(atomicValueRetriever)
         Mockito.verifyNoInteractions(nodeValueComparator)
-    }*/
+    }
 }

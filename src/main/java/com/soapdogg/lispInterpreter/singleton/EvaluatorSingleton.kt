@@ -1,7 +1,6 @@
 package com.soapdogg.lispInterpreter.singleton
 
 import com.soapdogg.lispInterpreter.evaluator.AtomNodeEvaluator
-import com.soapdogg.lispInterpreter.evaluator.CondFunctionEvaluator
 import com.soapdogg.lispInterpreter.evaluator.NodeEvaluator
 import com.soapdogg.lispInterpreter.evaluator.ProgramEvaluator
 
@@ -10,7 +9,6 @@ enum class EvaluatorSingleton {
 
     val atomNodeEvaluator: AtomNodeEvaluator = AtomNodeEvaluator()
     val nodeEvaluator: NodeEvaluator
-    val condFunctionEvaluator: CondFunctionEvaluator
     val programEvaluator: ProgramEvaluator
 
     init {
@@ -18,12 +16,6 @@ enum class EvaluatorSingleton {
             atomNodeEvaluator,
             DeterminerSingleton.INSTANCE.userDefinedFunctionNameDeterminer,
             AsserterSingleton.INSTANCE.functionLengthAsserter,
-            ConverterSingleton.INSTANCE.nodeConverter
-        )
-        condFunctionEvaluator = CondFunctionEvaluator(
-            ValueRetrieverSingleton.INSTANCE.listValueRetriever,
-            nodeEvaluator,
-            ComparatorSingleton.INSTANCE.nodeValueComparator,
             ConverterSingleton.INSTANCE.nodeConverter
         )
         programEvaluator = ProgramEvaluator(

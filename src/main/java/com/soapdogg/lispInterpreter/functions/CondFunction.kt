@@ -1,34 +1,45 @@
 package com.soapdogg.lispInterpreter.functions
 
 import com.soapdogg.lispInterpreter.asserter.CondFunctionParameterAsserter
-import com.soapdogg.lispInterpreter.converter.NodeConverter
+import com.soapdogg.lispInterpreter.comparator.NodeValueComparator
+import com.soapdogg.lispInterpreter.datamodels.AtomNode
 import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
-import com.soapdogg.lispInterpreter.datamodels.Node
+import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
-import com.soapdogg.lispInterpreter.evaluator.CondFunctionEvaluator
+import com.soapdogg.lispInterpreter.evaluator.NodeEvaluator
+import com.soapdogg.lispInterpreter.exceptions.NotAListException
 
 class CondFunction(
-    private val nodeConverter: NodeConverter,
     private val condFunctionParameterAsserter: CondFunctionParameterAsserter,
-    private val condFunctionEvaluator: CondFunctionEvaluator
-) : LispFunction {
+    private val nodeEvaluator: NodeEvaluator,
+    private val nodeValueComparator: NodeValueComparator
+): LispFunctionV2 {
 
     override fun evaluateLispFunction(
-        params: Node,
+        params: ExpressionListNode,
         userDefinedFunctions: List<UserDefinedFunction>,
-        variableNameToValueMap: Map<String, Node>
-    ): Node {
-        val converted = nodeConverter.convertNodeToNodeV2(params)
-        if (converted is ExpressionListNode) {
-            val condParams = converted.children.subList(1, converted.children.size)
-            condFunctionParameterAsserter.assertCondFunctionParameters(
-                condParams
-            )
-        }
-        return condFunctionEvaluator.evaluateCondFunction(
-            params,
-            userDefinedFunctions,
-            variableNameToValueMap
+        variableNameToValueMap: Map<String, NodeV2>
+    ): NodeV2 {
+        val condParams = params.children.subList(1, params.children.size)
+        val condExpressionParams = condFunctionParameterAsserter.assertCondFunctionParameters(
+            condParams
         )
+        condExpressionParams.forEach {
+            val evaluatedNode = nodeEvaluator.evaluateV2(
+                it.children[0],
+                userDefinedFunctions,
+                variableNameToValueMap,
+                true
+            )
+            if (evaluatedNode is AtomNode && !nodeValueComparator.equalsNil(evaluatedNode.value)) {
+                return nodeEvaluator.evaluateV2(
+                    it.children[1],
+                    userDefinedFunctions,
+                    variableNameToValueMap,
+                    true
+                )
+            }
+        }
+        throw NotAListException("Error! None of the conditions in the COND function evaluated to true.\n")
     }
 }

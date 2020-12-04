@@ -7,7 +7,6 @@ import com.soapdogg.lispInterpreter.exceptions.NotNumericException
 import com.soapdogg.lispInterpreter.printer.ListNotationPrinter
 
 class NumericValueRetriever(
-    private val atomicValueRetriever: AtomicValueRetriever,
     private val numericStringDeterminer: NumericStringDeterminer,
     private val nodeConverter: NodeConverter,
     private val listNotationPrinter: ListNotationPrinter
@@ -18,18 +17,13 @@ class NumericValueRetriever(
         position: Int,
         functionName: String
     ): Int {
-        val value = atomicValueRetriever.retrieveAtomicValue(
-            node,
-            position,
-            functionName
+        val nodeV2 = nodeConverter.convertNodeToNodeV2(node)
+        val value = listNotationPrinter.printInListNotation(
+            nodeV2
         )
         val isNumeric = numericStringDeterminer.isStringNumeric(value)
         if (!isNumeric) {
-            val nodeV2 = nodeConverter.convertNodeToNodeV2(node)
-            val listNotation = listNotationPrinter.printInListNotation(
-                nodeV2
-            )
-            val sb = """Error! Parameter at position: $position of function $functionName is not numeric!    Actual: $listNotation${'\n'}"""
+            val sb = """Error! Parameter at position: $position of function $functionName is not numeric!    Actual: $value${'\n'}"""
             throw NotNumericException(sb)
         }
         return value.toInt()

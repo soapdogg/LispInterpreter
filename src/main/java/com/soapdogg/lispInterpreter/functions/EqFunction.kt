@@ -3,61 +3,45 @@ package com.soapdogg.lispInterpreter.functions
 import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
 import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
-import com.soapdogg.lispInterpreter.converter.NodeConverter
-import com.soapdogg.lispInterpreter.datamodels.Node
+import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
+import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
 import com.soapdogg.lispInterpreter.evaluator.NodeEvaluator
 import com.soapdogg.lispInterpreter.generator.NodeGenerator
-import com.soapdogg.lispInterpreter.valueretriver.AtomicValueRetriever
-import com.soapdogg.lispInterpreter.valueretriver.ListValueRetriever
+import com.soapdogg.lispInterpreter.printer.ListNotationPrinter
 
 class EqFunction (
     private val functionLengthAsserter: FunctionLengthAsserter,
     private val nodeEvaluator: NodeEvaluator,
-    private val atomicValueRetriever: AtomicValueRetriever,
-    private val listValueRetriever: ListValueRetriever,
+    private val listNotationPrinter: ListNotationPrinter,
     private val nodeGenerator: NodeGenerator,
-    private val nodeConverter: NodeConverter
-): LispFunction {
+): LispFunctionV2 {
 
     override fun evaluateLispFunction(
-        params: Node,
+        params: ExpressionListNode,
         userDefinedFunctions: List<UserDefinedFunction>,
-        variableNameToValueMap: Map<String, Node>
-    ): Node {
+        variableNameToValueMap: Map<String, NodeV2>
+    ): NodeV2 {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.EQ,
             FunctionLengthConstants.THREE,
             params
         )
-        val evaluatedAddress = nodeEvaluator.evaluate(
-            nodeConverter.convertNodeToNodeV2(params),
+        val evaluatedAddress = nodeEvaluator.evaluateV2(
+            params.children[1],
             userDefinedFunctions,
             variableNameToValueMap,
             true
         )
-        val leftValue = atomicValueRetriever.retrieveAtomicValue(
-            evaluatedAddress,
-            1,
-            FunctionNameConstants.EQ
-        )
-        val expressionNodeParams = listValueRetriever.retrieveListValue(
-            params,
-            FunctionNameConstants.EQ,
-            variableNameToValueMap
-        )
-        val data = expressionNodeParams.data
-        val evaluatedData = nodeEvaluator.evaluate(
-            nodeConverter.convertNodeToNodeV2(data),
+        val evaluatedData = nodeEvaluator.evaluateV2(
+            params.children[2],
             userDefinedFunctions,
             variableNameToValueMap,
             true
         )
-        val rightValue = atomicValueRetriever.retrieveAtomicValue(
-            evaluatedData,
-            2,
-            FunctionNameConstants.EQ
-        )
+        val leftValue = listNotationPrinter.printInListNotation(evaluatedAddress)
+        val rightValue = listNotationPrinter.printInListNotation(evaluatedData)
+
         val result = leftValue == rightValue
         return nodeGenerator.generateAtomNode(result)
     }
