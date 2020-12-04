@@ -15,13 +15,12 @@ object FunctionsConstants {
         functionMap = HashMap()
         functionMap[FunctionNameConstants.CAR] = FunctionSingleton.INSTANCE.carFunction
         functionMap[FunctionNameConstants.CDR] = FunctionSingleton.INSTANCE.cdrFunction
-        functionMap[FunctionNameConstants.CONS] = FunctionSingleton.INSTANCE.consFunction
-
 
 
         functionV2Map = HashMap()
         functionV2Map[FunctionNameConstants.ATOM] = FunctionSingleton.INSTANCE.atomFunction
         functionV2Map[FunctionNameConstants.COND] = FunctionSingleton.INSTANCE.condFunction
+        functionV2Map[FunctionNameConstants.CONS] = FunctionSingleton.INSTANCE.consFunction
         functionV2Map[FunctionNameConstants.EQ] = FunctionSingleton.INSTANCE.eqFunction
         functionV2Map[FunctionNameConstants.GREATER] = FunctionSingleton.INSTANCE.greaterFunction
         functionV2Map[FunctionNameConstants.INT] = FunctionSingleton.INSTANCE.intFunction

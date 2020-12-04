@@ -29,10 +29,8 @@ enum class FunctionSingleton {
     )
     val consFunction: ConsFunction = ConsFunction(
         AsserterSingleton.INSTANCE.functionLengthAsserter,
-        ValueRetrieverSingleton.INSTANCE.listValueRetriever,
         EvaluatorSingleton.INSTANCE.nodeEvaluator,
-        GeneratorSingleton.INSTANCE.nodeGenerator,
-        ConverterSingleton.INSTANCE.nodeConverter
+        GeneratorSingleton.INSTANCE.nodeGenerator
     )
     val eqFunction: EqFunction = EqFunction(
         AsserterSingleton.INSTANCE.functionLengthAsserter,
