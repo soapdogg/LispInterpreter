@@ -8,7 +8,7 @@ import org.mockito.Mockito
 
 class ProgramEvaluatorTest {
     private val userDefinedFunctions: List<UserDefinedFunction> = emptyList()
-    private val variableNameToValueMap: Map<String, Node> = emptyMap()
+    private val variableNameToValueMap: Map<String, NodeV2> = emptyMap()
 
     private val atomRootNodeAsserter = Mockito.mock(AtomRootNodeAsserter::class.java)
     private val nodeEvaluator = Mockito.mock(NodeEvaluator::class.java)
@@ -22,9 +22,9 @@ class ProgramEvaluatorTest {
     fun rootNodeIsAnAtomNodeTest() {
         val atomNode = Mockito.mock(AtomNode::class.java)
         val rootNodes = listOf(atomNode)
-        val evaluatedNode = Mockito.mock(Node::class.java)
+        val evaluatedNode = Mockito.mock(NodeV2::class.java)
         Mockito.`when`(
-            nodeEvaluator.evaluate(
+            nodeEvaluator.evaluateV2(
                 atomNode,
                 userDefinedFunctions,
                 variableNameToValueMap,
@@ -46,9 +46,9 @@ class ProgramEvaluatorTest {
     fun rootNodeIsExpressionNodeTest() {
         val expressionNode = Mockito.mock(ExpressionListNode::class.java)
         val rootNodes = listOf(expressionNode)
-        val evaluatedNode = Mockito.mock(Node::class.java)
+        val evaluatedNode = Mockito.mock(NodeV2::class.java)
         Mockito.`when`(
-            nodeEvaluator.evaluate(
+            nodeEvaluator.evaluateV2(
                 expressionNode,
                 userDefinedFunctions,
                 variableNameToValueMap,

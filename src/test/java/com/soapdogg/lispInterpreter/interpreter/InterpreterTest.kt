@@ -19,7 +19,6 @@ class InterpreterTest {
     private val program: ProgramEvaluator = Mockito.mock(ProgramEvaluator::class.java)
     private val rootNodePartitioner: RootNodePartitioner = Mockito.mock(RootNodePartitioner::class.java)
     private val defunFunction = Mockito.mock(DefunFunction::class.java)
-    private val nodeConverter = Mockito.mock(NodeConverter::class.java)
     private val listNotationPrinter: ListNotationPrinter = Mockito.mock(ListNotationPrinter::class.java)
     private val interpreter: Interpreter = Interpreter(
         tokenizer,
@@ -27,7 +26,6 @@ class InterpreterTest {
         program,
         rootNodePartitioner,
         defunFunction,
-        nodeConverter,
         listNotationPrinter
     )
 
@@ -51,25 +49,22 @@ class InterpreterTest {
         Mockito.`when`(defunFunction.evaluateLispFunction(defunNode)).thenReturn(userDefinedFunction)
 
         val node = Mockito.mock(NodeV2::class.java)
-        val evaluatedNodes: List<NodeV2> = listOf(node)
-        Mockito.`when`(partitionedRootNodes.evaluatableNodes).thenReturn(evaluatedNodes)
+        val evaluatableNodes: List<NodeV2> = listOf(node)
+        Mockito.`when`(partitionedRootNodes.evaluatableNodes).thenReturn(evaluatableNodes)
 
 
-        val evaluatedNode = Mockito.mock(Node::class.java)
+        val evaluatedNode = Mockito.mock(NodeV2::class.java)
+        val evaluatedNodes = listOf(evaluatedNode)
         Mockito.`when`(
             program.evaluate(
-                evaluatedNodes,
+                evaluatableNodes,
                 userDefinedFunctions,
                 HashMap()
             )
-        ).thenReturn(listOf(evaluatedNode))
+        ).thenReturn(evaluatedNodes)
 
-        val nodeV2 = Mockito.mock(NodeV2::class.java)
-        Mockito.`when`(nodeConverter.convertNodeToNodeV2(evaluatedNode)).thenReturn(nodeV2)
-
-        val convertedNodes = listOf(nodeV2)
         val value = "value"
-        Mockito.`when`(listNotationPrinter.printInListNotation(convertedNodes)).thenReturn(value)
+        Mockito.`when`(listNotationPrinter.printInListNotation(evaluatedNodes)).thenReturn(value)
 
         val actual = interpreter.interpret(scanner)
         Assertions.assertEquals(value, actual)

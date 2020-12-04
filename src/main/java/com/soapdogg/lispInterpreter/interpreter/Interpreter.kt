@@ -1,6 +1,5 @@
 package com.soapdogg.lispInterpreter.interpreter
 
-import com.soapdogg.lispInterpreter.converter.NodeConverter
 import com.soapdogg.lispInterpreter.evaluator.ProgramEvaluator
 import com.soapdogg.lispInterpreter.functions.DefunFunction
 import com.soapdogg.lispInterpreter.parser.RootParser
@@ -14,7 +13,6 @@ class Interpreter (
     private val program: ProgramEvaluator,
     private val rootNodePartitioner: RootNodePartitioner,
     private val defunFunction: DefunFunction,
-    private val nodeConverter: NodeConverter,
     private val listNotationPrinter: ListNotationPrinter
 ){
 
@@ -31,7 +29,6 @@ class Interpreter (
             userDefinedFunctions,
             HashMap()
         )
-        val convertedNodes = evaluatedNodes.map { nodeConverter.convertNodeToNodeV2(it) }
-        return listNotationPrinter.printInListNotation(convertedNodes)
+        return listNotationPrinter.printInListNotation(evaluatedNodes)
     }
 }

@@ -7,17 +7,13 @@ enum class InterpreterSingleton {
     INSTANCE;
 
     val rootNodePartitioner: RootNodePartitioner = RootNodePartitioner()
-    val interpreter: Interpreter
+    val interpreter: Interpreter = Interpreter(
+        TokenizerSingleton.INSTANCE.tokenizer,
+        ParserSingleton.INSTANCE.rootParser,
+        EvaluatorSingleton.INSTANCE.programEvaluator,
+        rootNodePartitioner,
+        GeneratorSingleton.INSTANCE.defunFunction,
+        PrinterSingleton.INSTANCE.listNotationPrinter
+    )
 
-    init {
-        interpreter = Interpreter(
-            TokenizerSingleton.INSTANCE.tokenizer,
-            ParserSingleton.INSTANCE.rootParser,
-            EvaluatorSingleton.INSTANCE.programEvaluator,
-            rootNodePartitioner,
-            GeneratorSingleton.INSTANCE.defunFunction,
-            ConverterSingleton.INSTANCE.nodeConverter,
-            PrinterSingleton.INSTANCE.listNotationPrinter
-        )
-    }
 }
