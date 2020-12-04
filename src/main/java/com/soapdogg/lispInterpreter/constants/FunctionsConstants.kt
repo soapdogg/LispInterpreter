@@ -1,21 +1,14 @@
 package com.soapdogg.lispInterpreter.constants
 
-import com.soapdogg.lispInterpreter.functions.LispFunction
 import com.soapdogg.lispInterpreter.functions.LispFunctionV2
 import com.soapdogg.lispInterpreter.singleton.FunctionSingleton
 
 object FunctionsConstants {
-    @JvmField
-    val functionMap: MutableMap<String, LispFunction>?
 
     @JvmField
     val functionV2Map: MutableMap<String, LispFunctionV2>?
 
     init {
-        functionMap = HashMap()
-
-
-
 
         functionV2Map = HashMap()
         functionV2Map[FunctionNameConstants.ATOM] = FunctionSingleton.INSTANCE.atomFunction

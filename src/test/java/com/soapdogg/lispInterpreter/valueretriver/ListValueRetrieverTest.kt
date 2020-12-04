@@ -1,8 +1,6 @@
 package com.soapdogg.lispInterpreter.valueretriver
 
-import com.soapdogg.lispInterpreter.datamodels.AtomNode
-import com.soapdogg.lispInterpreter.datamodels.ExpressionNode
-import com.soapdogg.lispInterpreter.datamodels.Node
+import com.soapdogg.lispInterpreter.datamodels.*
 import com.soapdogg.lispInterpreter.exceptions.NotAListException
 import com.soapdogg.lispInterpreter.printer.DotNotationPrinter
 import org.junit.jupiter.api.Assertions
@@ -19,8 +17,8 @@ class ListValueRetrieverTest {
 
     @Test
     fun inputIsAListTest() {
-        val node: Node = Mockito.mock(ExpressionNode::class.java)
-        val variableNameToValueMap: Map<String, Node> = mapOf()
+        val node = Mockito.mock(ExpressionListNode::class.java)
+        val variableNameToValueMap: Map<String, NodeV2> = mapOf()
         val actual = listValueRetriever.retrieveListValue(
             node,
             functionName,
@@ -35,7 +33,8 @@ class ListValueRetrieverTest {
         val node = Mockito.mock(AtomNode::class.java)
         val nodeValue = "nodeValue"
         Mockito.`when`(node.value).thenReturn(nodeValue)
-        val result: Node = Mockito.mock(ExpressionNode::class.java)
+
+        val result = Mockito.mock(ExpressionListNode::class.java)
         val variableNameToValueMap = mapOf(Pair(nodeValue, result))
         val actual = listValueRetriever.retrieveListValue(
             node,
@@ -51,7 +50,8 @@ class ListValueRetrieverTest {
         val node = Mockito.mock(AtomNode::class.java)
         val nodeValue = "nodeValue"
         Mockito.`when`(node.value).thenReturn(nodeValue)
-        val result: Node = Mockito.mock(AtomNode::class.java)
+
+        val result = Mockito.mock(AtomNode::class.java)
         val variableNameToValueMap = mapOf(Pair(nodeValue, result))
         Assertions.assertThrows(
             NotAListException::class.java
@@ -69,7 +69,8 @@ class ListValueRetrieverTest {
         val node = Mockito.mock(AtomNode::class.java)
         val nodeValue = "nodeValue"
         Mockito.`when`(node.value).thenReturn(nodeValue)
-        val variableNameToValueMap: Map<String, Node> = mapOf()
+
+        val variableNameToValueMap: Map<String, NodeV2> = mapOf()
         Assertions.assertThrows(
             NotAListException::class.java
         ) {

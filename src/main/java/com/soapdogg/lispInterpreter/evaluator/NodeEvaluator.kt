@@ -96,21 +96,6 @@ class NodeEvaluator(
                     true
                 )
             }
-            if (FunctionsConstants.functionMap!!.containsKey(addressValue)) {
-                val function = FunctionsConstants.functionMap[addressValue]
-                if (addressValue == FunctionNameConstants.QUOTE) {
-                    return function!!.evaluateLispFunction(
-                        expressionNode,
-                        userDefinedFunctions,
-                        variableNameToValueMap
-                    )
-                }
-                return function!!.evaluateLispFunction(
-                    expressionNode.data,
-                    userDefinedFunctions,
-                    variableNameToValueMap
-                )
-            }
             if (FunctionsConstants.functionV2Map!!.containsKey(addressValue)) {
                 val convertedParams = nodeConverter.convertNodeToNodeV2(expressionNode)
                 val convertedVariables = variableNameToValueMap.map {

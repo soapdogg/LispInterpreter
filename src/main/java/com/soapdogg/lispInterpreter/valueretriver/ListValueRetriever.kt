@@ -8,24 +8,6 @@ class ListValueRetriever(
     private val dotNotationPrinter: DotNotationPrinter
 ){
     fun retrieveListValue(
-        node: Node,
-        functionName: String,
-        variableNameToValueMap: Map<String, Node>
-    ): ExpressionNode {
-        if (node is ExpressionNode) {
-            return node
-        }
-        val nodeValue = (node as AtomNode).value
-        val isVariable = variableNameToValueMap.containsKey(nodeValue)
-        if (isVariable) {
-            val result = variableNameToValueMap.getValue(nodeValue)
-            if (result is ExpressionNode) return result
-        }
-        val sb = """Error! Parameter of $functionName is not a list.    Actual: ${dotNotationPrinter.printInDotNotation(node)}${'\n'}"""
-        throw NotAListException(sb)
-    }
-
-    fun retrieveListValue(
         node: NodeV2,
         functionName: String,
         variableNameToValueMap: Map<String, NodeV2>
