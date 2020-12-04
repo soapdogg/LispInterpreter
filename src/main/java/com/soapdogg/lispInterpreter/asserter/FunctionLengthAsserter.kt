@@ -10,7 +10,6 @@ class FunctionLengthAsserter (
     private val functionLengthDeterminer: FunctionLengthDeterminer,
     private val nodeConverter: NodeConverter
 ){
-
     fun assertLengthIsAsExpected(
         functionName: String,
         expected: Int,

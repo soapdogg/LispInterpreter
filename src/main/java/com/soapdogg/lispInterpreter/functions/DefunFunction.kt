@@ -5,55 +5,42 @@ import com.soapdogg.lispInterpreter.asserter.UserDefinedFormalParametersAsserter
 import com.soapdogg.lispInterpreter.asserter.UserDefinedFunctionNameAsserter
 import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
-import com.soapdogg.lispInterpreter.datamodels.Node
+import com.soapdogg.lispInterpreter.converter.NodeConverter
+import com.soapdogg.lispInterpreter.datamodels.AtomNode
+import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
 import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
 import com.soapdogg.lispInterpreter.generator.UserDefinedFunctionFormalParameterGenerator
-import com.soapdogg.lispInterpreter.valueretriver.AtomicValueRetriever
-import com.soapdogg.lispInterpreter.valueretriver.ListValueRetriever
 
 class DefunFunction(
     private val functionLengthAsserter: FunctionLengthAsserter,
-    private val atomicValueRetriever: AtomicValueRetriever,
-    private val listValueRetriever: ListValueRetriever,
     private val userDefinedFunctionNameAsserter: UserDefinedFunctionNameAsserter,
     private val userDefinedFunctionFormalParameterGenerator: UserDefinedFunctionFormalParameterGenerator,
-    private val userDefinedFormalParametersAsserter: UserDefinedFormalParametersAsserter
+    private val userDefinedFormalParametersAsserter: UserDefinedFormalParametersAsserter,
+    private val nodeConverter: NodeConverter
 ) {
 
     fun evaluateLispFunction(
-        params: Node
+        params: ExpressionListNode
     ): UserDefinedFunction {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.DEFUN,
             FunctionLengthConstants.FOUR,
             params
         )
-        val paramsExpressionNode = listValueRetriever.retrieveListValue(
-            params,
-            FunctionNameConstants.DEFUN,
-            mapOf()
-        )
-        val functionName = atomicValueRetriever.retrieveAtomicValue(
-            paramsExpressionNode.address,
-            FunctionLengthConstants.ONE,
-            FunctionNameConstants.DEFUN
-        )
+        val functionNameNode = params.children[1] as AtomNode
+        val functionName = functionNameNode.value
         userDefinedFunctionNameAsserter.assertFunctionNameIsValid(functionName)
-        val paramsData = paramsExpressionNode.data
-        val tempNode = listValueRetriever.retrieveListValue(
-            paramsData,
-            FunctionNameConstants.DEFUN,
-            mapOf()
-        )
+
         val formalParameters = userDefinedFunctionFormalParameterGenerator.getFormalParameters(
-            tempNode.address,
+            nodeConverter.convertNodeV2ToNode(params.children[2]),
             FunctionLengthConstants.ONE,
             mapOf()
         )
         userDefinedFormalParametersAsserter.assertFormalParameters(formalParameters)
+        val convertedBody = nodeConverter.convertNodeV2ToNode(params.children[3])
         return UserDefinedFunction(
             formalParameters,
-            tempNode.data,
+            convertedBody,
             functionName
         )
     }

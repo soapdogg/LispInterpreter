@@ -49,4 +49,30 @@ class FunctionLengthAsserterTest {
             )
         }
     }
+
+    @Test
+    fun equalsV2Test() {
+        Mockito.`when`(functionLengthDeterminer.determineFunctionLength(converted)).thenReturn(actual)
+        Assertions.assertDoesNotThrow {
+            functionLengthAsserter.assertLengthIsAsExpected(
+                functionName,
+                actual,
+                converted
+            )
+        }
+    }
+
+    @Test
+    fun doesNotEqualV2Test() {
+        Mockito.`when`(functionLengthDeterminer.determineFunctionLength(converted)).thenReturn(actual)
+        Assertions.assertThrows(
+            WrongFunctionLengthException::class.java
+        ) {
+            functionLengthAsserter.assertLengthIsAsExpected(
+                functionName,
+                expected,
+                converted
+            )
+        }
+    }
 }

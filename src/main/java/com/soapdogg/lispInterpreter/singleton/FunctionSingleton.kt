@@ -39,6 +39,7 @@ enum class FunctionSingleton {
         GeneratorSingleton.INSTANCE.nodeGenerator
     )
     val greaterFunction: GreaterFunction = GreaterFunction(
+        ConverterSingleton.INSTANCE.nodeConverter,
         AsserterSingleton.INSTANCE.functionLengthAsserter,
         EvaluatorSingleton.INSTANCE.nodeEvaluator,
         ValueRetrieverSingleton.INSTANCE.numericValueRetriever,

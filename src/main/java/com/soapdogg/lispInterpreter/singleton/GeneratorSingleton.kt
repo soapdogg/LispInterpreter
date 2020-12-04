@@ -7,25 +7,22 @@ enum class GeneratorSingleton {
     INSTANCE;
 
     val nodeGenerator: NodeGenerator = NodeGenerator()
-    val userDefinedFunctionGenerator: UserDefinedFunctionGenerator
     val userDefinedFunctionFormalParameterGenerator: UserDefinedFunctionFormalParameterGenerator = UserDefinedFunctionFormalParameterGenerator(
         ValueRetrieverSingleton.INSTANCE.listValueRetriever,
         ValueRetrieverSingleton.INSTANCE.atomicValueRetriever
     )
+    val defunFunction: DefunFunction
     val tokenGenerator: TokenGenerator
 
     init {
-        val defunFunction = DefunFunction(
+        defunFunction = DefunFunction(
             AsserterSingleton.INSTANCE.functionLengthAsserter,
-            ValueRetrieverSingleton.INSTANCE.atomicValueRetriever,
-            ValueRetrieverSingleton.INSTANCE.listValueRetriever,
             AsserterSingleton.INSTANCE.userDefinedFunctionNameAsserter,
             userDefinedFunctionFormalParameterGenerator,
-            AsserterSingleton.INSTANCE.userDefinedFormalParametersAsserter
+            AsserterSingleton.INSTANCE.userDefinedFormalParametersAsserter,
+            ConverterSingleton.INSTANCE.nodeConverter
         )
-        userDefinedFunctionGenerator = UserDefinedFunctionGenerator(
-            defunFunction
-        )
+
         tokenGenerator = TokenGenerator()
     }
 }

@@ -3,10 +3,8 @@ package com.soapdogg.lispInterpreter.function
 import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
 import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
-import com.soapdogg.lispInterpreter.datamodels.AtomNode
-import com.soapdogg.lispInterpreter.datamodels.ExpressionNode
-import com.soapdogg.lispInterpreter.datamodels.Node
-import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
+import com.soapdogg.lispInterpreter.converter.NodeConverter
+import com.soapdogg.lispInterpreter.datamodels.*
 import com.soapdogg.lispInterpreter.evaluator.NodeEvaluator
 import com.soapdogg.lispInterpreter.functions.GreaterFunction
 import com.soapdogg.lispInterpreter.generator.NodeGenerator
@@ -18,9 +16,11 @@ import org.mockito.Mockito
 
 class GreaterFunctionTest {
     private val params = Mockito.mock(Node::class.java)
+    private val paramsV2 = Mockito.mock(NodeV2::class.java)
     private val userDefinedFunctions: List<UserDefinedFunction> = emptyList()
     private val variableNameToValueMap: Map<String, Node> = emptyMap()
 
+    private val nodeConverter = Mockito.mock(NodeConverter::class.java)
     private val functionLengthAsserter = Mockito.mock(FunctionLengthAsserter::class.java)
     private val nodeEvaluator = Mockito.mock(NodeEvaluator::class.java)
     private val numericValueRetriever = Mockito.mock(NumericValueRetriever::class.java)
@@ -28,6 +28,7 @@ class GreaterFunctionTest {
     private val nodeGenerator = Mockito.mock(NodeGenerator::class.java)
 
     private val greaterFunction = GreaterFunction(
+        nodeConverter,
         functionLengthAsserter,
         nodeEvaluator,
         numericValueRetriever,
@@ -37,6 +38,7 @@ class GreaterFunctionTest {
 
     @Test
     fun greaterFunctionTest() {
+        Mockito.`when`(nodeConverter.convertNodeToNodeV2(params)).thenReturn(paramsV2)
         val evaluatedAddress = Mockito.mock(Node::class.java)
         Mockito.`when`(
             nodeEvaluator.evaluate(
@@ -95,13 +97,14 @@ class GreaterFunctionTest {
         Assertions.assertEquals(expected, actual)
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
             FunctionNameConstants.GREATER,
-            FunctionLengthConstants.THREE,
-            params
+            FunctionLengthConstants.TWO,
+            paramsV2
         )
     }
 
     @Test
     fun greaterFunctionTrueTest() {
+        Mockito.`when`(nodeConverter.convertNodeToNodeV2(params)).thenReturn(paramsV2)
         val evaluatedAddress = Mockito.mock(Node::class.java)
         Mockito.`when`(
             nodeEvaluator.evaluate(
@@ -160,8 +163,8 @@ class GreaterFunctionTest {
         Assertions.assertEquals(expected, actual)
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
             FunctionNameConstants.GREATER,
-            FunctionLengthConstants.THREE,
-            params
+            FunctionLengthConstants.TWO,
+            paramsV2
         )
     }
 }

@@ -2,7 +2,7 @@ package com.soapdogg.lispInterpreter.interpreter
 
 import com.soapdogg.lispInterpreter.converter.NodeConverter
 import com.soapdogg.lispInterpreter.evaluator.ProgramEvaluator
-import com.soapdogg.lispInterpreter.generator.UserDefinedFunctionGenerator
+import com.soapdogg.lispInterpreter.functions.DefunFunction
 import com.soapdogg.lispInterpreter.parser.RootParser
 import com.soapdogg.lispInterpreter.printer.ListNotationPrinter
 import com.soapdogg.lispInterpreter.tokenizer.Tokenizer
@@ -13,7 +13,7 @@ class Interpreter (
     private val rootParser: RootParser,
     private val program: ProgramEvaluator,
     private val rootNodePartitioner: RootNodePartitioner,
-    private val userDefinedFunctionGenerator: UserDefinedFunctionGenerator,
+    private val defunFunction: DefunFunction,
     private val nodeConverter: NodeConverter,
     private val listNotationPrinter: ListNotationPrinter
 ){
@@ -25,11 +25,9 @@ class Interpreter (
         val partitionedRootNodes = rootNodePartitioner.partitionRootNodes(
             rootNodes
         )
-        val userDefinedFunctions = userDefinedFunctionGenerator.generateUserDefinedFunctions(
-            partitionedRootNodes.defunNodes
-        )
+        val userDefinedFunctions = partitionedRootNodes.defunNodes.map{defunFunction.evaluateLispFunction(it) }
         val evaluatedNodes = program.evaluate(
-            partitionedRootNodes.evaluatableNodes,
+            partitionedRootNodes.evaluatableNodes.map{nodeConverter.convertNodeV2ToNode(it)},
             userDefinedFunctions,
             HashMap()
         )

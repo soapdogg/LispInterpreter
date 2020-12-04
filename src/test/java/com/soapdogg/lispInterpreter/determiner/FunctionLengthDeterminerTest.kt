@@ -34,4 +34,14 @@ class FunctionLengthDeterminerTest {
         val actual = functionLengthDeterminer.determineFunctionLength(expressionNode)
         Assertions.assertEquals(1, actual)
     }
+
+    @Test
+    fun determineExpressionNodeWithLastElementNilTest() {
+        val atomNode = Mockito.mock(AtomNode::class.java)
+        Mockito.`when`(atomNode.value).thenReturn(ReservedValuesConstants.NIL)
+        val expressionNode = Mockito.mock(ExpressionListNode::class.java)
+        Mockito.`when`(expressionNode.children).thenReturn(listOf(atomNode))
+        val actual = functionLengthDeterminer.determineFunctionLength(expressionNode)
+        Assertions.assertEquals(0, actual)
+    }
 }

@@ -6,9 +6,7 @@ import com.soapdogg.lispInterpreter.interpreter.RootNodePartitioner
 enum class InterpreterSingleton {
     INSTANCE;
 
-    val rootNodePartitioner: RootNodePartitioner = RootNodePartitioner(
-        ConverterSingleton.INSTANCE.nodeConverter
-    )
+    val rootNodePartitioner: RootNodePartitioner = RootNodePartitioner()
     val interpreter: Interpreter
 
     init {
@@ -17,7 +15,7 @@ enum class InterpreterSingleton {
             ParserSingleton.INSTANCE.rootParser,
             EvaluatorSingleton.INSTANCE.programEvaluator,
             rootNodePartitioner,
-            GeneratorSingleton.INSTANCE.userDefinedFunctionGenerator,
+            GeneratorSingleton.INSTANCE.defunFunction,
             ConverterSingleton.INSTANCE.nodeConverter,
             PrinterSingleton.INSTANCE.listNotationPrinter
         )

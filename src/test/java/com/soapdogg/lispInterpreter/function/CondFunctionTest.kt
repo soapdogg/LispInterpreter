@@ -2,6 +2,7 @@ package com.soapdogg.lispInterpreter.function
 
 import com.soapdogg.lispInterpreter.asserter.CondFunctionParameterAsserter
 import com.soapdogg.lispInterpreter.converter.NodeConverter
+import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
 import com.soapdogg.lispInterpreter.datamodels.Node
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
@@ -45,9 +46,34 @@ class CondFunctionTest {
             variableNameToValueMap
         )
         Assertions.assertEquals(expected, actual)
-        //Mockito.verify(condFunctionParameterAsserter).assertCondFunctionParameters(
-        //    converted,
-        //    variableNameToValueMap
-        //)
+    }
+
+    @Test
+    fun evaluateLispFunctionExpressionListTest() {
+        val converted = Mockito.mock(ExpressionListNode::class.java)
+        Mockito.`when`(nodeConverter.convertNodeToNodeV2(params)).thenReturn(converted)
+
+        val child0 = Mockito.mock(NodeV2::class.java)
+        val child1 = Mockito.mock(NodeV2::class.java)
+        Mockito.`when`(converted.children).thenReturn(listOf(child0, child1))
+
+        val expected = Mockito.mock(Node::class.java)
+        Mockito.`when`(
+            condFunctionEvaluator.evaluateCondFunction(
+                params,
+                userDefinedFunctions,
+                variableNameToValueMap
+            )
+        ).thenReturn(expected)
+
+        val actual = condFunction.evaluateLispFunction(
+            params,
+            userDefinedFunctions,
+            variableNameToValueMap
+        )
+        Assertions.assertEquals(expected, actual)
+        Mockito.verify(condFunctionParameterAsserter).assertCondFunctionParameters(
+            listOf(child1)
+        )
     }
 }

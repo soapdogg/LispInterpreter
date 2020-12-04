@@ -1,12 +1,10 @@
 package com.soapdogg.lispInterpreter.interpreter
 
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
-import com.soapdogg.lispInterpreter.converter.NodeConverter
+
 import com.soapdogg.lispInterpreter.datamodels.*
 
-class RootNodePartitioner(
-    private val nodeConverter: NodeConverter
-) {
+class RootNodePartitioner {
     fun partitionRootNodes(
         rootNodes: List<NodeV2>
     ): PartitionedRootNodes {
@@ -21,8 +19,8 @@ class RootNodePartitioner(
         }
 
         return PartitionedRootNodes(
-            defun.map { nodeConverter.convertNodeV2ToNode(it) },
-            executables.map { nodeConverter.convertNodeV2ToNode(it) }
+            defun.map{it as ExpressionListNode},
+            executables
         )
     }
 }

@@ -8,10 +8,12 @@ import com.soapdogg.lispInterpreter.generator.NodeGenerator
 import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants
+import com.soapdogg.lispInterpreter.converter.NodeConverter
 import com.soapdogg.lispInterpreter.datamodels.Node
 
 
 class GreaterFunction (
+    private val nodeConverter: NodeConverter,
     private val functionLengthAsserter: FunctionLengthAsserter,
     private val nodeEvaluator: NodeEvaluator,
     private val numericValueRetriever: NumericValueRetriever,
@@ -24,10 +26,11 @@ class GreaterFunction (
         userDefinedFunctions: List<UserDefinedFunction>,
         variableNameToValueMap: Map<String, Node>
     ): Node {
+        val paramsV2 = nodeConverter.convertNodeToNodeV2(params)
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.GREATER,
-            FunctionLengthConstants.THREE,
-            params
+            FunctionLengthConstants.TWO,
+            paramsV2
         )
         val evaluatedAddress = nodeEvaluator.evaluate(
             params,
