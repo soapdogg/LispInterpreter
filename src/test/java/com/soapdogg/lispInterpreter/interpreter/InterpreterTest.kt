@@ -54,13 +54,11 @@ class InterpreterTest {
         val evaluatedNodes: List<NodeV2> = listOf(node)
         Mockito.`when`(partitionedRootNodes.evaluatableNodes).thenReturn(evaluatedNodes)
 
-        val convertedEvaluatableNode = Mockito.mock(Node::class.java)
-        Mockito.`when`(nodeConverter.convertNodeV2ToNode(node)).thenReturn(convertedEvaluatableNode)
 
         val evaluatedNode = Mockito.mock(Node::class.java)
         Mockito.`when`(
             program.evaluate(
-                listOf(convertedEvaluatableNode),
+                evaluatedNodes,
                 userDefinedFunctions,
                 HashMap()
             )

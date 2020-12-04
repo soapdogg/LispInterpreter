@@ -3,6 +3,7 @@ package com.soapdogg.lispInterpreter.functions
 import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
 import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
+import com.soapdogg.lispInterpreter.converter.NodeConverter
 import com.soapdogg.lispInterpreter.datamodels.Node
 import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
 import com.soapdogg.lispInterpreter.evaluator.NodeEvaluator
@@ -13,7 +14,8 @@ class ConsFunction(
     private val functionLengthAsserter: FunctionLengthAsserter,
     private val listValueRetriever: ListValueRetriever,
     private val nodeEvaluator: NodeEvaluator,
-    private val nodeGenerator: NodeGenerator
+    private val nodeGenerator: NodeGenerator,
+    private val nodeConverter: NodeConverter
 ) : LispFunction {
     
     override fun evaluateLispFunction(
@@ -33,13 +35,13 @@ class ConsFunction(
         )
         
         val evaluatedAddress = nodeEvaluator.evaluate(
-            expressionNodeParams.address,
+            nodeConverter.convertNodeToNodeV2(expressionNodeParams.address),
             userDefinedFunctions,
             variableNameToValueMap,
             true
         )
         val evaluatedData = nodeEvaluator.evaluate(
-            expressionNodeParams.data,
+            nodeConverter.convertNodeToNodeV2(expressionNodeParams.data),
             userDefinedFunctions,
             variableNameToValueMap,
             true

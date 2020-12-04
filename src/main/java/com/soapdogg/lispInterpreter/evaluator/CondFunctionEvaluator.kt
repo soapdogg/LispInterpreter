@@ -2,6 +2,7 @@ package com.soapdogg.lispInterpreter.evaluator
 
 import com.soapdogg.lispInterpreter.comparator.NodeValueComparator
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
+import com.soapdogg.lispInterpreter.converter.NodeConverter
 import com.soapdogg.lispInterpreter.datamodels.AtomNode
 import com.soapdogg.lispInterpreter.datamodels.ExpressionNode
 import com.soapdogg.lispInterpreter.datamodels.Node
@@ -12,7 +13,8 @@ import com.soapdogg.lispInterpreter.valueretriver.ListValueRetriever
 class CondFunctionEvaluator(
     private val listValueRetriever: ListValueRetriever,
     private val nodeEvaluator: NodeEvaluator,
-    private val nodeValueComparator: NodeValueComparator
+    private val nodeValueComparator: NodeValueComparator,
+    private val nodeConverter: NodeConverter
 ) {
 
     fun evaluateCondFunction(
@@ -30,13 +32,13 @@ class CondFunctionEvaluator(
             variableNameToValueMap
         )
         val booleanResult = nodeEvaluator.evaluate(
-            expressionNodeAddress.address,
+            nodeConverter.convertNodeToNodeV2(expressionNodeAddress.address),
             userDefinedFunctions,
             variableNameToValueMap,
             true
         )
         return if (booleanResult is AtomNode && !nodeValueComparator.equalsNil(booleanResult.value)) nodeEvaluator.evaluate(
-            expressionNodeAddress.data,
+            nodeConverter.convertNodeToNodeV2(expressionNodeAddress.data),
             userDefinedFunctions,
             variableNameToValueMap,
             true

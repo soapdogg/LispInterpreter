@@ -17,12 +17,14 @@ enum class EvaluatorSingleton {
         nodeEvaluator = NodeEvaluator(
             atomNodeEvaluator,
             DeterminerSingleton.INSTANCE.userDefinedFunctionNameDeterminer,
-            AsserterSingleton.INSTANCE.functionLengthAsserter
+            AsserterSingleton.INSTANCE.functionLengthAsserter,
+            ConverterSingleton.INSTANCE.nodeConverter
         )
         condFunctionEvaluator = CondFunctionEvaluator(
             ValueRetrieverSingleton.INSTANCE.listValueRetriever,
             nodeEvaluator,
-            ComparatorSingleton.INSTANCE.nodeValueComparator
+            ComparatorSingleton.INSTANCE.nodeValueComparator,
+            ConverterSingleton.INSTANCE.nodeConverter
         )
         programEvaluator = ProgramEvaluator(
             AsserterSingleton.INSTANCE.atomRootNodeAsserter,

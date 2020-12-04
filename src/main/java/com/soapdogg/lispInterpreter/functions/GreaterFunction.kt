@@ -33,7 +33,7 @@ class GreaterFunction (
             paramsV2
         )
         val evaluatedAddress = nodeEvaluator.evaluate(
-            params,
+            paramsV2,
             userDefinedFunctions,
             variableNameToValueMap,
             true
@@ -50,7 +50,7 @@ class GreaterFunction (
         )
         val data = expressionNodeParams.data
         val evaluatedData = nodeEvaluator.evaluate(
-            data,
+            nodeConverter.convertNodeToNodeV2(data),
             userDefinedFunctions,
             variableNameToValueMap,
             true

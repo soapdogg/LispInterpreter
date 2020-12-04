@@ -4,6 +4,7 @@ import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
 import com.soapdogg.lispInterpreter.comparator.NodeValueComparator
 import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
+import com.soapdogg.lispInterpreter.converter.NodeConverter
 import com.soapdogg.lispInterpreter.datamodels.ExpressionNode
 import com.soapdogg.lispInterpreter.datamodels.Node
 import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
@@ -16,7 +17,8 @@ class NullFunction(
     private val nodeEvaluator: NodeEvaluator,
     private val atomicValueRetriever: AtomicValueRetriever,
     private val nodeValueComparator: NodeValueComparator,
-    private val nodeGenerator: NodeGenerator
+    private val nodeGenerator: NodeGenerator,
+    private val nodeConverter: NodeConverter
 ) : LispFunction {
 
     override fun evaluateLispFunction(
@@ -30,7 +32,7 @@ class NullFunction(
             params
         )
         val evaluatedResult = nodeEvaluator.evaluate(
-            params,
+            nodeConverter.convertNodeToNodeV2(params),
             userDefinedFunctions,
             variableNameToValueMap,
             true

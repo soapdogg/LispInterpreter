@@ -35,7 +35,7 @@ class GreaterFunctionTest {
         listValueRetriever,
         nodeGenerator
     )
-
+/*
     @Test
     fun greaterFunctionTest() {
         Mockito.`when`(nodeConverter.convertNodeToNodeV2(params)).thenReturn(paramsV2)
@@ -166,5 +166,5 @@ class GreaterFunctionTest {
             FunctionLengthConstants.TWO,
             paramsV2
         )
-    }
+    }*/
 }

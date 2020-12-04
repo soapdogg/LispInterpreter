@@ -1,10 +1,7 @@
 package com.soapdogg.lispInterpreter.evaluator
 
 import com.soapdogg.lispInterpreter.asserter.AtomRootNodeAsserter
-import com.soapdogg.lispInterpreter.datamodels.AtomNode
-import com.soapdogg.lispInterpreter.datamodels.ExpressionNode
-import com.soapdogg.lispInterpreter.datamodels.Node
-import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
+import com.soapdogg.lispInterpreter.datamodels.*
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
@@ -24,7 +21,7 @@ class ProgramEvaluatorTest {
     @Test
     fun rootNodeIsAnAtomNodeTest() {
         val atomNode = Mockito.mock(AtomNode::class.java)
-        val rootNodes: List<Node> = listOf(atomNode)
+        val rootNodes = listOf(atomNode)
         val evaluatedNode = Mockito.mock(Node::class.java)
         Mockito.`when`(
             nodeEvaluator.evaluate(
@@ -47,8 +44,8 @@ class ProgramEvaluatorTest {
 
     @Test
     fun rootNodeIsExpressionNodeTest() {
-        val expressionNode = Mockito.mock(ExpressionNode::class.java)
-        val rootNodes: List<Node> = listOf(expressionNode)
+        val expressionNode = Mockito.mock(ExpressionListNode::class.java)
+        val rootNodes = listOf(expressionNode)
         val evaluatedNode = Mockito.mock(Node::class.java)
         Mockito.`when`(
             nodeEvaluator.evaluate(

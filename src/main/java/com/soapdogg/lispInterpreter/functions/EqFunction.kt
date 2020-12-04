@@ -3,6 +3,7 @@ package com.soapdogg.lispInterpreter.functions
 import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
 import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
+import com.soapdogg.lispInterpreter.converter.NodeConverter
 import com.soapdogg.lispInterpreter.datamodels.Node
 import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
 import com.soapdogg.lispInterpreter.evaluator.NodeEvaluator
@@ -15,7 +16,8 @@ class EqFunction (
     private val nodeEvaluator: NodeEvaluator,
     private val atomicValueRetriever: AtomicValueRetriever,
     private val listValueRetriever: ListValueRetriever,
-    private val nodeGenerator: NodeGenerator
+    private val nodeGenerator: NodeGenerator,
+    private val nodeConverter: NodeConverter
 ): LispFunction {
 
     override fun evaluateLispFunction(
@@ -29,7 +31,7 @@ class EqFunction (
             params
         )
         val evaluatedAddress = nodeEvaluator.evaluate(
-            params,
+            nodeConverter.convertNodeToNodeV2(params),
             userDefinedFunctions,
             variableNameToValueMap,
             true
@@ -46,7 +48,7 @@ class EqFunction (
         )
         val data = expressionNodeParams.data
         val evaluatedData = nodeEvaluator.evaluate(
-            data,
+            nodeConverter.convertNodeToNodeV2(data),
             userDefinedFunctions,
             variableNameToValueMap,
             true

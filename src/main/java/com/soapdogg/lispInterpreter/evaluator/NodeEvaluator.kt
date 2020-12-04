@@ -2,21 +2,20 @@ package com.soapdogg.lispInterpreter.evaluator
 
 import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
 import com.soapdogg.lispInterpreter.constants.FunctionsConstants
-import com.soapdogg.lispInterpreter.datamodels.AtomNode
-import com.soapdogg.lispInterpreter.datamodels.ExpressionNode
-import com.soapdogg.lispInterpreter.datamodels.Node
-import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
+import com.soapdogg.lispInterpreter.converter.NodeConverter
+import com.soapdogg.lispInterpreter.datamodels.*
 import com.soapdogg.lispInterpreter.determiner.UserDefinedFunctionNameDeterminer
 import java.util.*
 
 class NodeEvaluator(
     private val atomNodeEvaluator: AtomNodeEvaluator,
     private val userDefinedFunctionNameDeterminer: UserDefinedFunctionNameDeterminer,
-    private val functionLengthAsserter: FunctionLengthAsserter
+    private val functionLengthAsserter: FunctionLengthAsserter,
+    private val nodeConverter: NodeConverter
 ) {
 
     fun evaluate(
-        node: Node,
+        node: NodeV2,
         userDefinedFunctions: List<UserDefinedFunction>,
         variableNameToValueMap: Map<String, Node>,
         areLiteralsAllowed: Boolean
@@ -25,7 +24,7 @@ class NodeEvaluator(
             node,
             variableNameToValueMap
         ) else evaluate(
-            node as ExpressionNode,
+            nodeConverter.convertNodeV2ToNode(node) as ExpressionNode,
             userDefinedFunctions,
             variableNameToValueMap,
             areLiteralsAllowed
@@ -57,7 +56,7 @@ class NodeEvaluator(
                 for (formal in userDefinedFunction.formalParameters) {
                     val (address1, data) = params as ExpressionNode
                     val evaluatedAddress = evaluate(
-                        address1,
+                        nodeConverter.convertNodeToNodeV2(address1),
                         userDefinedFunctions,
                         variableNameToValueMap,
                         true
@@ -66,7 +65,7 @@ class NodeEvaluator(
                     params = data
                 }
                 return evaluate(
-                    userDefinedFunction.body,
+                    nodeConverter.convertNodeToNodeV2(userDefinedFunction.body),
                     userDefinedFunctions,
                     newVariables,
                     true
@@ -83,7 +82,7 @@ class NodeEvaluator(
             if (!areLiteralsAllowed) throw Exception("Error! Invalid CAR value: $addressValue\n")
         }
         return evaluate(
-            address,
+            nodeConverter.convertNodeToNodeV2(address),
             userDefinedFunctions,
             variableNameToValueMap,
             true
