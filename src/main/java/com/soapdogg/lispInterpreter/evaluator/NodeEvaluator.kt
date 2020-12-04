@@ -20,39 +20,23 @@ class NodeEvaluator(
         variableNameToValueMap: Map<String, NodeV2>,
         areLiteralsAllowed: Boolean
     ): NodeV2 {
-        val convertedVariables = variableNameToValueMap.map {
-            Pair(it.key, nodeConverter.convertNodeV2ToNode(it.value))
-        }.toMap()
-        val v1 = evaluate(
-            node,
-            userDefinedFunctions,
-            convertedVariables,
-            areLiteralsAllowed
-        )
-        return nodeConverter.convertNodeToNodeV2(v1)
-    }
-
-    fun evaluate(
-        node: NodeV2,
-        userDefinedFunctions: List<UserDefinedFunction>,
-        variableNameToValueMap: Map<String, Node>,
-        areLiteralsAllowed: Boolean
-    ): Node {
         return if (node is AtomNode){
-            val convertedVariables = variableNameToValueMap.map {
-                Pair(it.key, nodeConverter.convertNodeToNodeV2(it.value))
-            }.toMap()
-            val v2 = atomNodeEvaluator.evaluate(
+            atomNodeEvaluator.evaluate(
                 node,
-                convertedVariables
+                variableNameToValueMap
             )
-            nodeConverter.convertNodeV2ToNode(v2)
-        } else evaluate(
-            nodeConverter.convertNodeV2ToNode(node) as ExpressionNode,
-            userDefinedFunctions,
-            variableNameToValueMap,
-            areLiteralsAllowed
-        )
+        } else {
+            val convertedVariables = variableNameToValueMap.map {
+                Pair(it.key, nodeConverter.convertNodeV2ToNode(it.value))
+            }.toMap()
+            val v1 = evaluate(
+                nodeConverter.convertNodeV2ToNode(node) as ExpressionNode,
+                userDefinedFunctions,
+                convertedVariables,
+                areLiteralsAllowed
+            )
+            nodeConverter.convertNodeToNodeV2(v1)
+        }
     }
 
     private fun evaluate(
@@ -77,23 +61,31 @@ class NodeEvaluator(
                     params
                 )
                 val newVariables: MutableMap<String, Node> = HashMap(variableNameToValueMap)
+                val v = newVariables.map {
+                    Pair(it.key, nodeConverter.convertNodeToNodeV2(it.value))
+                }.toMap()
                 for (formal in userDefinedFunction.formalParameters) {
                     val (address1, data) = params as ExpressionNode
-                    val evaluatedAddress = evaluate(
+                    val evaluatedAddress = evaluateV2(
                         nodeConverter.convertNodeToNodeV2(address1),
                         userDefinedFunctions,
-                        variableNameToValueMap,
+                        v,
                         true
                     )
-                    newVariables[formal] = evaluatedAddress
+                    val v1EvaluatedAddress = nodeConverter.convertNodeV2ToNode(evaluatedAddress)
+                    newVariables[formal] = v1EvaluatedAddress
                     params = data
                 }
-                return evaluate(
+                val convertedNewVariables = newVariables.map {
+                    Pair(it.key, nodeConverter.convertNodeToNodeV2(it.value))
+                }.toMap()
+                val v2 = evaluateV2(
                     userDefinedFunction.body,
                     userDefinedFunctions,
-                    newVariables,
+                    convertedNewVariables,
                     true
                 )
+                return nodeConverter.convertNodeV2ToNode(v2)
             }
             if (FunctionsConstants.functionV2Map!!.containsKey(addressValue)) {
                 val convertedParams = nodeConverter.convertNodeToNodeV2(expressionNode)
@@ -110,11 +102,15 @@ class NodeEvaluator(
             }
             if (!areLiteralsAllowed) throw Exception("Error! Invalid CAR value: $addressValue\n")
         }
-        return evaluate(
+        val convertedVariables = variableNameToValueMap.map {
+            Pair(it.key, nodeConverter.convertNodeToNodeV2(it.value))
+        }.toMap()
+        val v2 =  evaluateV2(
             nodeConverter.convertNodeToNodeV2(address),
             userDefinedFunctions,
-            variableNameToValueMap,
+            convertedVariables,
             true
         )
+        return nodeConverter.convertNodeV2ToNode(v2)
     }
 }
