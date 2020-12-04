@@ -5,18 +5,14 @@ import com.soapdogg.lispInterpreter.asserter.UserDefinedFormalParametersAsserter
 import com.soapdogg.lispInterpreter.asserter.UserDefinedFunctionNameAsserter
 import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
-import com.soapdogg.lispInterpreter.converter.NodeConverter
 import com.soapdogg.lispInterpreter.datamodels.AtomNode
 import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
 import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
-import com.soapdogg.lispInterpreter.generator.UserDefinedFunctionFormalParameterGenerator
 
 class DefunFunction(
     private val functionLengthAsserter: FunctionLengthAsserter,
     private val userDefinedFunctionNameAsserter: UserDefinedFunctionNameAsserter,
-    private val userDefinedFunctionFormalParameterGenerator: UserDefinedFunctionFormalParameterGenerator,
-    private val userDefinedFormalParametersAsserter: UserDefinedFormalParametersAsserter,
-    private val nodeConverter: NodeConverter
+    private val userDefinedFormalParametersAsserter: UserDefinedFormalParametersAsserter
 ) {
 
     fun evaluateLispFunction(
@@ -31,16 +27,19 @@ class DefunFunction(
         val functionName = functionNameNode.value
         userDefinedFunctionNameAsserter.assertFunctionNameIsValid(functionName)
 
-        val formalParameters = userDefinedFunctionFormalParameterGenerator.getFormalParameters(
-            nodeConverter.convertNodeV2ToNode(params.children[2]),
-            FunctionLengthConstants.ONE,
-            mapOf()
-        )
+        val formalParametersNode = params.children[2]
+        val formalParameters = if (formalParametersNode is ExpressionListNode && formalParametersNode.children.isNotEmpty()) {
+           formalParametersNode.children.map {
+               (it as AtomNode).value
+           }.subList(0, formalParametersNode.children.size - 1)
+        } else {
+            listOf()
+        }
+
         userDefinedFormalParametersAsserter.assertFormalParameters(formalParameters)
-        val convertedBody = nodeConverter.convertNodeV2ToNode(params.children[3])
         return UserDefinedFunction(
             formalParameters,
-            convertedBody,
+            params.children[3],
             functionName
         )
     }

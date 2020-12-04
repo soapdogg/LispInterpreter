@@ -39,10 +39,16 @@ class NodeEvaluator(
         variableNameToValueMap: Map<String, Node>,
         areLiteralsAllowed: Boolean
     ): Node {
-        return if (node is AtomNode) atomNodeEvaluator.evaluate(
-            node,
-            variableNameToValueMap
-        ) else evaluate(
+        return if (node is AtomNode){
+            val convertedVariables = variableNameToValueMap.map {
+                Pair(it.key, nodeConverter.convertNodeToNodeV2(it.value))
+            }.toMap()
+            val v2 = atomNodeEvaluator.evaluate(
+                node,
+                convertedVariables
+            )
+            nodeConverter.convertNodeV2ToNode(v2)
+        } else evaluate(
             nodeConverter.convertNodeV2ToNode(node) as ExpressionNode,
             userDefinedFunctions,
             variableNameToValueMap,
@@ -84,7 +90,7 @@ class NodeEvaluator(
                     params = data
                 }
                 return evaluate(
-                    nodeConverter.convertNodeToNodeV2(userDefinedFunction.body),
+                    userDefinedFunction.body,
                     userDefinedFunctions,
                     newVariables,
                     true
