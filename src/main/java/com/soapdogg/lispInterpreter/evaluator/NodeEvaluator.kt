@@ -31,7 +31,6 @@ class NodeEvaluator(
                 userDefinedFunctions,
                 variableNameToValueMap
             )
-
         }
     }
 
@@ -42,13 +41,12 @@ class NodeEvaluator(
     ): NodeV2 {
         val address = expressionNode.children[0]
         if (address is AtomNode) {
-            val v1 = inside(
+            return inside(
                 address,
                 expressionNode,
                 userDefinedFunctions,
                 variableNameToValueMap
             )
-            return nodeConverter.convertNodeToNodeV2(v1)
         }
 
         return evaluateV2(
@@ -63,7 +61,7 @@ class NodeEvaluator(
         expressionNode: ExpressionListNode,
         userDefinedFunctions: List<UserDefinedFunction>,
         variableNameToValueMap: Map<String, NodeV2>
-    ): Node {
+    ): NodeV2 {
         val addressValue = address.value
         if (addressValue == ReservedValuesConstants.NIL) {
             return address
@@ -73,42 +71,69 @@ class NodeEvaluator(
             addressValue
         )
         if (isFunctionName) {
-            val userDefinedFunction = userDefinedFunctions.stream().filter { (_, _, functionName) -> functionName == addressValue }.findFirst().get()
-            val params = ExpressionListNode(expressionNode.children.subList(1, expressionNode.children.size))
-            functionLengthAsserter.assertLengthIsAsExpected(
-                userDefinedFunction.functionName,
-                userDefinedFunction.formalParameters.size,
-                params
-            )
-            val newVariables: MutableMap<String, NodeV2> = HashMap(variableNameToValueMap)
-            for ((index, formal) in userDefinedFunction.formalParameters.withIndex()) {
-                val a = params.children[index]
-                val evaluatedAddress = evaluateV2(
-                    a,
-                    userDefinedFunctions,
-                    newVariables
-                )
-                newVariables[formal] = evaluatedAddress
-            }
-
-            val v2 = evaluateV2(
-                userDefinedFunction.body,
-                userDefinedFunctions,
-                newVariables
-            )
-            return nodeConverter.convertNodeV2ToNode(v2)
-        }
-
-
-        if (FunctionsConstants.functionV2Map!!.containsKey(addressValue)) {
-            val function = FunctionsConstants.functionV2Map[addressValue]
-            val evaluatedV2 = function!!.evaluateLispFunction(
+            return insideInside(
+                addressValue,
                 expressionNode,
                 userDefinedFunctions,
                 variableNameToValueMap
             )
-            return nodeConverter.convertNodeV2ToNode(evaluatedV2)
+        }
+
+        if (FunctionsConstants.functionV2Map!!.containsKey(addressValue)) {
+            val v1 = insideInside2(
+                addressValue,
+                expressionNode,
+                userDefinedFunctions,
+                variableNameToValueMap
+            )
+            return nodeConverter.convertNodeToNodeV2(v1)
         }
         throw Exception("Error! Invalid CAR value: $addressValue\n")
+    }
+
+    private fun insideInside(
+        addressValue: String,
+        expressionNode: ExpressionListNode,
+        userDefinedFunctions: List<UserDefinedFunction>,
+        variableNameToValueMap: Map<String, NodeV2>
+    ): NodeV2 {
+        val userDefinedFunction = userDefinedFunctions.stream().filter { (_, _, functionName) -> functionName == addressValue }.findFirst().get()
+        val params = ExpressionListNode(expressionNode.children.subList(1, expressionNode.children.size))
+        functionLengthAsserter.assertLengthIsAsExpected(
+            userDefinedFunction.functionName,
+            userDefinedFunction.formalParameters.size,
+            params
+        )
+        val newVariables: MutableMap<String, NodeV2> = HashMap(variableNameToValueMap)
+        for ((index, formal) in userDefinedFunction.formalParameters.withIndex()) {
+            val a = params.children[index]
+            val evaluatedAddress = evaluateV2(
+                a,
+                userDefinedFunctions,
+                newVariables
+            )
+            newVariables[formal] = evaluatedAddress
+        }
+
+        return evaluateV2(
+            userDefinedFunction.body,
+            userDefinedFunctions,
+            newVariables
+        )
+    }
+
+    private fun insideInside2(
+        addressValue: String,
+        expressionNode: ExpressionListNode,
+        userDefinedFunctions: List<UserDefinedFunction>,
+        variableNameToValueMap: Map<String, NodeV2>
+    ): Node {
+        val function = FunctionsConstants.functionV2Map?.get(addressValue)
+        val evaluatedV2 = function!!.evaluateLispFunction(
+            expressionNode,
+            userDefinedFunctions,
+            variableNameToValueMap
+        )
+        return nodeConverter.convertNodeV2ToNode(evaluatedV2)
     }
 }

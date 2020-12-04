@@ -1,6 +1,5 @@
 package com.soapdogg.lispInterpreter.interpreter
 
-import com.soapdogg.lispInterpreter.converter.NodeConverter
 import com.soapdogg.lispInterpreter.datamodels.*
 import com.soapdogg.lispInterpreter.evaluator.ProgramEvaluator
 import com.soapdogg.lispInterpreter.functions.DefunFunction
