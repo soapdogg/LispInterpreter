@@ -3,10 +3,7 @@ package com.soapdogg.lispInterpreter.function
 import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
 import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
-import com.soapdogg.lispInterpreter.converter.NodeConverter
-import com.soapdogg.lispInterpreter.datamodels.ExpressionNode
-import com.soapdogg.lispInterpreter.datamodels.Node
-import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
+import com.soapdogg.lispInterpreter.datamodels.*
 import com.soapdogg.lispInterpreter.evaluator.NodeEvaluator
 import com.soapdogg.lispInterpreter.functions.CarFunction
 import com.soapdogg.lispInterpreter.valueretriver.ListValueRetriever
@@ -15,68 +12,59 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 
 class CarFunctionTest {
-    private val params: Node = Mockito.mock(ExpressionNode::class.java)
+    private val params = Mockito.mock(ExpressionListNode::class.java)
     private val userDefinedFunctions: List<UserDefinedFunction> = emptyList()
-    private val variableNameToValueMap: Map<String, Node> = emptyMap()
+    private val variableNameToValueMap: Map<String, NodeV2> = emptyMap()
 
     private val functionLengthAsserter = Mockito.mock(FunctionLengthAsserter::class.java)
     private val listValueRetriever = Mockito.mock(ListValueRetriever::class.java)
     private val nodeEvaluator = Mockito.mock(NodeEvaluator::class.java)
-    private val nodeConverter = Mockito.mock(NodeConverter::class.java)
 
     private val carFunction = CarFunction(
         functionLengthAsserter,
         listValueRetriever,
-        nodeEvaluator,
-        nodeConverter
+        nodeEvaluator
     )
-/*
+
     @Test
     fun carFunctionTest() {
-        val expressionNodeParams = Mockito.mock(ExpressionNode::class.java)
-        Mockito.`when`(
-            listValueRetriever.retrieveListValue(
-                params,
-                FunctionNameConstants.CAR,
-                variableNameToValueMap
-            )
-        ).thenReturn(expressionNodeParams)
+        val child0 = Mockito.mock(NodeV2::class.java)
+        val child1 = Mockito.mock(NodeV2::class.java)
+        Mockito.`when`(params.children).thenReturn(listOf(child0, child1))
 
-        val address = Mockito.mock(Node::class.java)
-        Mockito.`when`(expressionNodeParams.address).thenReturn(address)
-
-        val evaluatedAddress = Mockito.mock(Node::class.java)
+        val evaluatedChild = Mockito.mock(NodeV2::class.java)
         Mockito.`when`(
-            nodeEvaluator.evaluate(
-                address,
+            nodeEvaluator.evaluateV2(
+                child1,
                 userDefinedFunctions,
                 variableNameToValueMap,
                 false
             )
-        ).thenReturn(evaluatedAddress)
+        ).thenReturn(evaluatedChild)
 
-        val node = Mockito.mock(ExpressionNode::class.java)
+        val evaluatedChildExpressionListNode = Mockito.mock(ExpressionListNode::class.java)
         Mockito.`when`(
             listValueRetriever.retrieveListValue(
-                evaluatedAddress,
+                evaluatedChild,
                 FunctionNameConstants.CAR,
                 variableNameToValueMap
             )
-        ).thenReturn(node)
+        ).thenReturn(evaluatedChildExpressionListNode)
 
-        val expected = Mockito.mock(Node::class.java)
-        Mockito.`when`(node.address).thenReturn(expected)
+        val c0 = Mockito.mock(NodeV2::class.java)
+        val c1 = Mockito.mock(NodeV2::class.java)
+        Mockito.`when`(evaluatedChildExpressionListNode.children).thenReturn(listOf(c0, c1))
 
         val actual = carFunction.evaluateLispFunction(
             params,
             userDefinedFunctions,
             variableNameToValueMap
         )
-        Assertions.assertEquals(expected, actual)
+        Assertions.assertEquals(c0, actual)
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
             FunctionNameConstants.CAR,
             FunctionLengthConstants.TWO,
             params
         )
-    }*/
+    }
 }

@@ -13,14 +13,13 @@ enum class FunctionSingleton {
     val carFunction: CarFunction = CarFunction(
         AsserterSingleton.INSTANCE.functionLengthAsserter,
         ValueRetrieverSingleton.INSTANCE.listValueRetriever,
-        EvaluatorSingleton.INSTANCE.nodeEvaluator,
-        ConverterSingleton.INSTANCE.nodeConverter
+        EvaluatorSingleton.INSTANCE.nodeEvaluator
     )
     val cdrFunction: CdrFunction = CdrFunction(
         AsserterSingleton.INSTANCE.functionLengthAsserter,
         ValueRetrieverSingleton.INSTANCE.listValueRetriever,
         EvaluatorSingleton.INSTANCE.nodeEvaluator,
-        ConverterSingleton.INSTANCE.nodeConverter
+        GeneratorSingleton.INSTANCE.nodeGenerator
     )
     val condFunction: CondFunction = CondFunction(
         AsserterSingleton.INSTANCE.condFunctionParameterAsserter,

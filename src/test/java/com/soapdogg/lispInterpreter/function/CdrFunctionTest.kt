@@ -3,12 +3,10 @@ package com.soapdogg.lispInterpreter.function
 import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
 import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
-import com.soapdogg.lispInterpreter.converter.NodeConverter
-import com.soapdogg.lispInterpreter.datamodels.ExpressionNode
-import com.soapdogg.lispInterpreter.datamodels.Node
-import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
+import com.soapdogg.lispInterpreter.datamodels.*
 import com.soapdogg.lispInterpreter.evaluator.NodeEvaluator
 import com.soapdogg.lispInterpreter.functions.CdrFunction
+import com.soapdogg.lispInterpreter.generator.NodeGenerator
 import com.soapdogg.lispInterpreter.valueretriver.ListValueRetriever
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -16,57 +14,57 @@ import org.mockito.Mockito
 
 class CdrFunctionTest {
 
-    private val params = Mockito.mock(Node::class.java)
+    private val params = Mockito.mock(ExpressionListNode::class.java)
     private val userDefinedFunctions: List<UserDefinedFunction> = emptyList()
-    private val variableNameToValueMap: Map<String, Node> = emptyMap()
+    private val variableNameToValueMap: Map<String, NodeV2> = emptyMap()
 
     private val functionLengthAsserter = Mockito.mock(FunctionLengthAsserter::class.java)
     private val listValueRetriever = Mockito.mock(ListValueRetriever::class.java)
     private val nodeEvaluator = Mockito.mock(NodeEvaluator::class.java)
-    private val nodeConverter = Mockito.mock(NodeConverter::class.java)
+    private val nodeGenerator = Mockito.mock(NodeGenerator::class.java)
 
     private val cdrFunction = CdrFunction(
         functionLengthAsserter,
         listValueRetriever,
         nodeEvaluator,
-        nodeConverter
+        nodeGenerator
     )
-/*
+
     @Test
     fun cdrFunctionTest() {
-        val expressionNodeParams = Mockito.mock(ExpressionNode::class.java)
-        Mockito.`when`(
-            listValueRetriever.retrieveListValue(
-                params,
-                FunctionNameConstants.CDR,
-                variableNameToValueMap
-            )
-        ).thenReturn(expressionNodeParams)
+        val child0 = Mockito.mock(NodeV2::class.java)
+        val child1 = Mockito.mock(NodeV2::class.java)
+        Mockito.`when`(params.children).thenReturn(listOf(child0, child1))
 
-        val address = Mockito.mock(Node::class.java)
-        Mockito.`when`(expressionNodeParams.address).thenReturn(address)
-
-        val evaluatedAddress = Mockito.mock(Node::class.java)
+        val evaluatedChild = Mockito.mock(NodeV2::class.java)
         Mockito.`when`(
-            nodeEvaluator.evaluate(
-                address,
+            nodeEvaluator.evaluateV2(
+                child1,
                 userDefinedFunctions,
                 variableNameToValueMap,
                 false
             )
-        ).thenReturn(evaluatedAddress)
+        ).thenReturn(evaluatedChild)
 
-        val node = Mockito.mock(ExpressionNode::class.java)
+        val evaluatedChildExpressionList = Mockito.mock(ExpressionListNode::class.java)
         Mockito.`when`(
             listValueRetriever.retrieveListValue(
-                evaluatedAddress,
+                evaluatedChild,
                 FunctionNameConstants.CDR,
                 variableNameToValueMap
             )
-        ).thenReturn(node)
+        ).thenReturn(evaluatedChildExpressionList)
 
-        val expected = Mockito.mock(Node::class.java)
-        Mockito.`when`(node.data).thenReturn(expected)
+        val c0 = Mockito.mock(NodeV2::class.java)
+        val c1 = Mockito.mock(NodeV2::class.java)
+        Mockito.`when`(evaluatedChildExpressionList.children).thenReturn(listOf(c0, c1))
+
+        val expected = Mockito.mock(ExpressionListNode::class.java)
+        Mockito.`when`(
+            nodeGenerator.generateExpressionListNode(
+                listOf(c1)
+            )
+        ).thenReturn(expected)
 
         val actual = cdrFunction.evaluateLispFunction(
             params,
@@ -79,5 +77,5 @@ class CdrFunctionTest {
             FunctionLengthConstants.TWO,
             params
         )
-    }*/
+    }
 }
