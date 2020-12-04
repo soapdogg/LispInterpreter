@@ -41,11 +41,9 @@ enum class FunctionSingleton {
         GeneratorSingleton.INSTANCE.nodeGenerator
     )
     val greaterFunction: GreaterFunction = GreaterFunction(
-        ConverterSingleton.INSTANCE.nodeConverter,
         AsserterSingleton.INSTANCE.functionLengthAsserter,
         EvaluatorSingleton.INSTANCE.nodeEvaluator,
         ValueRetrieverSingleton.INSTANCE.numericValueRetriever,
-        ValueRetrieverSingleton.INSTANCE.listValueRetriever,
         GeneratorSingleton.INSTANCE.nodeGenerator
     )
     val intFunction: IntFunction = IntFunction(
@@ -58,17 +56,13 @@ enum class FunctionSingleton {
         AsserterSingleton.INSTANCE.functionLengthAsserter,
         EvaluatorSingleton.INSTANCE.nodeEvaluator,
         ValueRetrieverSingleton.INSTANCE.numericValueRetriever,
-        ValueRetrieverSingleton.INSTANCE.listValueRetriever,
-        GeneratorSingleton.INSTANCE.nodeGenerator,
-        ConverterSingleton.INSTANCE.nodeConverter
+        GeneratorSingleton.INSTANCE.nodeGenerator
     )
     val minusFunction: MinusFunction = MinusFunction(
         AsserterSingleton.INSTANCE.functionLengthAsserter,
         EvaluatorSingleton.INSTANCE.nodeEvaluator,
         ValueRetrieverSingleton.INSTANCE.numericValueRetriever,
-        ValueRetrieverSingleton.INSTANCE.listValueRetriever,
-        GeneratorSingleton.INSTANCE.nodeGenerator,
-        ConverterSingleton.INSTANCE.nodeConverter
+        GeneratorSingleton.INSTANCE.nodeGenerator
     )
     val nullFunction: NullFunction = NullFunction(
         AsserterSingleton.INSTANCE.functionLengthAsserter,
@@ -80,9 +74,7 @@ enum class FunctionSingleton {
         AsserterSingleton.INSTANCE.functionLengthAsserter,
         EvaluatorSingleton.INSTANCE.nodeEvaluator,
         ValueRetrieverSingleton.INSTANCE.numericValueRetriever,
-        ValueRetrieverSingleton.INSTANCE.listValueRetriever,
-        GeneratorSingleton.INSTANCE.nodeGenerator,
-        ConverterSingleton.INSTANCE.nodeConverter
+        GeneratorSingleton.INSTANCE.nodeGenerator
     )
     val quoteFunction: QuoteFunction = QuoteFunction(
         AsserterSingleton.INSTANCE.functionLengthAsserter
@@ -91,9 +83,7 @@ enum class FunctionSingleton {
         AsserterSingleton.INSTANCE.functionLengthAsserter,
         EvaluatorSingleton.INSTANCE.nodeEvaluator,
         ValueRetrieverSingleton.INSTANCE.numericValueRetriever,
-        ValueRetrieverSingleton.INSTANCE.listValueRetriever,
-        GeneratorSingleton.INSTANCE.nodeGenerator,
-        ConverterSingleton.INSTANCE.nodeConverter
+        GeneratorSingleton.INSTANCE.nodeGenerator
     )
 
 }
