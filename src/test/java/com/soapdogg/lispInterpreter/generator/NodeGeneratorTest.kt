@@ -1,11 +1,9 @@
 package com.soapdogg.lispInterpreter.generator
 
 import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
-import com.soapdogg.lispInterpreter.datamodels.Node
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
 
 class NodeGeneratorTest {
     private val nodeGenerator: NodeGenerator = NodeGenerator()
@@ -34,18 +32,6 @@ class NodeGeneratorTest {
         val value = "value"
         val (value1) = nodeGenerator.generateAtomNode(value)
         Assertions.assertEquals(value, value1)
-    }
-
-    @Test
-    fun generateNonEmptyExpressionNodeTest() {
-        val address = Mockito.mock(Node::class.java)
-        val data = Mockito.mock(Node::class.java)
-        val (address1, data1) = nodeGenerator.generateExpressionNode(
-                address,
-                data
-        )
-        Assertions.assertEquals(address, address1)
-        Assertions.assertEquals(data, data1)
     }
 
     @Test

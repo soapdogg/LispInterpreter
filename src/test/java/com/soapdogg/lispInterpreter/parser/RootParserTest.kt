@@ -1,6 +1,5 @@
 package com.soapdogg.lispInterpreter.parser
 
-import com.soapdogg.lispInterpreter.datamodels.Node
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.Token
 import com.soapdogg.lispInterpreter.datamodels.TokenKind

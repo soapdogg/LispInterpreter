@@ -8,8 +8,7 @@ enum class AsserterSingleton {
     INSTANCE;
 
     val functionLengthAsserter: FunctionLengthAsserter = FunctionLengthAsserter(
-        DeterminerSingleton.INSTANCE.functionLengthDeterminer,
-        ConverterSingleton.INSTANCE.nodeConverter
+        DeterminerSingleton.INSTANCE.functionLengthDeterminer
     )
     val condFunctionParameterAsserter: CondFunctionParameterAsserter
     val userDefinedFormalParametersAsserter: UserDefinedFormalParametersAsserter

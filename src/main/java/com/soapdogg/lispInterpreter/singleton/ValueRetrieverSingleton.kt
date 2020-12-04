@@ -11,7 +11,6 @@ enum class ValueRetrieverSingleton {
     )
     val numericValueRetriever: NumericValueRetriever = NumericValueRetriever(
         DeterminerSingleton.INSTANCE.numericStringDeterminer,
-        ConverterSingleton.INSTANCE.nodeConverter,
         PrinterSingleton.INSTANCE.listNotationPrinter
     )
 }

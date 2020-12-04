@@ -28,16 +28,6 @@ class NodeGenerator {
         return AtomNode(value)
     }
 
-    fun generateExpressionNode(
-        address: Node,
-        data: Node
-    ): ExpressionNode {
-        return ExpressionNode(
-            address,
-            data
-        )
-    }
-
     fun generateExpressionListNode(
         children: List<NodeV2>
     ): ExpressionListNode {
