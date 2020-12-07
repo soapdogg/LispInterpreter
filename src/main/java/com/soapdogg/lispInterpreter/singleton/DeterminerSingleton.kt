@@ -9,7 +9,6 @@ enum class DeterminerSingleton {
     val numericStringDeterminer: NumericStringDeterminer = NumericStringDeterminer()
     val functionLengthDeterminer: FunctionLengthDeterminer = FunctionLengthDeterminer()
     val invalidNameDeterminer: InvalidNameDeterminer
-    val userDefinedFunctionNameDeterminer: UserDefinedFunctionNameDeterminer
     val literalTokenValueEndIndexDeterminer: LiteralTokenValueEndIndexDeterminer
     val numericTokenValueEndIndexDeterminer: NumericTokenValueEndIndexDeterminer
 
@@ -18,7 +17,6 @@ enum class DeterminerSingleton {
             InvalidUserDefinedNameConstants.InvalidNames,
             numericStringDeterminer
         )
-        userDefinedFunctionNameDeterminer = UserDefinedFunctionNameDeterminer()
         literalTokenValueEndIndexDeterminer = LiteralTokenValueEndIndexDeterminer()
         numericTokenValueEndIndexDeterminer = NumericTokenValueEndIndexDeterminer()
     }

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 
 class ProgramEvaluatorTest {
-    private val userDefinedFunctions: List<UserDefinedFunction> = emptyList()
+    private val userDefinedFunctions: Map<String, UserDefinedFunction> = emptyMap()
     private val variableNameToValueMap: Map<String, NodeV2> = emptyMap()
 
     private val atomRootNodeAsserter = Mockito.mock(AtomRootNodeAsserter::class.java)

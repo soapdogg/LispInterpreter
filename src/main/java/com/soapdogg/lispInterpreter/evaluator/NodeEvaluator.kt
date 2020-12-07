@@ -8,7 +8,6 @@ import com.soapdogg.lispInterpreter.constants.FunctionsConstants.functionLengthM
 import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
 import com.soapdogg.lispInterpreter.datamodels.*
 import com.soapdogg.lispInterpreter.determiner.NumericStringDeterminer
-import com.soapdogg.lispInterpreter.determiner.UserDefinedFunctionNameDeterminer
 import com.soapdogg.lispInterpreter.exceptions.NotAListException
 import com.soapdogg.lispInterpreter.generator.NodeGenerator
 import com.soapdogg.lispInterpreter.printer.ListNotationPrinter
@@ -17,7 +16,6 @@ import com.soapdogg.lispInterpreter.valueretriver.NumericValueRetriever
 
 class NodeEvaluator(
     private val atomNodeEvaluator: AtomNodeEvaluator,
-    private val userDefinedFunctionNameDeterminer: UserDefinedFunctionNameDeterminer,
     private val functionLengthAsserter: FunctionLengthAsserter,
     private val numericStringDeterminer: NumericStringDeterminer,
     private val listValueRetriever: ListValueRetriever,
@@ -30,7 +28,7 @@ class NodeEvaluator(
 
     fun evaluateV2(
         node: NodeV2,
-        userDefinedFunctions: List<UserDefinedFunction>,
+        userDefinedFunctions: Map<String, UserDefinedFunction>,
         variableNameToValueMap: Map<String, NodeV2>
     ): NodeV2 {
         return if (node is AtomNode) {
@@ -45,20 +43,17 @@ class NodeEvaluator(
             if (addressValue == ReservedValuesConstants.NIL) {
                 return address
             }
-            val isUserDefinedFunction = userDefinedFunctionNameDeterminer.determineIfUserDefinedFunctionName(
-                userDefinedFunctions,
-                addressValue
-            )
-            if (isUserDefinedFunction) {
-                val userDefinedFunction = userDefinedFunctions.stream().filter { (_, _, functionName) -> functionName == addressValue }.findFirst().get()
+
+            userDefinedFunctions[addressValue]?.let {
                 val params = ExpressionListNode(expressionNode.children.subList(1, expressionNode.children.size))
                 functionLengthAsserter.assertLengthIsAsExpected(
-                    userDefinedFunction.functionName,
-                    userDefinedFunction.formalParameters.size,
+                    addressValue,
+                    it.formalParameters.size,
                     params
                 )
+
                 val newVariables: MutableMap<String, NodeV2> = HashMap(variableNameToValueMap)
-                for ((index, formal) in userDefinedFunction.formalParameters.withIndex()) {
+                for ((index, formal) in it.formalParameters.withIndex()) {
                     val a = params.children[index]
                     val evaluatedAddress = evaluateV2(
                         a,
@@ -69,7 +64,7 @@ class NodeEvaluator(
                 }
 
                 return evaluateV2(
-                    userDefinedFunction.body,
+                    it.body,
                     userDefinedFunctions,
                     newVariables
                 )
@@ -83,8 +78,8 @@ class NodeEvaluator(
                 )
             }
 
-            when {
-                addressValue == FunctionNameConstants.ATOM -> {
+            when (addressValue) {
+                FunctionNameConstants.ATOM -> {
                     val evaluatedResult = evaluateV2(
                         expressionNode.children[1],
                         userDefinedFunctions,
@@ -93,7 +88,7 @@ class NodeEvaluator(
                     val result = evaluatedResult !is ExpressionListNode
                     return nodeGenerator.generateAtomNode(result)
                 }
-                addressValue == FunctionNameConstants.INT -> {
+                FunctionNameConstants.INT -> {
                     val evaluatedResult = evaluateV2(
                         expressionNode.children[1],
                         userDefinedFunctions,
@@ -106,7 +101,7 @@ class NodeEvaluator(
                     val result = numericStringDeterminer.isStringNumeric(value)
                     return nodeGenerator.generateAtomNode(result)
                 }
-                addressValue == FunctionNameConstants.NULL -> {
+                FunctionNameConstants.NULL -> {
                     val evaluatedResult = evaluateV2(
                         expressionNode.children[1],
                         userDefinedFunctions,
@@ -119,10 +114,10 @@ class NodeEvaluator(
                     val result = nodeValueComparator.equalsNil(value)
                     return nodeGenerator.generateAtomNode(result)
                 }
-                addressValue == FunctionNameConstants.QUOTE -> {
+                FunctionNameConstants.QUOTE -> {
                     return expressionNode.children[1]
                 }
-                addressValue == FunctionNameConstants.CAR -> {
+                FunctionNameConstants.CAR -> {
                     val evaluatedChild = evaluateV2(
                         expressionNode.children[1],
                         userDefinedFunctions,
@@ -135,7 +130,7 @@ class NodeEvaluator(
                     )
                     return evaluatedChildExpressionListNode.children[0]
                 }
-                addressValue == FunctionNameConstants.CDR -> {
+                FunctionNameConstants.CDR -> {
                     val evaluatedChild = evaluateV2(
                         expressionNode.children[1],
                         userDefinedFunctions,
@@ -156,7 +151,7 @@ class NodeEvaluator(
                         evaluatedChildExpressionList.children.subList(1, evaluatedChildExpressionList.children.size)
                     )
                 }
-                addressValue == FunctionNameConstants.CONS -> {
+                FunctionNameConstants.CONS -> {
                     val evaluatedAddress = evaluateV2(
                         expressionNode.children[1],
                         userDefinedFunctions,
@@ -176,7 +171,7 @@ class NodeEvaluator(
                         listOf(evaluatedAddress, evaluatedData)
                     )
                 }
-                addressValue == FunctionNameConstants.EQ -> {
+                FunctionNameConstants.EQ -> {
                     val evaluatedAddress = evaluateV2(
                         expressionNode.children[1],
                         userDefinedFunctions,
@@ -193,7 +188,7 @@ class NodeEvaluator(
                     val result = leftValue == rightValue
                     return nodeGenerator.generateAtomNode(result)
                 }
-                addressValue == FunctionNameConstants.GREATER -> {
+                FunctionNameConstants.GREATER -> {
                     val evaluatedAddress = evaluateV2(
                         expressionNode.children[1],
                         userDefinedFunctions,
@@ -217,7 +212,7 @@ class NodeEvaluator(
                     val result = leftValue > rightValue
                     return nodeGenerator.generateAtomNode(result)
                 }
-                addressValue == FunctionNameConstants.LESS -> {
+                FunctionNameConstants.LESS -> {
                     val evaluatedAddress = evaluateV2(
                         expressionNode.children[1],
                         userDefinedFunctions,
@@ -241,7 +236,7 @@ class NodeEvaluator(
                     val result = leftValue < rightValue
                     return nodeGenerator.generateAtomNode(result)
                 }
-                addressValue == FunctionNameConstants.MINUS -> {
+                FunctionNameConstants.MINUS -> {
                     val evaluatedAddress = evaluateV2(
                         expressionNode.children[1],
                         userDefinedFunctions,
@@ -265,7 +260,7 @@ class NodeEvaluator(
                     val result = leftValue - rightValue
                     return nodeGenerator.generateAtomNode(result)
                 }
-                addressValue == FunctionNameConstants.PLUS -> {
+                FunctionNameConstants.PLUS -> {
                     val evaluatedAddress = evaluateV2(
                         expressionNode.children[1],
                         userDefinedFunctions,
@@ -289,7 +284,7 @@ class NodeEvaluator(
                     val result = leftValue + rightValue
                     return nodeGenerator.generateAtomNode(result)
                 }
-                addressValue == FunctionNameConstants.TIMES -> {
+                FunctionNameConstants.TIMES -> {
                     val evaluatedAddress = evaluateV2(
                         expressionNode.children[1],
                         userDefinedFunctions,
@@ -313,7 +308,7 @@ class NodeEvaluator(
                     val result = leftValue * rightValue
                     return nodeGenerator.generateAtomNode(result)
                 }
-                addressValue == FunctionNameConstants.COND -> {
+                FunctionNameConstants.COND -> {
                     val condParams = expressionNode.children.subList(1, expressionNode.children.size)
                     val condExpressionParams = condFunctionParameterAsserter.assertCondFunctionParameters(
                         condParams
@@ -334,7 +329,6 @@ class NodeEvaluator(
                     }
                     throw NotAListException("Error! None of the conditions in the COND function evaluated to true.\n")
                 }
-
                 else -> throw Exception("Error! Invalid CAR value: $addressValue\n")
             }
 

@@ -17,7 +17,7 @@ class UserDefinedFunctionGenerator(
 
     fun evaluateLispFunction(
         params: ExpressionListNode
-    ): UserDefinedFunction {
+    ): Pair<String, UserDefinedFunction> {
         functionLengthAsserter.assertLengthIsAsExpected(
             FunctionNameConstants.DEFUN,
             FunctionLengthConstants.FOUR,
@@ -37,10 +37,10 @@ class UserDefinedFunctionGenerator(
         }
 
         userDefinedFormalParametersAsserter.assertFormalParameters(formalParameters)
-        return UserDefinedFunction(
+        val userDefinedFunction = UserDefinedFunction(
             formalParameters,
-            params.children[3],
-            functionName
+            params.children[3]
         )
+        return Pair(functionName, userDefinedFunction)
     }
 }

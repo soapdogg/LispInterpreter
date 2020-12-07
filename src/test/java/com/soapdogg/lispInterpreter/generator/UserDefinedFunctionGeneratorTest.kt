@@ -45,10 +45,10 @@ class UserDefinedFunctionGeneratorTest {
         )
         Mockito.`when`(params.children).thenReturn(paramsChildren)
 
-        val (formalParameters1, body1, functionName1) = defunFunction.evaluateLispFunction(params)
-        Assertions.assertEquals(formalParameters, formalParameters1)
-        Assertions.assertEquals(bodyV2, body1)
-        Assertions.assertEquals(functionName, functionName1)
+        val actual = defunFunction.evaluateLispFunction(params)
+        Assertions.assertEquals(formalParameters, actual.second.formalParameters)
+        Assertions.assertEquals(bodyV2, actual.second.body)
+        Assertions.assertEquals(functionName, actual.first)
 
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
             FunctionNameConstants.DEFUN,
@@ -95,10 +95,10 @@ class UserDefinedFunctionGeneratorTest {
         )
         Mockito.`when`(params.children).thenReturn(paramsChildren)
 
-        val (formalParameters1, body1, functionName1) = defunFunction.evaluateLispFunction(params)
-        Assertions.assertEquals(formalParameters, formalParameters1)
-        Assertions.assertEquals(bodyV2, body1)
-        Assertions.assertEquals(functionName, functionName1)
+        val actual = defunFunction.evaluateLispFunction(params)
+        Assertions.assertEquals(formalParameters, actual.second.formalParameters)
+        Assertions.assertEquals(bodyV2, actual.second.body)
+        Assertions.assertEquals(functionName, actual.first)
 
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
             FunctionNameConstants.DEFUN,
@@ -131,10 +131,10 @@ class UserDefinedFunctionGeneratorTest {
         )
         Mockito.`when`(params.children).thenReturn(paramsChildren)
 
-        val (formalParameters1, body1, functionName1) = defunFunction.evaluateLispFunction(params)
-        Assertions.assertEquals(formalParameters, formalParameters1)
-        Assertions.assertEquals(bodyV2, body1)
-        Assertions.assertEquals(functionName, functionName1)
+        val actual = defunFunction.evaluateLispFunction(params)
+        Assertions.assertEquals(formalParameters, actual.second.formalParameters)
+        Assertions.assertEquals(bodyV2, actual.second.body)
+        Assertions.assertEquals(functionName, actual.first)
 
         Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
             FunctionNameConstants.DEFUN,

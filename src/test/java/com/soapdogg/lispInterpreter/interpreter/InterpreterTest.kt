@@ -44,16 +44,17 @@ class InterpreterTest {
         Mockito.`when`(partitionedRootNodes.defunNodes).thenReturn(defunNodes)
 
         val userDefinedFunction = Mockito.mock(UserDefinedFunction::class.java)
-        val userDefinedFunctions: List<UserDefinedFunction> = listOf(userDefinedFunction)
-        Mockito.`when`(defunFunction.evaluateLispFunction(defunNode)).thenReturn(userDefinedFunction)
+        val functionName = "functionName"
+        val pair = Pair(functionName, userDefinedFunction)
+        Mockito.`when`(defunFunction.evaluateLispFunction(defunNode)).thenReturn(pair)
 
         val node = Mockito.mock(NodeV2::class.java)
         val evaluatableNodes: List<NodeV2> = listOf(node)
         Mockito.`when`(partitionedRootNodes.evaluatableNodes).thenReturn(evaluatableNodes)
 
-
         val evaluatedNode = Mockito.mock(NodeV2::class.java)
         val evaluatedNodes = listOf(evaluatedNode)
+        val userDefinedFunctions: Map<String, UserDefinedFunction> = mapOf(pair)
         Mockito.`when`(
             program.evaluate(
                 evaluatableNodes,

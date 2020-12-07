@@ -11,7 +11,7 @@ class ProgramEvaluator(
 ) {
     fun evaluate(
         rootNodes: List<NodeV2>,
-        userDefinedFunctions: List<UserDefinedFunction>,
+        userDefinedFunctions: Map<String, UserDefinedFunction>,
         variableNameToValueMap: Map<String, NodeV2>
     ): List<NodeV2> {
         return rootNodes.map {

@@ -23,7 +23,8 @@ class Interpreter (
         val partitionedRootNodes = rootNodePartitioner.partitionRootNodes(
             rootNodes
         )
-        val userDefinedFunctions = partitionedRootNodes.defunNodes.map{userDefinedFunctionGenerator.evaluateLispFunction(it) }
+        val userDefinedFunctions = partitionedRootNodes.defunNodes.map{
+            userDefinedFunctionGenerator.evaluateLispFunction(it) }.toMap()
         val evaluatedNodes = program.evaluate(
             partitionedRootNodes.evaluatableNodes,
             userDefinedFunctions,
