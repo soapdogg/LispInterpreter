@@ -1,19 +1,10 @@
 package com.soapdogg.lispInterpreter.constants
 
-import com.soapdogg.lispInterpreter.functions.LispFunctionV2
-import com.soapdogg.lispInterpreter.singleton.FunctionSingleton
-
 object FunctionsConstants {
-
-    @JvmField
-    val functionV2Map: MutableMap<String, LispFunctionV2>?
 
     val functionLengthMap: Map<String, Int>
 
     init {
-
-        functionV2Map = HashMap()
-        functionV2Map[FunctionNameConstants.COND] = FunctionSingleton.INSTANCE.condFunction
 
         functionLengthMap = mapOf(
             Pair(FunctionNameConstants.ATOM, FunctionLengthConstants.TWO),

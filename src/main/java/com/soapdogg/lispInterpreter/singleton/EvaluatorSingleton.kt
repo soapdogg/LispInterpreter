@@ -17,7 +17,8 @@ enum class EvaluatorSingleton {
         PrinterSingleton.INSTANCE.listNotationPrinter,
         ComparatorSingleton.INSTANCE.nodeValueComparator,
         ValueRetrieverSingleton.INSTANCE.numericValueRetriever,
-        GeneratorSingleton.INSTANCE.nodeGenerator
+        GeneratorSingleton.INSTANCE.nodeGenerator,
+        AsserterSingleton.INSTANCE.condFunctionParameterAsserter
     )
     val programEvaluator: ProgramEvaluator = ProgramEvaluator(
         AsserterSingleton.INSTANCE.atomRootNodeAsserter,

@@ -1,14 +1,15 @@
 package com.soapdogg.lispInterpreter.evaluator
 
+import com.soapdogg.lispInterpreter.asserter.CondFunctionParameterAsserter
 import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
 import com.soapdogg.lispInterpreter.comparator.NodeValueComparator
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
-import com.soapdogg.lispInterpreter.constants.FunctionsConstants
 import com.soapdogg.lispInterpreter.constants.FunctionsConstants.functionLengthMap
 import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
 import com.soapdogg.lispInterpreter.datamodels.*
 import com.soapdogg.lispInterpreter.determiner.NumericStringDeterminer
 import com.soapdogg.lispInterpreter.determiner.UserDefinedFunctionNameDeterminer
+import com.soapdogg.lispInterpreter.exceptions.NotAListException
 import com.soapdogg.lispInterpreter.generator.NodeGenerator
 import com.soapdogg.lispInterpreter.printer.ListNotationPrinter
 import com.soapdogg.lispInterpreter.valueretriver.ListValueRetriever
@@ -23,7 +24,8 @@ class NodeEvaluator(
     private val listNotationPrinter: ListNotationPrinter,
     private val nodeValueComparator: NodeValueComparator,
     private val numericValueRetriever: NumericValueRetriever,
-    private val nodeGenerator: NodeGenerator
+    private val nodeGenerator: NodeGenerator,
+    private val condFunctionParameterAsserter: CondFunctionParameterAsserter
 ) {
 
     fun evaluateV2(
@@ -311,15 +313,28 @@ class NodeEvaluator(
                     val result = leftValue * rightValue
                     return nodeGenerator.generateAtomNode(result)
                 }
-                FunctionsConstants.functionV2Map!!.containsKey(addressValue) -> {
-
-                    val function = FunctionsConstants.functionV2Map[addressValue]
-                    return function!!.evaluateLispFunction(
-                        expressionNode,
-                        userDefinedFunctions,
-                        variableNameToValueMap
+                addressValue == FunctionNameConstants.COND -> {
+                    val condParams = expressionNode.children.subList(1, expressionNode.children.size)
+                    val condExpressionParams = condFunctionParameterAsserter.assertCondFunctionParameters(
+                        condParams
                     )
+                    condExpressionParams.forEach {
+                        val evaluatedNode = evaluateV2(
+                            it.children[0],
+                            userDefinedFunctions,
+                            variableNameToValueMap
+                        )
+                        if (evaluatedNode is AtomNode && !nodeValueComparator.equalsNil(evaluatedNode.value)) {
+                            return evaluateV2(
+                                it.children[1],
+                                userDefinedFunctions,
+                                variableNameToValueMap
+                            )
+                        }
+                    }
+                    throw NotAListException("Error! None of the conditions in the COND function evaluated to true.\n")
                 }
+
                 else -> throw Exception("Error! Invalid CAR value: $addressValue\n")
             }
 
