@@ -14,11 +14,8 @@ class QuoteFunctionTest {
     private val userDefinedFunctions: List<UserDefinedFunction> = emptyList()
     private val variableNameToValueMap: Map<String, NodeV2> = emptyMap()
 
-    private val functionLengthAsserter = Mockito.mock(FunctionLengthAsserter::class.java)
 
-    private val quoteFunction = QuoteFunction(
-        functionLengthAsserter
-    )
+    private val quoteFunction = QuoteFunction()
 
     @Test
     fun quoteFunctionTest() {
@@ -33,13 +30,5 @@ class QuoteFunctionTest {
         )
 
         Assertions.assertEquals(child1, actual)
-
-        Mockito.verify(
-            functionLengthAsserter
-        ).assertLengthIsAsExpected(
-            FunctionNameConstants.QUOTE,
-            FunctionLengthConstants.TWO,
-            params
-        )
     }
 }

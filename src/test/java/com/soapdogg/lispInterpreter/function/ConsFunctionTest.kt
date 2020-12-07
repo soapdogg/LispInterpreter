@@ -1,8 +1,5 @@
 package com.soapdogg.lispInterpreter.function
 
-import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
-import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants
-import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.datamodels.*
 import com.soapdogg.lispInterpreter.evaluator.NodeEvaluator
 import com.soapdogg.lispInterpreter.functions.ConsFunction
@@ -16,12 +13,10 @@ class ConsFunctionTest {
     private val userDefinedFunctions: List<UserDefinedFunction> = emptyList()
     private val variableNameToValueMap: Map<String, NodeV2> = emptyMap()
 
-    private val functionLengthAsserter = Mockito.mock(FunctionLengthAsserter::class.java)
     private val nodeEvaluator = Mockito.mock(NodeEvaluator::class.java)
     private val nodeGenerator = Mockito.mock(NodeGenerator::class.java)
 
     private val consFunction = ConsFunction(
-        functionLengthAsserter,
         nodeEvaluator,
         nodeGenerator
     )
@@ -70,11 +65,6 @@ class ConsFunctionTest {
             variableNameToValueMap
         )
         Assertions.assertEquals(expected, actual)
-        Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
-            FunctionNameConstants.CONS,
-            FunctionLengthConstants.THREE,
-            params
-        )
     }
 
     @Test
@@ -118,10 +108,5 @@ class ConsFunctionTest {
             variableNameToValueMap
         )
         Assertions.assertEquals(expected, actual)
-        Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
-            FunctionNameConstants.CONS,
-            FunctionLengthConstants.THREE,
-            params
-        )
     }
 }

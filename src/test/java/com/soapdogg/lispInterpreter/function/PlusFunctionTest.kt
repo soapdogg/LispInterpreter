@@ -17,13 +17,11 @@ class PlusFunctionTest {
     private val userDefinedFunctions: List<UserDefinedFunction> = emptyList()
     private val variableNameToValueMap: Map<String, NodeV2> = emptyMap()
 
-    private val functionLengthAsserter = Mockito.mock(FunctionLengthAsserter::class.java)
     private val nodeEvaluator = Mockito.mock(NodeEvaluator::class.java)
     private val numericValueRetriever = Mockito.mock(NumericValueRetriever::class.java)
     private val nodeGenerator = Mockito.mock(NodeGenerator::class.java)
 
     private val plusFunction = PlusFunction(
-        functionLengthAsserter,
         nodeEvaluator,
         numericValueRetriever,
         nodeGenerator
@@ -85,10 +83,5 @@ class PlusFunctionTest {
             variableNameToValueMap
         )
         Assertions.assertEquals(expected, actual)
-        Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
-            FunctionNameConstants.PLUS,
-            FunctionLengthConstants.THREE,
-            params
-        )
     }
 }

@@ -1,7 +1,5 @@
 package com.soapdogg.lispInterpreter.function
 
-import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
-import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.datamodels.*
 import com.soapdogg.lispInterpreter.evaluator.NodeEvaluator
@@ -17,13 +15,11 @@ class GreaterFunctionTest {
     private val userDefinedFunctions: List<UserDefinedFunction> = emptyList()
     private val variableNameToValueMap: Map<String, NodeV2> = emptyMap()
 
-    private val functionLengthAsserter = Mockito.mock(FunctionLengthAsserter::class.java)
     private val nodeEvaluator = Mockito.mock(NodeEvaluator::class.java)
     private val numericValueRetriever = Mockito.mock(NumericValueRetriever::class.java)
     private val nodeGenerator = Mockito.mock(NodeGenerator::class.java)
 
     private val greaterFunction = GreaterFunction(
-        functionLengthAsserter,
         nodeEvaluator,
         numericValueRetriever,
         nodeGenerator
@@ -85,10 +81,5 @@ class GreaterFunctionTest {
             variableNameToValueMap
         )
         Assertions.assertEquals(expected, actual)
-        Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
-            FunctionNameConstants.GREATER,
-            FunctionLengthConstants.THREE,
-            params
-        )
     }
 }

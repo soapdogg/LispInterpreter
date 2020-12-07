@@ -18,13 +18,11 @@ class NullFunctionTest {
     private val userDefinedFunctions: List<UserDefinedFunction> = emptyList()
     private val variableNameToValueMap: Map<String, NodeV2> = emptyMap()
 
-    private val functionLengthAsserter = Mockito.mock(FunctionLengthAsserter::class.java)
     private val nodeEvaluator = Mockito.mock(NodeEvaluator::class.java)
     private val nodeValueComparator = Mockito.mock(NodeValueComparator::class.java)
     private val nodeGenerator = Mockito.mock(NodeGenerator::class.java)
 
     private val nullFunction = NullFunction(
-        functionLengthAsserter,
         nodeEvaluator,
         nodeValueComparator,
         nodeGenerator
@@ -61,11 +59,6 @@ class NullFunctionTest {
         )
 
         Assertions.assertEquals(expected, actual)
-        Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
-            FunctionNameConstants.NULL,
-            FunctionLengthConstants.TWO,
-            params
-        )
     }
 
     @Test
@@ -93,11 +86,6 @@ class NullFunctionTest {
         )
         Assertions.assertEquals(expected, actual)
 
-        Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
-            FunctionNameConstants.NULL,
-            FunctionLengthConstants.TWO,
-            params
-        )
         Mockito.verifyNoInteractions(nodeValueComparator)
     }
 }

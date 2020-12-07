@@ -1,15 +1,11 @@
 package com.soapdogg.lispInterpreter.functions
 
-import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
-import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants
-import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.datamodels.*
 import com.soapdogg.lispInterpreter.determiner.NumericStringDeterminer
 import com.soapdogg.lispInterpreter.evaluator.NodeEvaluator
 import com.soapdogg.lispInterpreter.generator.NodeGenerator
 
-class IntFunction (
-    private val functionLengthAsserter: FunctionLengthAsserter,
+class IntFunction(
     private val nodeEvaluator: NodeEvaluator,
     private val numericStringDeterminer: NumericStringDeterminer,
     private val nodeGenerator: NodeGenerator
@@ -20,11 +16,6 @@ class IntFunction (
         userDefinedFunctions: List<UserDefinedFunction>,
         variableNameToValueMap: Map<String, NodeV2>
     ): NodeV2 {
-        functionLengthAsserter.assertLengthIsAsExpected(
-            FunctionNameConstants.INT,
-            FunctionLengthConstants.TWO,
-            params
-        )
         val evaluatedResult = nodeEvaluator.evaluateV2(
             params.children[1],
             userDefinedFunctions,

@@ -1,8 +1,5 @@
 package com.soapdogg.lispInterpreter.function
 
-import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
-import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants
-import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.datamodels.*
 import com.soapdogg.lispInterpreter.evaluator.NodeEvaluator
 import com.soapdogg.lispInterpreter.functions.EqFunction
@@ -17,13 +14,11 @@ class EqFunctionTest {
     private val userDefinedFunctions: List<UserDefinedFunction> = emptyList()
     private val variableNameToValueMap: Map<String, NodeV2> = emptyMap()
 
-    private val functionLengthAsserter = Mockito.mock(FunctionLengthAsserter::class.java)
     private val nodeEvaluator = Mockito.mock(NodeEvaluator::class.java)
     private val listNotationPrinter = Mockito.mock(ListNotationPrinter::class.java)
     private val nodeGenerator = Mockito.mock(NodeGenerator::class.java)
 
     private val eqFunction = EqFunction(
-        functionLengthAsserter,
         nodeEvaluator,
         listNotationPrinter,
         nodeGenerator
@@ -75,10 +70,5 @@ class EqFunctionTest {
             variableNameToValueMap
         )
         Assertions.assertEquals(expected, actual)
-        Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
-            FunctionNameConstants.EQ,
-            FunctionLengthConstants.THREE,
-            params
-        )
     }
 }

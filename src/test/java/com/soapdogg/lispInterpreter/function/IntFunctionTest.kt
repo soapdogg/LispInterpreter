@@ -18,13 +18,11 @@ class IntFunctionTest {
     private val userDefinedFunctions: List<UserDefinedFunction> = emptyList()
     private val variableNameToValueMap: Map<String, NodeV2> = emptyMap()
 
-    private val functionLengthAsserter = Mockito.mock(FunctionLengthAsserter::class.java)
     private val nodeEvaluator = Mockito.mock(NodeEvaluator::class.java)
     private val numericStringDeterminer = Mockito.mock(NumericStringDeterminer::class.java)
     private val nodeGenerator = Mockito.mock(NodeGenerator::class.java)
 
     private val intFunction = IntFunction(
-        functionLengthAsserter,
         nodeEvaluator,
         numericStringDeterminer,
         nodeGenerator
@@ -63,11 +61,6 @@ class IntFunctionTest {
         )
 
         Assertions.assertEquals(expected, actual)
-        Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
-            FunctionNameConstants.INT,
-            FunctionLengthConstants.TWO,
-            params
-        )
     }
 
     @Test
@@ -95,11 +88,6 @@ class IntFunctionTest {
         )
         Assertions.assertEquals(expected, actual)
 
-        Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
-            FunctionNameConstants.INT,
-            FunctionLengthConstants.TWO,
-            params
-        )
         Mockito.verifyNoInteractions(numericStringDeterminer)
     }
 }

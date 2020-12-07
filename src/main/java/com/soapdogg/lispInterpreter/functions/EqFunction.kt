@@ -1,8 +1,5 @@
 package com.soapdogg.lispInterpreter.functions
 
-import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
-import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants
-import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
@@ -10,8 +7,7 @@ import com.soapdogg.lispInterpreter.evaluator.NodeEvaluator
 import com.soapdogg.lispInterpreter.generator.NodeGenerator
 import com.soapdogg.lispInterpreter.printer.ListNotationPrinter
 
-class EqFunction (
-    private val functionLengthAsserter: FunctionLengthAsserter,
+class EqFunction(
     private val nodeEvaluator: NodeEvaluator,
     private val listNotationPrinter: ListNotationPrinter,
     private val nodeGenerator: NodeGenerator,
@@ -22,11 +18,6 @@ class EqFunction (
         userDefinedFunctions: List<UserDefinedFunction>,
         variableNameToValueMap: Map<String, NodeV2>
     ): NodeV2 {
-        functionLengthAsserter.assertLengthIsAsExpected(
-            FunctionNameConstants.EQ,
-            FunctionLengthConstants.THREE,
-            params
-        )
         val evaluatedAddress = nodeEvaluator.evaluateV2(
             params.children[1],
             userDefinedFunctions,

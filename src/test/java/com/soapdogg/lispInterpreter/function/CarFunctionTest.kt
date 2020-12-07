@@ -1,7 +1,5 @@
 package com.soapdogg.lispInterpreter.function
 
-import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
-import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.datamodels.*
 import com.soapdogg.lispInterpreter.evaluator.NodeEvaluator
@@ -16,12 +14,10 @@ class CarFunctionTest {
     private val userDefinedFunctions: List<UserDefinedFunction> = emptyList()
     private val variableNameToValueMap: Map<String, NodeV2> = emptyMap()
 
-    private val functionLengthAsserter = Mockito.mock(FunctionLengthAsserter::class.java)
     private val listValueRetriever = Mockito.mock(ListValueRetriever::class.java)
     private val nodeEvaluator = Mockito.mock(NodeEvaluator::class.java)
 
     private val carFunction = CarFunction(
-        functionLengthAsserter,
         listValueRetriever,
         nodeEvaluator
     )
@@ -60,10 +56,5 @@ class CarFunctionTest {
             variableNameToValueMap
         )
         Assertions.assertEquals(c0, actual)
-        Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
-            FunctionNameConstants.CAR,
-            FunctionLengthConstants.TWO,
-            params
-        )
     }
 }

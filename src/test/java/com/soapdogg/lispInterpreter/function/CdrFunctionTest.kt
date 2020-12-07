@@ -1,7 +1,5 @@
 package com.soapdogg.lispInterpreter.function
 
-import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
-import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.datamodels.*
 import com.soapdogg.lispInterpreter.evaluator.NodeEvaluator
@@ -18,13 +16,11 @@ class CdrFunctionTest {
     private val userDefinedFunctions: List<UserDefinedFunction> = emptyList()
     private val variableNameToValueMap: Map<String, NodeV2> = emptyMap()
 
-    private val functionLengthAsserter = Mockito.mock(FunctionLengthAsserter::class.java)
     private val listValueRetriever = Mockito.mock(ListValueRetriever::class.java)
     private val nodeEvaluator = Mockito.mock(NodeEvaluator::class.java)
     private val nodeGenerator = Mockito.mock(NodeGenerator::class.java)
 
     private val cdrFunction = CdrFunction(
-        functionLengthAsserter,
         listValueRetriever,
         nodeEvaluator,
         nodeGenerator
@@ -63,11 +59,6 @@ class CdrFunctionTest {
             variableNameToValueMap
         )
         Assertions.assertEquals(c0, actual)
-        Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
-            FunctionNameConstants.CDR,
-            FunctionLengthConstants.TWO,
-            params
-        )
     }
 
     @Test
@@ -104,11 +95,6 @@ class CdrFunctionTest {
             variableNameToValueMap
         )
         Assertions.assertEquals(c1, actual)
-        Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
-            FunctionNameConstants.CDR,
-            FunctionLengthConstants.TWO,
-            params
-        )
     }
 
     @Test
@@ -153,10 +139,5 @@ class CdrFunctionTest {
             variableNameToValueMap
         )
         Assertions.assertEquals(expected, actual)
-        Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
-            FunctionNameConstants.CDR,
-            FunctionLengthConstants.TWO,
-            params
-        )
     }
 }
