@@ -13,10 +13,7 @@ object FunctionsConstants {
     init {
 
         functionV2Map = HashMap()
-        functionV2Map[FunctionNameConstants.CAR] = FunctionSingleton.INSTANCE.carFunction
-        functionV2Map[FunctionNameConstants.CDR] = FunctionSingleton.INSTANCE.cdrFunction
         functionV2Map[FunctionNameConstants.COND] = FunctionSingleton.INSTANCE.condFunction
-        functionV2Map[FunctionNameConstants.CONS] = FunctionSingleton.INSTANCE.consFunction
 
         functionLengthMap = mapOf(
             Pair(FunctionNameConstants.ATOM, FunctionLengthConstants.TWO),

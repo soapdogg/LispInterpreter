@@ -13,6 +13,7 @@ enum class EvaluatorSingleton {
         DeterminerSingleton.INSTANCE.userDefinedFunctionNameDeterminer,
         AsserterSingleton.INSTANCE.functionLengthAsserter,
         DeterminerSingleton.INSTANCE.numericStringDeterminer,
+        ValueRetrieverSingleton.INSTANCE.listValueRetriever,
         PrinterSingleton.INSTANCE.listNotationPrinter,
         ComparatorSingleton.INSTANCE.nodeValueComparator,
         ValueRetrieverSingleton.INSTANCE.numericValueRetriever,

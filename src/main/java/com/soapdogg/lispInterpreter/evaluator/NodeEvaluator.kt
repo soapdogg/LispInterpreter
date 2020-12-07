@@ -11,6 +11,7 @@ import com.soapdogg.lispInterpreter.determiner.NumericStringDeterminer
 import com.soapdogg.lispInterpreter.determiner.UserDefinedFunctionNameDeterminer
 import com.soapdogg.lispInterpreter.generator.NodeGenerator
 import com.soapdogg.lispInterpreter.printer.ListNotationPrinter
+import com.soapdogg.lispInterpreter.valueretriver.ListValueRetriever
 import com.soapdogg.lispInterpreter.valueretriver.NumericValueRetriever
 
 class NodeEvaluator(
@@ -18,6 +19,7 @@ class NodeEvaluator(
     private val userDefinedFunctionNameDeterminer: UserDefinedFunctionNameDeterminer,
     private val functionLengthAsserter: FunctionLengthAsserter,
     private val numericStringDeterminer: NumericStringDeterminer,
+    private val listValueRetriever: ListValueRetriever,
     private val listNotationPrinter: ListNotationPrinter,
     private val nodeValueComparator: NodeValueComparator,
     private val numericValueRetriever: NumericValueRetriever,
@@ -41,11 +43,11 @@ class NodeEvaluator(
             if (addressValue == ReservedValuesConstants.NIL) {
                 return address
             }
-            val isFunctionName = userDefinedFunctionNameDeterminer.determineIfUserDefinedFunctionName(
+            val isUserDefinedFunction = userDefinedFunctionNameDeterminer.determineIfUserDefinedFunctionName(
                 userDefinedFunctions,
                 addressValue
             )
-            if (isFunctionName) {
+            if (isUserDefinedFunction) {
                 val userDefinedFunction = userDefinedFunctions.stream().filter { (_, _, functionName) -> functionName == addressValue }.findFirst().get()
                 val params = ExpressionListNode(expressionNode.children.subList(1, expressionNode.children.size))
                 functionLengthAsserter.assertLengthIsAsExpected(
@@ -117,6 +119,60 @@ class NodeEvaluator(
                 }
                 addressValue == FunctionNameConstants.QUOTE -> {
                     return expressionNode.children[1]
+                }
+                addressValue == FunctionNameConstants.CAR -> {
+                    val evaluatedChild = evaluateV2(
+                        expressionNode.children[1],
+                        userDefinedFunctions,
+                        variableNameToValueMap
+                    )
+                    val evaluatedChildExpressionListNode = listValueRetriever.retrieveListValue(
+                        evaluatedChild,
+                        FunctionNameConstants.CAR,
+                        variableNameToValueMap
+                    )
+                    return evaluatedChildExpressionListNode.children[0]
+                }
+                addressValue == FunctionNameConstants.CDR -> {
+                    val evaluatedChild = evaluateV2(
+                        expressionNode.children[1],
+                        userDefinedFunctions,
+                        variableNameToValueMap
+                    )
+                    val evaluatedChildExpressionList = listValueRetriever.retrieveListValue(
+                        evaluatedChild,
+                        FunctionNameConstants.CDR,
+                        variableNameToValueMap
+                    )
+                    if (evaluatedChildExpressionList.children.size == 1) {
+                        return evaluatedChildExpressionList.children[0]
+                    }
+                    if (evaluatedChildExpressionList.children.size == 2) {
+                        return evaluatedChildExpressionList.children[1]
+                    }
+                    return nodeGenerator.generateExpressionListNode(
+                        evaluatedChildExpressionList.children.subList(1, evaluatedChildExpressionList.children.size)
+                    )
+                }
+                addressValue == FunctionNameConstants.CONS -> {
+                    val evaluatedAddress = evaluateV2(
+                        expressionNode.children[1],
+                        userDefinedFunctions,
+                        variableNameToValueMap
+                    )
+                    val evaluatedData = evaluateV2(
+                        expressionNode.children[2],
+                        userDefinedFunctions,
+                        variableNameToValueMap
+                    )
+                    if (evaluatedData is ExpressionListNode) {
+                        return nodeGenerator.generateExpressionListNode(
+                            listOf(evaluatedAddress) + evaluatedData.children
+                        )
+                    }
+                    return nodeGenerator.generateExpressionListNode(
+                        listOf(evaluatedAddress, evaluatedData)
+                    )
                 }
                 addressValue == FunctionNameConstants.EQ -> {
                     val evaluatedAddress = evaluateV2(
