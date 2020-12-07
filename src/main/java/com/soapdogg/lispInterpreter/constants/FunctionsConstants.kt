@@ -8,6 +8,8 @@ object FunctionsConstants {
     @JvmField
     val functionV2Map: MutableMap<String, LispFunctionV2>?
 
+    val functionLengthMap: Map<String, Int>
+
     init {
 
         functionV2Map = HashMap()
@@ -25,5 +27,9 @@ object FunctionsConstants {
         functionV2Map[FunctionNameConstants.PLUS] = FunctionSingleton.INSTANCE.plusFunction
         functionV2Map[FunctionNameConstants.QUOTE] = FunctionSingleton.INSTANCE.quoteFunction
         functionV2Map[FunctionNameConstants.TIMES] = FunctionSingleton.INSTANCE.timesFunction
+
+        functionLengthMap = mapOf(
+            Pair(FunctionNameConstants.ATOM, FunctionLengthConstants.TWO)
+        )
     }
 }

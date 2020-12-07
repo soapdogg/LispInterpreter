@@ -2,6 +2,7 @@ package com.soapdogg.lispInterpreter.evaluator
 
 import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
 import com.soapdogg.lispInterpreter.constants.FunctionsConstants
+import com.soapdogg.lispInterpreter.constants.FunctionsConstants.functionLengthMap
 import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
 import com.soapdogg.lispInterpreter.datamodels.*
 import com.soapdogg.lispInterpreter.determiner.UserDefinedFunctionNameDeterminer
@@ -37,57 +38,58 @@ class NodeEvaluator(
         userDefinedFunctions: List<UserDefinedFunction>,
         variableNameToValueMap: Map<String, NodeV2>
     ): NodeV2 {
-        val address = expressionNode.children[0]
-        if (address is AtomNode){
-            val addressValue = address.value
-            if (addressValue == ReservedValuesConstants.NIL) {
-                return address
-            }
-            val isFunctionName = userDefinedFunctionNameDeterminer.determineIfUserDefinedFunctionName(
-                userDefinedFunctions,
-                addressValue
+        val address = expressionNode.children[0] as AtomNode
+        val addressValue = address.value
+        if (addressValue == ReservedValuesConstants.NIL) {
+            return address
+        }
+        val isFunctionName = userDefinedFunctionNameDeterminer.determineIfUserDefinedFunctionName(
+            userDefinedFunctions,
+            addressValue
+        )
+        if (isFunctionName) {
+            val userDefinedFunction = userDefinedFunctions.stream().filter { (_, _, functionName) -> functionName == addressValue }.findFirst().get()
+            val params = ExpressionListNode(expressionNode.children.subList(1, expressionNode.children.size))
+            functionLengthAsserter.assertLengthIsAsExpected(
+                userDefinedFunction.functionName,
+                userDefinedFunction.formalParameters.size,
+                params
             )
-            if (isFunctionName) {
-                val userDefinedFunction = userDefinedFunctions.stream().filter { (_, _, functionName) -> functionName == addressValue }.findFirst().get()
-                val params = ExpressionListNode(expressionNode.children.subList(1, expressionNode.children.size))
-                functionLengthAsserter.assertLengthIsAsExpected(
-                    userDefinedFunction.functionName,
-                    userDefinedFunction.formalParameters.size,
-                    params
-                )
-                val newVariables: MutableMap<String, NodeV2> = HashMap(variableNameToValueMap)
-                for ((index, formal) in userDefinedFunction.formalParameters.withIndex()) {
-                    val a = params.children[index]
-                    val evaluatedAddress = evaluateV2(
-                        a,
-                        userDefinedFunctions,
-                        newVariables
-                    )
-                    newVariables[formal] = evaluatedAddress
-                }
-
-                return evaluateV2(
-                    userDefinedFunction.body,
+            val newVariables: MutableMap<String, NodeV2> = HashMap(variableNameToValueMap)
+            for ((index, formal) in userDefinedFunction.formalParameters.withIndex()) {
+                val a = params.children[index]
+                val evaluatedAddress = evaluateV2(
+                    a,
                     userDefinedFunctions,
                     newVariables
                 )
+                newVariables[formal] = evaluatedAddress
             }
 
-            if (FunctionsConstants.functionV2Map!!.containsKey(addressValue)) {
-                val function = FunctionsConstants.functionV2Map[addressValue]
-                return function!!.evaluateLispFunction(
-                    expressionNode,
-                    userDefinedFunctions,
-                    variableNameToValueMap
-                )
-            }
-            throw Exception("Error! Invalid CAR value: $addressValue\n")
+            return evaluateV2(
+                userDefinedFunction.body,
+                userDefinedFunctions,
+                newVariables
+            )
         }
 
-        return evaluateV2(
-            address,
-            userDefinedFunctions,
-            variableNameToValueMap
-        )
+
+        functionLengthMap[addressValue]?.let {
+            functionLengthAsserter.assertLengthIsAsExpected(
+                addressValue,
+                it,
+                expressionNode
+            )
+        }
+
+        if (FunctionsConstants.functionV2Map!!.containsKey(addressValue)) {
+            val function = FunctionsConstants.functionV2Map[addressValue]
+            return function!!.evaluateLispFunction(
+                expressionNode,
+                userDefinedFunctions,
+                variableNameToValueMap
+            )
+        }
+        throw Exception("Error! Invalid CAR value: $addressValue\n")
     }
 }
