@@ -1,6 +1,5 @@
 package regression
 
-import com.soapdogg.lispInterpreter.singleton.ConverterSingleton
 import com.soapdogg.lispInterpreter.singleton.ParserSingleton
 import com.soapdogg.lispInterpreter.singleton.PrinterSingleton
 import com.soapdogg.lispInterpreter.singleton.TokenizerSingleton
@@ -75,12 +74,10 @@ class ParserTest {
             val tokenizer = TokenizerSingleton.INSTANCE.tokenizer
             val rootParser = ParserSingleton.INSTANCE.rootParser
             val dotNotationPrinter = PrinterSingleton.INSTANCE.dotNotationPrinter
-            val converter = ConverterSingleton.INSTANCE.nodeConverter
             val actual = try {
                 val `in` = getScannerFromFilePath(programFile)
                 val tokens = tokenizer.tokenize(`in`)
                 val nodes = rootParser.parse(tokens)
-                val convertedNodes = nodes.map { converter.convertNodeV2ToNode(it) }
                 dotNotationPrinter.printInDotNotation(nodes)
             } catch (e: Exception) {
                 e.message
