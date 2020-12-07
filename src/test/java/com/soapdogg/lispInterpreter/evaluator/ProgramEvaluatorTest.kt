@@ -25,11 +25,11 @@ class ProgramEvaluatorTest {
         val evaluatedNode = Mockito.mock(NodeV2::class.java)
         Mockito.`when`(
             nodeEvaluator.evaluateV2(
-                atomNode,
+                listOf(atomNode),
                 userDefinedFunctions,
                 variableNameToValueMap
             )
-        ).thenReturn(evaluatedNode)
+        ).thenReturn(listOf(evaluatedNode))
 
         val actual = programEvaluator.evaluate(
             rootNodes,
@@ -48,11 +48,11 @@ class ProgramEvaluatorTest {
         val evaluatedNode = Mockito.mock(NodeV2::class.java)
         Mockito.`when`(
             nodeEvaluator.evaluateV2(
-                expressionNode,
+                listOf(expressionNode),
                 userDefinedFunctions,
                 variableNameToValueMap
             )
-        ).thenReturn(evaluatedNode)
+        ).thenReturn(listOf(evaluatedNode))
         val actual = programEvaluator.evaluate(
             rootNodes,
             userDefinedFunctions,

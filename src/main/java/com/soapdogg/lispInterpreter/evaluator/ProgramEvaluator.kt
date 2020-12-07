@@ -19,10 +19,10 @@ class ProgramEvaluator(
                 atomRootNodeAsserter.assertAtomRootNode(it)
             }
             nodeEvaluator.evaluateV2(
-                it,
+                listOf(it),
                 userDefinedFunctions,
                 variableNameToValueMap
-            )
+            )[0]
         }
     }
 }
