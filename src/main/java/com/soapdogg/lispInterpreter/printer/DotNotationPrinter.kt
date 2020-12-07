@@ -1,16 +1,14 @@
 package com.soapdogg.lispInterpreter.printer
 
 import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
-import com.soapdogg.lispInterpreter.datamodels.AtomNode
-import com.soapdogg.lispInterpreter.datamodels.ExpressionNode
-import com.soapdogg.lispInterpreter.datamodels.Node
+import com.soapdogg.lispInterpreter.datamodels.*
 
 class DotNotationPrinter (
     private val atomNodePrinter: AtomNodePrinter,
     private val dotNotationExpressionNodePrinter: DotNotationExpressionNodePrinter
 ) {
 
-    fun printInDotNotation(nodes: List<Node>): String {
+    fun printInDotNotation(nodes: List<NodeV2>): String {
         if (nodes.isEmpty()) return """${ReservedValuesConstants.NIL}${ReservedValuesConstants.NEW_LINE}"""
         return nodes.joinToString(
             ReservedValuesConstants.NEW_LINE.toString(),
@@ -19,8 +17,8 @@ class DotNotationPrinter (
         ) {node -> printInDotNotation(node)}
     }
 
-    fun printInDotNotation(node: Node): String {
-        return if (node is ExpressionNode) dotNotationExpressionNodePrinter.printExpressionNodeInDotNotation(node)
+    fun printInDotNotation(node: NodeV2): String {
+        return if (node is ExpressionListNode) dotNotationExpressionNodePrinter.printExpressionNodeInDotNotation(node)
         else atomNodePrinter.printAtomNode(node as AtomNode)
     }
 }

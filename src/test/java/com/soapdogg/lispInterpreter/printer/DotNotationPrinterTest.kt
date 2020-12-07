@@ -2,7 +2,7 @@ package com.soapdogg.lispInterpreter.printer
 
 import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
 import com.soapdogg.lispInterpreter.datamodels.AtomNode
-import com.soapdogg.lispInterpreter.datamodels.ExpressionNode
+import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
@@ -44,7 +44,7 @@ class DotNotationPrinterTest {
 
     @Test
     fun printExpressionNodeListTest() {
-        val expressionNode = Mockito.mock(ExpressionNode::class.java)
+        val expressionNode = Mockito.mock(ExpressionListNode::class.java)
         val expected = "value"
         Mockito.`when`(dotNotationExpressionNodePrinter.printExpressionNodeInDotNotation(expressionNode)).thenReturn(expected)
         val actual = dotNotationPrinter.printInDotNotation(expressionNode)

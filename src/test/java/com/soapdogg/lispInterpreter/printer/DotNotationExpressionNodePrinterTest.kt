@@ -3,7 +3,7 @@ package com.soapdogg.lispInterpreter.printer
 import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
 import com.soapdogg.lispInterpreter.constants.TokenValueConstants
 import com.soapdogg.lispInterpreter.datamodels.AtomNode
-import com.soapdogg.lispInterpreter.datamodels.ExpressionNode
+import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
@@ -16,53 +16,45 @@ class DotNotationExpressionNodePrinterTest {
     )
 
     @Test
-    fun printExpressionNodeListTest() {
-        val address = Mockito.mock(ExpressionNode::class.java)
+    fun printExpressionNodeOneChildIsAtomTest() {
+        val node = Mockito.mock(ExpressionListNode::class.java)
+        val addressChild = Mockito.mock(AtomNode::class.java)
+        Mockito.`when`(node.children).thenReturn(listOf(addressChild))
 
-        val addressAtom = Mockito.mock(AtomNode::class.java)
-        Mockito.`when`(address.address).thenReturn(addressAtom)
+        val expected = "expected"
+        Mockito.`when`(atomNodePrinter.printAtomNode(addressChild)).thenReturn(expected)
 
-        val addressStr = "address"
-        Mockito.`when`(atomNodePrinter.printAtomNode(addressAtom)).thenReturn(addressStr)
+        val actual = dotNotationExpressionNodePrinter.printExpressionNodeInDotNotation(
+            node
+        )
 
-        val dataAtom = Mockito.mock(AtomNode::class.java)
-        Mockito.`when`(address.data).thenReturn(dataAtom)
+        Assertions.assertEquals(expected, actual)
+    }
 
-        val dataStr = "data"
-        Mockito.`when`(atomNodePrinter.printAtomNode(dataAtom)).thenReturn(dataStr)
+    @Test
+    fun printExpressionNodeTwoChildrenBothAtomsTest() {
+        val node = Mockito.mock(ExpressionListNode::class.java)
 
-        val data = Mockito.mock(ExpressionNode::class.java)
+        val child0 = Mockito.mock(AtomNode::class.java)
+        val child1 = Mockito.mock(AtomNode::class.java)
+        Mockito.`when`(node.children).thenReturn(listOf(child0, child1))
 
-        val addressAtom2 = Mockito.mock(AtomNode::class.java)
-        Mockito.`when`(data.address).thenReturn(addressAtom2)
+        val c0 = "c0"
+        Mockito.`when`(atomNodePrinter.printAtomNode(child0)).thenReturn(c0)
 
-        val addressStr2 = "address2"
-        Mockito.`when`(atomNodePrinter.printAtomNode(addressAtom2)).thenReturn(addressStr2)
+        val c1 = "c1"
+        Mockito.`when`(atomNodePrinter.printAtomNode(child1)).thenReturn(c1)
 
-        val dataAtom2 = Mockito.mock(AtomNode::class.java)
-        Mockito.`when`(data.data).thenReturn(dataAtom2)
-
-        val dataStr2 = "data"
-        Mockito.`when`(atomNodePrinter.printAtomNode(dataAtom2)).thenReturn(dataStr2)
-
-        val expressionNode = Mockito.mock(ExpressionNode::class.java)
-        Mockito.`when`(expressionNode.address).thenReturn(address)
-        Mockito.`when`(expressionNode.data).thenReturn(data)
-
-        val expected = (TokenValueConstants.OPEN_PARENTHESES.toString()
-            + TokenValueConstants.OPEN_PARENTHESES
-            + addressStr
+        val expected = (TokenValueConstants.OPEN_PARENTHESES
+            + c0
             + ReservedValuesConstants.LIST_DELIMITER
-            + dataStr
-            + TokenValueConstants.CLOSE_PARENTHESES
-            + ReservedValuesConstants.LIST_DELIMITER
-            + TokenValueConstants.OPEN_PARENTHESES
-            + addressStr2
-            + ReservedValuesConstants.LIST_DELIMITER
-            + dataStr2
-            + TokenValueConstants.CLOSE_PARENTHESES
+            + c1
             + TokenValueConstants.CLOSE_PARENTHESES)
-        val actual = dotNotationExpressionNodePrinter.printExpressionNodeInDotNotation(expressionNode)
+
+        val actual = dotNotationExpressionNodePrinter.printExpressionNodeInDotNotation(
+            node
+        )
+
         Assertions.assertEquals(expected, actual)
     }
 }

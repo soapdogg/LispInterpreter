@@ -31,7 +31,47 @@ class CdrFunctionTest {
     )
 
     @Test
-    fun cdrFunctionTest() {
+    fun cdrFunctionOneChildTest() {
+        val child0 = Mockito.mock(NodeV2::class.java)
+        val child1 = Mockito.mock(NodeV2::class.java)
+        Mockito.`when`(params.children).thenReturn(listOf(child0, child1))
+
+        val evaluatedChild = Mockito.mock(NodeV2::class.java)
+        Mockito.`when`(
+            nodeEvaluator.evaluateV2(
+                child1,
+                userDefinedFunctions,
+                variableNameToValueMap
+            )
+        ).thenReturn(evaluatedChild)
+
+        val evaluatedChildExpressionList = Mockito.mock(ExpressionListNode::class.java)
+        Mockito.`when`(
+            listValueRetriever.retrieveListValue(
+                evaluatedChild,
+                FunctionNameConstants.CDR,
+                variableNameToValueMap
+            )
+        ).thenReturn(evaluatedChildExpressionList)
+
+        val c0 = Mockito.mock(NodeV2::class.java)
+        Mockito.`when`(evaluatedChildExpressionList.children).thenReturn(listOf(c0))
+
+        val actual = cdrFunction.evaluateLispFunction(
+            params,
+            userDefinedFunctions,
+            variableNameToValueMap
+        )
+        Assertions.assertEquals(c0, actual)
+        Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
+            FunctionNameConstants.CDR,
+            FunctionLengthConstants.TWO,
+            params
+        )
+    }
+
+    @Test
+    fun cdrFunctionTwoChildrenTest() {
         val child0 = Mockito.mock(NodeV2::class.java)
         val child1 = Mockito.mock(NodeV2::class.java)
         Mockito.`when`(params.children).thenReturn(listOf(child0, child1))
@@ -58,10 +98,52 @@ class CdrFunctionTest {
         val c1 = Mockito.mock(NodeV2::class.java)
         Mockito.`when`(evaluatedChildExpressionList.children).thenReturn(listOf(c0, c1))
 
+        val actual = cdrFunction.evaluateLispFunction(
+            params,
+            userDefinedFunctions,
+            variableNameToValueMap
+        )
+        Assertions.assertEquals(c1, actual)
+        Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
+            FunctionNameConstants.CDR,
+            FunctionLengthConstants.TWO,
+            params
+        )
+    }
+
+    @Test
+    fun cdrFunctionThreeChildrenTest() {
+        val child0 = Mockito.mock(NodeV2::class.java)
+        val child1 = Mockito.mock(NodeV2::class.java)
+        Mockito.`when`(params.children).thenReturn(listOf(child0, child1))
+
+        val evaluatedChild = Mockito.mock(NodeV2::class.java)
+        Mockito.`when`(
+            nodeEvaluator.evaluateV2(
+                child1,
+                userDefinedFunctions,
+                variableNameToValueMap
+            )
+        ).thenReturn(evaluatedChild)
+
+        val evaluatedChildExpressionList = Mockito.mock(ExpressionListNode::class.java)
+        Mockito.`when`(
+            listValueRetriever.retrieveListValue(
+                evaluatedChild,
+                FunctionNameConstants.CDR,
+                variableNameToValueMap
+            )
+        ).thenReturn(evaluatedChildExpressionList)
+
+        val c0 = Mockito.mock(NodeV2::class.java)
+        val c1 = Mockito.mock(NodeV2::class.java)
+        val c2 = Mockito.mock(NodeV2::class.java)
+        Mockito.`when`(evaluatedChildExpressionList.children).thenReturn(listOf(c0, c1, c2))
+
         val expected = Mockito.mock(ExpressionListNode::class.java)
         Mockito.`when`(
             nodeGenerator.generateExpressionListNode(
-                listOf(c1)
+                listOf(c1, c2)
             )
         ).thenReturn(expected)
 

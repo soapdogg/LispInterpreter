@@ -81,7 +81,7 @@ class ParserTest {
                 val tokens = tokenizer.tokenize(`in`)
                 val nodes = rootParser.parse(tokens)
                 val convertedNodes = nodes.map { converter.convertNodeV2ToNode(it) }
-                dotNotationPrinter.printInDotNotation(convertedNodes)
+                dotNotationPrinter.printInDotNotation(nodes)
             } catch (e: Exception) {
                 e.message
             }
