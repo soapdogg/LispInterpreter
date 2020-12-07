@@ -155,39 +155,31 @@ class NodeEvaluator(
                             }
                         }
                         FunctionNameConstants.CONS -> {
-                            val evaluatedAddress = evaluateV2(
-                                listOf(expressionNode.children[1]),
+                            val evaluatedChildren = evaluateV2(
+                                expressionNode.children.subList(1, 3),
                                 userDefinedFunctions,
                                 variableNameToValueMap
                             )
-                            val evaluatedData = evaluateV2(
-                                listOf(expressionNode.children[2]),
-                                userDefinedFunctions,
-                                variableNameToValueMap
-                            )
-                            if (evaluatedData[0] is ExpressionListNode) {
+                            val evaluatedAddress = evaluatedChildren[0]
+                            val evaluatedData = evaluatedChildren[1]
+                            if (evaluatedData is ExpressionListNode) {
                                 nodeGenerator.generateExpressionListNode(
-                                    listOf(evaluatedAddress[0]) + (evaluatedData[0] as ExpressionListNode).children
+                                    listOf(evaluatedAddress) + evaluatedData.children
                                 )
                             } else {
                                 nodeGenerator.generateExpressionListNode(
-                                    listOf(evaluatedAddress[0], evaluatedData[0])
+                                    listOf(evaluatedAddress, evaluatedData)
                                 )
                             }
                         }
                         FunctionNameConstants.EQ -> {
-                            val evaluatedAddress = evaluateV2(
-                                listOf(expressionNode.children[1]),
+                            val evaluatedChildren = evaluateV2(
+                                expressionNode.children.subList(1, 3),
                                 userDefinedFunctions,
                                 variableNameToValueMap
                             )
-                            val evaluatedData = evaluateV2(
-                                listOf(expressionNode.children[2]),
-                                userDefinedFunctions,
-                                variableNameToValueMap
-                            )
-                            val leftValue = listNotationPrinter.printInListNotation(evaluatedAddress)
-                            val rightValue = listNotationPrinter.printInListNotation(evaluatedData)
+                            val leftValue = listNotationPrinter.printInListNotation(evaluatedChildren[0])
+                            val rightValue = listNotationPrinter.printInListNotation(evaluatedChildren[1])
 
                             val result = leftValue == rightValue
                             nodeGenerator.generateAtomNode(result)
@@ -198,17 +190,12 @@ class NodeEvaluator(
                                 userDefinedFunctions,
                                 variableNameToValueMap
                             )
-                            val leftValue = numericValueRetriever.retrieveNumericValue(
-                                evaluatedChildren[0],
-                                1,
+                            val numericChildren = numericValueRetriever.retrieveNumericValue(
+                                evaluatedChildren,
                                 FunctionNameConstants.GREATER
                             )
-                            val rightValue = numericValueRetriever.retrieveNumericValue(
-                                evaluatedChildren[1],
-                                2,
-                                FunctionNameConstants.GREATER
-                            )
-                            val result = leftValue > rightValue
+
+                            val result = numericChildren[0] > numericChildren[1]
                             nodeGenerator.generateAtomNode(result)
                         }
                         FunctionNameConstants.LESS -> {
@@ -217,17 +204,11 @@ class NodeEvaluator(
                                 userDefinedFunctions,
                                 variableNameToValueMap
                             )
-                            val leftValue = numericValueRetriever.retrieveNumericValue(
-                                evaluatedChildren[0],
-                                1,
+                            val numericChildren = numericValueRetriever.retrieveNumericValue(
+                                evaluatedChildren,
                                 FunctionNameConstants.LESS
                             )
-                            val rightValue = numericValueRetriever.retrieveNumericValue(
-                                evaluatedChildren[1],
-                                2,
-                                FunctionNameConstants.LESS
-                            )
-                            val result = leftValue < rightValue
+                            val result = numericChildren[0] < numericChildren[1]
                             nodeGenerator.generateAtomNode(result)
                         }
                         FunctionNameConstants.MINUS -> {
@@ -236,17 +217,11 @@ class NodeEvaluator(
                                 userDefinedFunctions,
                                 variableNameToValueMap
                             )
-                            val leftValue = numericValueRetriever.retrieveNumericValue(
-                                evaluatedChildren[0],
-                                1,
+                            val numericChildren = numericValueRetriever.retrieveNumericValue(
+                                evaluatedChildren,
                                 FunctionNameConstants.MINUS
                             )
-                            val rightValue = numericValueRetriever.retrieveNumericValue(
-                                evaluatedChildren[1],
-                                2,
-                                FunctionNameConstants.MINUS
-                            )
-                            val result = leftValue - rightValue
+                            val result = numericChildren.reduce { acc, i -> acc - i }
                             nodeGenerator.generateAtomNode(result)
                         }
                         FunctionNameConstants.PLUS -> {
@@ -255,17 +230,11 @@ class NodeEvaluator(
                                 userDefinedFunctions,
                                 variableNameToValueMap
                             )
-                            val leftValue = numericValueRetriever.retrieveNumericValue(
-                                evaluatedChildren[0],
-                                1,
+                            val numericChildren = numericValueRetriever.retrieveNumericValue(
+                                evaluatedChildren,
                                 FunctionNameConstants.PLUS
                             )
-                            val rightValue = numericValueRetriever.retrieveNumericValue(
-                                evaluatedChildren[1],
-                                2,
-                                FunctionNameConstants.PLUS
-                            )
-                            val result = leftValue + rightValue
+                            val result = numericChildren.reduce { acc, i -> acc + i }
                             nodeGenerator.generateAtomNode(result)
                         }
                         FunctionNameConstants.TIMES -> {
@@ -274,17 +243,11 @@ class NodeEvaluator(
                                 userDefinedFunctions,
                                 variableNameToValueMap
                             )
-                            val leftValue = numericValueRetriever.retrieveNumericValue(
-                                evaluatedChildren[0],
-                                1,
+                            val numericChildren = numericValueRetriever.retrieveNumericValue(
+                                evaluatedChildren,
                                 FunctionNameConstants.TIMES
                             )
-                            val rightValue = numericValueRetriever.retrieveNumericValue(
-                                evaluatedChildren[1],
-                                2,
-                                FunctionNameConstants.TIMES
-                            )
-                            val result = leftValue * rightValue
+                            val result = numericChildren.reduce { acc, i -> acc * i }
                             nodeGenerator.generateAtomNode(result)
                         }
                         FunctionNameConstants.COND -> {

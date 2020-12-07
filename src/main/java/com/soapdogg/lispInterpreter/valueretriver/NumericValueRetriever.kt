@@ -11,18 +11,19 @@ class NumericValueRetriever(
 ) {
 
     fun retrieveNumericValue(
-        node: NodeV2,
-        position: Int,
+        nodes: List<NodeV2>,
         functionName: String
-    ): Int {
-        val value = listNotationPrinter.printInListNotation(
-            node
-        )
-        val isNumeric = numericStringDeterminer.isStringNumeric(value)
-        if (!isNumeric) {
-            val sb = """Error! Parameter at position: $position of function $functionName is not numeric!    Actual: $value${'\n'}"""
-            throw NotNumericException(sb)
+    ): List<Int> {
+        return nodes.withIndex().map { (index, node) ->
+            val value = listNotationPrinter.printInListNotation(
+                node
+            )
+            val isNumeric = numericStringDeterminer.isStringNumeric(value)
+            if (!isNumeric) {
+                val sb = """Error! Parameter at position: ${index + 1} of function $functionName is not numeric!    Actual: $value${'\n'}"""
+                throw NotNumericException(sb)
+            }
+            value.toInt()
         }
-        return value.toInt()
     }
 }

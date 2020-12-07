@@ -11,7 +11,6 @@ import org.mockito.Mockito
 
 class NumericValueRetrieverTest {
     private val node = Mockito.mock(NodeV2::class.java)
-    private val position = 1
     private val functionName = FunctionNameConstants.QUOTE
     private val numericStringDeterminer = Mockito.mock(NumericStringDeterminer::class.java)
     private val listNotationPrinter = Mockito.mock(ListNotationPrinter::class.java)
@@ -31,8 +30,7 @@ class NumericValueRetrieverTest {
             NotNumericException::class.java
         ) {
             numericValueRetriever.retrieveNumericValue(
-                node,
-                position,
+                listOf(node),
                 functionName
             )
         }
@@ -46,10 +44,9 @@ class NumericValueRetrieverTest {
         ).thenReturn(value.toString())
         Mockito.`when`(numericStringDeterminer.isStringNumeric(value.toString())).thenReturn(true)
         val actual = numericValueRetriever.retrieveNumericValue(
-            node,
-            position,
+            listOf(node),
             functionName
         )
-        Assertions.assertEquals(value, actual)
+        Assertions.assertEquals(listOf(value), actual)
     }
 }
