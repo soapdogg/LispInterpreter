@@ -1,4 +1,4 @@
-package com.soapdogg.lispInterpreter.functions
+package com.soapdogg.lispInterpreter.generator
 
 import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
 import com.soapdogg.lispInterpreter.asserter.UserDefinedFormalParametersAsserter
@@ -9,7 +9,7 @@ import com.soapdogg.lispInterpreter.datamodels.AtomNode
 import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
 import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
 
-class DefunFunction(
+class UserDefinedFunctionGenerator(
     private val functionLengthAsserter: FunctionLengthAsserter,
     private val userDefinedFunctionNameAsserter: UserDefinedFunctionNameAsserter,
     private val userDefinedFormalParametersAsserter: UserDefinedFormalParametersAsserter

@@ -13,7 +13,9 @@ enum class EvaluatorSingleton {
         DeterminerSingleton.INSTANCE.userDefinedFunctionNameDeterminer,
         AsserterSingleton.INSTANCE.functionLengthAsserter,
         DeterminerSingleton.INSTANCE.numericStringDeterminer,
+        PrinterSingleton.INSTANCE.listNotationPrinter,
         ComparatorSingleton.INSTANCE.nodeValueComparator,
+        ValueRetrieverSingleton.INSTANCE.numericValueRetriever,
         GeneratorSingleton.INSTANCE.nodeGenerator
     )
     val programEvaluator: ProgramEvaluator = ProgramEvaluator(

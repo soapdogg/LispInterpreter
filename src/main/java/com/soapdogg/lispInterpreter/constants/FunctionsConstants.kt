@@ -17,12 +17,6 @@ object FunctionsConstants {
         functionV2Map[FunctionNameConstants.CDR] = FunctionSingleton.INSTANCE.cdrFunction
         functionV2Map[FunctionNameConstants.COND] = FunctionSingleton.INSTANCE.condFunction
         functionV2Map[FunctionNameConstants.CONS] = FunctionSingleton.INSTANCE.consFunction
-        functionV2Map[FunctionNameConstants.EQ] = FunctionSingleton.INSTANCE.eqFunction
-        functionV2Map[FunctionNameConstants.GREATER] = FunctionSingleton.INSTANCE.greaterFunction
-        functionV2Map[FunctionNameConstants.LESS] = FunctionSingleton.INSTANCE.lessFunction
-        functionV2Map[FunctionNameConstants.MINUS] = FunctionSingleton.INSTANCE.minusFunction
-        functionV2Map[FunctionNameConstants.PLUS] = FunctionSingleton.INSTANCE.plusFunction
-        functionV2Map[FunctionNameConstants.TIMES] = FunctionSingleton.INSTANCE.timesFunction
 
         functionLengthMap = mapOf(
             Pair(FunctionNameConstants.ATOM, FunctionLengthConstants.TWO),

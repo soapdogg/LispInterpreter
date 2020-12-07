@@ -10,14 +10,17 @@ import com.soapdogg.lispInterpreter.datamodels.*
 import com.soapdogg.lispInterpreter.determiner.NumericStringDeterminer
 import com.soapdogg.lispInterpreter.determiner.UserDefinedFunctionNameDeterminer
 import com.soapdogg.lispInterpreter.generator.NodeGenerator
-import java.util.*
+import com.soapdogg.lispInterpreter.printer.ListNotationPrinter
+import com.soapdogg.lispInterpreter.valueretriver.NumericValueRetriever
 
 class NodeEvaluator(
     private val atomNodeEvaluator: AtomNodeEvaluator,
     private val userDefinedFunctionNameDeterminer: UserDefinedFunctionNameDeterminer,
     private val functionLengthAsserter: FunctionLengthAsserter,
     private val numericStringDeterminer: NumericStringDeterminer,
+    private val listNotationPrinter: ListNotationPrinter,
     private val nodeValueComparator: NodeValueComparator,
+    private val numericValueRetriever: NumericValueRetriever,
     private val nodeGenerator: NodeGenerator
 ) {
 
@@ -114,6 +117,143 @@ class NodeEvaluator(
                 }
                 addressValue == FunctionNameConstants.QUOTE -> {
                     return expressionNode.children[1]
+                }
+                addressValue == FunctionNameConstants.EQ -> {
+                    val evaluatedAddress = evaluateV2(
+                        expressionNode.children[1],
+                        userDefinedFunctions,
+                        variableNameToValueMap
+                    )
+                    val evaluatedData = evaluateV2(
+                        expressionNode.children[2],
+                        userDefinedFunctions,
+                        variableNameToValueMap
+                    )
+                    val leftValue = listNotationPrinter.printInListNotation(evaluatedAddress)
+                    val rightValue = listNotationPrinter.printInListNotation(evaluatedData)
+
+                    val result = leftValue == rightValue
+                    return nodeGenerator.generateAtomNode(result)
+                }
+                addressValue == FunctionNameConstants.GREATER -> {
+                    val evaluatedAddress = evaluateV2(
+                        expressionNode.children[1],
+                        userDefinedFunctions,
+                        variableNameToValueMap
+                    )
+                    val evaluatedData = evaluateV2(
+                        expressionNode.children[2],
+                        userDefinedFunctions,
+                        variableNameToValueMap
+                    )
+                    val leftValue = numericValueRetriever.retrieveNumericValue(
+                        evaluatedAddress,
+                        1,
+                        FunctionNameConstants.GREATER
+                    )
+                    val rightValue = numericValueRetriever.retrieveNumericValue(
+                        evaluatedData,
+                        2,
+                        FunctionNameConstants.GREATER
+                    )
+                    val result = leftValue > rightValue
+                    return nodeGenerator.generateAtomNode(result)
+                }
+                addressValue == FunctionNameConstants.LESS -> {
+                    val evaluatedAddress = evaluateV2(
+                        expressionNode.children[1],
+                        userDefinedFunctions,
+                        variableNameToValueMap
+                    )
+                    val evaluatedData = evaluateV2(
+                        expressionNode.children[2],
+                        userDefinedFunctions,
+                        variableNameToValueMap
+                    )
+                    val leftValue = numericValueRetriever.retrieveNumericValue(
+                        evaluatedAddress,
+                        1,
+                        FunctionNameConstants.LESS
+                    )
+                    val rightValue = numericValueRetriever.retrieveNumericValue(
+                        evaluatedData,
+                        2,
+                        FunctionNameConstants.LESS
+                    )
+                    val result = leftValue < rightValue
+                    return nodeGenerator.generateAtomNode(result)
+                }
+                addressValue == FunctionNameConstants.MINUS -> {
+                    val evaluatedAddress = evaluateV2(
+                        expressionNode.children[1],
+                        userDefinedFunctions,
+                        variableNameToValueMap
+                    )
+                    val evaluatedData = evaluateV2(
+                        expressionNode.children[2],
+                        userDefinedFunctions,
+                        variableNameToValueMap
+                    )
+                    val leftValue = numericValueRetriever.retrieveNumericValue(
+                        evaluatedAddress,
+                        1,
+                        FunctionNameConstants.MINUS
+                    )
+                    val rightValue = numericValueRetriever.retrieveNumericValue(
+                        evaluatedData,
+                        2,
+                        FunctionNameConstants.MINUS
+                    )
+                    val result = leftValue - rightValue
+                    return nodeGenerator.generateAtomNode(result)
+                }
+                addressValue == FunctionNameConstants.PLUS -> {
+                    val evaluatedAddress = evaluateV2(
+                        expressionNode.children[1],
+                        userDefinedFunctions,
+                        variableNameToValueMap
+                    )
+                    val evaluatedData = evaluateV2(
+                        expressionNode.children[2],
+                        userDefinedFunctions,
+                        variableNameToValueMap
+                    )
+                    val leftValue = numericValueRetriever.retrieveNumericValue(
+                        evaluatedAddress,
+                        1,
+                        FunctionNameConstants.PLUS
+                    )
+                    val rightValue = numericValueRetriever.retrieveNumericValue(
+                        evaluatedData,
+                        2,
+                        FunctionNameConstants.PLUS
+                    )
+                    val result = leftValue + rightValue
+                    return nodeGenerator.generateAtomNode(result)
+                }
+                addressValue == FunctionNameConstants.TIMES -> {
+                    val evaluatedAddress = evaluateV2(
+                        expressionNode.children[1],
+                        userDefinedFunctions,
+                        variableNameToValueMap
+                    )
+                    val evaluatedData = evaluateV2(
+                        expressionNode.children[2],
+                        userDefinedFunctions,
+                        variableNameToValueMap
+                    )
+                    val leftValue = numericValueRetriever.retrieveNumericValue(
+                        evaluatedAddress,
+                        1,
+                        FunctionNameConstants.TIMES
+                    )
+                    val rightValue = numericValueRetriever.retrieveNumericValue(
+                        evaluatedData,
+                        2,
+                        FunctionNameConstants.TIMES
+                    )
+                    val result = leftValue * rightValue
+                    return nodeGenerator.generateAtomNode(result)
                 }
                 FunctionsConstants.functionV2Map!!.containsKey(addressValue) -> {
 

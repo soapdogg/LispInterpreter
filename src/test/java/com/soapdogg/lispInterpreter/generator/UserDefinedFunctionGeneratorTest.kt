@@ -1,4 +1,4 @@
-package com.soapdogg.lispInterpreter.function
+package com.soapdogg.lispInterpreter.generator
 
 import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
 import com.soapdogg.lispInterpreter.asserter.UserDefinedFormalParametersAsserter
@@ -7,19 +7,18 @@ import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
 import com.soapdogg.lispInterpreter.datamodels.*
-import com.soapdogg.lispInterpreter.functions.DefunFunction
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 
-class DefunFunctionTest {
+class UserDefinedFunctionGeneratorTest {
     private val params = Mockito.mock(ExpressionListNode::class.java)
 
     private val functionLengthAsserter = Mockito.mock(FunctionLengthAsserter::class.java)
     private val userDefinedFunctionNameAsserter = Mockito.mock(UserDefinedFunctionNameAsserter::class.java)
     private val userDefinedFormalParametersAsserter = Mockito.mock(UserDefinedFormalParametersAsserter::class.java)
 
-    private val defunFunction = DefunFunction(
+    private val defunFunction = UserDefinedFunctionGenerator(
         functionLengthAsserter,
         userDefinedFunctionNameAsserter,
         userDefinedFormalParametersAsserter

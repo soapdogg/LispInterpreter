@@ -23,35 +23,4 @@ enum class FunctionSingleton {
         EvaluatorSingleton.INSTANCE.nodeEvaluator,
         GeneratorSingleton.INSTANCE.nodeGenerator
     )
-    val eqFunction: EqFunction = EqFunction(
-        EvaluatorSingleton.INSTANCE.nodeEvaluator,
-        PrinterSingleton.INSTANCE.listNotationPrinter,
-        GeneratorSingleton.INSTANCE.nodeGenerator
-    )
-    val greaterFunction: GreaterFunction = GreaterFunction(
-        EvaluatorSingleton.INSTANCE.nodeEvaluator,
-        ValueRetrieverSingleton.INSTANCE.numericValueRetriever,
-        GeneratorSingleton.INSTANCE.nodeGenerator
-    )
-    val lessFunction: LessFunction = LessFunction(
-        EvaluatorSingleton.INSTANCE.nodeEvaluator,
-        ValueRetrieverSingleton.INSTANCE.numericValueRetriever,
-        GeneratorSingleton.INSTANCE.nodeGenerator
-    )
-    val minusFunction: MinusFunction = MinusFunction(
-        EvaluatorSingleton.INSTANCE.nodeEvaluator,
-        ValueRetrieverSingleton.INSTANCE.numericValueRetriever,
-        GeneratorSingleton.INSTANCE.nodeGenerator
-    )
-    val plusFunction: PlusFunction = PlusFunction(
-        EvaluatorSingleton.INSTANCE.nodeEvaluator,
-        ValueRetrieverSingleton.INSTANCE.numericValueRetriever,
-        GeneratorSingleton.INSTANCE.nodeGenerator
-    )
-    val timesFunction: TimesFunction = TimesFunction(
-        EvaluatorSingleton.INSTANCE.nodeEvaluator,
-        ValueRetrieverSingleton.INSTANCE.numericValueRetriever,
-        GeneratorSingleton.INSTANCE.nodeGenerator
-    )
-
 }

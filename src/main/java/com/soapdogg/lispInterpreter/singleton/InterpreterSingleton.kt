@@ -12,7 +12,7 @@ enum class InterpreterSingleton {
         ParserSingleton.INSTANCE.rootParser,
         EvaluatorSingleton.INSTANCE.programEvaluator,
         rootNodePartitioner,
-        GeneratorSingleton.INSTANCE.defunFunction,
+        GeneratorSingleton.INSTANCE.userDefinedFunctionGenerator,
         PrinterSingleton.INSTANCE.listNotationPrinter
     )
 

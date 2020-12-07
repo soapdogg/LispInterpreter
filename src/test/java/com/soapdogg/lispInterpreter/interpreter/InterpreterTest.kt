@@ -2,7 +2,7 @@ package com.soapdogg.lispInterpreter.interpreter
 
 import com.soapdogg.lispInterpreter.datamodels.*
 import com.soapdogg.lispInterpreter.evaluator.ProgramEvaluator
-import com.soapdogg.lispInterpreter.functions.DefunFunction
+import com.soapdogg.lispInterpreter.generator.UserDefinedFunctionGenerator
 import com.soapdogg.lispInterpreter.parser.RootParser
 import com.soapdogg.lispInterpreter.printer.ListNotationPrinter
 import com.soapdogg.lispInterpreter.tokenizer.Tokenizer
@@ -17,7 +17,7 @@ class InterpreterTest {
     private val rootParser: RootParser = Mockito.mock(RootParser::class.java)
     private val program: ProgramEvaluator = Mockito.mock(ProgramEvaluator::class.java)
     private val rootNodePartitioner: RootNodePartitioner = Mockito.mock(RootNodePartitioner::class.java)
-    private val defunFunction = Mockito.mock(DefunFunction::class.java)
+    private val defunFunction = Mockito.mock(UserDefinedFunctionGenerator::class.java)
     private val listNotationPrinter: ListNotationPrinter = Mockito.mock(ListNotationPrinter::class.java)
     private val interpreter: Interpreter = Interpreter(
         tokenizer,
