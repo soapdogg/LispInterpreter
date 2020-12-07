@@ -71,6 +71,28 @@ class NodeEvaluator(
                         )[0]
                     }
 
+                    if (addressValue == FunctionNameConstants.COND) {
+                        val condParams = expressionNode.children.subList(1, expressionNode.children.size)
+                        val condExpressionParams = condFunctionParameterAsserter.assertCondFunctionParameters(
+                            condParams
+                        )
+                        condExpressionParams.forEach {
+                            val evaluatedNode = evaluateV2(
+                                it.children.subList(0, 1),
+                                userDefinedFunctions,
+                                variableNameToValueMap
+                            )
+                            if (evaluatedNode[0] is AtomNode && !nodeValueComparator.equalsNil((evaluatedNode[0] as AtomNode).value)) {
+                                return@map evaluateV2(
+                                    it.children.subList(1, 2),
+                                    userDefinedFunctions,
+                                    variableNameToValueMap
+                                )[0]
+                            }
+                        }
+                        throw NotAListException("Error! None of the conditions in the COND function evaluated to true.\n")
+                    }
+
                     functionLengthMap[addressValue]?.let {
                         functionLengthAsserter.assertLengthIsAsExpected(
                             addressValue,
@@ -250,27 +272,7 @@ class NodeEvaluator(
                             val result = numericChildren.reduce { acc, i -> acc * i }
                             nodeGenerator.generateAtomNode(result)
                         }
-                        FunctionNameConstants.COND -> {
-                            val condParams = expressionNode.children.subList(1, expressionNode.children.size)
-                            val condExpressionParams = condFunctionParameterAsserter.assertCondFunctionParameters(
-                                condParams
-                            )
-                            condExpressionParams.forEach {
-                                val evaluatedNode = evaluateV2(
-                                    it.children.subList(0, 1),
-                                    userDefinedFunctions,
-                                    variableNameToValueMap
-                                )
-                                if (evaluatedNode[0] is AtomNode && !nodeValueComparator.equalsNil((evaluatedNode[0] as AtomNode).value)) {
-                                    return@map evaluateV2(
-                                        it.children.subList(1, 2),
-                                        userDefinedFunctions,
-                                        variableNameToValueMap
-                                    )[0]
-                                }
-                            }
-                            throw NotAListException("Error! None of the conditions in the COND function evaluated to true.\n")
-                        }
+
                         else -> throw Exception("Error! Invalid CAR value: $addressValue\n")
                     }
                 }
