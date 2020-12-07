@@ -11,11 +11,13 @@ enum class EvaluatorSingleton {
     val nodeEvaluator: NodeEvaluator = NodeEvaluator(
         atomNodeEvaluator,
         DeterminerSingleton.INSTANCE.userDefinedFunctionNameDeterminer,
-        AsserterSingleton.INSTANCE.functionLengthAsserter
+        AsserterSingleton.INSTANCE.functionLengthAsserter,
+        DeterminerSingleton.INSTANCE.numericStringDeterminer,
+        ComparatorSingleton.INSTANCE.nodeValueComparator,
+        GeneratorSingleton.INSTANCE.nodeGenerator
     )
     val programEvaluator: ProgramEvaluator = ProgramEvaluator(
         AsserterSingleton.INSTANCE.atomRootNodeAsserter,
         nodeEvaluator
     )
-
 }

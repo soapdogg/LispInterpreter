@@ -5,10 +5,6 @@ import com.soapdogg.lispInterpreter.functions.*
 enum class FunctionSingleton {
     INSTANCE;
 
-    val atomFunction: AtomFunction = AtomFunction(
-        EvaluatorSingleton.INSTANCE.nodeEvaluator,
-        GeneratorSingleton.INSTANCE.nodeGenerator
-    )
     val carFunction: CarFunction = CarFunction(
         ValueRetrieverSingleton.INSTANCE.listValueRetriever,
         EvaluatorSingleton.INSTANCE.nodeEvaluator
@@ -37,11 +33,6 @@ enum class FunctionSingleton {
         ValueRetrieverSingleton.INSTANCE.numericValueRetriever,
         GeneratorSingleton.INSTANCE.nodeGenerator
     )
-    val intFunction: IntFunction = IntFunction(
-        EvaluatorSingleton.INSTANCE.nodeEvaluator,
-        DeterminerSingleton.INSTANCE.numericStringDeterminer,
-        GeneratorSingleton.INSTANCE.nodeGenerator
-    )
     val lessFunction: LessFunction = LessFunction(
         EvaluatorSingleton.INSTANCE.nodeEvaluator,
         ValueRetrieverSingleton.INSTANCE.numericValueRetriever,
@@ -52,17 +43,11 @@ enum class FunctionSingleton {
         ValueRetrieverSingleton.INSTANCE.numericValueRetriever,
         GeneratorSingleton.INSTANCE.nodeGenerator
     )
-    val nullFunction: NullFunction = NullFunction(
-        EvaluatorSingleton.INSTANCE.nodeEvaluator,
-        ComparatorSingleton.INSTANCE.nodeValueComparator,
-        GeneratorSingleton.INSTANCE.nodeGenerator
-    )
     val plusFunction: PlusFunction = PlusFunction(
         EvaluatorSingleton.INSTANCE.nodeEvaluator,
         ValueRetrieverSingleton.INSTANCE.numericValueRetriever,
         GeneratorSingleton.INSTANCE.nodeGenerator
     )
-    val quoteFunction: QuoteFunction = QuoteFunction()
     val timesFunction: TimesFunction = TimesFunction(
         EvaluatorSingleton.INSTANCE.nodeEvaluator,
         ValueRetrieverSingleton.INSTANCE.numericValueRetriever,
