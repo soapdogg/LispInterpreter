@@ -46,22 +46,21 @@ class NodeEvaluator(
                 } else {
 
                     userDefinedFunctions[addressValue]?.let { it ->
-                        val params = ExpressionListNode(expressionNode.children.subList(1, expressionNode.children.size))
                         functionLengthAsserter.assertLengthIsAsExpected(
                             addressValue,
-                            it.formalParameters.size,
-                            params
+                            it.formalParameters.size + 1,
+                            expressionNode
                         )
 
                         val newVariables: MutableMap<String, NodeV2> = HashMap(variableNameToValueMap)
+                        val evaluatedAddress = evaluateV2(
+                            expressionNode.children.subList(1, expressionNode.children.size),
+                            userDefinedFunctions,
+                            newVariables
+                        )
+
                         for ((index, formal) in it.formalParameters.withIndex()) {
-                            val a = params.children[index]
-                            val evaluatedAddress = evaluateV2(
-                                listOf(a),
-                                userDefinedFunctions,
-                                newVariables
-                            )
-                            newVariables[formal] = evaluatedAddress[0]
+                            newVariables[formal] = evaluatedAddress[index]
                         }
 
                         return@map evaluateV2(
