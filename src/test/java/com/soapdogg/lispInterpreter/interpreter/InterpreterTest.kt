@@ -1,5 +1,6 @@
 package com.soapdogg.lispInterpreter.interpreter
 
+import com.soapdogg.lispInterpreter.converter.NodeToStackConverter
 import com.soapdogg.lispInterpreter.datamodels.*
 import com.soapdogg.lispInterpreter.evaluator.ProgramEvaluator
 import com.soapdogg.lispInterpreter.generator.UserDefinedFunctionGenerator
@@ -15,6 +16,7 @@ class InterpreterTest {
     private val scanner: Scanner = Mockito.mock(Scanner::class.java)
     private val tokenizer: Tokenizer = Mockito.mock(Tokenizer::class.java)
     private val rootParser: RootParser = Mockito.mock(RootParser::class.java)
+    private val nodeToStackConverter = Mockito.mock(NodeToStackConverter::class.java)
     private val program: ProgramEvaluator = Mockito.mock(ProgramEvaluator::class.java)
     private val rootNodePartitioner: RootNodePartitioner = Mockito.mock(RootNodePartitioner::class.java)
     private val defunFunction = Mockito.mock(UserDefinedFunctionGenerator::class.java)
@@ -22,6 +24,7 @@ class InterpreterTest {
     private val interpreter: Interpreter = Interpreter(
         tokenizer,
         rootParser,
+        nodeToStackConverter,
         program,
         rootNodePartitioner,
         defunFunction,
@@ -66,7 +69,7 @@ class InterpreterTest {
         val value = "value"
         Mockito.`when`(listNotationPrinter.printInListNotation(evaluatedNodes)).thenReturn(value)
 
-        val actual = interpreter.interpret(scanner)
+        val actual = interpreter.interpret(scanner, false)
         Assertions.assertEquals(value, actual)
     }
 }

@@ -9,7 +9,7 @@ object Main {
         try {
             val interpreter = InterpreterSingleton.INSTANCE.interpreter
             val scanner = Scanner(System.`in`)
-            val result = interpreter.interpret(scanner)
+            val result = interpreter.interpret(scanner, false)
             println(result)
         } catch (e: Exception) {
             println(e.message)

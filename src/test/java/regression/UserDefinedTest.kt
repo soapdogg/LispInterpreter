@@ -107,7 +107,7 @@ class UserDefinedTest {
             val interpreter = InterpreterSingleton.INSTANCE.interpreter
             val actual = try {
                 val `in` = getScannerFromFilePath(programFile)
-                interpreter.interpret(`in`)
+                interpreter.interpret(`in`, false)
             } catch (e: Exception) {
                 e.message.toString()
             }
