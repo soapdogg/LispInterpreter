@@ -52,16 +52,15 @@ class NodeEvaluator(
                             expressionNode
                         )
 
-                        val newVariables: MutableMap<String, NodeV2> = HashMap(variableNameToValueMap)
                         val evaluatedAddress = evaluateV2(
                             expressionNode.children.subList(1, expressionNode.children.size),
                             userDefinedFunctions,
-                            newVariables
+                            variableNameToValueMap
                         )
 
-                        for ((index, formal) in it.formalParameters.withIndex()) {
-                            newVariables[formal] = evaluatedAddress[index]
-                        }
+                        val newVariables = variableNameToValueMap + it.formalParameters.withIndex().map{
+                            Pair(it.value, evaluatedAddress[it.index])
+                        }.toMap()
 
                         return@map evaluateV2(
                             listOf(it.body),
