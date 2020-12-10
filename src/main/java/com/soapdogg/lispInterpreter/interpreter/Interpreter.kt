@@ -36,7 +36,9 @@ class Interpreter (
             val evaluatedStacks = program.evaluateStacks(
                 stacks
             )
-            println(evaluatedStacks)
+            evaluatedStacks.forEach {
+                println(it)
+            }
         }
         val evaluatedNodes = program.evaluate(
             partitionedRootNodes.evaluatableNodes,

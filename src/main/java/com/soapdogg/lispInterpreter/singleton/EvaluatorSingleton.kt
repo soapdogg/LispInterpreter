@@ -20,7 +20,10 @@ enum class EvaluatorSingleton {
         GeneratorSingleton.INSTANCE.nodeGenerator,
         AsserterSingleton.INSTANCE.condFunctionParameterAsserter
     )
-    val stackEvaluator: StackEvaluator = StackEvaluator()
+    val stackEvaluator: StackEvaluator = StackEvaluator(
+        GeneratorSingleton.INSTANCE.nodeGenerator,
+        DeterminerSingleton.INSTANCE.numericStringDeterminer
+    )
     val programEvaluator: ProgramEvaluator = ProgramEvaluator(
         AsserterSingleton.INSTANCE.atomRootNodeAsserter,
         nodeEvaluator,

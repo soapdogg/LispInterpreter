@@ -14,7 +14,7 @@ class NodeToStackConverter(
         val result = Stack<AtomNode>()
         if (node is ExpressionListNode) {
             val length = functionLengthDeterminer.determineFunctionLength(node)
-            for (i in 0 until length) {
+            for (i in 0 .. length) {
                 val stack = convertToStack(node.children[i])
                 result.addAll(stack)
             }
