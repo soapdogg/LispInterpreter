@@ -3,6 +3,7 @@ package com.soapdogg.lispInterpreter.singleton
 import com.soapdogg.lispInterpreter.evaluator.AtomNodeEvaluator
 import com.soapdogg.lispInterpreter.evaluator.NodeEvaluator
 import com.soapdogg.lispInterpreter.evaluator.ProgramEvaluator
+import com.soapdogg.lispInterpreter.evaluator.StackEvaluator
 
 enum class EvaluatorSingleton {
     INSTANCE;
@@ -19,8 +20,10 @@ enum class EvaluatorSingleton {
         GeneratorSingleton.INSTANCE.nodeGenerator,
         AsserterSingleton.INSTANCE.condFunctionParameterAsserter
     )
+    val stackEvaluator: StackEvaluator = StackEvaluator()
     val programEvaluator: ProgramEvaluator = ProgramEvaluator(
         AsserterSingleton.INSTANCE.atomRootNodeAsserter,
-        nodeEvaluator
+        nodeEvaluator,
+        stackEvaluator
     )
 }

@@ -31,17 +31,19 @@ class Interpreter (
         val userDefinedFunctions = partitionedRootNodes.defunNodes.map{
             userDefinedFunctionGenerator.evaluateLispFunction(it) }.toMap()
 
-        val stacks = partitionedRootNodes.evaluatableNodes.map { nodeToStackConverter.convertToStack(it) }
-        print(stacks)
-        val evaluatedNodes = if (useStackEval) {
-            partitionedRootNodes.evaluatableNodes
-        } else {
-            program.evaluate(
-                partitionedRootNodes.evaluatableNodes,
-                userDefinedFunctions,
-                HashMap()
+        if (useStackEval) {
+            val stacks = partitionedRootNodes.evaluatableNodes.map { nodeToStackConverter.convertToStack(it) }
+            val evaluatedStacks = program.evaluateStacks(
+                stacks
             )
+            println(evaluatedStacks)
         }
+        val evaluatedNodes = program.evaluate(
+            partitionedRootNodes.evaluatableNodes,
+            userDefinedFunctions,
+            HashMap()
+        )
+
         return listNotationPrinter.printInListNotation(evaluatedNodes)
     }
 }
