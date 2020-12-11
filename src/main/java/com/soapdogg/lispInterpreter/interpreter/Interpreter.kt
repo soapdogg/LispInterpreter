@@ -39,7 +39,7 @@ class Interpreter (
         )
 
         if (useStackEval) {
-            val stacks = partitionedRootNodes.evaluatableNodes.map { nodeToStackConverter.convertToStack(it) }
+            val stacks = nodeToStackConverter.convertTokenQueueToStack(tokens)
             val evaluatedStacks = program.evaluateStacks(
                 stacks
             )

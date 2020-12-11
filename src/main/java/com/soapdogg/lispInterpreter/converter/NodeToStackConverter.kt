@@ -3,6 +3,7 @@ package com.soapdogg.lispInterpreter.converter
 import com.soapdogg.lispInterpreter.datamodels.AtomNode
 import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
+import com.soapdogg.lispInterpreter.datamodels.Token
 import com.soapdogg.lispInterpreter.determiner.FunctionLengthDeterminer
 import java.util.*
 
@@ -20,6 +21,14 @@ class NodeToStackConverter(
             }
         } else {
             result.add(node as AtomNode)
+        }
+        return result
+    }
+
+    fun convertTokenQueueToStack(tokenQueue: List<Token>): Stack<Token> {
+        val result = Stack<Token>()
+        tokenQueue.forEach {
+            result.push(it)
         }
         return result
     }

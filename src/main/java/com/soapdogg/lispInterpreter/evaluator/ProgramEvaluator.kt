@@ -3,6 +3,7 @@ package com.soapdogg.lispInterpreter.evaluator
 import com.soapdogg.lispInterpreter.asserter.AtomRootNodeAsserter
 import com.soapdogg.lispInterpreter.datamodels.AtomNode
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
+import com.soapdogg.lispInterpreter.datamodels.Token
 import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
 import java.util.*
 
@@ -29,14 +30,8 @@ class ProgramEvaluator(
     }
 
     fun evaluateStacks(
-        stacks: List<Stack<AtomNode>>
-    ):List<Stack<AtomNode>> {
-        return stacks.map {
-            if (it.size == 1) {
-                atomRootNodeAsserter.assertAtomRootNode(it[0])
-                return@map it
-            }
-            stackEvaluator.evaluate(it)
-        }
+        stack: Stack<Token>
+    ): Stack<Token> {
+        return stackEvaluator.evaluate(stack)
     }
 }

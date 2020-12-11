@@ -141,7 +141,7 @@ class InterpreterTest {
     //EQ TESTS
     @Test
     fun project3EqValidTest() {
-        interpreterTest("data/input/project3/eq/valid.lisp", "data/expected/project3/eq/valid.txt", true)
+        interpreterTest("data/input/project3/eq/valid.lisp", "data/expected/project3/eq/valid.txt", false)
     }
 
     @Test
@@ -162,7 +162,7 @@ class InterpreterTest {
     //GREATER TESTS
     @Test
     fun project3GreaterValidTest() {
-        interpreterTest("data/input/project3/greater/valid.lisp", "data/expected/project3/greater/valid.txt", true)
+        interpreterTest("data/input/project3/greater/valid.lisp", "data/expected/project3/greater/valid.txt", false)
     }
 
     @Test
@@ -241,7 +241,7 @@ class InterpreterTest {
     //NULL TESTS
     @Test
     fun project3NullValidTest() {
-        interpreterTest("data/input/project3/null/valid.lisp", "data/expected/project3/null/valid.txt", true)
+        interpreterTest("data/input/project3/null/valid.lisp", "data/expected/project3/null/valid.txt", false)
     }
 
     @Test
@@ -278,7 +278,7 @@ class InterpreterTest {
     //QUOTE TESTS
     @Test
     fun project3QuoteValidTest() {
-        interpreterTest("data/input/project3/quote/valid.lisp", "data/expected/project3/quote/valid.txt", true)
+        interpreterTest("data/input/project3/quote/valid.lisp", "data/expected/project3/quote/valid.txt", false)
     }
 
     @Test

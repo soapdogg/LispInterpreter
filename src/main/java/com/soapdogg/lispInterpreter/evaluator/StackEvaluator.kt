@@ -1,11 +1,10 @@
 package com.soapdogg.lispInterpreter.evaluator
 
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
-import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
-import com.soapdogg.lispInterpreter.datamodels.AtomNode
+import com.soapdogg.lispInterpreter.datamodels.Token
+import com.soapdogg.lispInterpreter.datamodels.TokenKind
 import com.soapdogg.lispInterpreter.determiner.NumericStringDeterminer
 import com.soapdogg.lispInterpreter.generator.NodeGenerator
-import com.soapdogg.lispInterpreter.valueretriver.NumericValueRetriever
 import java.util.*
 
 class StackEvaluator (
@@ -14,121 +13,45 @@ class StackEvaluator (
 ){
 
     fun evaluate(
-        stack: Stack<AtomNode>
-    ): Stack<AtomNode> {
-        val programStack = Stack<AtomNode>()
-        while(stack.isNotEmpty()) {
-            val head = stack.pop()
-
-            val value = head.value
-            if (value == FunctionNameConstants.ATOM) {
-                val first = programStack.pop()
-                if (programStack.peek().value == ReservedValuesConstants.NIL) {
-                    programStack.pop()
-                    val resultingNode = nodeGenerator.generateAtomNode(true)
-                    programStack.push(resultingNode)
-                } else {
-                    while (programStack.peek().value != ReservedValuesConstants.NIL) {
-                        programStack.pop()
-                    }
-                    programStack.pop()
-                    val resultingNode = nodeGenerator.generateAtomNode(false)
-                    programStack.push(resultingNode)
+        tokenStack: Stack<Token>
+    ): Stack<Token> {
+        val resultStack = Stack<Token>()
+        while(tokenStack.isNotEmpty()) {
+            val current = tokenStack.peek()
+            if (current.tokenKind == TokenKind.CLOSE_TOKEN) {
+                val innerStack = Stack<Token>()
+                while(tokenStack.peek().tokenKind != TokenKind.OPEN_TOKEN) {
+                    innerStack.push(tokenStack.pop())
                 }
-            }
-            else if (value == FunctionNameConstants.INT) {
-                val first = programStack.pop()
-                if (programStack.peek().value == ReservedValuesConstants.NIL) {
-                    programStack.pop()
-                    val isFirstNumeric = numericStringDeterminer.isStringNumeric(first.value)
-                    val resultingNode = nodeGenerator.generateAtomNode(isFirstNumeric)
-                    programStack.push(resultingNode)
-                } else {
-                    while (programStack.peek().value != ReservedValuesConstants.NIL) {
-                        programStack.pop()
-                    }
-                    programStack.pop()
-                    val resultingNode = nodeGenerator.generateAtomNode(false)
-                    programStack.push(resultingNode)
+                tokenStack.pop() // remove OpenToken
+                val evaluatedExpr = performOperation(innerStack)
+                while(evaluatedExpr.isNotEmpty()) {
+                    tokenStack.push(evaluatedExpr.pop())
                 }
-            }
-            else if (value == FunctionNameConstants.NULL) {
-                val first = programStack.pop()
-                if (programStack.peek().value == ReservedValuesConstants.NIL) {
-                    programStack.pop()
-                    val isNil = first.value == ReservedValuesConstants.NIL
-                    val resultingNode = nodeGenerator.generateAtomNode(isNil)
-                    programStack.push(resultingNode)
-                } else {
-                    while (programStack.peek().value != ReservedValuesConstants.NIL) {
-                        programStack.pop()
-                    }
-                    programStack.pop()
-                    val resultingNode = nodeGenerator.generateAtomNode(false)
-                    programStack.push(resultingNode)
-                }
-            }
-            else if (value == FunctionNameConstants.QUOTE) {
-                val tempStack = Stack<AtomNode>()
-                val first = programStack.pop()
-                tempStack.push(first)
-                while (programStack.peek().value != ReservedValuesConstants.NIL) {
-                    val t = programStack.pop()
-                    tempStack.push(t)
-                }
-                val nil = programStack.pop()
-                while(tempStack.isNotEmpty()) {
-                    val t = tempStack.pop()
-                    programStack.push(t)
-                }
-            }
-            else if (value == FunctionNameConstants.EQ) {
-                val first = programStack.pop()
-                val second = programStack.pop()
-                val nil = programStack.pop()
-                val result = first.value == second.value
-                val resultingNode = nodeGenerator.generateAtomNode(result)
-                programStack.push(resultingNode)
-            } else if (value == FunctionNameConstants.GREATER) {
-                val first = programStack.pop()
-                val second = programStack.pop()
-                val nil = programStack.pop()
-                val result = first.value.toInt() > second.value.toInt()
-                val resultingNode = nodeGenerator.generateAtomNode(result)
-                programStack.push(resultingNode)
-            } else if (value == FunctionNameConstants.LESS) {
-                val first = programStack.pop()
-                val second = programStack.pop()
-                val result = first.value.toInt() < second.value.toInt()
-                val resultingNode = nodeGenerator.generateAtomNode(result)
-                programStack.push(resultingNode)
-            } else if (value == FunctionNameConstants.MINUS) {
-                val first = programStack.pop()
-                val second = programStack.pop()
-                val nil = programStack.pop()
-                val result = first.value.toInt() - second.value.toInt()
-                val resultingNode = nodeGenerator.generateAtomNode(result)
-                programStack.push(resultingNode)
-            } else if (value == FunctionNameConstants.PLUS) {
-                val first = programStack.pop()
-                val second = programStack.pop()
-                val nil = programStack.pop()
-                val result = first.value.toInt() + second.value.toInt()
-                val resultingNode = nodeGenerator.generateAtomNode(result)
-                programStack.push(resultingNode)
-            } else if (value == FunctionNameConstants.TIMES) {
-                val first = programStack.pop()
-                val second = programStack.pop()
-                val nil = programStack.pop()
-                val result = first.value.toInt() * second.value.toInt()
-                val resultingNode = nodeGenerator.generateAtomNode(result)
-                programStack.push(resultingNode)
-            }
-            else {
-                programStack.push(head)
+            } else {
+                resultStack.push(tokenStack.pop())
             }
         }
-        programStack.reverse()
-        return programStack
+        return resultStack
+    }
+
+    fun performOperation(
+        s: Stack<Token>
+    ): Stack<Token> {
+        val addressValue = s.pop()
+        if (addressValue.value == FunctionNameConstants.MINUS) {
+            val first = s.pop().value.toInt()
+            val second = s.pop().value.toInt()
+            s.pop()
+            val result = first - second
+            s.push(Token(TokenKind.NUMERIC_TOKEN, result.toString()))
+        } else if (addressValue.value == FunctionNameConstants.TIMES) {
+            val first = s.pop().value.toInt()
+            val second = s.pop().value.toInt()
+            s.pop()
+            val result = first * second
+            s.push(Token(TokenKind.NUMERIC_TOKEN, result.toString()))
+        }
+        return s
     }
 }
