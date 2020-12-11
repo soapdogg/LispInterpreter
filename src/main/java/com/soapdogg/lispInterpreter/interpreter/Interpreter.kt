@@ -1,5 +1,6 @@
 package com.soapdogg.lispInterpreter.interpreter
 
+import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
 import com.soapdogg.lispInterpreter.converter.NodeToStackConverter
 import com.soapdogg.lispInterpreter.evaluator.ProgramEvaluator
 import com.soapdogg.lispInterpreter.generator.UserDefinedFunctionGenerator
@@ -15,6 +16,7 @@ class Interpreter (
     private val program: ProgramEvaluator,
     private val rootNodePartitioner: RootNodePartitioner,
     private val userDefinedFunctionGenerator: UserDefinedFunctionGenerator,
+    private val functionLengthAsserter: FunctionLengthAsserter,
     private val listNotationPrinter: ListNotationPrinter
 ){
 
@@ -30,6 +32,11 @@ class Interpreter (
         )
         val userDefinedFunctions = partitionedRootNodes.defunNodes.map{
             userDefinedFunctionGenerator.evaluateLispFunction(it) }.toMap()
+
+        functionLengthAsserter.assertLengthIsAsExpected(
+            partitionedRootNodes.evaluatableNodes,
+            userDefinedFunctions
+        )
 
         if (useStackEval) {
             val stacks = partitionedRootNodes.evaluatableNodes.map { nodeToStackConverter.convertToStack(it) }

@@ -1,14 +1,13 @@
 package com.soapdogg.lispInterpreter.asserter
 
 import com.soapdogg.lispInterpreter.comparator.NodeValueComparator
-import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants
-import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
-import com.soapdogg.lispInterpreter.datamodels.*
+import com.soapdogg.lispInterpreter.datamodels.AtomNode
+import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
+import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.exceptions.NotAListException
 
 class CondFunctionParameterAsserter(
-    private val nodeValueComparator: NodeValueComparator,
-    private val functionLengthAsserter: FunctionLengthAsserter
+    private val nodeValueComparator: NodeValueComparator
 ) {
 
     fun assertCondFunctionParameters(
@@ -19,12 +18,6 @@ class CondFunctionParameterAsserter(
                 if (!nodeValueComparator.equalsNil(it.value)) {
                     throw NotAListException("Error! COND parameter: ${it.value} is not a list!${'\n'}")
                 }
-            } else {
-                functionLengthAsserter.assertLengthIsAsExpected(
-                    FunctionNameConstants.COND,
-                    FunctionLengthConstants.TWO,
-                    it
-                )
             }
             it
         }.filterIsInstance<ExpressionListNode>()

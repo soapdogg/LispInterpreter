@@ -31,11 +31,12 @@ class NodeToStackConverterTest {
         Mockito.`when`(functionLengthDeterminer.determineFunctionLength(node)).thenReturn(length)
 
         val child = Mockito.mock(AtomNode::class.java)
-        Mockito.`when`(node.children).thenReturn(listOf(child))
+        val nil = Mockito.mock(AtomNode::class.java)
+        Mockito.`when`(node.children).thenReturn(listOf(child, nil))
 
         val actual = nodeToStackConverter.convertToStack(node)
 
-        Assertions.assertEquals(1, actual.size)
+        Assertions.assertEquals(2, actual.size)
         Assertions.assertEquals(child, actual[0])
     }
 }

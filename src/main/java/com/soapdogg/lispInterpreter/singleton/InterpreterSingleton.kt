@@ -14,6 +14,7 @@ enum class InterpreterSingleton {
         EvaluatorSingleton.INSTANCE.programEvaluator,
         rootNodePartitioner,
         GeneratorSingleton.INSTANCE.userDefinedFunctionGenerator,
+        AsserterSingleton.INSTANCE.functionLengthAsserter,
         PrinterSingleton.INSTANCE.listNotationPrinter
     )
 

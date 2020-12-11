@@ -1,7 +1,6 @@
 package com.soapdogg.lispInterpreter.evaluator
 
 import com.soapdogg.lispInterpreter.asserter.CondFunctionParameterAsserter
-import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
 import com.soapdogg.lispInterpreter.comparator.NodeValueComparator
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.constants.FunctionsConstants.functionLengthMap
@@ -16,7 +15,6 @@ import com.soapdogg.lispInterpreter.valueretriver.NumericValueRetriever
 
 class NodeEvaluator(
     private val atomNodeEvaluator: AtomNodeEvaluator,
-    private val functionLengthAsserter: FunctionLengthAsserter,
     private val numericStringDeterminer: NumericStringDeterminer,
     private val listValueRetriever: ListValueRetriever,
     private val listNotationPrinter: ListNotationPrinter,
@@ -46,12 +44,6 @@ class NodeEvaluator(
                 } else {
 
                     userDefinedFunctions[addressValue]?.let { it ->
-                        functionLengthAsserter.assertLengthIsAsExpected(
-                            addressValue,
-                            it.formalParameters.size + 1,
-                            expressionNode
-                        )
-
                         val evaluatedAddress = evaluateV2(
                             expressionNode.children.subList(1, expressionNode.children.size),
                             userDefinedFunctions,
@@ -92,11 +84,6 @@ class NodeEvaluator(
                     }
 
                     functionLengthMap[addressValue]?.let {
-                        functionLengthAsserter.assertLengthIsAsExpected(
-                            addressValue,
-                            it,
-                            expressionNode
-                        )
 
                         if (addressValue == FunctionNameConstants.QUOTE) {
                             return@map expressionNode.children[1]

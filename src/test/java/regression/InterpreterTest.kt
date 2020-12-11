@@ -304,7 +304,7 @@ class InterpreterTest {
 
     @Test
     fun project3TimesInvalid2Test() {
-        interpreterTest("data/input/project3/times/invalid2.lisp", "data/expected/project3/times/invalid2.txt", false)
+        interpreterTest("data/input/project3/times/invalid2.lisp", "data/expected/project3/times/invalid2.txt", true)
     }
 
     @Test

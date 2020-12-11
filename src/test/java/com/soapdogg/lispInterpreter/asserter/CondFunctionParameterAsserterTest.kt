@@ -13,10 +13,8 @@ import org.mockito.Mockito
 
 class CondFunctionParameterAsserterTest {
     private val nodeValueComparator = Mockito.mock(NodeValueComparator::class.java)
-    private val functionLengthAsserter = Mockito.mock(FunctionLengthAsserter::class.java)
     private val condFunctionParameterAsserter = CondFunctionParameterAsserter(
-        nodeValueComparator,
-        functionLengthAsserter
+        nodeValueComparator
     )
 
     @Test
@@ -29,7 +27,6 @@ class CondFunctionParameterAsserterTest {
                 listOf(params)
             )
         }
-        Mockito.verifyNoInteractions(functionLengthAsserter)
     }
 
     @Test
@@ -44,7 +41,6 @@ class CondFunctionParameterAsserterTest {
                 listOf(params)
             )
         }
-        Mockito.verifyNoInteractions(functionLengthAsserter)
     }
 
     @Test
@@ -56,10 +52,5 @@ class CondFunctionParameterAsserterTest {
                 listOf(params)
             )
         }
-        Mockito.verify(functionLengthAsserter).assertLengthIsAsExpected(
-            FunctionNameConstants.COND,
-            FunctionLengthConstants.TWO,
-            params
-        )
     }
 }

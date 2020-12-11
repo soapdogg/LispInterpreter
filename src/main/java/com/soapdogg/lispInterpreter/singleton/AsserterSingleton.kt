@@ -18,8 +18,7 @@ enum class AsserterSingleton {
 
     init {
         condFunctionParameterAsserter = CondFunctionParameterAsserter(
-            ComparatorSingleton.INSTANCE.nodeValueComparator,
-            functionLengthAsserter
+            ComparatorSingleton.INSTANCE.nodeValueComparator
         )
         userDefinedFormalParametersAsserter = UserDefinedFormalParametersAsserter(
             InvalidUserDefinedNameConstants.InvalidNames
