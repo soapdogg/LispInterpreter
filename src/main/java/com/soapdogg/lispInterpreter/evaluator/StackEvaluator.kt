@@ -93,9 +93,13 @@ class StackEvaluator (
             FunctionNameConstants.EQ -> {
                 val first = s.pop().value
                 val second = s.pop().value
-                s.pop()
+                s.pop() //closeToken
                 val result = first == second
-                s.push(Token(TokenKind.NUMERIC_TOKEN, result.toString())) //todo
+                if (result) {
+                    s.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.T))
+                } else {
+                    s.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.NIL))
+                }
             }
             FunctionNameConstants.GREATER -> {
                 val first = s.pop().value.toInt()
