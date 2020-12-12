@@ -39,18 +39,49 @@ class StackEvaluator (
         s: Stack<Token>
     ): Stack<Token> {
         val addressValue = s.pop()
-        if (addressValue.value == FunctionNameConstants.MINUS) {
-            val first = s.pop().value.toInt()
-            val second = s.pop().value.toInt()
-            s.pop()
-            val result = first - second
-            s.push(Token(TokenKind.NUMERIC_TOKEN, result.toString()))
-        } else if (addressValue.value == FunctionNameConstants.TIMES) {
-            val first = s.pop().value.toInt()
-            val second = s.pop().value.toInt()
-            s.pop()
-            val result = first * second
-            s.push(Token(TokenKind.NUMERIC_TOKEN, result.toString()))
+        when (addressValue.value) {
+            FunctionNameConstants.EQ -> {
+                val first = s.pop().value
+                val second = s.pop().value
+                s.pop()
+                val result = first == second
+                s.push(Token(TokenKind.NUMERIC_TOKEN, result.toString())) //todo
+            }
+            FunctionNameConstants.GREATER -> {
+                val first = s.pop().value.toInt()
+                val second = s.pop().value.toInt()
+                s.pop()
+                val result = first > second
+                s.push(Token(TokenKind.NUMERIC_TOKEN, result.toString()))
+            }
+            FunctionNameConstants.LESS -> {
+                val first = s.pop().value.toInt()
+                val second = s.pop().value.toInt()
+                s.pop()
+                val result = first < second
+                s.push(Token(TokenKind.NUMERIC_TOKEN, result.toString()))
+            }
+            FunctionNameConstants.MINUS -> {
+                val first = s.pop().value.toInt()
+                val second = s.pop().value.toInt()
+                s.pop()
+                val result = first - second
+                s.push(Token(TokenKind.NUMERIC_TOKEN, result.toString()))
+            }
+            FunctionNameConstants.PLUS -> {
+                val first = s.pop().value.toInt()
+                val second = s.pop().value.toInt()
+                s.pop()
+                val result = first + second
+                s.push(Token(TokenKind.NUMERIC_TOKEN, result.toString()))
+            }
+            FunctionNameConstants.TIMES -> {
+                val first = s.pop().value.toInt()
+                val second = s.pop().value.toInt()
+                s.pop()
+                val result = first * second
+                s.push(Token(TokenKind.NUMERIC_TOKEN, result.toString()))
+            }
         }
         return s
     }

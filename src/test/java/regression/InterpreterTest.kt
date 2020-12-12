@@ -15,12 +15,12 @@ class InterpreterTest {
 
     @Test
     fun project3AtomInvalid1Test() {
-        interpreterTest("data/input/project3/atom/invalid1.lisp", "data/expected/project3/atom/invalid1.txt", false)
+        interpreterTest("data/input/project3/atom/invalid1.lisp", "data/expected/project3/atom/invalid1.txt", true)
     }
 
     @Test
     fun project3AtomInvalid2Test() {
-        interpreterTest("data/input/project3/atom/invalid2.lisp", "data/expected/project3/atom/invalid2.txt", false)
+        interpreterTest("data/input/project3/atom/invalid2.lisp", "data/expected/project3/atom/invalid2.txt", true)
     }
 
     //ATOMIC TESTS
@@ -31,7 +31,7 @@ class InterpreterTest {
 
     @Test
     fun project3AtomicInvalid1Test() {
-        interpreterTest("data/input/project3/atomic/invalid1.lisp", "data/expected/project3/atomic/invalid1.txt", false)
+        interpreterTest("data/input/project3/atomic/invalid1.lisp", "data/expected/project3/atomic/invalid1.txt", true)
     }
 
     @Test
@@ -57,12 +57,12 @@ class InterpreterTest {
 
     @Test
     fun project3CarInvalid1Test() {
-        interpreterTest("data/input/project3/car/invalid1.lisp", "data/expected/project3/car/invalid1.txt", false)
+        interpreterTest("data/input/project3/car/invalid1.lisp", "data/expected/project3/car/invalid1.txt", true)
     }
 
     @Test
     fun project3CarInvalid2Test() {
-        interpreterTest("data/input/project3/car/invalid2.lisp", "data/expected/project3/car/invalid2.txt", false)
+        interpreterTest("data/input/project3/car/invalid2.lisp", "data/expected/project3/car/invalid2.txt", true)
     }
 
     @Test
@@ -83,12 +83,12 @@ class InterpreterTest {
 
     @Test
     fun project3CdrInvalid1Test() {
-        interpreterTest("data/input/project3/cdr/invalid1.lisp", "data/expected/project3/cdr/invalid1.txt", false)
+        interpreterTest("data/input/project3/cdr/invalid1.lisp", "data/expected/project3/cdr/invalid1.txt", true)
     }
 
     @Test
     fun project3CdrInvalid2Test() {
-        interpreterTest("data/input/project3/cdr/invalid2.lisp", "data/expected/project3/cdr/invalid2.txt", false)
+        interpreterTest("data/input/project3/cdr/invalid2.lisp", "data/expected/project3/cdr/invalid2.txt", true)
     }
 
     @Test
@@ -109,7 +109,7 @@ class InterpreterTest {
 
     @Test
     fun project3CondInvalid2Test() {
-        interpreterTest("data/input/project3/cond/invalid2.lisp", "data/expected/project3/cond/invalid2.txt", false)
+        interpreterTest("data/input/project3/cond/invalid2.lisp", "data/expected/project3/cond/invalid2.txt", true)
     }
 
     @Test
@@ -119,7 +119,7 @@ class InterpreterTest {
 
     @Test
     fun project3CondInvalid4Test() {
-        interpreterTest("data/input/project3/cond/invalid4.lisp", "data/expected/project3/cond/invalid4.txt", false)
+        interpreterTest("data/input/project3/cond/invalid4.lisp", "data/expected/project3/cond/invalid4.txt", true)
     }
 
     //CONS TESTS
@@ -130,12 +130,12 @@ class InterpreterTest {
 
     @Test
     fun project3ConsInvalid1Test() {
-        interpreterTest("data/input/project3/cons/invalid1.lisp", "data/expected/project3/cons/invalid1.txt", false)
+        interpreterTest("data/input/project3/cons/invalid1.lisp", "data/expected/project3/cons/invalid1.txt", true)
     }
 
     @Test
     fun project3ConsInvalid2Test() {
-        interpreterTest("data/input/project3/cons/invalid2.lisp", "data/expected/project3/cons/invalid2.txt", false)
+        interpreterTest("data/input/project3/cons/invalid2.lisp", "data/expected/project3/cons/invalid2.txt", true)
     }
 
     //EQ TESTS
@@ -146,12 +146,12 @@ class InterpreterTest {
 
     @Test
     fun project3EqInvalid1Test() {
-        interpreterTest("data/input/project3/eq/invalid1.lisp", "data/expected/project3/eq/invalid1.txt", false)
+        interpreterTest("data/input/project3/eq/invalid1.lisp", "data/expected/project3/eq/invalid1.txt", true)
     }
 
     @Test
     fun project3EqInvalid2Test() {
-        interpreterTest("data/input/project3/eq/invalid2.lisp", "data/expected/project3/eq/invalid2.txt", false)
+        interpreterTest("data/input/project3/eq/invalid2.lisp", "data/expected/project3/eq/invalid2.txt", true)
     }
 
     @Test
@@ -167,12 +167,12 @@ class InterpreterTest {
 
     @Test
     fun project3GreaterInvalid1Test() {
-        interpreterTest("data/input/project3/greater/invalid1.lisp", "data/expected/project3/greater/invalid1.txt", false)
+        interpreterTest("data/input/project3/greater/invalid1.lisp", "data/expected/project3/greater/invalid1.txt", true)
     }
 
     @Test
     fun project3GreaterInvalid2Test() {
-        interpreterTest("data/input/project3/greater/invalid2.lisp", "data/expected/project3/greater/invalid2.txt", false)
+        interpreterTest("data/input/project3/greater/invalid2.lisp", "data/expected/project3/greater/invalid2.txt", true)
     }
 
     @Test
@@ -188,12 +188,12 @@ class InterpreterTest {
 
     @Test
     fun project3IntInvalid1Test() {
-        interpreterTest("data/input/project3/int/invalid1.lisp", "data/expected/project3/int/invalid1.txt", false)
+        interpreterTest("data/input/project3/int/invalid1.lisp", "data/expected/project3/int/invalid1.txt", true)
     }
 
     @Test
     fun project3IntInvalid2Test() {
-        interpreterTest("data/input/project3/int/invalid2.lisp", "data/expected/project3/int/invalid2.txt", false)
+        interpreterTest("data/input/project3/int/invalid2.lisp", "data/expected/project3/int/invalid2.txt", true)
     }
 
     //LESS TESTS
@@ -204,12 +204,12 @@ class InterpreterTest {
 
     @Test
     fun project3LessInvalid1Test() {
-        interpreterTest("data/input/project3/less/invalid1.lisp", "data/expected/project3/less/invalid1.txt", false)
+        interpreterTest("data/input/project3/less/invalid1.lisp", "data/expected/project3/less/invalid1.txt", true)
     }
 
     @Test
     fun project3LessInvalid2Test() {
-        interpreterTest("data/input/project3/less/invalid2.lisp", "data/expected/project3/less/invalid2.txt", false)
+        interpreterTest("data/input/project3/less/invalid2.lisp", "data/expected/project3/less/invalid2.txt", true)
     }
 
     @Test
@@ -225,12 +225,12 @@ class InterpreterTest {
 
     @Test
     fun project3MinusInvalid1Test() {
-        interpreterTest("data/input/project3/minus/invalid1.lisp", "data/expected/project3/minus/invalid1.txt", false)
+        interpreterTest("data/input/project3/minus/invalid1.lisp", "data/expected/project3/minus/invalid1.txt", true)
     }
 
     @Test
     fun project3MinusInvalid2Test() {
-        interpreterTest("data/input/project3/minus/invalid2.lisp", "data/expected/project3/minus/invalid2.txt", false)
+        interpreterTest("data/input/project3/minus/invalid2.lisp", "data/expected/project3/minus/invalid2.txt", true)
     }
 
     @Test
@@ -246,12 +246,12 @@ class InterpreterTest {
 
     @Test
     fun project3NullInvalid1Test() {
-        interpreterTest("data/input/project3/null/invalid1.lisp", "data/expected/project3/null/invalid1.txt", false)
+        interpreterTest("data/input/project3/null/invalid1.lisp", "data/expected/project3/null/invalid1.txt", true)
     }
 
     @Test
     fun project3NullInvalid2Test() {
-        interpreterTest("data/input/project3/null/invalid2.lisp", "data/expected/project3/null/invalid2.txt", false)
+        interpreterTest("data/input/project3/null/invalid2.lisp", "data/expected/project3/null/invalid2.txt", true)
     }
 
     //PLUS TESTS
@@ -262,12 +262,12 @@ class InterpreterTest {
 
     @Test
     fun project3PlusInvalid1Test() {
-        interpreterTest("data/input/project3/plus/invalid1.lisp", "data/expected/project3/plus/invalid1.txt", false)
+        interpreterTest("data/input/project3/plus/invalid1.lisp", "data/expected/project3/plus/invalid1.txt", true)
     }
 
     @Test
     fun project3PlusInvalid2Test() {
-        interpreterTest("data/input/project3/plus/invalid2.lisp", "data/expected/project3/plus/invalid2.txt", false)
+        interpreterTest("data/input/project3/plus/invalid2.lisp", "data/expected/project3/plus/invalid2.txt", true)
     }
 
     @Test
@@ -283,12 +283,12 @@ class InterpreterTest {
 
     @Test
     fun project3QuoteInvalid1Test() {
-        interpreterTest("data/input/project3/quote/invalid1.lisp", "data/expected/project3/quote/invalid1.txt", false)
+        interpreterTest("data/input/project3/quote/invalid1.lisp", "data/expected/project3/quote/invalid1.txt", true)
     }
 
     @Test
     fun project3QuoteInvalid2Test() {
-        interpreterTest("data/input/project3/quote/invalid2.lisp", "data/expected/project3/quote/invalid2.txt", false)
+        interpreterTest("data/input/project3/quote/invalid2.lisp", "data/expected/project3/quote/invalid2.txt", true)
     }
 
     //TIMES TESTS
@@ -299,7 +299,7 @@ class InterpreterTest {
 
     @Test
     fun project3TimesInvalid1Test() {
-        interpreterTest("data/input/project3/times/invalid1.lisp", "data/expected/project3/times/invalid1.txt", false)
+        interpreterTest("data/input/project3/times/invalid1.lisp", "data/expected/project3/times/invalid1.txt", true)
     }
 
     @Test
