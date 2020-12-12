@@ -1,6 +1,7 @@
 package com.soapdogg.lispInterpreter.evaluator
 
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
+import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
 import com.soapdogg.lispInterpreter.datamodels.Token
 import com.soapdogg.lispInterpreter.datamodels.TokenKind
 import com.soapdogg.lispInterpreter.determiner.NumericStringDeterminer
@@ -40,6 +41,55 @@ class StackEvaluator (
     ): Stack<Token> {
         val addressValue = s.pop()
         when (addressValue.value) {
+            FunctionNameConstants.ATOM -> {
+                s.pop() // atom
+                val tempStack = Stack<Token>()
+                while(s.peek().tokenKind != TokenKind.CLOSE_TOKEN) {
+                    tempStack.push(s.pop())
+                }
+                s.pop() //closeToken
+                if (tempStack.isEmpty()) {
+                    s.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.T))
+                } else {
+                    s.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.NIL))
+                }
+            }
+            FunctionNameConstants.INT -> {
+                val int = s.pop() // int
+                val tempStack = Stack<Token>()
+                while(s.peek().tokenKind != TokenKind.CLOSE_TOKEN) {
+                    tempStack.push(s.pop())
+                }
+                s.pop() //closeToken
+                if (tempStack.isEmpty() && int.tokenKind == TokenKind.NUMERIC_TOKEN) {
+                    s.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.T))
+                } else {
+                    s.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.NIL))
+                }
+            }
+            FunctionNameConstants.NULL -> {
+                val nil = s.pop() // null
+                val tempStack = Stack<Token>()
+                while(s.peek().tokenKind != TokenKind.CLOSE_TOKEN) {
+                    tempStack.push(s.pop())
+                }
+                s.pop() //closeToken
+                if (tempStack.isEmpty() && nil.value == ReservedValuesConstants.NIL) {
+                    s.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.T))
+                } else {
+                    s.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.NIL))
+                }
+            }
+            FunctionNameConstants.QUOTE -> {
+                val tempStack = Stack<Token>()
+                while(s.peek().tokenKind != TokenKind.CLOSE_TOKEN) {
+                    tempStack.push(s.pop())
+                }
+                s.pop() //closeToken
+                while(tempStack.isNotEmpty()) {
+                    s.push(tempStack.pop())
+                }
+            }
             FunctionNameConstants.EQ -> {
                 val first = s.pop().value
                 val second = s.pop().value
@@ -81,6 +131,17 @@ class StackEvaluator (
                 s.pop()
                 val result = first * second
                 s.push(Token(TokenKind.NUMERIC_TOKEN, result.toString()))
+            }
+            else -> {
+                val tempStack = Stack<Token>()
+                tempStack.push(addressValue)
+                while(s.peek().tokenKind != TokenKind.CLOSE_TOKEN) {
+                    tempStack.push(s.pop())
+                }
+                val close = s.pop() // closeToken
+                while(tempStack.isNotEmpty()) {
+                    s.push(tempStack.pop())
+                }
             }
         }
         return s

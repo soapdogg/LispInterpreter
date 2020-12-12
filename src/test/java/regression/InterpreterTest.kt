@@ -10,7 +10,7 @@ class InterpreterTest {
     //ATOM TESTS
     @Test
     fun project3AtomValidTest() {
-        interpreterTest("data/input/project3/atom/valid.lisp", "data/expected/project3/atom/valid.txt", false)
+        interpreterTest("data/input/project3/atom/valid.lisp", "data/expected/project3/atom/valid.txt", true)
     }
 
     @Test
@@ -36,7 +36,7 @@ class InterpreterTest {
 
     @Test
     fun project3AtomicInvalid2Test() {
-        interpreterTest("data/input/project3/atomic/invalid2.lisp", "data/expected/project3/atomic/invalid2.txt", false)
+        interpreterTest("data/input/project3/atomic/invalid2.lisp", "data/expected/project3/atomic/invalid2.txt", true)
     }
 
     @Test
@@ -46,7 +46,7 @@ class InterpreterTest {
 
     @Test
     fun project3AtomicInvalid4Test() {
-        interpreterTest("data/input/project3/atomic/invalid4.lisp", "data/expected/project3/atomic/invalid4.txt", false)
+        interpreterTest("data/input/project3/atomic/invalid4.lisp", "data/expected/project3/atomic/invalid4.txt", true)
     }
 
     //CAR TESTS
@@ -67,12 +67,12 @@ class InterpreterTest {
 
     @Test
     fun project3CarInvalid3Test() {
-        interpreterTest("data/input/project3/car/invalid3.lisp", "data/expected/project3/car/invalid3.txt", false)
+        interpreterTest("data/input/project3/car/invalid3.lisp", "data/expected/project3/car/invalid3.txt", true)
     }
 
     @Test
     fun project3CarInvalid4Test() {
-        interpreterTest("data/input/project3/car/invalid4.lisp", "data/expected/project3/car/invalid4.txt", false)
+        interpreterTest("data/input/project3/car/invalid4.lisp", "data/expected/project3/car/invalid4.txt", true)
     }
 
     //CDR TESTS
@@ -104,7 +104,7 @@ class InterpreterTest {
 
     @Test
     fun project3CondInvalid1Test() {
-        interpreterTest("data/input/project3/cond/invalid1.lisp", "data/expected/project3/cond/invalid1.txt", false)
+        interpreterTest("data/input/project3/cond/invalid1.lisp", "data/expected/project3/cond/invalid1.txt", true)
     }
 
     @Test
@@ -141,7 +141,7 @@ class InterpreterTest {
     //EQ TESTS
     @Test
     fun project3EqValidTest() {
-        interpreterTest("data/input/project3/eq/valid.lisp", "data/expected/project3/eq/valid.txt", false)
+        interpreterTest("data/input/project3/eq/valid.lisp", "data/expected/project3/eq/valid.txt", true)
     }
 
     @Test
@@ -162,7 +162,7 @@ class InterpreterTest {
     //GREATER TESTS
     @Test
     fun project3GreaterValidTest() {
-        interpreterTest("data/input/project3/greater/valid.lisp", "data/expected/project3/greater/valid.txt", false)
+        interpreterTest("data/input/project3/greater/valid.lisp", "data/expected/project3/greater/valid.txt", true)
     }
 
     @Test
@@ -183,7 +183,7 @@ class InterpreterTest {
     //INT TESTS
     @Test
     fun project3IntValidTest() {
-        interpreterTest("data/input/project3/int/valid.lisp", "data/expected/project3/int/valid.txt", false)
+        interpreterTest("data/input/project3/int/valid.lisp", "data/expected/project3/int/valid.txt", true)
     }
 
     @Test
@@ -199,7 +199,7 @@ class InterpreterTest {
     //LESS TESTS
     @Test
     fun project3LessValidTest() {
-        interpreterTest("data/input/project3/less/valid.lisp", "data/expected/project3/less/valid.txt", false)
+        interpreterTest("data/input/project3/less/valid.lisp", "data/expected/project3/less/valid.txt", true)
     }
 
     @Test
@@ -241,7 +241,7 @@ class InterpreterTest {
     //NULL TESTS
     @Test
     fun project3NullValidTest() {
-        interpreterTest("data/input/project3/null/valid.lisp", "data/expected/project3/null/valid.txt", false)
+        interpreterTest("data/input/project3/null/valid.lisp", "data/expected/project3/null/valid.txt", true)
     }
 
     @Test
@@ -278,7 +278,7 @@ class InterpreterTest {
     //QUOTE TESTS
     @Test
     fun project3QuoteValidTest() {
-        interpreterTest("data/input/project3/quote/valid.lisp", "data/expected/project3/quote/valid.txt", false)
+        interpreterTest("data/input/project3/quote/valid.lisp", "data/expected/project3/quote/valid.txt", true)
     }
 
     @Test
