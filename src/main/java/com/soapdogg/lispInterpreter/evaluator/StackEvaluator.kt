@@ -43,6 +43,34 @@ class StackEvaluator (
         val addressValue = s.pop()
         var ss = s
         when (addressValue.value) {
+            FunctionNameConstants.CAR -> {
+                val firstParamPair = extractParam(ss)
+                val firstParamValue = firstParamPair.second
+                ss.clear()
+                while(firstParamValue.isNotEmpty()) {
+                    ss.push(firstParamValue.pop())
+                }
+            }
+            FunctionNameConstants.CDR -> {
+                val firstParamPair = extractParam(ss)
+                val result = extractParamUntilClose(firstParamPair.first)
+                ss = result.second
+            }
+
+            FunctionNameConstants.CONS -> {
+                val firstParamPair = extractParam(ss)
+                val secondParamPair = extractParamUntilClose(firstParamPair.first)
+
+
+                ss.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.NIL))
+                while(secondParamPair.second.isNotEmpty()) {
+                    ss.push(secondParamPair.second.pop())
+                }
+                while(firstParamPair.second.isNotEmpty()) {
+                    ss.push(firstParamPair.second.pop())
+                }
+            }
+
             TokenValueConstants.CLOSE_PARENTHESES.toString() -> {
                 ss.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.NIL))
             }
@@ -107,6 +135,7 @@ class StackEvaluator (
                 val secondToken = secondParamValue[0]
                 val second = secondToken.value
                 ss = secondParamPair.first
+                if (ss.peek().tokenKind != TokenKind.CLOSE_TOKEN) throw Exception("Woah was not expecting this")
                 ss.pop() //closeToken
                 val result = first == second
                 if (result) {
@@ -222,15 +251,29 @@ class StackEvaluator (
 
     fun extractParam(
         s: Stack<Token>
-    ): Pair<Stack<Token>, List<Token>> {
+    ): Pair<Stack<Token>, Stack<Token>> {
         var openClose = 0
-        val param = mutableListOf<Token>()
+        val param = Stack<Token>()
         do {
             val token = s.pop()
             if (token.tokenKind == TokenKind.OPEN_TOKEN) openClose++
             else if (token.tokenKind == TokenKind.CLOSE_TOKEN) openClose--
-            param.add(token)
+            param.push(token)
         } while(openClose != 0)
+        return Pair(s, param)
+    }
+
+    fun extractParamUntilClose(
+        s: Stack<Token>
+    ): Pair<Stack<Token>, Stack<Token>> {
+        val param = Stack<Token>()
+        do {
+            val token = s.pop()
+            if (token.value != ReservedValuesConstants.NIL) {
+                param.push(token)
+            }
+        } while(s.peek().tokenKind != TokenKind.CLOSE_TOKEN)
+        s.pop()
         return Pair(s, param)
     }
 }
