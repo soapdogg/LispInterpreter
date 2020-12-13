@@ -118,7 +118,7 @@ class StackEvaluator (
             FunctionNameConstants.MINUS -> {
                 val first = s.pop().value.toInt()
                 val second = s.pop().value.toInt()
-                s.pop()
+                s.pop() //closeToken
                 val result = first - second
                 s.push(Token(TokenKind.NUMERIC_TOKEN, result.toString()))
             }
@@ -149,5 +149,9 @@ class StackEvaluator (
             }
         }
         return s
+    }
+
+    fun extractParam() {
+
     }
 }
