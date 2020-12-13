@@ -2,6 +2,7 @@ package com.soapdogg.lispInterpreter.evaluator
 
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
+import com.soapdogg.lispInterpreter.constants.TokenValueConstants
 import com.soapdogg.lispInterpreter.datamodels.Token
 import com.soapdogg.lispInterpreter.datamodels.TokenKind
 import com.soapdogg.lispInterpreter.determiner.NumericStringDeterminer
@@ -40,118 +41,196 @@ class StackEvaluator (
         s: Stack<Token>
     ): Stack<Token> {
         val addressValue = s.pop()
+        var ss = s
         when (addressValue.value) {
+            TokenValueConstants.CLOSE_PARENTHESES.toString() -> {
+                ss.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.NIL))
+            }
             FunctionNameConstants.ATOM -> {
-                s.pop() // atom
+                ss.pop() // atom
                 val tempStack = Stack<Token>()
-                while(s.peek().tokenKind != TokenKind.CLOSE_TOKEN) {
-                    tempStack.push(s.pop())
+                while(ss.peek().tokenKind != TokenKind.CLOSE_TOKEN) {
+                    tempStack.push(ss.pop())
                 }
-                s.pop() //closeToken
+                ss.pop() //closeToken
                 if (tempStack.isEmpty()) {
-                    s.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.T))
+                    ss.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.T))
                 } else {
-                    s.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.NIL))
+                    ss.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.NIL))
                 }
             }
             FunctionNameConstants.INT -> {
-                val int = s.pop() // int
+                val int = ss.pop() // int
                 val tempStack = Stack<Token>()
-                while(s.peek().tokenKind != TokenKind.CLOSE_TOKEN) {
-                    tempStack.push(s.pop())
+                while(ss.peek().tokenKind != TokenKind.CLOSE_TOKEN) {
+                    tempStack.push(ss.pop())
                 }
-                s.pop() //closeToken
+                ss.pop() //closeToken
                 if (tempStack.isEmpty() && int.tokenKind == TokenKind.NUMERIC_TOKEN) {
-                    s.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.T))
+                    ss.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.T))
                 } else {
-                    s.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.NIL))
+                    ss.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.NIL))
                 }
             }
             FunctionNameConstants.NULL -> {
-                val nil = s.pop() // null
+                val nil = ss.pop() // null
                 val tempStack = Stack<Token>()
-                while(s.peek().tokenKind != TokenKind.CLOSE_TOKEN) {
-                    tempStack.push(s.pop())
+                while(ss.peek().tokenKind != TokenKind.CLOSE_TOKEN) {
+                    tempStack.push(ss.pop())
                 }
-                s.pop() //closeToken
+                ss.pop() //closeToken
                 if (tempStack.isEmpty() && nil.value == ReservedValuesConstants.NIL) {
-                    s.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.T))
+                    ss.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.T))
                 } else {
-                    s.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.NIL))
+                    ss.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.NIL))
                 }
             }
             FunctionNameConstants.QUOTE -> {
                 val tempStack = Stack<Token>()
-                while(s.peek().tokenKind != TokenKind.CLOSE_TOKEN) {
-                    tempStack.push(s.pop())
+                while(ss.peek().tokenKind != TokenKind.CLOSE_TOKEN) {
+                    tempStack.push(ss.pop())
                 }
-                s.pop() //closeToken
+                ss.pop() //closeToken
                 while(tempStack.isNotEmpty()) {
-                    s.push(tempStack.pop())
+                    ss.push(tempStack.pop())
                 }
             }
             FunctionNameConstants.EQ -> {
-                val first = s.pop().value
-                val second = s.pop().value
-                s.pop() //closeToken
+                val firstParamPair = extractParam(s)
+                val firstParamValue = firstParamPair.second
+                if (firstParamValue.size != 1) throw Exception("SHIT DICK")
+                val firstToken = firstParamValue[0]
+                val first = firstToken.value
+                val secondParamPair = extractParam(firstParamPair.first)
+                val secondParamValue = secondParamPair.second
+                if (secondParamValue.size != 1) throw Exception("SHIT DICK 2")
+                val secondToken = secondParamValue[0]
+                val second = secondToken.value
+                ss = secondParamPair.first
+                ss.pop() //closeToken
                 val result = first == second
                 if (result) {
-                    s.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.T))
+                    ss.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.T))
                 } else {
-                    s.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.NIL))
+                    ss.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.NIL))
                 }
             }
             FunctionNameConstants.GREATER -> {
-                val first = s.pop().value.toInt()
-                val second = s.pop().value.toInt()
-                s.pop()
+                val firstParamPair = extractParam(s)
+                val firstParamValue = firstParamPair.second
+                if (firstParamValue.size != 1) throw Exception("SHIT DICK")
+                val firstToken = firstParamValue[0]
+                if (firstToken.tokenKind != TokenKind.NUMERIC_TOKEN) throw Exception("OOOOH SHIT BUDDY")
+                val first = firstToken.value.toInt()
+                val secondParamPair = extractParam(firstParamPair.first)
+                val secondParamValue = secondParamPair.second
+                if (secondParamValue.size != 1) throw Exception("SHIT DICK 2")
+                val secondToken = secondParamValue[0]
+                if (secondToken.tokenKind != TokenKind.NUMERIC_TOKEN) throw Exception("OOOOOH SHIY BUDDY 2.0")
+                val second = secondToken.value.toInt()
+                ss = secondParamPair.first
+                ss.pop()
                 val result = first > second
-                s.push(Token(TokenKind.NUMERIC_TOKEN, result.toString()))
+                ss.push(Token(TokenKind.NUMERIC_TOKEN, result.toString()))
             }
             FunctionNameConstants.LESS -> {
-                val first = s.pop().value.toInt()
-                val second = s.pop().value.toInt()
-                s.pop()
+                val firstParamPair = extractParam(s)
+                val firstParamValue = firstParamPair.second
+                if (firstParamValue.size != 1) throw Exception("SHIT DICK")
+                val firstToken = firstParamValue[0]
+                if (firstToken.tokenKind != TokenKind.NUMERIC_TOKEN) throw Exception("OOOOH SHIT BUDDY")
+                val first = firstToken.value.toInt()
+                val secondParamPair = extractParam(firstParamPair.first)
+                val secondParamValue = secondParamPair.second
+                if (secondParamValue.size != 1) throw Exception("SHIT DICK 2")
+                val secondToken = secondParamValue[0]
+                if (secondToken.tokenKind != TokenKind.NUMERIC_TOKEN) throw Exception("OOOOOH SHIY BUDDY 2.0")
+                val second = secondToken.value.toInt()
+                ss = secondParamPair.first
+                ss.pop() //closeToken
                 val result = first < second
-                s.push(Token(TokenKind.NUMERIC_TOKEN, result.toString()))
+                ss.push(Token(TokenKind.NUMERIC_TOKEN, result.toString()))
             }
             FunctionNameConstants.MINUS -> {
-                val first = s.pop().value.toInt()
-                val second = s.pop().value.toInt()
-                s.pop() //closeToken
+                val firstParamPair = extractParam(s)
+                val firstParamValue = firstParamPair.second
+                if (firstParamValue.size != 1) throw Exception("SHIT DICK")
+                val firstToken = firstParamValue[0]
+                if (firstToken.tokenKind != TokenKind.NUMERIC_TOKEN) throw Exception("OOOOH SHIT BUDDY")
+                val first = firstToken.value.toInt()
+                val secondParamPair = extractParam(firstParamPair.first)
+                val secondParamValue = secondParamPair.second
+                if (secondParamValue.size != 1) throw Exception("SHIT DICK 2")
+                val secondToken = secondParamValue[0]
+                if (secondToken.tokenKind != TokenKind.NUMERIC_TOKEN) throw Exception("OOOOOH SHIY BUDDY 2.0")
+                val second = secondToken.value.toInt()
+                ss = secondParamPair.first
+                ss.pop() //closeToken
                 val result = first - second
-                s.push(Token(TokenKind.NUMERIC_TOKEN, result.toString()))
+                ss.push(Token(TokenKind.NUMERIC_TOKEN, result.toString()))
             }
             FunctionNameConstants.PLUS -> {
-                val first = s.pop().value.toInt()
-                val second = s.pop().value.toInt()
-                s.pop()
+                val firstParamPair = extractParam(s)
+                val firstParamValue = firstParamPair.second
+                if (firstParamValue.size != 1) throw Exception("SHIT DICK")
+                val firstToken = firstParamValue[0]
+                if (firstToken.tokenKind != TokenKind.NUMERIC_TOKEN) throw Exception("OOOOH SHIT BUDDY")
+                val first = firstToken.value.toInt()
+                val secondParamPair = extractParam(firstParamPair.first)
+                val secondParamValue = secondParamPair.second
+                if (secondParamValue.size != 1) throw Exception("SHIT DICK 2")
+                val secondToken = secondParamValue[0]
+                if (secondToken.tokenKind != TokenKind.NUMERIC_TOKEN) throw Exception("OOOOOH SHIY BUDDY 2.0")
+                val second = secondToken.value.toInt()
+                ss = secondParamPair.first
+                ss.pop()
                 val result = first + second
-                s.push(Token(TokenKind.NUMERIC_TOKEN, result.toString()))
+                ss.push(Token(TokenKind.NUMERIC_TOKEN, result.toString()))
             }
             FunctionNameConstants.TIMES -> {
-                val first = s.pop().value.toInt()
-                val second = s.pop().value.toInt()
-                s.pop()
+                val firstParamPair = extractParam(s)
+                val firstParamValue = firstParamPair.second
+                if (firstParamValue.size != 1) throw Exception("SHIT DICK")
+                val firstToken = firstParamValue[0]
+                if (firstToken.tokenKind != TokenKind.NUMERIC_TOKEN) throw Exception("OOOOH SHIT BUDDY")
+                val first = firstToken.value.toInt()
+                val secondParamPair = extractParam(firstParamPair.first)
+                val secondParamValue = secondParamPair.second
+                if (secondParamValue.size != 1) throw Exception("SHIT DICK 2")
+                val secondToken = secondParamValue[0]
+                if (secondToken.tokenKind != TokenKind.NUMERIC_TOKEN) throw Exception("OOOOOH SHIY BUDDY 2.0")
+                val second = secondToken.value.toInt()
+                ss = secondParamPair.first
+                ss.pop()
                 val result = first * second
-                s.push(Token(TokenKind.NUMERIC_TOKEN, result.toString()))
+                ss.push(Token(TokenKind.NUMERIC_TOKEN, result.toString()))
             }
             else -> {
                 val tempStack = Stack<Token>()
                 tempStack.push(addressValue)
-                while(s.peek().tokenKind != TokenKind.CLOSE_TOKEN) {
-                    tempStack.push(s.pop())
+                while(ss.peek().tokenKind != TokenKind.CLOSE_TOKEN) {
+                    tempStack.push(ss.pop())
                 }
-                val close = s.pop() // closeToken
+                val close = ss.pop() // closeToken
                 while(tempStack.isNotEmpty()) {
-                    s.push(tempStack.pop())
+                    ss.push(tempStack.pop())
                 }
             }
         }
-        return s
+        return ss
     }
 
-    fun extractParam() {
-
+    fun extractParam(
+        s: Stack<Token>
+    ): Pair<Stack<Token>, List<Token>> {
+        var openClose = 0
+        val param = mutableListOf<Token>()
+        do {
+            val token = s.pop()
+            if (token.tokenKind == TokenKind.OPEN_TOKEN) openClose++
+            else if (token.tokenKind == TokenKind.CLOSE_TOKEN) openClose--
+            param.add(token)
+        } while(openClose != 0)
+        return Pair(s, param)
     }
 }
