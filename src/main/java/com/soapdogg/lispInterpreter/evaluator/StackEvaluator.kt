@@ -58,19 +58,21 @@ class StackEvaluator (
             }
 
             FunctionNameConstants.CONS -> {
-                val firstParamPair = extractParam(ss)
-                val secondParamPair = extractParamUntilClose(firstParamPair.first)
-
-
-                ss.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.NIL))
-                while(secondParamPair.second.isNotEmpty()) {
-                    ss.push(secondParamPair.second.pop())
+                val tempStack = Stack<Token>()
+                while (ss.peek().tokenKind != TokenKind.CLOSE_TOKEN) {
+                    tempStack.push(ss.pop())
                 }
-                while(firstParamPair.second.isNotEmpty()) {
-                    ss.push(firstParamPair.second.pop())
+
+                ss.pop() // closeToken
+
+                if (tempStack.peek().value != ReservedValuesConstants.NIL) {
+                    tempStack.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.NIL))
+                }
+
+                while(tempStack.isNotEmpty()) {
+                    ss.push(tempStack.pop())
                 }
             }
-
             TokenValueConstants.CLOSE_PARENTHESES.toString() -> {
                 ss.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.NIL))
             }
