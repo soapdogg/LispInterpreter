@@ -24,12 +24,4 @@ class NodeToStackConverter(
         }
         return result
     }
-
-    fun convertTokenQueueToStack(tokenQueue: List<Token>): Stack<Token> {
-        val result = Stack<Token>()
-        tokenQueue.forEach {
-            result.push(it)
-        }
-        return result
-    }
 }

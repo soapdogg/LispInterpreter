@@ -12,12 +12,12 @@ class ProgramEvaluatorTest {
 
     private val atomRootNodeAsserter = Mockito.mock(AtomRootNodeAsserter::class.java)
     private val nodeEvaluator = Mockito.mock(NodeEvaluator::class.java)
-    private val stackEvaluator = Mockito.mock(StackEvaluator::class.java)
+    private val nodeEvaluatorIterative = Mockito.mock(NodeEvaluatorIterative::class.java)
 
     private val programEvaluator = ProgramEvaluator(
         atomRootNodeAsserter,
         nodeEvaluator,
-        stackEvaluator
+        nodeEvaluatorIterative
     )
 
     @Test
