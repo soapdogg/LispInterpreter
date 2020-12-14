@@ -57,7 +57,7 @@ class InterpreterTest {
 
     @Test
     fun project3CarInvalid1Test() {
-        interpreterTest("data/input/project3/car/invalid1.lisp", "data/expected/project3/car/invalid1.txt", true)
+        interpreterTest("data/input/project3/car/invalid1.lisp", "data/expected/project3/car/invalid1.txt", false)
     }
 
     @Test
@@ -67,12 +67,12 @@ class InterpreterTest {
 
     @Test
     fun project3CarInvalid3Test() {
-        interpreterTest("data/input/project3/car/invalid3.lisp", "data/expected/project3/car/invalid3.txt", true)
+        interpreterTest("data/input/project3/car/invalid3.lisp", "data/expected/project3/car/invalid3.txt", false)
     }
 
     @Test
     fun project3CarInvalid4Test() {
-        interpreterTest("data/input/project3/car/invalid4.lisp", "data/expected/project3/car/invalid4.txt", true)
+        interpreterTest("data/input/project3/car/invalid4.lisp", "data/expected/project3/car/invalid4.txt", false)
     }
 
     //CDR TESTS
@@ -125,7 +125,7 @@ class InterpreterTest {
     //CONS TESTS
     @Test
     fun project3ConsValidTest() {
-        interpreterTest("data/input/project3/cons/valid.lisp", "data/expected/project3/cons/valid.txt", true)
+        interpreterTest("data/input/project3/cons/valid.lisp", "data/expected/project3/cons/valid.txt", false)
     }
 
     @Test

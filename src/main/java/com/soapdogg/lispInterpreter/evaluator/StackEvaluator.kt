@@ -44,11 +44,30 @@ class StackEvaluator (
         var ss = s
         when (addressValue.value) {
             FunctionNameConstants.CAR -> {
-                val firstParamPair = extractParam(ss)
-                val firstParamValue = firstParamPair.second
-                ss.clear()
-                while(firstParamValue.isNotEmpty()) {
-                    ss.push(firstParamValue.pop())
+                val tempStack = Stack<Token>()
+                while (ss.peek().value != ReservedValuesConstants.NIL) {
+                    tempStack.push(ss.pop())
+                }
+
+                var moreThanOneNil = false
+                while(ss.peek().tokenKind != TokenKind.CLOSE_TOKEN) {
+                    val head = ss.pop()
+                    if (head.value == ReservedValuesConstants.NIL) moreThanOneNil = true
+                }
+                ss.pop() //CloseToken
+
+                if (moreThanOneNil) {
+                    if (tempStack.size == 2) {
+                        tempStack.pop()
+                    }
+                } else {
+                    while(tempStack.size > 1) {
+                        tempStack.pop()
+                    }
+                }
+
+                while(tempStack.isNotEmpty()) {
+                    ss.push(tempStack.pop())
                 }
             }
             FunctionNameConstants.CDR -> {
