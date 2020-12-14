@@ -57,7 +57,7 @@ class InterpreterTest {
 
     @Test
     fun project3CarInvalid1Test() {
-        interpreterTest("data/input/project3/car/invalid1.lisp", "data/expected/project3/car/invalid1.txt", false)
+        interpreterTest("data/input/project3/car/invalid1.lisp", "data/expected/project3/car/invalid1.txt", true)
     }
 
     @Test
@@ -162,7 +162,7 @@ class InterpreterTest {
     //GREATER TESTS
     @Test
     fun project3GreaterValidTest() {
-        interpreterTest("data/input/project3/greater/valid.lisp", "data/expected/project3/greater/valid.txt", false)
+        interpreterTest("data/input/project3/greater/valid.lisp", "data/expected/project3/greater/valid.txt", true)
     }
 
     @Test
@@ -177,7 +177,7 @@ class InterpreterTest {
 
     @Test
     fun project3GreaterInvalid3Test() {
-        interpreterTest("data/input/project3/greater/invalid3.lisp", "data/expected/project3/greater/invalid3.txt", false)
+        interpreterTest("data/input/project3/greater/invalid3.lisp", "data/expected/project3/greater/invalid3.txt", true)
     }
 
     //INT TESTS
@@ -235,7 +235,7 @@ class InterpreterTest {
 
     @Test
     fun project3MinusInvalid3Test() {
-        interpreterTest("data/input/project3/minus/invalid3.lisp", "data/expected/project3/minus/invalid3.txt", false)
+        interpreterTest("data/input/project3/minus/invalid3.lisp", "data/expected/project3/minus/invalid3.txt", true)
     }
 
     //NULL TESTS
@@ -272,7 +272,7 @@ class InterpreterTest {
 
     @Test
     fun project3PlusInvalid3Test() {
-        interpreterTest("data/input/project3/plus/invalid3.lisp", "data/expected/project3/plus/invalid3.txt", false)
+        interpreterTest("data/input/project3/plus/invalid3.lisp", "data/expected/project3/plus/invalid3.txt", true)
     }
 
     //QUOTE TESTS
@@ -309,7 +309,7 @@ class InterpreterTest {
 
     @Test
     fun project3TimesInvalid3Test() {
-        interpreterTest("data/input/project3/times/invalid3.lisp", "data/expected/project3/times/invalid3.txt", false)
+        interpreterTest("data/input/project3/times/invalid3.lisp", "data/expected/project3/times/invalid3.txt", true)
     }
 
     companion object {

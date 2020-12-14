@@ -81,11 +81,67 @@ class NodeEvaluatorIterative (
                         nodeGenerator.generateAtomNode(false)
                     }
                     evalStack.push(resultingNode)
+                } else if (function.value == FunctionNameConstants.ATOM) {
+                    val first = functionStack.pop()
+                    val isAtom = first !is ExpressionListNode
+                    val resultingNode = nodeGenerator.generateAtomNode(isAtom)
+                    evalStack.push(resultingNode)
+                } else if (function.value == FunctionNameConstants.CONS) {
+                    val evaluatedAddress = functionStack.pop()
+                    val evaluatedData = functionStack.pop()
+
+                    val resultingNode = if (evaluatedData is ExpressionListNode) {
+                        nodeGenerator.generateExpressionListNode(
+                            listOf(evaluatedAddress) + evaluatedData.children
+                        )
+                    } else {
+                        nodeGenerator.generateExpressionListNode(
+                            listOf(evaluatedAddress, evaluatedData)
+                        )
+                    }
+
+                    evalStack.push(resultingNode)
                 } else if (function.value == FunctionNameConstants.EQ) {
                     val first = functionStack.pop()
                     val second = functionStack.pop()
                     val isEqual = first == second
                     val resultingNode = nodeGenerator.generateAtomNode(isEqual)
+                    evalStack.push(resultingNode)
+                } else if (function.value == FunctionNameConstants.GREATER) {
+                    val first = functionStack.pop()
+                    val second = functionStack.pop()
+                    val firstNumeric = numericValueRetriever.retrieveNumericValue(
+                        first,
+                        function.value,
+                        1
+                    )
+                    val secondNumeric = numericValueRetriever.retrieveNumericValue(
+                        second,
+                        function.value,
+                        2
+                    )
+
+                    val result = firstNumeric > secondNumeric
+
+                    val resultingNode = nodeGenerator.generateAtomNode(result)
+                    evalStack.push(resultingNode)
+                } else if (function.value == FunctionNameConstants.LESS) {
+                    val first = functionStack.pop()
+                    val second = functionStack.pop()
+                    val firstNumeric = numericValueRetriever.retrieveNumericValue(
+                        first,
+                        function.value,
+                        1
+                    )
+                    val secondNumeric = numericValueRetriever.retrieveNumericValue(
+                        second,
+                        function.value,
+                        2
+                    )
+
+                    val result = firstNumeric < secondNumeric
+
+                    val resultingNode = nodeGenerator.generateAtomNode(result)
                     evalStack.push(resultingNode)
                 } else if (function.value == FunctionNameConstants.PLUS) {
                     val first = functionStack.pop()
