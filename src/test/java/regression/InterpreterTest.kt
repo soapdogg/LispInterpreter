@@ -241,7 +241,7 @@ class InterpreterTest {
     //NULL TESTS
     @Test
     fun project3NullValidTest() {
-        interpreterTest("data/input/project3/null/valid.lisp", "data/expected/project3/null/valid.txt", false)
+        interpreterTest("data/input/project3/null/valid.lisp", "data/expected/project3/null/valid.txt", true)
     }
 
     @Test
@@ -278,7 +278,7 @@ class InterpreterTest {
     //QUOTE TESTS
     @Test
     fun project3QuoteValidTest() {
-        interpreterTest("data/input/project3/quote/valid.lisp", "data/expected/project3/quote/valid.txt", false)
+        interpreterTest("data/input/project3/quote/valid.lisp", "data/expected/project3/quote/valid.txt", true)
     }
 
     @Test

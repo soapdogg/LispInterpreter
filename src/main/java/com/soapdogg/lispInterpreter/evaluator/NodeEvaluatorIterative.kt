@@ -38,7 +38,18 @@ class NodeEvaluatorIterative (
                 currentRootIndex = 0
 
                 if (root is ExpressionListNode) {
-                    root = root.children[0]
+                    val firstChild = root.children[0]
+                    if (firstChild is AtomNode && firstChild.value == FunctionNameConstants.QUOTE) {
+                        val top = stack.pop().node as ExpressionListNode
+                        if (stack.isNotEmpty()) {
+                            val next = stack.pop()
+                            stack.push(StackItem(next.node, next.childrenIndex + 1))
+                        }
+                        stack.push(StackItem(top.children[1],  1))
+                        root = null
+                    } else {
+                        root = root.children[0]
+                    }
                 } else {
                     root = null
                 }
@@ -73,7 +84,8 @@ class NodeEvaluatorIterative (
                         nodeGenerator.generateAtomNode(false)
                     }
                     evalStack.push(resultingNode)
-                } else if (function.value == FunctionNameConstants.NULL) {
+                }
+                else if (function.value == FunctionNameConstants.NULL) {
                     val first = functionStack.pop()
                     val resultingNode = if (first is AtomNode) {
                         val value = first.value
@@ -83,12 +95,14 @@ class NodeEvaluatorIterative (
                         nodeGenerator.generateAtomNode(false)
                     }
                     evalStack.push(resultingNode)
-                } else if (function.value == FunctionNameConstants.ATOM) {
+                }
+                else if (function.value == FunctionNameConstants.ATOM) {
                     val first = functionStack.pop()
                     val isAtom = first !is ExpressionListNode
                     val resultingNode = nodeGenerator.generateAtomNode(isAtom)
                     evalStack.push(resultingNode)
-                } else if (function.value == FunctionNameConstants.CAR) {
+                }
+                else if (function.value == FunctionNameConstants.CAR) {
                     val first = functionStack.pop()
 
                     val firstExpressionListNode = listValueRetriever.retrieveListValue(
@@ -97,7 +111,8 @@ class NodeEvaluatorIterative (
                     )
 
                     evalStack.push(firstExpressionListNode.children[0])
-                } else if (function.value == FunctionNameConstants.CDR) {
+                }
+                else if (function.value == FunctionNameConstants.CDR) {
                     val first = functionStack.pop()
 
                     val firstExpressionListNode = listValueRetriever.retrieveListValue(
@@ -119,7 +134,8 @@ class NodeEvaluatorIterative (
                         }
                     }
                     evalStack.push(resultingNode)
-                } else if (function.value == FunctionNameConstants.CONS) {
+                }
+                else if (function.value == FunctionNameConstants.CONS) {
                     val evaluatedAddress = functionStack.pop()
                     val evaluatedData = functionStack.pop()
 
@@ -134,13 +150,15 @@ class NodeEvaluatorIterative (
                     }
 
                     evalStack.push(resultingNode)
-                } else if (function.value == FunctionNameConstants.EQ) {
+                }
+                else if (function.value == FunctionNameConstants.EQ) {
                     val first = functionStack.pop()
                     val second = functionStack.pop()
                     val isEqual = first == second
                     val resultingNode = nodeGenerator.generateAtomNode(isEqual)
                     evalStack.push(resultingNode)
-                } else if (function.value == FunctionNameConstants.GREATER) {
+                }
+                else if (function.value == FunctionNameConstants.GREATER) {
                     val first = functionStack.pop()
                     val second = functionStack.pop()
                     val firstNumeric = numericValueRetriever.retrieveNumericValue(
@@ -158,7 +176,8 @@ class NodeEvaluatorIterative (
 
                     val resultingNode = nodeGenerator.generateAtomNode(result)
                     evalStack.push(resultingNode)
-                } else if (function.value == FunctionNameConstants.LESS) {
+                }
+                else if (function.value == FunctionNameConstants.LESS) {
                     val first = functionStack.pop()
                     val second = functionStack.pop()
                     val firstNumeric = numericValueRetriever.retrieveNumericValue(
@@ -176,7 +195,8 @@ class NodeEvaluatorIterative (
 
                     val resultingNode = nodeGenerator.generateAtomNode(result)
                     evalStack.push(resultingNode)
-                } else if (function.value == FunctionNameConstants.PLUS) {
+                }
+                else if (function.value == FunctionNameConstants.PLUS) {
                     val first = functionStack.pop()
                     val second = functionStack.pop()
                     val firstNumeric = numericValueRetriever.retrieveNumericValue(
@@ -194,7 +214,8 @@ class NodeEvaluatorIterative (
 
                     val resultingNode = nodeGenerator.generateAtomNode(result)
                     evalStack.push(resultingNode)
-                } else if (function.value == FunctionNameConstants.MINUS) {
+                }
+                else if (function.value == FunctionNameConstants.MINUS) {
                     val first = functionStack.pop()
                     val second = functionStack.pop()
                     val firstNumeric = numericValueRetriever.retrieveNumericValue(
@@ -211,7 +232,8 @@ class NodeEvaluatorIterative (
                     val result = firstNumeric - secondNumeric
                     val resultingNode = nodeGenerator.generateAtomNode(result)
                     evalStack.push(resultingNode)
-                } else if (function.value == FunctionNameConstants.TIMES) {
+                }
+                else if (function.value == FunctionNameConstants.TIMES) {
                     val first = functionStack.pop()
                     val second = functionStack.pop()
                     val firstNumeric = numericValueRetriever.retrieveNumericValue(
@@ -231,6 +253,7 @@ class NodeEvaluatorIterative (
                     evalStack.push(resultingNode)
                 }
             }
+
             if (stack.isNotEmpty()) {
                 root = (stack.peek().node as ExpressionListNode).children[
                     temp.childrenIndex + 1
