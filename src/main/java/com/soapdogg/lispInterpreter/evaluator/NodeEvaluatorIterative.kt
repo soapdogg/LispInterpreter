@@ -9,12 +9,14 @@ import com.soapdogg.lispInterpreter.datamodels.StackItem
 import com.soapdogg.lispInterpreter.determiner.FunctionLengthDeterminer
 import com.soapdogg.lispInterpreter.determiner.NumericStringDeterminer
 import com.soapdogg.lispInterpreter.generator.NodeGenerator
+import com.soapdogg.lispInterpreter.valueretriver.ListValueRetriever
 import com.soapdogg.lispInterpreter.valueretriver.NumericValueRetriever
 import java.util.*
 
 class NodeEvaluatorIterative (
     private val functionLengthDeterminer: FunctionLengthDeterminer,
     private val nodeGenerator: NodeGenerator,
+    private val listValueRetriever: ListValueRetriever,
     private val numericStringDeterminer: NumericStringDeterminer,
     private val numericValueRetriever: NumericValueRetriever
 ){
@@ -85,6 +87,37 @@ class NodeEvaluatorIterative (
                     val first = functionStack.pop()
                     val isAtom = first !is ExpressionListNode
                     val resultingNode = nodeGenerator.generateAtomNode(isAtom)
+                    evalStack.push(resultingNode)
+                } else if (function.value == FunctionNameConstants.CAR) {
+                    val first = functionStack.pop()
+
+                    val firstExpressionListNode = listValueRetriever.retrieveListValue(
+                        first,
+                        FunctionNameConstants.CAR
+                    )
+
+                    evalStack.push(firstExpressionListNode.children[0])
+                } else if (function.value == FunctionNameConstants.CDR) {
+                    val first = functionStack.pop()
+
+                    val firstExpressionListNode = listValueRetriever.retrieveListValue(
+                        first,
+                        FunctionNameConstants.CDR
+                    )
+
+                    val resultingNode = when (firstExpressionListNode.children.size) {
+                        1 -> {
+                            firstExpressionListNode.children[0]
+                        }
+                        2 -> {
+                            firstExpressionListNode.children[1]
+                        }
+                        else -> {
+                            nodeGenerator.generateExpressionListNode(
+                                firstExpressionListNode.children.subList(1, firstExpressionListNode.children.size)
+                            )
+                        }
+                    }
                     evalStack.push(resultingNode)
                 } else if (function.value == FunctionNameConstants.CONS) {
                     val evaluatedAddress = functionStack.pop()

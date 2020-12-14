@@ -22,6 +22,7 @@ enum class EvaluatorSingleton {
     val nodeEvaluatorIterative = NodeEvaluatorIterative(
         DeterminerSingleton.INSTANCE.functionLengthDeterminer,
         GeneratorSingleton.INSTANCE.nodeGenerator,
+        ValueRetrieverSingleton.INSTANCE.listValueRetriever,
         DeterminerSingleton.INSTANCE.numericStringDeterminer,
         ValueRetrieverSingleton.INSTANCE.numericValueRetriever
     )

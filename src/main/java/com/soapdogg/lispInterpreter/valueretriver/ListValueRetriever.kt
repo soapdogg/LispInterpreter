@@ -24,4 +24,15 @@ class ListValueRetriever(
         val sb = """Error! Parameter of $functionName is not a list.    Actual: ${dotNotationPrinter.printInDotNotation(node)}${'\n'}"""
         throw NotAListException(sb)
     }
+
+    fun retrieveListValue(
+        node: NodeV2,
+        functionName: String
+    ): ExpressionListNode {
+        if (node is ExpressionListNode) {
+            return node
+        }
+        val sb = """Error! Parameter of $functionName is not a list.    Actual: ${dotNotationPrinter.printInDotNotation(node)}${'\n'}"""
+        throw NotAListException(sb)
+    }
 }
