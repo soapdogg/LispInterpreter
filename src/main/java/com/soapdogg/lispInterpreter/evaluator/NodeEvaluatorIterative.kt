@@ -7,11 +7,13 @@ import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.determiner.FunctionLengthDeterminer
 import com.soapdogg.lispInterpreter.determiner.NumericStringDeterminer
+import com.soapdogg.lispInterpreter.generator.NodeGenerator
 import com.soapdogg.lispInterpreter.valueretriver.NumericValueRetriever
 import java.util.*
 
 class NodeEvaluatorIterative (
     private val functionLengthDeterminer: FunctionLengthDeterminer,
+    private val nodeGenerator: NodeGenerator,
     private val numericStringDeterminer: NumericStringDeterminer,
     private val numericValueRetriever: NumericValueRetriever
 ){
@@ -43,7 +45,6 @@ class NodeEvaluatorIterative (
             var temp = stack.pop()
 
 
-
             evalStack.push(temp.first)
 
             while (
@@ -61,38 +62,30 @@ class NodeEvaluatorIterative (
                 val function = functionStack.pop() as AtomNode
                 if (function.value == FunctionNameConstants.INT) {
                     val first = functionStack.pop()
-                    if (first is AtomNode) {
+                    val resultingNode = if (first is AtomNode) {
                         val value = first.value
                         val isNumeric = numericStringDeterminer.isStringNumeric(value)
-                        if (isNumeric) {
-                            evalStack.push(AtomNode(ReservedValuesConstants.T))
-                        } else {
-                            evalStack.push(AtomNode(ReservedValuesConstants.NIL))
-                        }
+                        nodeGenerator.generateAtomNode(isNumeric)
                     } else {
-                        evalStack.push(AtomNode(ReservedValuesConstants.NIL))
+                        nodeGenerator.generateAtomNode(false)
                     }
+                    evalStack.push(resultingNode)
                 } else if (function.value == FunctionNameConstants.NULL) {
                     val first = functionStack.pop()
-                    if (first is AtomNode) {
+                    val resultingNode = if (first is AtomNode) {
                         val value = first.value
                         val isNil = value == ReservedValuesConstants.NIL
-                        if (isNil) {
-                            evalStack.push(AtomNode(ReservedValuesConstants.T))
-                        } else {
-                            evalStack.push(AtomNode(ReservedValuesConstants.NIL))
-                        }
+                        nodeGenerator.generateAtomNode(isNil)
                     } else {
-                        evalStack.push(AtomNode(ReservedValuesConstants.NIL))
+                        nodeGenerator.generateAtomNode(false)
                     }
+                    evalStack.push(resultingNode)
                 } else if (function.value == FunctionNameConstants.EQ) {
                     val first = functionStack.pop()
                     val second = functionStack.pop()
-                    if (first == second) {
-                        evalStack.push(AtomNode(ReservedValuesConstants.T))
-                    } else {
-                        evalStack.push(AtomNode(ReservedValuesConstants.NIL))
-                    }
+                    val isEqual = first == second
+                    val resultingNode = nodeGenerator.generateAtomNode(isEqual)
+                    evalStack.push(resultingNode)
                 } else if (function.value == FunctionNameConstants.PLUS) {
                     val first = functionStack.pop()
                     val second = functionStack.pop()
@@ -109,7 +102,8 @@ class NodeEvaluatorIterative (
 
                     val result = firstNumeric + secondNumeric
 
-                    evalStack.push(AtomNode(result.toString()))
+                    val resultingNode = nodeGenerator.generateAtomNode(result)
+                    evalStack.push(resultingNode)
                 } else if (function.value == FunctionNameConstants.MINUS) {
                     val first = functionStack.pop()
                     val second = functionStack.pop()
@@ -125,8 +119,8 @@ class NodeEvaluatorIterative (
                     )
 
                     val result = firstNumeric - secondNumeric
-
-                    evalStack.push(AtomNode(result.toString()))
+                    val resultingNode = nodeGenerator.generateAtomNode(result)
+                    evalStack.push(resultingNode)
                 } else if (function.value == FunctionNameConstants.TIMES) {
                     val first = functionStack.pop()
                     val second = functionStack.pop()
@@ -143,7 +137,8 @@ class NodeEvaluatorIterative (
 
                     val result = firstNumeric * secondNumeric
 
-                    evalStack.push(AtomNode(result.toString()))
+                    val resultingNode = nodeGenerator.generateAtomNode(result)
+                    evalStack.push(resultingNode)
                 }
             }
             if (stack.isNotEmpty()) {
