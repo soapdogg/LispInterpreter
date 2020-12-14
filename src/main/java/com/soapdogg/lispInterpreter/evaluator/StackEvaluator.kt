@@ -71,11 +71,41 @@ class StackEvaluator (
                 }
             }
             FunctionNameConstants.CDR -> {
-                val firstParamPair = extractParam(ss)
-                val result = extractParamUntilClose(firstParamPair.first)
-                ss = result.second
-            }
+                val tempStack = Stack<Token>()
+                while (ss.peek().value != ReservedValuesConstants.NIL) {
+                    tempStack.push(ss.pop())
+                }
+                tempStack.push(ss.pop()) //NIL
 
+                var moreThanOneNil = false
+                val t = Stack<Token>()
+                while(ss.peek().tokenKind != TokenKind.CLOSE_TOKEN) {
+                    val head = ss.peek()
+                    if (head.value == ReservedValuesConstants.NIL) moreThanOneNil = true
+                    t.push(ss.pop())
+                }
+                ss.pop() //CloseToken
+
+                if (moreThanOneNil) {
+                    while(t.isNotEmpty()) {
+                        ss.push(t.pop())
+                    }
+                } else {
+                    val tempTempStack = Stack<Token>()
+                    while(tempStack.size > 1) {
+                        tempTempStack.push(tempStack.pop())
+                    }
+                    tempTempStack.reverse()
+                    if (tempTempStack.size == 2) {
+                        tempTempStack.pop()
+                        ss.push(tempTempStack.pop())
+                    } else {
+                        while(tempTempStack.isNotEmpty()) {
+                            ss.push(tempTempStack.pop())
+                        }
+                    }
+                }
+            }
             FunctionNameConstants.CONS -> {
                 val tempStack = Stack<Token>()
                 while (ss.peek().tokenKind != TokenKind.CLOSE_TOKEN) {
@@ -181,7 +211,11 @@ class StackEvaluator (
                 ss = secondParamPair.first
                 ss.pop()
                 val result = first > second
-                ss.push(Token(TokenKind.NUMERIC_TOKEN, result.toString()))
+                if (result) {
+                    ss.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.T))
+                } else {
+                    ss.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.NIL))
+                }
             }
             FunctionNameConstants.LESS -> {
                 val firstParamPair = extractParam(s)
@@ -199,7 +233,11 @@ class StackEvaluator (
                 ss = secondParamPair.first
                 ss.pop() //closeToken
                 val result = first < second
-                ss.push(Token(TokenKind.NUMERIC_TOKEN, result.toString()))
+                if (result) {
+                    ss.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.T))
+                } else {
+                    ss.push(Token(TokenKind.LITERAL_TOKEN, ReservedValuesConstants.NIL))
+                }
             }
             FunctionNameConstants.MINUS -> {
                 val firstParamPair = extractParam(s)
@@ -281,20 +319,6 @@ class StackEvaluator (
             else if (token.tokenKind == TokenKind.CLOSE_TOKEN) openClose--
             param.push(token)
         } while(openClose != 0)
-        return Pair(s, param)
-    }
-
-    fun extractParamUntilClose(
-        s: Stack<Token>
-    ): Pair<Stack<Token>, Stack<Token>> {
-        val param = Stack<Token>()
-        do {
-            val token = s.pop()
-            if (token.value != ReservedValuesConstants.NIL) {
-                param.push(token)
-            }
-        } while(s.peek().tokenKind != TokenKind.CLOSE_TOKEN)
-        s.pop()
         return Pair(s, param)
     }
 }
