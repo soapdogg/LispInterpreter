@@ -5,6 +5,7 @@ import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
 import com.soapdogg.lispInterpreter.datamodels.AtomNode
 import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
+import com.soapdogg.lispInterpreter.datamodels.StackItem
 import com.soapdogg.lispInterpreter.determiner.FunctionLengthDeterminer
 import com.soapdogg.lispInterpreter.determiner.NumericStringDeterminer
 import com.soapdogg.lispInterpreter.generator.NodeGenerator
@@ -22,7 +23,7 @@ class NodeEvaluatorIterative (
         expressionListNode: ExpressionListNode
     ) {
 
-        val stack = Stack<Pair<NodeV2, Int>>()
+        val stack = Stack<StackItem>()
         var currentRootIndex = 0
         var root: NodeV2? = expressionListNode
         val evalStack = Stack<NodeV2>()
@@ -31,7 +32,7 @@ class NodeEvaluatorIterative (
             root != null || stack.isNotEmpty()
         ) {
             if (root != null) {
-                stack.push(Pair(root, currentRootIndex))
+                stack.push(StackItem(root, currentRootIndex))
                 currentRootIndex = 0
 
                 if (root is ExpressionListNode) {
@@ -45,15 +46,15 @@ class NodeEvaluatorIterative (
             var temp = stack.pop()
 
 
-            evalStack.push(temp.first)
+            evalStack.push(temp.node)
 
             while (
                 !stack.isEmpty()
-                && stack.peek().first is ExpressionListNode
-                && temp.second == functionLengthDeterminer.determineFunctionLength(stack.peek().first) - 1) {
+                && stack.peek().node is ExpressionListNode
+                && temp.childrenIndex == functionLengthDeterminer.determineFunctionLength(stack.peek().node) - 1) {
                 temp = stack.pop()
 
-                val functionLength = functionLengthDeterminer.determineFunctionLength(temp.first)
+                val functionLength = functionLengthDeterminer.determineFunctionLength(temp.node)
                 val functionStack = Stack<NodeV2>()
                 for (i in 0 until functionLength) {
                     functionStack.push(evalStack.pop())
@@ -142,10 +143,10 @@ class NodeEvaluatorIterative (
                 }
             }
             if (stack.isNotEmpty()) {
-                root = (stack.peek().first as ExpressionListNode).children[
-                    temp.second + 1
+                root = (stack.peek().node as ExpressionListNode).children[
+                    temp.childrenIndex + 1
                 ]
-                currentRootIndex = temp.second + 1
+                currentRootIndex = temp.childrenIndex + 1
             }
         }
 
