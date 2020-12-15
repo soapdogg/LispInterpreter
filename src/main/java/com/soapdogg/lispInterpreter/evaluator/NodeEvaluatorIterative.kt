@@ -1,5 +1,6 @@
 package com.soapdogg.lispInterpreter.evaluator
 
+import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.datamodels.AtomNode
 import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
@@ -33,9 +34,21 @@ class NodeEvaluatorIterative(
                 continue
             }
 
+            val nthChildAtomNode = nthChild as AtomNode
+            if (nthChildAtomNode.value == FunctionNameConstants.QUOTE) {
+                val quoteExprNode = top.expressionListNode
+                val secondChild = quoteExprNode.children[1]
+                evalStack.push(secondChild)
+                if (programStack.isNotEmpty()) {
+                    val head = programStack.pop()
+                    programStack.push(StackItem(head.expressionListNode, head.currentChildIndex + 1))
+                }
+                continue
+            }
+
             val expectedFunctionLength = functionLengthDeterminer.determineFunctionLength(top.expressionListNode)
             if (top.currentChildIndex < expectedFunctionLength) {
-                evalStack.push(nthChild)
+                evalStack.push(nthChildAtomNode)
                 programStack.push(StackItem(top.expressionListNode, top.currentChildIndex + 1))
             } else {
                 programStack.push(top)
