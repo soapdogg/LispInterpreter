@@ -1,6 +1,5 @@
 package com.soapdogg.lispInterpreter.evaluator
 
-import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.datamodels.AtomNode
 import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
@@ -18,69 +17,51 @@ class NodeEvaluatorIterative(
         expressionListNode: ExpressionListNode
     ): NodeV2 {
 
-        val stack = Stack<StackItem>()
-        var currentRootIndex = 0
-        var root: NodeV2? = expressionListNode
+        val programStack = Stack<StackItem>()
         val evalStack = Stack<NodeV2>()
 
-        while(
-            root != null || stack.isNotEmpty()
-        ) {
-            if (root != null) {
-                stack.push(StackItem(root, currentRootIndex))
-                currentRootIndex = 0
+        programStack.push(StackItem(expressionListNode, 0))
 
-                if (root is ExpressionListNode) {
-                    root = root.children[0]
-                } else {
-                    root = null
-                }
+        while(
+            programStack.isNotEmpty()
+        ) {
+            val top = programStack.pop()
+            val nthChild = top.expressionListNode.children[top.currentChildIndex]
+            if (nthChild is ExpressionListNode) {
+                programStack.push(top)
+                programStack.push(StackItem(nthChild, 0))
                 continue
             }
 
-            var temp = stack.pop()
-            if (temp.node is AtomNode && (temp.node as AtomNode).value == FunctionNameConstants.QUOTE) {
-                val quoteExpr = stack.pop()
-                val quoteExprNode = quoteExpr.node as ExpressionListNode
-                if (stack.isNotEmpty()) {
-                    val top = stack.pop()
-                    stack.push(StackItem(top.node, top.childrenIndex + 1))
-                    temp = stack.peek()
-                }
-                root = null
-                evalStack.push(quoteExprNode.children[1])
+            val expectedFunctionLength = functionLengthDeterminer.determineFunctionLength(top.expressionListNode)
+            if (top.currentChildIndex < expectedFunctionLength) {
+                evalStack.push(nthChild)
+                programStack.push(StackItem(top.expressionListNode, top.currentChildIndex + 1))
             } else {
-                evalStack.push(temp.node)
+                programStack.push(top)
             }
 
-            while (
-                stack.isNotEmpty()
-                &&
-                temp.childrenIndex == functionLengthDeterminer.determineFunctionLength(stack.peek().node) - 1
-            ) {
-                temp = stack.pop()
-
-                val functionLength = functionLengthDeterminer.determineFunctionLength(temp.node)
+            val evaluatingTop = programStack.peek()
+            if (expectedFunctionLength == evaluatingTop.currentChildIndex) {
                 val functionStack = Stack<NodeV2>()
-                for (i in 0 until functionLength) {
+                for (i in 0 until expectedFunctionLength) {
                     functionStack.push(evalStack.pop())
                 }
 
-                val function = functionStack.pop() as AtomNode
-                val functionValue = function.value
-                if (functionMap.containsKey(functionValue)) {
-                    val f = functionMap.getValue(functionValue)
-                    val resultingNode = f.evaluate(functionStack)
-                    evalStack.push(resultingNode)
+                val functionNameNode = functionStack.pop()
+                val functionName = (functionNameNode as AtomNode).value
+                if (functionMap.containsKey(functionName)) {
+                    val function = functionMap.getValue(functionName)
+                    val evaluatedFunctionResult = function.evaluate(functionStack)
+                    evalStack.push(evaluatedFunctionResult)
                 }
-            }
 
+                programStack.pop() // remove ExpressionNode from program stack since we have evaluated it
 
-            if (stack.isNotEmpty()) {
-                currentRootIndex = temp.childrenIndex + 1
-                root = (stack.peek().node as ExpressionListNode).children[
-                    currentRootIndex
-                ]
+                if (programStack.isNotEmpty()) {
+                    val head = programStack.pop()
+                    programStack.push(StackItem(head.expressionListNode, head.currentChildIndex + 1))
+                }
             }
         }
 
