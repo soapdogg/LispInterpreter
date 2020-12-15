@@ -46,14 +46,13 @@ class NodeEvaluatorIterative (
             }
 
             var temp = stack.pop()
-
-
             evalStack.push(temp.node)
 
             while (
-                !stack.isEmpty()
-                && stack.peek().node is ExpressionListNode
-                && temp.childrenIndex == functionLengthDeterminer.determineFunctionLength(stack.peek().node) - 1) {
+                stack.isNotEmpty()
+                &&
+                temp.childrenIndex == functionLengthDeterminer.determineFunctionLength(stack.peek().node) - 1
+            ) {
                 temp = stack.pop()
 
                 val functionLength = functionLengthDeterminer.determineFunctionLength(temp.node)
@@ -244,10 +243,10 @@ class NodeEvaluatorIterative (
             }
 
             if (stack.isNotEmpty()) {
-                root = (stack.peek().node as ExpressionListNode).children[
-                    temp.childrenIndex + 1
-                ]
                 currentRootIndex = temp.childrenIndex + 1
+                root = (stack.peek().node as ExpressionListNode).children[
+                    currentRootIndex
+                ]
             }
         }
 
