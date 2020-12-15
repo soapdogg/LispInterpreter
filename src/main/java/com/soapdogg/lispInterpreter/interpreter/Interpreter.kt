@@ -1,7 +1,6 @@
 package com.soapdogg.lispInterpreter.interpreter
 
 import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
-import com.soapdogg.lispInterpreter.converter.NodeToStackConverter
 import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
 import com.soapdogg.lispInterpreter.evaluator.ProgramEvaluator
 import com.soapdogg.lispInterpreter.generator.UserDefinedFunctionGenerator
@@ -13,7 +12,6 @@ import java.util.Scanner
 class Interpreter (
     private val tokenizer: Tokenizer,
     private val rootParser: RootParser,
-    private val nodeToStackConverter: NodeToStackConverter,
     private val program: ProgramEvaluator,
     private val rootNodePartitioner: RootNodePartitioner,
     private val userDefinedFunctionGenerator: UserDefinedFunctionGenerator,
