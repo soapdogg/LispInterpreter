@@ -26,7 +26,7 @@ class InterpreterTest {
     //ATOMIC TESTS
     @Test
     fun project3AtomicValidTest() {
-        interpreterTest("data/input/project3/atomic/valid.lisp", "data/expected/project3/atomic/valid.txt", true)
+        interpreterTest("data/input/project3/atomic/valid.lisp", "data/expected/project3/atomic/valid.txt", false)
     }
 
     @Test

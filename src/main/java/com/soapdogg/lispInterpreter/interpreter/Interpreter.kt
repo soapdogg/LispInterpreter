@@ -37,21 +37,17 @@ class Interpreter (
             userDefinedFunctions
         )
 
-        if (useStackEval) {
-            partitionedRootNodes.evaluatableNodes.forEach {
-                if (it is ExpressionListNode) {
-                    program.evaluatePostOrder(
-                        it
-                    )
-                }
-            }
+        val evaluatedNodes = if (useStackEval) {
+            program.evaluatePostOrder(
+                partitionedRootNodes.evaluatableNodes
+            )
+        } else {
+             program.evaluate(
+                partitionedRootNodes.evaluatableNodes,
+                userDefinedFunctions,
+                HashMap()
+            )
         }
-        val evaluatedNodes = program.evaluate(
-            partitionedRootNodes.evaluatableNodes,
-            userDefinedFunctions,
-            HashMap()
-        )
-
         return listNotationPrinter.printInListNotation(evaluatedNodes)
     }
 }
