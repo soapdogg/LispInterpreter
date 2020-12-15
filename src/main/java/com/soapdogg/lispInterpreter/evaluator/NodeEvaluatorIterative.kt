@@ -1,5 +1,6 @@
 package com.soapdogg.lispInterpreter.evaluator
 
+import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.datamodels.AtomNode
 import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
@@ -38,7 +39,19 @@ class NodeEvaluatorIterative(
             }
 
             var temp = stack.pop()
-            evalStack.push(temp.node)
+            if (temp.node is AtomNode && (temp.node as AtomNode).value == FunctionNameConstants.QUOTE) {
+                val quoteExpr = stack.pop()
+                val quoteExprNode = quoteExpr.node as ExpressionListNode
+                if (stack.isNotEmpty()) {
+                    val top = stack.pop()
+                    stack.push(StackItem(top.node, top.childrenIndex + 1))
+                    temp = stack.peek()
+                }
+                root = null
+                evalStack.push(quoteExprNode.children[1])
+            } else {
+                evalStack.push(temp.node)
+            }
 
             while (
                 stack.isNotEmpty()
@@ -61,6 +74,7 @@ class NodeEvaluatorIterative(
                     evalStack.push(resultingNode)
                 }
             }
+
 
             if (stack.isNotEmpty()) {
                 currentRootIndex = temp.childrenIndex + 1
