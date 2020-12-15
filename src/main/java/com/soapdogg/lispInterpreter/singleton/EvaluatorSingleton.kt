@@ -11,7 +11,6 @@ enum class EvaluatorSingleton {
     val atomNodeEvaluator: AtomNodeEvaluator = AtomNodeEvaluator()
     val nodeEvaluator: NodeEvaluator = NodeEvaluator(
         atomNodeEvaluator,
-        DeterminerSingleton.INSTANCE.numericStringDeterminer,
         ValueRetrieverSingleton.INSTANCE.listValueRetriever,
         PrinterSingleton.INSTANCE.listNotationPrinter,
         ComparatorSingleton.INSTANCE.nodeValueComparator,

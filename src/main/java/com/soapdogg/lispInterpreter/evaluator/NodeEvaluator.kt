@@ -6,7 +6,6 @@ import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.constants.FunctionsConstants.functionLengthMap
 import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
 import com.soapdogg.lispInterpreter.datamodels.*
-import com.soapdogg.lispInterpreter.determiner.NumericStringDeterminer
 import com.soapdogg.lispInterpreter.exceptions.NotAListException
 import com.soapdogg.lispInterpreter.generator.NodeGenerator
 import com.soapdogg.lispInterpreter.printer.ListNotationPrinter
@@ -15,7 +14,6 @@ import com.soapdogg.lispInterpreter.valueretriver.NumericValueRetriever
 
 class NodeEvaluator(
     private val atomNodeEvaluator: AtomNodeEvaluator,
-    private val numericStringDeterminer: NumericStringDeterminer,
     private val listValueRetriever: ListValueRetriever,
     private val listNotationPrinter: ListNotationPrinter,
     private val nodeValueComparator: NodeValueComparator,
@@ -99,15 +97,6 @@ class NodeEvaluator(
                             FunctionNameConstants.ATOM -> {
                                 val result = evaluatedChildren[0] !is ExpressionListNode
                                 return@map nodeGenerator.generateAtomNode(result)
-                            }
-                            FunctionNameConstants.INT -> {
-                                if (evaluatedChildren[0] is ExpressionListNode) {
-                                    return@map nodeGenerator.generateAtomNode(false)
-                                } else {
-                                    val value = (evaluatedChildren[0] as AtomNode).value
-                                    val result = numericStringDeterminer.isStringNumeric(value)
-                                    return@map nodeGenerator.generateAtomNode(result)
-                                }
                             }
                             FunctionNameConstants.NULL -> {
                                 if (evaluatedChildren[0] is ExpressionListNode) {
