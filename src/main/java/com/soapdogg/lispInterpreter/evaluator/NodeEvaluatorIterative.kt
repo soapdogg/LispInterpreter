@@ -82,9 +82,13 @@ class NodeEvaluatorIterative(
             }
 
             val nthChild = top.expressionListNode.children[top.currentChildIndex]
-            if (nthChild is ExpressionListNode) {
+            if (nthChild is ExpressionListNode && nthChild.children.size > 1) {
                 programStack.push(top)
                 programStack.push(StackItem(nthChild, 0))
+                continue
+            } else if (nthChild is ExpressionListNode ) {
+                evalStack.push(nthChild.children[0])
+                programStack.push(StackItem(top.expressionListNode, top.currentChildIndex + 1))
                 continue
             }
 
@@ -117,10 +121,14 @@ class NodeEvaluatorIterative(
 
                 val functionNameNode = functionStack.pop()
                 val functionName = (functionNameNode as AtomNode).value
-                if (functionMap.containsKey(functionName)) {
+                if (functionName == ReservedValuesConstants.NIL) {
+                    evalStack.push(functionNameNode)
+                } else if (functionMap.containsKey(functionName)) {
                     val function = functionMap.getValue(functionName)
                     val evaluatedFunctionResult = function.evaluate(functionStack)
                     evalStack.push(evaluatedFunctionResult)
+                } else {
+                    throw Exception("Error! Invalid CAR value: $functionName\n")
                 }
 
                 programStack.pop() // remove ExpressionNode from program stack since we have evaluated it

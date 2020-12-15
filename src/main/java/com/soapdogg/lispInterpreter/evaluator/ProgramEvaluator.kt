@@ -31,6 +31,7 @@ class ProgramEvaluator(
         return rootNodes.map {
             if (it is AtomNode) {
                 atomRootNodeAsserter.assertAtomRootNode(it)
+                return@map it
             }
             nodeEvaluatorIterative.evaluate(
                 it as ExpressionListNode
