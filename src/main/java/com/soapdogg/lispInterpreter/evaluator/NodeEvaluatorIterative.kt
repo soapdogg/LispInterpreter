@@ -2,10 +2,7 @@ package com.soapdogg.lispInterpreter.evaluator
 
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
-import com.soapdogg.lispInterpreter.datamodels.AtomNode
-import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
-import com.soapdogg.lispInterpreter.datamodels.NodeV2
-import com.soapdogg.lispInterpreter.datamodels.StackItem
+import com.soapdogg.lispInterpreter.datamodels.*
 import com.soapdogg.lispInterpreter.determiner.FunctionLengthDeterminer
 import com.soapdogg.lispInterpreter.exceptions.NotAListException
 import com.soapdogg.lispInterpreter.function.Function
@@ -17,7 +14,8 @@ class NodeEvaluatorIterative(
 ){
 
     fun evaluate(
-        expressionListNode: ExpressionListNode
+        expressionListNode: ExpressionListNode,
+        userDefinedFunctions: Map<String, UserDefinedFunction>
     ): NodeV2 {
 
         val programStack = Stack<StackItem>()

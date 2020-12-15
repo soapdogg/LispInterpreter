@@ -39,7 +39,8 @@ class Interpreter (
 
         val evaluatedNodes = if (useStackEval) {
             program.evaluatePostOrder(
-                partitionedRootNodes.evaluatableNodes
+                partitionedRootNodes.evaluatableNodes,
+                userDefinedFunctions
             )
         } else {
              program.evaluate(

@@ -26,7 +26,8 @@ class ProgramEvaluator(
     }
 
     fun evaluatePostOrder(
-        rootNodes: List<NodeV2>
+        rootNodes: List<NodeV2>,
+        userDefinedFunctions: Map<String, UserDefinedFunction>
     ): List<NodeV2> {
         return rootNodes.map {
             if (it is AtomNode) {
@@ -34,7 +35,8 @@ class ProgramEvaluator(
                 return@map it
             }
             nodeEvaluatorIterative.evaluate(
-                it as ExpressionListNode
+                it as ExpressionListNode,
+                userDefinedFunctions
             )
         }
     }
