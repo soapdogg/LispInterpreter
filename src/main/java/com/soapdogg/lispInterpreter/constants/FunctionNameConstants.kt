@@ -5,6 +5,7 @@ object FunctionNameConstants {
     const val CAR = "CAR"
     const val CDR = "CDR"
     const val COND = "COND"
+    const val CONDCHILD = "CONDCHILD"
     const val CONS = "CONS"
     const val DEFUN = "DEFUN"
     const val EQ = "EQ"

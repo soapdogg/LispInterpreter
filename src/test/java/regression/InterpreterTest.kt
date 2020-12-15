@@ -99,7 +99,7 @@ class InterpreterTest {
     //COND TESTS
     @Test
     fun project3CondValidTest() {
-        interpreterTest("data/input/project3/cond/valid.lisp", "data/expected/project3/cond/valid.txt", false)
+        interpreterTest("data/input/project3/cond/valid.lisp", "data/expected/project3/cond/valid.txt", true)
     }
 
     @Test
@@ -125,7 +125,7 @@ class InterpreterTest {
     //CONS TESTS
     @Test
     fun project3ConsValidTest() {
-        interpreterTest("data/input/project3/cons/valid.lisp", "data/expected/project3/cons/valid.txt", false)
+        interpreterTest("data/input/project3/cons/valid.lisp", "data/expected/project3/cons/valid.txt", true)
     }
 
     @Test
@@ -199,7 +199,7 @@ class InterpreterTest {
     //LESS TESTS
     @Test
     fun project3LessValidTest() {
-        interpreterTest("data/input/project3/less/valid.lisp", "data/expected/project3/less/valid.txt", false)
+        interpreterTest("data/input/project3/less/valid.lisp", "data/expected/project3/less/valid.txt", true)
     }
 
     @Test
