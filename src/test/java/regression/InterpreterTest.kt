@@ -104,7 +104,7 @@ class InterpreterTest {
 
     @Test
     fun project3CondInvalid1Test() {
-        interpreterTest("data/input/project3/cond/invalid1.lisp", "data/expected/project3/cond/invalid1.txt", false)
+        interpreterTest("data/input/project3/cond/invalid1.lisp", "data/expected/project3/cond/invalid1.txt", true)
     }
 
     @Test
@@ -114,7 +114,7 @@ class InterpreterTest {
 
     @Test
     fun project3CondInvalid3Test() {
-        interpreterTest("data/input/project3/cond/invalid3.lisp", "data/expected/project3/cond/invalid3.txt", false)
+        interpreterTest("data/input/project3/cond/invalid3.lisp", "data/expected/project3/cond/invalid3.txt", true)
     }
 
     @Test

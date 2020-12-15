@@ -7,6 +7,7 @@ import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.StackItem
 import com.soapdogg.lispInterpreter.determiner.FunctionLengthDeterminer
+import com.soapdogg.lispInterpreter.exceptions.NotAListException
 import com.soapdogg.lispInterpreter.function.Function
 import java.util.*
 
@@ -44,6 +45,8 @@ class NodeEvaluatorIterative(
                             programStack.push(StackItem(head.expressionListNode, head.currentChildIndex + 1))
                         }
                         continue
+                    } else {
+                        throw NotAListException("Error! None of the conditions in the COND function evaluated to true.\n")
                     }
                 }
 
@@ -60,16 +63,18 @@ class NodeEvaluatorIterative(
                             evalStack.push(secondChild.children[0])
                         }
                     } else {
-                        val evaluatedCondChild = evalStack.pop() as AtomNode
-                        if (evaluatedCondChild.value != ReservedValuesConstants.NIL) {
-                            evalStack.push(secondChild.children[1])
-                            while (
-                                (programStack.peek().expressionListNode.children[0] as AtomNode).value == FunctionNameConstants.CONDCHILD
-                            ) {
-                                programStack.pop()
+                        if (evalStack.isNotEmpty()) {
+                            val evaluatedCondChild = evalStack.pop() as AtomNode
+                            if (evaluatedCondChild.value != ReservedValuesConstants.NIL) {
+                                evalStack.push(secondChild.children[1])
+                                while (
+                                    (programStack.peek().expressionListNode.children[0] as AtomNode).value == FunctionNameConstants.CONDCHILD
+                                ) {
+                                    programStack.pop()
+                                }
+                                val cond = programStack.pop()
+                                programStack.push(StackItem(cond.expressionListNode, 2))
                             }
-                            val cond = programStack.pop()
-                            programStack.push(StackItem(cond.expressionListNode, 2))
                         }
                     }
                     continue
