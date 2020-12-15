@@ -38,18 +38,7 @@ class NodeEvaluatorIterative (
                 currentRootIndex = 0
 
                 if (root is ExpressionListNode) {
-                    val firstChild = root.children[0]
-                    if (firstChild is AtomNode && firstChild.value == FunctionNameConstants.QUOTE) {
-                        val top = stack.pop().node as ExpressionListNode
-                        if (stack.isNotEmpty()) {
-                            val next = stack.pop()
-                            stack.push(StackItem(next.node, next.childrenIndex + 1))
-                        }
-                        stack.push(StackItem(top.children[1],  1))
-                        root = null
-                    } else {
-                        root = root.children[0]
-                    }
+                    root = root.children[0]
                 } else {
                     root = null
                 }
