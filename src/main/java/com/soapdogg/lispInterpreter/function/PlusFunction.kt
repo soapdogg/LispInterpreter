@@ -10,6 +10,7 @@ class PlusFunction(
     private val numericValueRetriever: NumericValueRetriever,
     private val nodeGenerator: NodeGenerator
 ): Function {
+
     override fun evaluate(
         params: Stack<NodeV2>,
         variableMap: Map<String, NodeV2>
