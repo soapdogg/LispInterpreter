@@ -9,7 +9,7 @@ import regression.ScannerUtils.scanExpected
 class UserDefinedTest {
     @Test
     fun project4DiffTest() {
-        interpreterTest("data/input/project4/diff.lisp", "data/expected/project4/diff.txt", false)
+        interpreterTest("data/input/project4/diff.lisp", "data/expected/project4/diff.txt", true)
     }
 
     @Test
@@ -34,12 +34,12 @@ class UserDefinedTest {
 
     @Test
     fun project4NegateTest() {
-        interpreterTest("data/input/project4/negate.lisp", "data/expected/project4/negate.txt", false)
+        interpreterTest("data/input/project4/negate.lisp", "data/expected/project4/negate.txt", true)
     }
 
     @Test
     fun project4IncrementTest() {
-        interpreterTest("data/input/project4/increment.lisp", "data/expected/project4/increment.txt", false)
+        interpreterTest("data/input/project4/increment.lisp", "data/expected/project4/increment.txt", true)
     }
 
     @Test
@@ -74,7 +74,7 @@ class UserDefinedTest {
 
     @Test
     fun project4OutOfOrderDefunTest() {
-        interpreterTest("data/input/project4/out_of_order_defun.lisp", "data/expected/project4/out_of_order_defun.txt", false)
+        interpreterTest("data/input/project4/out_of_order_defun.lisp", "data/expected/project4/out_of_order_defun.txt", true)
     }
 
     @Test
