@@ -18,9 +18,11 @@ enum class FunctionSingleton {
         GeneratorSingleton.INSTANCE.nodeGenerator
     )
     val consFunction: ConsFunction = ConsFunction(
+        ValueRetrieverSingleton.INSTANCE.atomNodeValueRetriever,
         GeneratorSingleton.INSTANCE.nodeGenerator
     )
     val eqFunction: EqFunction = EqFunction(
+        ValueRetrieverSingleton.INSTANCE.atomNodeValueRetriever,
         GeneratorSingleton.INSTANCE.nodeGenerator
     )
     val greaterFunction: GreaterFunction = GreaterFunction(
@@ -28,6 +30,7 @@ enum class FunctionSingleton {
         GeneratorSingleton.INSTANCE.nodeGenerator
     )
     val intFunction: IntFunction = IntFunction(
+        ValueRetrieverSingleton.INSTANCE.atomNodeValueRetriever,
         DeterminerSingleton.INSTANCE.numericStringDeterminer,
         GeneratorSingleton.INSTANCE.nodeGenerator
     )

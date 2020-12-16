@@ -4,9 +4,11 @@ import com.soapdogg.lispInterpreter.datamodels.AtomNode
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.determiner.NumericStringDeterminer
 import com.soapdogg.lispInterpreter.generator.NodeGenerator
+import com.soapdogg.lispInterpreter.valueretriver.AtomNodeValueRetriever
 import java.util.*
 
 class IntFunction (
+    private val atomNodeValueRetriever: AtomNodeValueRetriever,
     private val numericStringDeterminer: NumericStringDeterminer,
     private val nodeGenerator: NodeGenerator
 ): Function {
@@ -17,9 +19,17 @@ class IntFunction (
     ): NodeV2 {
         val first = params.pop()
         return if (first is AtomNode) {
-            val value = first.value
-            val isNumeric = numericStringDeterminer.isStringNumeric(value)
-            nodeGenerator.generateAtomNode(isNumeric)
+            val evaluatedAtom = atomNodeValueRetriever.retrieveAtomNode(
+                first,
+                variableMap
+            )
+            if (evaluatedAtom is AtomNode) {
+                val value = evaluatedAtom.value
+                val isNumeric = numericStringDeterminer.isStringNumeric(value)
+                nodeGenerator.generateAtomNode(isNumeric)
+            } else {
+                nodeGenerator.generateAtomNode(false)
+            }
         } else {
             nodeGenerator.generateAtomNode(false)
         }

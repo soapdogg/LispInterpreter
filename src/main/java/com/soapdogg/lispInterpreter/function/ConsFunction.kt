@@ -4,24 +4,36 @@ import com.soapdogg.lispInterpreter.datamodels.AtomNode
 import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.generator.NodeGenerator
+import com.soapdogg.lispInterpreter.valueretriver.AtomNodeValueRetriever
 import java.util.*
 
 class ConsFunction(
+    private val atomNodeValueRetriever: AtomNodeValueRetriever,
     private val nodeGenerator: NodeGenerator
 ): Function {
     override fun evaluate(
         params: Stack<NodeV2>,
         variableMap: Map<String, NodeV2>
     ): NodeV2 {
-        var evaluatedAddress = params.pop()
-        var evaluatedData = params.pop()
+        val first = params.pop()
+        val second = params.pop()
 
-        if (evaluatedAddress is AtomNode) {
-            evaluatedAddress = variableMap.getOrDefault(evaluatedAddress.value, evaluatedAddress)
+        val evaluatedAddress = if (first is AtomNode) {
+            atomNodeValueRetriever.retrieveAtomNode(
+                first,
+                variableMap
+            )
+        } else {
+            first
         }
 
-        if (evaluatedData is AtomNode) {
-            evaluatedData = variableMap.getOrDefault(evaluatedData.value, evaluatedData)
+        val evaluatedData = if (second is AtomNode) {
+            atomNodeValueRetriever.retrieveAtomNode(
+                second,
+                variableMap
+            )
+        } else {
+            second
         }
 
         return if (evaluatedData is ExpressionListNode) {
