@@ -23,8 +23,7 @@ enum class AsserterSingleton {
             DeterminerSingleton.INSTANCE.invalidNameDeterminer
         )
         atomRootNodeAsserter = AtomRootNodeAsserter(
-            DeterminerSingleton.INSTANCE.numericStringDeterminer,
-            ComparatorSingleton.INSTANCE.nodeValueComparator
+            DeterminerSingleton.INSTANCE.numericStringDeterminer
         )
         lineFormatAsserter = LineFormatAsserter(
             TokenValueConstants.ERROR_STATE_PATTERN

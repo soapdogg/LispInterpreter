@@ -12,23 +12,6 @@ class NumericValueRetriever(
 ) {
 
     fun retrieveNumericValue(
-        nodes: List<NodeV2>,
-        functionName: String
-    ): List<Int> {
-        return nodes.withIndex().map { (index, node) ->
-            val value = listNotationPrinter.printInListNotation(
-                node
-            )
-            val isNumeric = numericStringDeterminer.isStringNumeric(value)
-            if (!isNumeric) {
-                val sb = """Error! Parameter at position: ${index + 1} of function $functionName is not numeric!    Actual: $value${'\n'}"""
-                throw NotNumericException(sb)
-            }
-            value.toInt()
-        }
-    }
-
-    fun retrieveNumericValue(
         node: NodeV2,
         functionName: String,
         index: Int,
