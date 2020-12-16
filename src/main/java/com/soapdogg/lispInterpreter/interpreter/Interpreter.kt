@@ -1,7 +1,6 @@
 package com.soapdogg.lispInterpreter.interpreter
 
 import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
-import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
 import com.soapdogg.lispInterpreter.evaluator.ProgramEvaluator
 import com.soapdogg.lispInterpreter.generator.UserDefinedFunctionGenerator
 import com.soapdogg.lispInterpreter.parser.RootParser

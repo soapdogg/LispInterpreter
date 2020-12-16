@@ -24,7 +24,6 @@ enum class EvaluatorSingleton {
     )
     val programEvaluator: ProgramEvaluator = ProgramEvaluator(
         AsserterSingleton.INSTANCE.atomRootNodeAsserter,
-        nodeEvaluator,
         nodeEvaluatorIterative
     )
 }

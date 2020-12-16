@@ -8,15 +8,12 @@ import org.mockito.Mockito
 
 class ProgramEvaluatorTest {
     private val userDefinedFunctions: Map<String, UserDefinedFunction> = emptyMap()
-    private val variableNameToValueMap: Map<String, NodeV2> = emptyMap()
 
     private val atomRootNodeAsserter = Mockito.mock(AtomRootNodeAsserter::class.java)
-    private val nodeEvaluator = Mockito.mock(NodeEvaluator::class.java)
     private val nodeEvaluatorIterative = Mockito.mock(NodeEvaluatorIterative::class.java)
 
     private val programEvaluator = ProgramEvaluator(
         atomRootNodeAsserter,
-        nodeEvaluator,
         nodeEvaluatorIterative
     )
 
@@ -24,22 +21,13 @@ class ProgramEvaluatorTest {
     fun rootNodeIsAnAtomNodeTest() {
         val atomNode = Mockito.mock(AtomNode::class.java)
         val rootNodes = listOf(atomNode)
-        val evaluatedNode = Mockito.mock(NodeV2::class.java)
-        Mockito.`when`(
-            nodeEvaluator.evaluateV2(
-                listOf(atomNode),
-                userDefinedFunctions,
-                variableNameToValueMap
-            )
-        ).thenReturn(listOf(evaluatedNode))
 
-        val actual = programEvaluator.evaluate(
+        val actual = programEvaluator.evaluatePostOrder(
             rootNodes,
-            userDefinedFunctions,
-            variableNameToValueMap
+            userDefinedFunctions
         )
         Assertions.assertEquals(1, actual.size)
-        Assertions.assertEquals(evaluatedNode, actual[0])
+        Assertions.assertEquals(atomNode, actual[0])
         Mockito.verify(atomRootNodeAsserter).assertAtomRootNode(atomNode)
     }
 
@@ -49,16 +37,14 @@ class ProgramEvaluatorTest {
         val rootNodes = listOf(expressionNode)
         val evaluatedNode = Mockito.mock(NodeV2::class.java)
         Mockito.`when`(
-            nodeEvaluator.evaluateV2(
-                listOf(expressionNode),
-                userDefinedFunctions,
-                variableNameToValueMap
+            nodeEvaluatorIterative.evaluate(
+                expressionNode,
+                userDefinedFunctions
             )
-        ).thenReturn(listOf(evaluatedNode))
-        val actual = programEvaluator.evaluate(
+        ).thenReturn(evaluatedNode)
+        val actual = programEvaluator.evaluatePostOrder(
             rootNodes,
-            userDefinedFunctions,
-            variableNameToValueMap
+            userDefinedFunctions
         )
         Assertions.assertEquals(1, actual.size)
         Assertions.assertEquals(evaluatedNode, actual[0])

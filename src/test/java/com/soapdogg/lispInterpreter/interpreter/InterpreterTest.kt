@@ -58,13 +58,14 @@ class InterpreterTest {
         val evaluatedNode = Mockito.mock(NodeV2::class.java)
         val evaluatedNodes = listOf(evaluatedNode)
         val userDefinedFunctions: Map<String, UserDefinedFunction> = mapOf(pair)
+
         Mockito.`when`(
-            program.evaluate(
+            program.evaluatePostOrder(
                 evaluatableNodes,
-                userDefinedFunctions,
-                HashMap()
+                userDefinedFunctions
             )
         ).thenReturn(evaluatedNodes)
+
 
         val value = "value"
         Mockito.`when`(listNotationPrinter.printInListNotation(evaluatedNodes)).thenReturn(value)
