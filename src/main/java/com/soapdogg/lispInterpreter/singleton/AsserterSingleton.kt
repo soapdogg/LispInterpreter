@@ -10,16 +10,12 @@ enum class AsserterSingleton {
     val functionLengthAsserter: FunctionLengthAsserter = FunctionLengthAsserter(
         DeterminerSingleton.INSTANCE.functionLengthDeterminer
     )
-    val condFunctionParameterAsserter: CondFunctionParameterAsserter
     val userDefinedFormalParametersAsserter: UserDefinedFormalParametersAsserter
     val userDefinedFunctionNameAsserter: UserDefinedFunctionNameAsserter
     val atomRootNodeAsserter: AtomRootNodeAsserter
     val lineFormatAsserter: LineFormatAsserter
 
     init {
-        condFunctionParameterAsserter = CondFunctionParameterAsserter(
-            ComparatorSingleton.INSTANCE.nodeValueComparator
-        )
         userDefinedFormalParametersAsserter = UserDefinedFormalParametersAsserter(
             InvalidUserDefinedNameConstants.InvalidNames
         )
