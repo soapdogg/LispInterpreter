@@ -1,10 +1,10 @@
-package com.soapdogg.lispInterpreter.evaluator
+package com.soapdogg.lispInterpreter.valueretriver
 
 import com.soapdogg.lispInterpreter.datamodels.AtomNode
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 
-class AtomNodeEvaluator {
-    fun evaluate(
+class AtomNodeValueRetriever {
+    fun retrieveAtomNode(
         atomNode: AtomNode,
         variableNameToValueMap: Map<String, NodeV2>
     ): NodeV2 {

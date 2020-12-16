@@ -2,13 +2,13 @@ package com.soapdogg.lispInterpreter.singleton
 
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.function.*
-import java.sql.Time
 
 enum class FunctionSingleton {
     INSTANCE;
 
     val atomFunction: AtomFunction = AtomFunction(
-        GeneratorSingleton.INSTANCE.nodeGenerator
+        GeneratorSingleton.INSTANCE.nodeGenerator,
+        ValueRetrieverSingleton.INSTANCE.atomNodeValueRetriever
     )
     val carFunction: CarFunction = CarFunction(
         ValueRetrieverSingleton.INSTANCE.listValueRetriever
@@ -40,7 +40,8 @@ enum class FunctionSingleton {
         GeneratorSingleton.INSTANCE.nodeGenerator
     )
     val nullFunction: NullFunction = NullFunction(
-        GeneratorSingleton.INSTANCE.nodeGenerator
+        GeneratorSingleton.INSTANCE.nodeGenerator,
+        ValueRetrieverSingleton.INSTANCE.atomNodeValueRetriever
     )
     val plusFunction: PlusFunction = PlusFunction(
         ValueRetrieverSingleton.INSTANCE.numericValueRetriever,
