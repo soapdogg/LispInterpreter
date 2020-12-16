@@ -320,7 +320,7 @@ class InterpreterTest {
             val interpreter = InterpreterSingleton.INSTANCE.interpreter
             val actual = try {
                 val `in` = getScannerFromFilePath(programFile)
-                interpreter.interpret(`in`, true)
+                interpreter.interpret(`in`)
             } catch (e: Exception) {
                 e.message.toString()
             }

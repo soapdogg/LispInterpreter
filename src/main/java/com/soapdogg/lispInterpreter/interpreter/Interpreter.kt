@@ -20,8 +20,7 @@ class Interpreter (
 ){
 
     fun interpret(
-        scanner: Scanner,
-        useStackEval: Boolean
+        scanner: Scanner
     ): String {
         val tokens = tokenizer.tokenize(scanner)
         val rootNodes = rootParser.parse(tokens)
@@ -37,18 +36,11 @@ class Interpreter (
             userDefinedFunctions
         )
 
-        val evaluatedNodes = if (useStackEval) {
-            program.evaluatePostOrder(
-                partitionedRootNodes.evaluatableNodes,
-                userDefinedFunctions
-            )
-        } else {
-             program.evaluate(
-                partitionedRootNodes.evaluatableNodes,
-                userDefinedFunctions,
-                HashMap()
-            )
-        }
+        val evaluatedNodes = program.evaluatePostOrder(
+            partitionedRootNodes.evaluatableNodes,
+            userDefinedFunctions
+        )
+
         return listNotationPrinter.printInListNotation(evaluatedNodes)
     }
 }

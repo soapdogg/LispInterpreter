@@ -69,7 +69,7 @@ class InterpreterTest {
         val value = "value"
         Mockito.`when`(listNotationPrinter.printInListNotation(evaluatedNodes)).thenReturn(value)
 
-        val actual = interpreter.interpret(scanner, false)
+        val actual = interpreter.interpret(scanner)
         Assertions.assertEquals(value, actual)
     }
 }
