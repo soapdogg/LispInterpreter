@@ -94,10 +94,6 @@ class NodeEvaluator(
                         )
 
                         when (addressValue) {
-                            FunctionNameConstants.ATOM -> {
-                                val result = evaluatedChildren[0] !is ExpressionListNode
-                                return@map nodeGenerator.generateAtomNode(result)
-                            }
                             FunctionNameConstants.NULL -> {
                                 if (evaluatedChildren[0] is ExpressionListNode) {
                                     return@map nodeGenerator.generateAtomNode(false)
@@ -169,14 +165,6 @@ class NodeEvaluator(
                                     FunctionNameConstants.MINUS
                                 )
                                 val result = numericChildren.reduce { acc, i -> acc - i }
-                                return@map nodeGenerator.generateAtomNode(result)
-                            }
-                            FunctionNameConstants.PLUS -> {
-                                val numericChildren = numericValueRetriever.retrieveNumericValue(
-                                    evaluatedChildren,
-                                    FunctionNameConstants.PLUS
-                                )
-                                val result = numericChildren.reduce { acc, i -> acc + i }
                                 return@map nodeGenerator.generateAtomNode(result)
                             }
                             FunctionNameConstants.TIMES -> {
