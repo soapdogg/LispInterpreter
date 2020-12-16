@@ -84,7 +84,7 @@ class UserDefinedTest {
 
     @Test
     fun project4MemLargeTest() {
-        //interpreterTest("data/input/project4/mem_large.lisp", "data/expected/project4/mem_large.txt");
+        //interpreterTest("data/input/project4/mem_large.lisp", "data/expected/project4/mem_large.lisp", true)
     }
 
     @Test

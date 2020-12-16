@@ -16,7 +16,8 @@ class CarFunction(
 
         val firstExpressionListNode = listValueRetriever.retrieveListValue(
             first,
-            FunctionNameConstants.CAR
+            FunctionNameConstants.CAR,
+            variableMap
         )
         return firstExpressionListNode.children[0]
     }

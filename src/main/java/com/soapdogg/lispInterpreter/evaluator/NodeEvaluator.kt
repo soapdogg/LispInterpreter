@@ -155,15 +155,6 @@ class NodeEvaluator(
                                 val result = leftValue == rightValue
                                 return@map nodeGenerator.generateAtomNode(result)
                             }
-                            FunctionNameConstants.GREATER -> {
-                                val numericChildren = numericValueRetriever.retrieveNumericValue(
-                                    evaluatedChildren,
-                                    FunctionNameConstants.GREATER
-                                )
-
-                                val result = numericChildren[0] > numericChildren[1]
-                                return@map nodeGenerator.generateAtomNode(result)
-                            }
                             FunctionNameConstants.LESS -> {
                                 val numericChildren = numericValueRetriever.retrieveNumericValue(
                                     evaluatedChildren,

@@ -18,7 +18,8 @@ class CdrFunction(
 
         val firstExpressionListNode = listValueRetriever.retrieveListValue(
             first,
-            FunctionNameConstants.CDR
+            FunctionNameConstants.CDR,
+            variableMap
         )
 
         return when (firstExpressionListNode.children.size) {
