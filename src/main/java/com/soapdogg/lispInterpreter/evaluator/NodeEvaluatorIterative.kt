@@ -21,7 +21,7 @@ class NodeEvaluatorIterative(
         val programStack = Stack<StackItem>()
         val evalStack = Stack<NodeV2>()
 
-        programStack.push(StackItem(expressionListNode, 0))
+        programStack.push(StackItem(expressionListNode, 0, mutableMapOf()))
 
         while(
             programStack.isNotEmpty()
@@ -32,15 +32,37 @@ class NodeEvaluatorIterative(
                 val firstChild = top.expressionListNode.children[0] as AtomNode
                 if (firstChild.value == FunctionNameConstants.COND) {
                     if (top.currentChildIndex == 0) {
-                        programStack.push(StackItem(top.expressionListNode, top.currentChildIndex + 1))
+                        programStack.push(
+                            StackItem(
+                                top.expressionListNode,
+                                top.currentChildIndex + 1,
+                                top.variableMap
+                            )
+                        )
                         for (i in top.expressionListNode.children.size - 2 downTo 1) {
-                            programStack.push(StackItem(ExpressionListNode(listOf(AtomNode(FunctionNameConstants.CONDCHILD), top.expressionListNode.children[i])), 0))
+                            programStack.push(
+                                StackItem(
+                                    ExpressionListNode(
+                                        listOf(
+                                            AtomNode(FunctionNameConstants.CONDCHILD), top.expressionListNode.children[i]
+                                        )
+                                    ),
+                                    0,
+                                    top.variableMap
+                                )
+                            )
                         }
                         continue
                     } else if (top.currentChildIndex == 2) {
                         if (programStack.isNotEmpty()) {
                             val head = programStack.pop()
-                            programStack.push(StackItem(head.expressionListNode, head.currentChildIndex + 1))
+                            programStack.push(
+                                StackItem(
+                                    head.expressionListNode,
+                                    head.currentChildIndex + 1,
+                                    head.variableMap
+                                )
+                            )
                         }
                         continue
                     } else {
@@ -53,10 +75,22 @@ class NodeEvaluatorIterative(
                     val secondChild = condChildExprNode.children[1] as ExpressionListNode
 
                     if (top.currentChildIndex == 0) {
-                        programStack.push(StackItem(top.expressionListNode, 1))
+                        programStack.push(
+                            StackItem(
+                                top.expressionListNode,
+                                1,
+                                top.variableMap
+                            )
+                        )
                         val secondChildsFirstChild = secondChild.children[0]
                         if (secondChildsFirstChild is ExpressionListNode) {
-                            programStack.push(StackItem(secondChildsFirstChild, 0))
+                            programStack.push(
+                                StackItem(
+                                    secondChildsFirstChild,
+                                    0,
+                                    top.variableMap
+                                )
+                            )
                         } else {
                             evalStack.push(secondChild.children[0])
                         }
@@ -71,7 +105,13 @@ class NodeEvaluatorIterative(
                                     programStack.pop()
                                 }
                                 val cond = programStack.pop()
-                                programStack.push(StackItem(cond.expressionListNode, 2))
+                                programStack.push(
+                                    StackItem(
+                                        cond.expressionListNode,
+                                        2,
+                                        cond.variableMap
+                                    )
+                                )
                             }
                         }
                     }
@@ -82,11 +122,23 @@ class NodeEvaluatorIterative(
             val nthChild = top.expressionListNode.children[top.currentChildIndex]
             if (nthChild is ExpressionListNode && nthChild.children.size > 1) {
                 programStack.push(top)
-                programStack.push(StackItem(nthChild, 0))
+                programStack.push(
+                    StackItem(
+                        nthChild,
+                        0,
+                        top.variableMap
+                    )
+                )
                 continue
             } else if (nthChild is ExpressionListNode ) {
                 evalStack.push(nthChild.children[0])
-                programStack.push(StackItem(top.expressionListNode, top.currentChildIndex + 1))
+                programStack.push(
+                    StackItem(
+                        top.expressionListNode,
+                        top.currentChildIndex + 1,
+                        top.variableMap
+                    )
+                )
                 continue
             }
 
@@ -97,7 +149,13 @@ class NodeEvaluatorIterative(
                 evalStack.push(secondChild)
                 if (programStack.isNotEmpty()) {
                     val head = programStack.pop()
-                    programStack.push(StackItem(head.expressionListNode, head.currentChildIndex + 1))
+                    programStack.push(
+                        StackItem(
+                            head.expressionListNode,
+                            head.currentChildIndex + 1,
+                            head.variableMap
+                        )
+                    )
                 }
                 continue
             }
@@ -105,7 +163,13 @@ class NodeEvaluatorIterative(
             val expectedFunctionLength = functionLengthDeterminer.determineFunctionLength(top.expressionListNode)
             if (top.currentChildIndex < expectedFunctionLength) {
                 evalStack.push(nthChildAtomNode)
-                programStack.push(StackItem(top.expressionListNode, top.currentChildIndex + 1))
+                programStack.push(
+                    StackItem(
+                        top.expressionListNode,
+                        top.currentChildIndex + 1,
+                        top.variableMap
+                    )
+                )
             } else {
                 programStack.push(top)
             }
@@ -121,19 +185,48 @@ class NodeEvaluatorIterative(
                 val functionName = (functionNameNode as AtomNode).value
                 if (functionName == ReservedValuesConstants.NIL) {
                     evalStack.push(functionNameNode)
+                    programStack.pop() // remove ExpressionNode from program stack since we have evaluated it
                 } else if (functionMap.containsKey(functionName)) {
                     val function = functionMap.getValue(functionName)
-                    val evaluatedFunctionResult = function.evaluate(functionStack)
+                    val evaluatedFunctionResult = function.evaluate(functionStack, evaluatingTop.variableMap)
                     evalStack.push(evaluatedFunctionResult)
+                    programStack.pop() // remove ExpressionNode from program stack since we have evaluated it
+                } else if (userDefinedFunctions.containsKey(functionName)) {
+                    val userDefinedFunction = userDefinedFunctions.getValue(functionName)
+                    var i = 0
+                    val mapCopy = evaluatingTop.variableMap
+                    while(functionStack.isNotEmpty()) {
+                        val param = functionStack.pop()
+                        val variableName = userDefinedFunction.formalParameters[i]
+                        mapCopy[variableName] = param
+                        ++i
+                    }
+                    programStack.pop() // remove ExpressionNode from program stack since we have evaluated it
+                    if (userDefinedFunction.body is ExpressionListNode) {
+                        programStack.push(
+                            StackItem(
+                                userDefinedFunction.body,
+                                0,
+                                mapCopy
+                            )
+                        )
+                    } else {
+                        evalStack.push(userDefinedFunction.body)
+                    }
+                    continue
                 } else {
                     throw Exception("Error! Invalid CAR value: $functionName\n")
                 }
 
-                programStack.pop() // remove ExpressionNode from program stack since we have evaluated it
 
                 if (programStack.isNotEmpty()) {
                     val head = programStack.pop()
-                    programStack.push(StackItem(head.expressionListNode, head.currentChildIndex + 1))
+                    programStack.push(
+                        StackItem(head.expressionListNode,
+                            head.currentChildIndex + 1,
+                        head.variableMap
+                        )
+                    )
                 }
             }
         }

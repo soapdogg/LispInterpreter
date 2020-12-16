@@ -9,7 +9,8 @@ class ConsFunction(
     private val nodeGenerator: NodeGenerator
 ): Function {
     override fun evaluate(
-        params: Stack<NodeV2>
+        params: Stack<NodeV2>,
+        variableMap: Map<String, NodeV2>
     ): NodeV2 {
         val evaluatedAddress = params.pop()
         val evaluatedData = params.pop()

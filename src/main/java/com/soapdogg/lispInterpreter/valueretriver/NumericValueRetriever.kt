@@ -1,5 +1,6 @@
 package com.soapdogg.lispInterpreter.valueretriver
 
+import com.soapdogg.lispInterpreter.datamodels.AtomNode
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.determiner.NumericStringDeterminer
 import com.soapdogg.lispInterpreter.exceptions.NotNumericException
@@ -30,16 +31,20 @@ class NumericValueRetriever(
     fun retrieveNumericValue(
         node: NodeV2,
         functionName: String,
-        index: Int
+        index: Int,
+        variableMap: Map<String, NodeV2>
     ): Int {
-        val value = listNotationPrinter.printInListNotation(
-            node
-        )
-        val isNumeric = numericStringDeterminer.isStringNumeric(value)
-        if (!isNumeric) {
-            val sb = """Error! Parameter at position: ${index} of function $functionName is not numeric!    Actual: $value${'\n'}"""
-            throw NotNumericException(sb)
+        if (node is AtomNode) {
+            val value = variableMap.getOrDefault(node.value, node)
+            if (value is AtomNode) {
+                val isNumeric = numericStringDeterminer.isStringNumeric(value.value)
+                if (isNumeric) {
+                    return value.value.toInt()
+                }
+            }
         }
-        return value.toInt()
+        val value = listNotationPrinter.printInListNotation(node)
+        val sb = """Error! Parameter at position: $index of function $functionName is not numeric!    Actual: $value${'\n'}"""
+        throw NotNumericException(sb)
     }
 }

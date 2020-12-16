@@ -9,7 +9,8 @@ class CarFunction(
     private val listValueRetriever: ListValueRetriever
 ): Function {
     override fun evaluate(
-        params: Stack<NodeV2>
+        params: Stack<NodeV2>,
+        variableMap: Map<String, NodeV2>
     ): NodeV2 {
         val first = params.pop()
 

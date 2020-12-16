@@ -14,7 +14,7 @@ class UserDefinedTest {
 
     @Test
     fun project4DynamicTest() {
-        interpreterTest("data/input/project4/dynamicscoping.lisp", "data/expected/project4/dynamicscoping.txt", false)
+        interpreterTest("data/input/project4/dynamicscoping.lisp", "data/expected/project4/dynamicscoping.txt", true)
     }
 
     @Test
