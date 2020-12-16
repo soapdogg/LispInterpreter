@@ -24,7 +24,7 @@ class UserDefinedTest {
 
     @Test
     fun project4UniTest() {
-        interpreterTest("data/input/project4/uni.lisp", "data/expected/project4/uni.txt", false)
+        interpreterTest("data/input/project4/uni.lisp", "data/expected/project4/uni.txt", true)
     }
 
     @Test
@@ -111,7 +111,7 @@ class UserDefinedTest {
             val interpreter = InterpreterSingleton.INSTANCE.interpreter
             val actual = try {
                 val `in` = getScannerFromFilePath(programFile)
-                interpreter.interpret(`in`, useStackEval)
+                interpreter.interpret(`in`, true)
             } catch (e: Exception) {
                 e.message.toString()
             }

@@ -7,6 +7,7 @@ import com.soapdogg.lispInterpreter.determiner.FunctionLengthDeterminer
 import com.soapdogg.lispInterpreter.exceptions.NotAListException
 import com.soapdogg.lispInterpreter.function.Function
 import java.util.*
+import kotlin.collections.HashMap
 
 class NodeEvaluatorIterative(
     private val functionLengthDeterminer: FunctionLengthDeterminer,
@@ -98,7 +99,6 @@ class NodeEvaluatorIterative(
                         if (evalStack.isNotEmpty()) {
                             val evaluatedCondChild = evalStack.pop() as AtomNode
                             if (evaluatedCondChild.value != ReservedValuesConstants.NIL) {
-                                //evalStack.push(secondChild.children[1])
                                 while (
                                     (programStack.peek().expressionListNode.children[0] as AtomNode).value == FunctionNameConstants.CONDCHILD
                                 ) {
@@ -114,7 +114,9 @@ class NodeEvaluatorIterative(
                                         )
                                     )
                                 } else {
-                                    evalStack.push(secondChild.children[1])
+                                    val secondChildAtomNode = secondChild.children[1] as AtomNode
+                                    val pusher = cond.variableMap.getOrDefault(secondChildAtomNode.value, secondChildAtomNode)
+                                    evalStack.push(pusher)
                                 }
                                 programStack.push(
                                     StackItem(
@@ -205,7 +207,7 @@ class NodeEvaluatorIterative(
                 } else if (userDefinedFunctions.containsKey(functionName)) {
                     val userDefinedFunction = userDefinedFunctions.getValue(functionName)
                     var i = 0
-                    val mapCopy = evaluatingTop.variableMap
+                    val mapCopy = HashMap(evaluatingTop.variableMap)
                     while(functionStack.isNotEmpty()) {
                         var param = functionStack.pop()
                         if (param is AtomNode) {
