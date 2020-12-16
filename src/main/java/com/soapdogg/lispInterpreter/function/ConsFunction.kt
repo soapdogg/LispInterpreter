@@ -1,5 +1,6 @@
 package com.soapdogg.lispInterpreter.function
 
+import com.soapdogg.lispInterpreter.datamodels.AtomNode
 import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.generator.NodeGenerator
@@ -12,8 +13,16 @@ class ConsFunction(
         params: Stack<NodeV2>,
         variableMap: Map<String, NodeV2>
     ): NodeV2 {
-        val evaluatedAddress = params.pop()
-        val evaluatedData = params.pop()
+        var evaluatedAddress = params.pop()
+        var evaluatedData = params.pop()
+
+        if (evaluatedAddress is AtomNode) {
+            evaluatedAddress = variableMap.getOrDefault(evaluatedAddress.value, evaluatedAddress)
+        }
+
+        if (evaluatedData is AtomNode) {
+            evaluatedData = variableMap.getOrDefault(evaluatedData.value, evaluatedData)
+        }
 
         return if (evaluatedData is ExpressionListNode) {
             nodeGenerator.generateExpressionListNode(

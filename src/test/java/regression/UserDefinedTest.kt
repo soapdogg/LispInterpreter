@@ -19,7 +19,7 @@ class UserDefinedTest {
 
     @Test
     fun project4MemTest() {
-        interpreterTest("data/input/project4/mem.lisp", "data/expected/project4/mem.txt", false)
+        interpreterTest("data/input/project4/mem.lisp", "data/expected/project4/mem.txt", true)
     }
 
     @Test
@@ -69,7 +69,7 @@ class UserDefinedTest {
 
     @Test
     fun project4OneTest() {
-        interpreterTest("data/input/project4/one.lisp", "data/expected/project4/one.txt", false)
+        interpreterTest("data/input/project4/one.lisp", "data/expected/project4/one.txt", true)
     }
 
     @Test
@@ -79,27 +79,27 @@ class UserDefinedTest {
 
     @Test
     fun project4UndefinedVariableTest() {
-        interpreterTest("data/input/project4/undefined_variable.lisp", "data/expected/project4/undefined_variable.txt", false)
+        interpreterTest("data/input/project4/undefined_variable.lisp", "data/expected/project4/undefined_variable.txt", true)
     }
 
     @Test
     fun project4MemLargeTest() {
-        //interpreterTest("data/input/project4/mem_large.lisp", "data/expected/project4/mem_large.lisp", true)
+        interpreterTest("data/input/project4/mem_large.lisp", "data/expected/project4/mem_large.lisp", true)
     }
 
     @Test
     fun project4BoundTest() {
-        interpreterTest("data/input/project4/bound.lisp", "data/expected/project4/bound.txt", false)
+        interpreterTest("data/input/project4/bound.lisp", "data/expected/project4/bound.txt", true)
     }
 
     @Test
     fun project4GetValTest() {
-        interpreterTest("data/input/project4/getval.lisp", "data/expected/project4/getval.txt", false)
+        interpreterTest("data/input/project4/getval.lisp", "data/expected/project4/getval.txt", true)
     }
 
     @Test
     fun project4AddPairsTest() {
-        interpreterTest("data/input/project4/addpairs.lisp", "data/expected/project4/addpairs.txt", false)
+        interpreterTest("data/input/project4/addpairs.lisp", "data/expected/project4/addpairs.txt", true)
     }
 
     companion object {

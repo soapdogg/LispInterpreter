@@ -14,11 +14,16 @@ class NullFunction(
         params: Stack<NodeV2>,
         variableMap: Map<String, NodeV2>
     ): NodeV2 {
-        val first = params.pop()
+        var first = params.pop()
         return if (first is AtomNode) {
-            val value = first.value
-            val isNil = value == ReservedValuesConstants.NIL
-            nodeGenerator.generateAtomNode(isNil)
+            first = variableMap.getOrDefault(first.value, first)
+            if (first is AtomNode) {
+                val value = first.value
+                val isNil = value == ReservedValuesConstants.NIL
+                nodeGenerator.generateAtomNode(isNil)
+            } else {
+                nodeGenerator.generateAtomNode(false)
+            }
         } else {
             nodeGenerator.generateAtomNode(false)
         }

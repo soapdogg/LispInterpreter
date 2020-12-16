@@ -1,5 +1,6 @@
 package com.soapdogg.lispInterpreter.function
 
+import com.soapdogg.lispInterpreter.datamodels.AtomNode
 import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.generator.NodeGenerator
@@ -13,7 +14,10 @@ class AtomFunction(
         params: Stack<NodeV2>,
         variableMap: Map<String, NodeV2>
     ): NodeV2 {
-        val first = params.pop()
+        var first = params.pop()
+        if (first is AtomNode) {
+            first = variableMap.getOrDefault(first.value, first)
+        }
         val isAtom = first !is ExpressionListNode
         return nodeGenerator.generateAtomNode(isAtom)
     }

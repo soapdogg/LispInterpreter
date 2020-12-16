@@ -98,13 +98,24 @@ class NodeEvaluatorIterative(
                         if (evalStack.isNotEmpty()) {
                             val evaluatedCondChild = evalStack.pop() as AtomNode
                             if (evaluatedCondChild.value != ReservedValuesConstants.NIL) {
-                                evalStack.push(secondChild.children[1])
+                                //evalStack.push(secondChild.children[1])
                                 while (
                                     (programStack.peek().expressionListNode.children[0] as AtomNode).value == FunctionNameConstants.CONDCHILD
                                 ) {
                                     programStack.pop()
                                 }
                                 val cond = programStack.pop()
+                                if (secondChild.children[1] is ExpressionListNode) {
+                                    programStack.push(
+                                        StackItem(
+                                            secondChild.children[1] as ExpressionListNode,
+                                            -1,
+                                            cond.variableMap
+                                        )
+                                    )
+                                } else {
+                                    evalStack.push(secondChild.children[1])
+                                }
                                 programStack.push(
                                     StackItem(
                                         cond.expressionListNode,
@@ -196,13 +207,16 @@ class NodeEvaluatorIterative(
                     var i = 0
                     val mapCopy = evaluatingTop.variableMap
                     while(functionStack.isNotEmpty()) {
-                        val param = functionStack.pop()
+                        var param = functionStack.pop()
+                        if (param is AtomNode) {
+                            param = evaluatingTop.variableMap.getOrDefault(param.value, param)
+                        }
                         val variableName = userDefinedFunction.formalParameters[i]
                         mapCopy[variableName] = param
                         ++i
                     }
                     programStack.pop() // remove ExpressionNode from program stack since we have evaluated it
-                    if (userDefinedFunction.body is ExpressionListNode) {
+                    if (userDefinedFunction.body is ExpressionListNode && userDefinedFunction.formalParameters.isNotEmpty()) {
                         programStack.push(
                             StackItem(
                                 userDefinedFunction.body,
@@ -212,6 +226,16 @@ class NodeEvaluatorIterative(
                         )
                     } else {
                         evalStack.push(userDefinedFunction.body)
+                        if (programStack.isNotEmpty()) {
+                            val head = programStack.pop()
+                            programStack.push(
+                                StackItem(
+                                    head.expressionListNode,
+                                    head.currentChildIndex + 1,
+                                    head.variableMap
+                                )
+                            )
+                        }
                     }
                     continue
                 } else {
