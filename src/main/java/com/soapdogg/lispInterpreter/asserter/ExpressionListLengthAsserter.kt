@@ -2,7 +2,6 @@ package com.soapdogg.lispInterpreter.asserter
 
 import com.soapdogg.lispInterpreter.constants.FunctionLengthConstants
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
-import com.soapdogg.lispInterpreter.constants.FunctionsConstants
 import com.soapdogg.lispInterpreter.datamodels.AtomNode
 import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
@@ -10,7 +9,8 @@ import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
 import com.soapdogg.lispInterpreter.exceptions.NotAListException
 
 class ExpressionListLengthAsserter(
-    private val functionLengthAsserter: FunctionLengthAsserter
+    private val functionLengthAsserter: FunctionLengthAsserter,
+    private val functionLengthMap: Map<String, Int>
 ) {
 
     fun assertLengthIsAsExpected(
@@ -22,7 +22,7 @@ class ExpressionListLengthAsserter(
                 val address = node.children[0]
                 if(address is AtomNode) {
                     val addressValue = address.value
-                    FunctionsConstants.functionLengthMap[addressValue]?.let {
+                    functionLengthMap[addressValue]?.let {
                         functionLengthAsserter.assertLengthIsAsExpected(
                             addressValue,
                             it,
