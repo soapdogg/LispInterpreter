@@ -6,10 +6,12 @@ import com.soapdogg.lispInterpreter.datamodels.*
 import com.soapdogg.lispInterpreter.determiner.FunctionLengthDeterminer
 import com.soapdogg.lispInterpreter.exceptions.NotAListException
 import com.soapdogg.lispInterpreter.function.Function
+import com.soapdogg.lispInterpreter.generator.ProgramStackItemGenerator
 import java.util.*
 import kotlin.collections.HashMap
 
 class NodeEvaluatorIterative(
+    private val programStackItemGenerator: ProgramStackItemGenerator,
     private val functionLengthDeterminer: FunctionLengthDeterminer,
     private val functionMap: Map<String, Function>
 ){
@@ -19,33 +21,40 @@ class NodeEvaluatorIterative(
         userDefinedFunctions: Map<String, UserDefinedFunction>
     ): NodeV2 {
 
-        val programStack = Stack<StackItem>()
+        val programStack = Stack<ProgramStackItem>()
         val evalStack = Stack<NodeV2>()
 
-        programStack.push(StackItem(expressionListNode, 0, mutableMapOf()))
+        val root = programStackItemGenerator.generateProgramStackItem(
+            expressionListNode,
+            0,
+            mapOf()
+        )
+        programStack.push(
+            root
+        )
 
         while(
             programStack.isNotEmpty()
         ) {
             val top = programStack.pop()
 
-            if (top.expressionListNode.children[0] is AtomNode) {
-                val firstChild = top.expressionListNode.children[0] as AtomNode
+            if (top.functionExpressionNode.children[0] is AtomNode) {
+                val firstChild = top.functionExpressionNode.children[0] as AtomNode
                 if (firstChild.value == FunctionNameConstants.COND) {
-                    if (top.currentChildIndex == 0) {
+                    if (top.currentParameterIndex == 0) {
                         programStack.push(
-                            StackItem(
-                                top.expressionListNode,
-                                top.currentChildIndex + 1,
+                            ProgramStackItem(
+                                top.functionExpressionNode,
+                                top.currentParameterIndex + 1,
                                 top.variableMap
                             )
                         )
-                        for (i in top.expressionListNode.children.size - 2 downTo 1) {
+                        for (i in top.functionExpressionNode.children.size - 2 downTo 1) {
                             programStack.push(
-                                StackItem(
+                                ProgramStackItem(
                                     ExpressionListNode(
                                         listOf(
-                                            AtomNode(FunctionNameConstants.CONDCHILD), top.expressionListNode.children[i]
+                                            AtomNode(FunctionNameConstants.CONDCHILD), top.functionExpressionNode.children[i]
                                         )
                                     ),
                                     0,
@@ -54,13 +63,13 @@ class NodeEvaluatorIterative(
                             )
                         }
                         continue
-                    } else if (top.currentChildIndex == 2) {
+                    } else if (top.currentParameterIndex == 2) {
                         if (programStack.isNotEmpty()) {
                             val head = programStack.pop()
                             programStack.push(
-                                StackItem(
-                                    head.expressionListNode,
-                                    head.currentChildIndex + 1,
+                                ProgramStackItem(
+                                    head.functionExpressionNode,
+                                    head.currentParameterIndex + 1,
                                     head.variableMap
                                 )
                             )
@@ -72,13 +81,13 @@ class NodeEvaluatorIterative(
                 }
 
                 if (firstChild.value == FunctionNameConstants.CONDCHILD) {
-                    val condChildExprNode = top.expressionListNode
+                    val condChildExprNode = top.functionExpressionNode
                     val secondChild = condChildExprNode.children[1] as ExpressionListNode
 
-                    if (top.currentChildIndex == 0) {
+                    if (top.currentParameterIndex == 0) {
                         programStack.push(
-                            StackItem(
-                                top.expressionListNode,
+                            ProgramStackItem(
+                                top.functionExpressionNode,
                                 1,
                                 top.variableMap
                             )
@@ -86,7 +95,7 @@ class NodeEvaluatorIterative(
                         val secondChildsFirstChild = secondChild.children[0]
                         if (secondChildsFirstChild is ExpressionListNode) {
                             programStack.push(
-                                StackItem(
+                                ProgramStackItem(
                                     secondChildsFirstChild,
                                     0,
                                     top.variableMap
@@ -100,14 +109,14 @@ class NodeEvaluatorIterative(
                             val evaluatedCondChild = evalStack.pop() as AtomNode
                             if (evaluatedCondChild.value != ReservedValuesConstants.NIL) {
                                 while (
-                                    (programStack.peek().expressionListNode.children[0] as AtomNode).value == FunctionNameConstants.CONDCHILD
+                                    (programStack.peek().functionExpressionNode.children[0] as AtomNode).value == FunctionNameConstants.CONDCHILD
                                 ) {
                                     programStack.pop()
                                 }
                                 val cond = programStack.pop()
                                 if (secondChild.children[1] is ExpressionListNode) {
                                     programStack.push(
-                                        StackItem(
+                                        ProgramStackItem(
                                             secondChild.children[1] as ExpressionListNode,
                                             -1,
                                             cond.variableMap
@@ -119,8 +128,8 @@ class NodeEvaluatorIterative(
                                     evalStack.push(pusher)
                                 }
                                 programStack.push(
-                                    StackItem(
-                                        cond.expressionListNode,
+                                    ProgramStackItem(
+                                        cond.functionExpressionNode,
                                         2,
                                         cond.variableMap
                                     )
@@ -132,11 +141,11 @@ class NodeEvaluatorIterative(
                 }
             }
 
-            val nthChild = top.expressionListNode.children[top.currentChildIndex]
+            val nthChild = top.functionExpressionNode.children[top.currentParameterIndex]
             if (nthChild is ExpressionListNode && nthChild.children.size > 1) {
                 programStack.push(top)
                 programStack.push(
-                    StackItem(
+                    ProgramStackItem(
                         nthChild,
                         0,
                         top.variableMap
@@ -146,9 +155,9 @@ class NodeEvaluatorIterative(
             } else if (nthChild is ExpressionListNode ) {
                 evalStack.push(nthChild.children[0])
                 programStack.push(
-                    StackItem(
-                        top.expressionListNode,
-                        top.currentChildIndex + 1,
+                    ProgramStackItem(
+                        top.functionExpressionNode,
+                        top.currentParameterIndex + 1,
                         top.variableMap
                     )
                 )
@@ -157,15 +166,15 @@ class NodeEvaluatorIterative(
 
             val nthChildAtomNode = nthChild as AtomNode
             if (nthChildAtomNode.value == FunctionNameConstants.QUOTE) {
-                val quoteExprNode = top.expressionListNode
+                val quoteExprNode = top.functionExpressionNode
                 val secondChild = quoteExprNode.children[1]
                 evalStack.push(secondChild)
                 if (programStack.isNotEmpty()) {
                     val head = programStack.pop()
                     programStack.push(
-                        StackItem(
-                            head.expressionListNode,
-                            head.currentChildIndex + 1,
+                        ProgramStackItem(
+                            head.functionExpressionNode,
+                            head.currentParameterIndex + 1,
                             head.variableMap
                         )
                     )
@@ -173,13 +182,13 @@ class NodeEvaluatorIterative(
                 continue
             }
 
-            val expectedFunctionLength = functionLengthDeterminer.determineFunctionLength(top.expressionListNode)
-            if (top.currentChildIndex < expectedFunctionLength) {
+            val expectedFunctionLength = functionLengthDeterminer.determineFunctionLength(top.functionExpressionNode)
+            if (top.currentParameterIndex < expectedFunctionLength) {
                 evalStack.push(nthChildAtomNode)
                 programStack.push(
-                    StackItem(
-                        top.expressionListNode,
-                        top.currentChildIndex + 1,
+                    ProgramStackItem(
+                        top.functionExpressionNode,
+                        top.currentParameterIndex + 1,
                         top.variableMap
                     )
                 )
@@ -188,7 +197,7 @@ class NodeEvaluatorIterative(
             }
 
             val evaluatingTop = programStack.peek()
-            if (expectedFunctionLength == evaluatingTop.currentChildIndex) {
+            if (expectedFunctionLength == evaluatingTop.currentParameterIndex) {
                 val functionStack = Stack<NodeV2>()
                 for (i in 0 until expectedFunctionLength) {
                     functionStack.push(evalStack.pop())
@@ -220,7 +229,7 @@ class NodeEvaluatorIterative(
                     programStack.pop() // remove ExpressionNode from program stack since we have evaluated it
                     if (userDefinedFunction.body is ExpressionListNode && userDefinedFunction.formalParameters.isNotEmpty()) {
                         programStack.push(
-                            StackItem(
+                            ProgramStackItem(
                                 userDefinedFunction.body,
                                 0,
                                 mapCopy
@@ -231,9 +240,9 @@ class NodeEvaluatorIterative(
                         if (programStack.isNotEmpty()) {
                             val head = programStack.pop()
                             programStack.push(
-                                StackItem(
-                                    head.expressionListNode,
-                                    head.currentChildIndex + 1,
+                                ProgramStackItem(
+                                    head.functionExpressionNode,
+                                    head.currentParameterIndex + 1,
                                     head.variableMap
                                 )
                             )
@@ -248,8 +257,8 @@ class NodeEvaluatorIterative(
                 if (programStack.isNotEmpty()) {
                     val head = programStack.pop()
                     programStack.push(
-                        StackItem(head.expressionListNode,
-                            head.currentChildIndex + 1,
+                        ProgramStackItem(head.functionExpressionNode,
+                            head.currentParameterIndex + 1,
                         head.variableMap
                         )
                     )

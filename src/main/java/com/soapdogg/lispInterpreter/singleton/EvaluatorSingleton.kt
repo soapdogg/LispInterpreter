@@ -7,6 +7,7 @@ enum class EvaluatorSingleton {
     INSTANCE;
 
     val nodeEvaluatorIterative = NodeEvaluatorIterative(
+        GeneratorSingleton.INSTANCE.programStackItemGenerator,
         DeterminerSingleton.INSTANCE.functionLengthDeterminer,
         FunctionSingleton.INSTANCE.functionMap
     )
