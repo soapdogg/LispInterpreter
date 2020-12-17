@@ -10,6 +10,9 @@ enum class AsserterSingleton {
     val functionLengthAsserter: FunctionLengthAsserter = FunctionLengthAsserter(
         DeterminerSingleton.INSTANCE.functionLengthDeterminer
     )
+    val expressionListLengthAsserter: ExpressionListLengthAsserter = ExpressionListLengthAsserter(
+        functionLengthAsserter
+    )
     val userDefinedFormalParametersAsserter: UserDefinedFormalParametersAsserter
     val userDefinedFunctionNameAsserter: UserDefinedFunctionNameAsserter
     val atomRootNodeAsserter: AtomRootNodeAsserter

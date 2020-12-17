@@ -1,6 +1,6 @@
 package com.soapdogg.lispInterpreter.interpreter
 
-import com.soapdogg.lispInterpreter.asserter.FunctionLengthAsserter
+import com.soapdogg.lispInterpreter.asserter.ExpressionListLengthAsserter
 import com.soapdogg.lispInterpreter.datamodels.*
 import com.soapdogg.lispInterpreter.evaluator.ProgramEvaluator
 import com.soapdogg.lispInterpreter.generator.UserDefinedFunctionGenerator
@@ -19,15 +19,15 @@ class InterpreterTest {
     private val program: ProgramEvaluator = Mockito.mock(ProgramEvaluator::class.java)
     private val rootNodePartitioner: RootNodePartitioner = Mockito.mock(RootNodePartitioner::class.java)
     private val defunFunction = Mockito.mock(UserDefinedFunctionGenerator::class.java)
-    private val functionLengthAsserter = Mockito.mock(FunctionLengthAsserter::class.java)
+    private val expressionListLengthAsserter = Mockito.mock(ExpressionListLengthAsserter::class.java)
     private val listNotationPrinter: ListNotationPrinter = Mockito.mock(ListNotationPrinter::class.java)
     private val interpreter: Interpreter = Interpreter(
         tokenizer,
         rootParser,
-        program,
         rootNodePartitioner,
         defunFunction,
-        functionLengthAsserter,
+        expressionListLengthAsserter,
+        program,
         listNotationPrinter
     )
 

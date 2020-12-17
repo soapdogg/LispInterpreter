@@ -10,10 +10,10 @@ enum class InterpreterSingleton {
     val interpreter: Interpreter = Interpreter(
         TokenizerSingleton.INSTANCE.tokenizer,
         ParserSingleton.INSTANCE.rootParser,
-        EvaluatorSingleton.INSTANCE.programEvaluator,
         rootNodePartitioner,
         GeneratorSingleton.INSTANCE.userDefinedFunctionGenerator,
-        AsserterSingleton.INSTANCE.functionLengthAsserter,
+        AsserterSingleton.INSTANCE.expressionListLengthAsserter,
+        EvaluatorSingleton.INSTANCE.programEvaluator,
         PrinterSingleton.INSTANCE.listNotationPrinter
     )
 
