@@ -52,15 +52,14 @@ class NodeEvaluatorIterative(
                             top,
                             programStack
                         )
-                        continue
                     } else if (top.currentParameterIndex == 2) {
                         programStack = topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
                             programStack
                         )
-                        continue
                     } else {
                         throw NotAListException("Error! None of the conditions in the COND function evaluated to true.\n")
                     }
+                    continue
                 }
 
                 if (firstChild.value == FunctionNameConstants.CONDCHILD) {
@@ -85,7 +84,8 @@ class NodeEvaluatorIterative(
                         } else {
                             evalStack.push(secondChildsFirstChild)
                         }
-                    } else if (evalStack.isNotEmpty()) {
+                    }
+                    else if (evalStack.isNotEmpty()) {
                         val evaluatedCondChild = evalStack.pop() as AtomNode
                         if (evaluatedCondChild.value != ReservedValuesConstants.NIL) {
                             while (
@@ -135,83 +135,83 @@ class NodeEvaluatorIterative(
                         programStack
                     )
                 }
-                continue
             }
-
-            val nthChildAtomNode = nthChild as AtomNode
-            if (nthChildAtomNode.value == FunctionNameConstants.QUOTE) {
-                val quoteExprNode = top.functionExpressionNode
-                val secondChild = quoteExprNode.children[1]
-                evalStack.push(secondChild)
-                programStack = topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
-                    programStack
-                )
-                continue
-            }
-
-            val expectedFunctionLength = functionLengthDeterminer.determineFunctionLength(top.functionExpressionNode)
-            programStack.push(top)
-            if (top.currentParameterIndex < expectedFunctionLength) {
-                programStack = topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
-                    programStack
-                )
-                evalStack.push(nthChildAtomNode)
-            }
-
-            val evaluatingTop = programStack.peek()
-            if (expectedFunctionLength == evaluatingTop.currentParameterIndex) {
-                val functionStack = Stack<NodeV2>()
-                for (i in 0 until expectedFunctionLength) {
-                    functionStack.push(evalStack.pop())
+            else {
+                val nthChildAtomNode = nthChild as AtomNode
+                if (nthChildAtomNode.value == FunctionNameConstants.QUOTE) {
+                    val quoteExprNode = top.functionExpressionNode
+                    val secondChild = quoteExprNode.children[1]
+                    evalStack.push(secondChild)
+                    programStack = topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
+                        programStack
+                    )
+                    continue
                 }
 
-                val functionNameNode = functionStack.pop()
-                val functionName = (functionNameNode as AtomNode).value
-                if (functionName == ReservedValuesConstants.NIL) {
-                    evalStack.push(functionNameNode)
-                    programStack.pop() // remove ExpressionNode from program stack since we have evaluated it
+                val expectedFunctionLength = functionLengthDeterminer.determineFunctionLength(top.functionExpressionNode)
+                programStack.push(top)
+                if (top.currentParameterIndex < expectedFunctionLength) {
                     programStack = topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
                         programStack
                     )
-                } else if (functionMap.containsKey(functionName)) {
-                    val function = functionMap.getValue(functionName)
-                    val evaluatedFunctionResult = function.evaluate(functionStack, evaluatingTop.variableMap)
-                    evalStack.push(evaluatedFunctionResult)
-                    programStack.pop() // remove ExpressionNode from program stack since we have evaluated it
-                    programStack = topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
-                        programStack
-                    )
-                } else if (userDefinedFunctions.containsKey(functionName)) {
-                    val userDefinedFunction = userDefinedFunctions.getValue(functionName)
-                    var i = 0
-                    val mapCopy = HashMap(evaluatingTop.variableMap)
-                    while(functionStack.isNotEmpty()) {
-                        var param = functionStack.pop()
-                        if (param is AtomNode) {
-                            param = evaluatingTop.variableMap.getOrDefault(param.value, param)
-                        }
-                        val variableName = userDefinedFunction.formalParameters[i]
-                        mapCopy[variableName] = param
-                        ++i
+                    evalStack.push(nthChildAtomNode)
+                }
+
+                if (expectedFunctionLength == top.currentParameterIndex) {
+                    programStack.pop()
+                    val functionStack = Stack<NodeV2>()
+                    for (i in 0 until expectedFunctionLength) {
+                        functionStack.push(evalStack.pop())
                     }
-                    programStack.pop() // remove ExpressionNode from program stack since we have evaluated it
-                    if (userDefinedFunction.body is ExpressionListNode && userDefinedFunction.formalParameters.isNotEmpty()) {
-                        val userDefinedFunctionBodyProgramStackItem = programStackItemGenerator.generateProgramStackItem(
-                            userDefinedFunction.body,
-                            0,
-                            mapCopy
-                        )
-                        programStack.push(
-                            userDefinedFunctionBodyProgramStackItem
-                        )
-                    } else {
-                        evalStack.push(userDefinedFunction.body)
+
+                    val functionNameNode = functionStack.pop()
+                    val functionName = (functionNameNode as AtomNode).value
+                    if (functionName == ReservedValuesConstants.NIL) {
+                        evalStack.push(functionNameNode)
                         programStack = topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
                             programStack
                         )
                     }
-                } else {
-                    throw Exception("Error! Invalid CAR value: $functionName\n")
+                    else if (functionMap.containsKey(functionName)) {
+                        val function = functionMap.getValue(functionName)
+                        val evaluatedFunctionResult = function.evaluate(functionStack, top.variableMap)
+                        evalStack.push(evaluatedFunctionResult)
+                        programStack = topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
+                            programStack
+                        )
+                    }
+                    else if (userDefinedFunctions.containsKey(functionName)) {
+                        val userDefinedFunction = userDefinedFunctions.getValue(functionName)
+                        var i = 0
+                        val mapCopy = HashMap(top.variableMap)
+                        while (functionStack.isNotEmpty()) {
+                            var param = functionStack.pop()
+                            if (param is AtomNode) {
+                                param = top.variableMap.getOrDefault(param.value, param)
+                            }
+                            val variableName = userDefinedFunction.formalParameters[i]
+                            mapCopy[variableName] = param
+                            ++i
+                        }
+                        if (userDefinedFunction.body is ExpressionListNode && userDefinedFunction.formalParameters.isNotEmpty()) {
+                            val userDefinedFunctionBodyProgramStackItem = programStackItemGenerator.generateProgramStackItem(
+                                userDefinedFunction.body,
+                                0,
+                                mapCopy
+                            )
+                            programStack.push(
+                                userDefinedFunctionBodyProgramStackItem
+                            )
+                        } else {
+                            evalStack.push(userDefinedFunction.body)
+                            programStack = topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
+                                programStack
+                            )
+                        }
+                    }
+                    else {
+                        throw Exception("Error! Invalid CAR value: $functionName\n")
+                    }
                 }
             }
         }
