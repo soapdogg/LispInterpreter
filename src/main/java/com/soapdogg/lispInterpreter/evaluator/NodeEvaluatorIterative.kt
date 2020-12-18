@@ -40,11 +40,18 @@ class NodeEvaluatorIterative(
         ) {
             val top = programStack.pop()
 
-            if (top.functionExpressionNode.children[0] is AtomNode) {
+            if (
+                top.functionExpressionNode.children[0] is AtomNode
+                && (
+                    ((top.functionExpressionNode.children[0] as AtomNode).value == FunctionNameConstants.COND)
+                    ||
+                    ((top.functionExpressionNode.children[0] as AtomNode).value == FunctionNameConstants.CONDCHILD)
+                    )
+            ) {
                 val firstChild = top.functionExpressionNode.children[0] as AtomNode
                 if (firstChild.value == FunctionNameConstants.COND) {
+                    programStack.push(top)
                     if (top.currentParameterIndex == 0) {
-                        programStack.push(top)
                         programStack = topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
                             programStack
                         )
@@ -53,21 +60,22 @@ class NodeEvaluatorIterative(
                             programStack
                         )
                     } else if (top.currentParameterIndex == 2) {
+                        programStack.pop()
                         programStack = topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
                             programStack
                         )
                     } else {
                         throw NotAListException("Error! None of the conditions in the COND function evaluated to true.\n")
                     }
-                    continue
                 }
 
                 if (firstChild.value == FunctionNameConstants.CONDCHILD) {
                     val condChildExprNode = top.functionExpressionNode
                     val secondChild = condChildExprNode.children[1] as ExpressionListNode
 
+                    programStack.push(top)
                     if (top.currentParameterIndex == 0) {
-                        programStack.push(top)
+
                         programStack = topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
                             programStack
                         )
@@ -86,6 +94,7 @@ class NodeEvaluatorIterative(
                         }
                     }
                     else if (evalStack.isNotEmpty()) {
+                        programStack.pop()
                         val evaluatedCondChild = evalStack.pop() as AtomNode
                         if (evaluatedCondChild.value != ReservedValuesConstants.NIL) {
                             while (
@@ -113,8 +122,8 @@ class NodeEvaluatorIterative(
                             )
                         }
                     }
-                    continue
                 }
+                continue
             }
 
             val nthChild = top.functionExpressionNode.children[top.currentParameterIndex]
@@ -149,16 +158,14 @@ class NodeEvaluatorIterative(
                 }
 
                 val expectedFunctionLength = functionLengthDeterminer.determineFunctionLength(top.functionExpressionNode)
-                programStack.push(top)
                 if (top.currentParameterIndex < expectedFunctionLength) {
+                    programStack.push(top)
                     programStack = topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
                         programStack
                     )
                     evalStack.push(nthChildAtomNode)
                 }
-
-                if (expectedFunctionLength == top.currentParameterIndex) {
-                    programStack.pop()
+                else {
                     val functionStack = Stack<NodeV2>()
                     for (i in 0 until expectedFunctionLength) {
                         functionStack.push(evalStack.pop())
