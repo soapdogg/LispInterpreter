@@ -11,6 +11,7 @@ import java.util.*
 import kotlin.collections.HashMap
 
 class NodeEvaluatorIterative(
+    private val condChildStackItemBuilder: CondChildStackItemBuilder,
     private val programStackItemGenerator: ProgramStackItemGenerator,
     private val functionLengthDeterminer: FunctionLengthDeterminer,
     private val functionMap: Map<String, Function>,
@@ -47,21 +48,10 @@ class NodeEvaluatorIterative(
                         programStack = topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
                             programStack
                         )
-                        for (i in top.functionExpressionNode.children.size - 2 downTo 1) {
-                            val condChildStackItem = programStackItemGenerator.generateProgramStackItem(
-                                ExpressionListNode(
-                                    listOf(
-                                        AtomNode(FunctionNameConstants.CONDCHILD), top.functionExpressionNode.children[i],
-
-                                    )
-                                ),
-                                0,
-                                top.variableMap
-                            )
-                            programStack.push(
-                                condChildStackItem
-                            )
-                        }
+                        programStack = condChildStackItemBuilder.buildCondChildStackItems(
+                            top,
+                            programStack
+                        )
                         continue
                     } else if (top.currentParameterIndex == 2) {
                         programStack = topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
@@ -162,14 +152,12 @@ class NodeEvaluatorIterative(
             }
 
             val expectedFunctionLength = functionLengthDeterminer.determineFunctionLength(top.functionExpressionNode)
+            programStack.push(top)
             if (top.currentParameterIndex < expectedFunctionLength) {
-                programStack.push(top)
                 programStack = topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
                     programStack
                 )
                 evalStack.push(nthChildAtomNode)
-            } else {
-                programStack.push(top)
             }
 
             val evaluatingTop = programStack.peek()
@@ -184,11 +172,19 @@ class NodeEvaluatorIterative(
                 if (functionName == ReservedValuesConstants.NIL) {
                     evalStack.push(functionNameNode)
                     programStack.pop() // remove ExpressionNode from program stack since we have evaluated it
+                    programStack = topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
+                        programStack
+                    )
+                    continue
                 } else if (functionMap.containsKey(functionName)) {
                     val function = functionMap.getValue(functionName)
                     val evaluatedFunctionResult = function.evaluate(functionStack, evaluatingTop.variableMap)
                     evalStack.push(evaluatedFunctionResult)
                     programStack.pop() // remove ExpressionNode from program stack since we have evaluated it
+                    programStack = topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
+                        programStack
+                    )
+                    continue
                 } else if (userDefinedFunctions.containsKey(functionName)) {
                     val userDefinedFunction = userDefinedFunctions.getValue(functionName)
                     var i = 0
@@ -221,10 +217,6 @@ class NodeEvaluatorIterative(
                 } else {
                     throw Exception("Error! Invalid CAR value: $functionName\n")
                 }
-
-                programStack = topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
-                    programStack
-                )
             }
         }
 
