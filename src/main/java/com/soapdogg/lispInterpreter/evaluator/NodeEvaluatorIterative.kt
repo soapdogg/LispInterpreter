@@ -13,7 +13,8 @@ import kotlin.collections.HashMap
 class NodeEvaluatorIterative(
     private val programStackItemGenerator: ProgramStackItemGenerator,
     private val functionLengthDeterminer: FunctionLengthDeterminer,
-    private val functionMap: Map<String, Function>
+    private val functionMap: Map<String, Function>,
+    private val topProgramStackItemUpdater: TopProgramStackItemUpdater
 ){
 
     fun evaluate(
@@ -21,7 +22,7 @@ class NodeEvaluatorIterative(
         userDefinedFunctions: Map<String, UserDefinedFunction>
     ): NodeV2 {
 
-        val programStack = Stack<ProgramStackItem>()
+        var programStack = Stack<ProgramStackItem>()
         val evalStack = Stack<NodeV2>()
 
         val root = programStackItemGenerator.generateProgramStackItem(
@@ -67,17 +68,9 @@ class NodeEvaluatorIterative(
                         }
                         continue
                     } else if (top.currentParameterIndex == 2) {
-                        if (programStack.isNotEmpty()) {
-                            val head = programStack.pop()
-                            val updatedHead = programStackItemGenerator.generateProgramStackItem(
-                                head.functionExpressionNode,
-                                head.currentParameterIndex + 1,
-                                head.variableMap
-                            )
-                            programStack.push(
-                                updatedHead
-                            )
-                        }
+                        programStack = topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
+                            programStack
+                        )
                         continue
                     } else {
                         throw NotAListException("Error! None of the conditions in the COND function evaluated to true.\n")
@@ -178,17 +171,9 @@ class NodeEvaluatorIterative(
                 val quoteExprNode = top.functionExpressionNode
                 val secondChild = quoteExprNode.children[1]
                 evalStack.push(secondChild)
-                if (programStack.isNotEmpty()) {
-                    val head = programStack.pop()
-                    val updatedHead = programStackItemGenerator.generateProgramStackItem(
-                        head.functionExpressionNode,
-                        head.currentParameterIndex + 1,
-                        head.variableMap
-                    )
-                    programStack.push(
-                        updatedHead
-                    )
-                }
+                programStack = topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
+                    programStack
+                )
                 continue
             }
 
@@ -247,35 +232,18 @@ class NodeEvaluatorIterative(
                         )
                     } else {
                         evalStack.push(userDefinedFunction.body)
-                        if (programStack.isNotEmpty()) {
-                            val head = programStack.pop()
-                            val updatedHead = programStackItemGenerator.generateProgramStackItem(
-                                head.functionExpressionNode,
-                                head.currentParameterIndex + 1,
-                                head.variableMap
-                            )
-                            programStack.push(
-                                updatedHead
-                            )
-                        }
+                        programStack = topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
+                            programStack
+                        )
                     }
                     continue
                 } else {
                     throw Exception("Error! Invalid CAR value: $functionName\n")
                 }
 
-
-                if (programStack.isNotEmpty()) {
-                    val head = programStack.pop()
-                    val updatedHead = programStackItemGenerator.generateProgramStackItem(
-                        head.functionExpressionNode,
-                        head.currentParameterIndex + 1,
-                        head.variableMap
-                    )
-                    programStack.push(
-                        updatedHead
-                    )
-                }
+                programStack = topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
+                    programStack
+                )
             }
         }
 
