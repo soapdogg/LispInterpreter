@@ -77,7 +77,9 @@ class NodeEvaluatorIterative(
                                 secondChildsFirstChildProgramStackItem
                             )
                         } else {
-                            evalStack.push(secondChildsFirstChild)
+                            val secondChildAtomNode = secondChildsFirstChild as AtomNode
+                            val pusher = top.variableMap.getOrDefault(secondChildAtomNode.value, secondChildAtomNode)
+                            evalStack.push(pusher)
                         }
                     }
                     else {
@@ -89,11 +91,11 @@ class NodeEvaluatorIterative(
                             ) {
                                 programStack.pop()
                             }
-                            val cond = programStack.peek()
+                            val cond = programStack.pop()
                             if (secondChild.children[1] is ExpressionListNode) {
                                 val secondChildsSecondChildProgramStackItem = programStackItemGenerator.generateProgramStackItem(
                                     secondChild.children[1] as ExpressionListNode,
-                                    -1,
+                                    0,
                                     cond.variableMap
                                 )
                                 programStack.push(
@@ -103,10 +105,10 @@ class NodeEvaluatorIterative(
                                 val secondChildAtomNode = secondChild.children[1] as AtomNode
                                 val pusher = cond.variableMap.getOrDefault(secondChildAtomNode.value, secondChildAtomNode)
                                 evalStack.push(pusher)
+                                programStack = topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
+                                    programStack
+                                )
                             }
-                            programStack = topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
-                                programStack
-                            )
                         }
                     }
                 }

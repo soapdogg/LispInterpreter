@@ -48,29 +48,6 @@ class CondProgramStackItemEvaluatorTest {
     }
 
     @Test
-    fun currentParameterIndexIsTwoTest() {
-        val firstChildValue = FunctionNameConstants.COND
-        val top = Mockito.mock(ProgramStackItem::class.java)
-        val programStack = Stack<ProgramStackItem>()
-
-        val currentParameterIndex = 2
-        Mockito.`when`(top.currentParameterIndex).thenReturn(currentParameterIndex)
-
-        val updatedProgramStack = Stack<ProgramStackItem>()
-        Mockito.`when`(topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(programStack)).thenReturn(updatedProgramStack)
-
-        val actual = condProgramStackItemEvaluator.evaluateCondProgramStackItem(
-            firstChildValue,
-            top,
-            programStack
-        )
-
-        Assertions.assertEquals(updatedProgramStack, actual)
-
-        Mockito.verifyNoInteractions(condChildStackItemBuilder)
-    }
-
-    @Test
     fun noCondConditionsEvaluatedToTrueTest() {
         val firstChildValue = FunctionNameConstants.COND
         val top = Mockito.mock(ProgramStackItem::class.java)

@@ -27,12 +27,6 @@ class CondProgramStackItemEvaluator(
                         updatedProgramStack
                     )
                 }
-                2 -> {
-                    programStack.pop()
-                    return topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
-                        programStack
-                    )
-                }
                 else -> {
                     throw NotAListException("Error! None of the conditions in the COND function evaluated to true.\n")
                 }
