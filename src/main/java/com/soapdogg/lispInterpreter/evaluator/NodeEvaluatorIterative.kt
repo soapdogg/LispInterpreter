@@ -56,11 +56,20 @@ class NodeEvaluatorIterative(
 
                     val condChildsCondition = condChildExprNode.children[top.currentParameterIndex +1]
                     if (condChildsCondition is ExpressionListNode) {
-                        topProgramStackItemCreator.createTopProgramStackItem(
-                            condChildsCondition,
-                            top.variableMap,
-                            programStack
-                        )
+                        if (condChildsCondition.children.size > 1) {
+                            topProgramStackItemCreator.createTopProgramStackItem(
+                                condChildsCondition,
+                                top.variableMap,
+                                programStack
+                            )
+                        } else {
+                            postEvaluationStackUpdater.updateStacksAfterEvaluation(
+                                condChildsCondition.children[0],
+                                top.variableMap,
+                                evalStack,
+                                programStack
+                            )
+                        }
                     } else {
                         postEvaluationStackUpdater.updateStacksAfterEvaluation(
                             condChildsCondition,
@@ -84,12 +93,22 @@ class NodeEvaluatorIterative(
 
                         val condChildsValue = top.functionExpressionNode.children[top.currentParameterIndex +1]
                         if (condChildsValue is ExpressionListNode) {
-                            topProgramStackItemCreator.createTopProgramStackItem(
-                                condChildsValue,
-                                top.variableMap,
-                                programStack
-                            )
-                        } else {
+                            if (condChildsValue.children.size > 1) {
+                                topProgramStackItemCreator.createTopProgramStackItem(
+                                    condChildsValue,
+                                    top.variableMap,
+                                    programStack
+                                )
+                            } else {
+                                postEvaluationStackUpdater.updateStacksAfterEvaluation(
+                                    condChildsValue.children[0],
+                                    top.variableMap,
+                                    evalStack,
+                                    programStack
+                                )
+                            }
+                        }
+                        else {
                             postEvaluationStackUpdater.updateStacksAfterEvaluation(
                                 condChildsValue,
                                 top.variableMap,
