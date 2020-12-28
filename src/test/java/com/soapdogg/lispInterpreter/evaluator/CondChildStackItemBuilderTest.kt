@@ -34,7 +34,7 @@ class CondChildStackItemBuilderTest {
         Mockito.`when`(condProgramStackItem.functionExpressionNode).thenReturn(functionExpressionListNode)
 
         val child0 = Mockito.mock(NodeV2::class.java)
-        val child1 = Mockito.mock(NodeV2::class.java)
+        val child1 = Mockito.mock(ExpressionListNode::class.java)
         val child2 = Mockito.mock(NodeV2::class.java)
         val condChildren = listOf(
             child0,
@@ -47,7 +47,10 @@ class CondChildStackItemBuilderTest {
         val condChildAtomNode = Mockito.mock(AtomNode::class.java)
         Mockito.`when`(nodeGenerator.generateAtomNode(FunctionNameConstants.CONDCHILD)).thenReturn(condChildAtomNode)
 
-        val condChildsChildren = listOf(condChildAtomNode, child1)
+        val grandchild = Mockito.mock(NodeV2::class.java)
+        val child1Children = listOf(grandchild)
+        Mockito.`when`(child1.children).thenReturn(child1Children)
+        val condChildsChildren = listOf(condChildAtomNode, grandchild)
         val condChildExpressionListNode = Mockito.mock(ExpressionListNode::class.java)
         Mockito.`when`(nodeGenerator.generateExpressionListNode(condChildsChildren)).thenReturn(condChildExpressionListNode)
 
@@ -55,7 +58,7 @@ class CondChildStackItemBuilderTest {
         Mockito.`when`(
             programStackItemGenerator.generateProgramStackItem(
                 condChildExpressionListNode,
-                0,
+                1,
                 variableMap
             )
         ).thenReturn(condChildStackItem)
