@@ -36,7 +36,6 @@ enum class EvaluatorSingleton {
         GeneratorSingleton.INSTANCE.programStackItemGenerator,
         DeterminerSingleton.INSTANCE.functionLengthDeterminer,
         FunctionSingleton.INSTANCE.functionMap,
-        topProgramStackItemUpdater,
         stackUpdater,
         condProgramStackItemEvaluator,
         quoteFunctionEvaluator,

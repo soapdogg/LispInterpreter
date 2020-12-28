@@ -18,51 +18,14 @@ class ListValueRetrieverTest {
     @Test
     fun inputIsAListTest() {
         val node = Mockito.mock(ExpressionListNode::class.java)
-        val variableNameToValueMap: Map<String, NodeV2> = mapOf()
         val actual = listValueRetriever.retrieveListValue(
             node,
-            functionName,
-            variableNameToValueMap
+            functionName
         )
         Assertions.assertEquals(node, actual)
         Mockito.verifyNoInteractions(dotNotationPrinter)
     }
 
-    @Test
-    fun inputIsAVariableListTest() {
-        val node = Mockito.mock(AtomNode::class.java)
-        val nodeValue = "nodeValue"
-        Mockito.`when`(node.value).thenReturn(nodeValue)
-
-        val result = Mockito.mock(ExpressionListNode::class.java)
-        val variableNameToValueMap = mapOf(Pair(nodeValue, result))
-        val actual = listValueRetriever.retrieveListValue(
-            node,
-            functionName,
-            variableNameToValueMap
-        )
-        Assertions.assertEquals(result, actual)
-        Mockito.verifyNoInteractions(dotNotationPrinter)
-    }
-
-    @Test
-    fun inputIsVariableButNotListTest() {
-        val node = Mockito.mock(AtomNode::class.java)
-        val nodeValue = "nodeValue"
-        Mockito.`when`(node.value).thenReturn(nodeValue)
-
-        val result = Mockito.mock(AtomNode::class.java)
-        val variableNameToValueMap = mapOf(Pair(nodeValue, result))
-        Assertions.assertThrows(
-            NotAListException::class.java
-        ) {
-            listValueRetriever.retrieveListValue(
-                node,
-                functionName,
-                variableNameToValueMap
-            )
-        }
-    }
 
     @Test
     fun inputIsNotAVariableTest() {
@@ -70,14 +33,12 @@ class ListValueRetrieverTest {
         val nodeValue = "nodeValue"
         Mockito.`when`(node.value).thenReturn(nodeValue)
 
-        val variableNameToValueMap: Map<String, NodeV2> = mapOf()
         Assertions.assertThrows(
             NotAListException::class.java
         ) {
             listValueRetriever.retrieveListValue(
                 node,
-                functionName,
-                variableNameToValueMap
+                functionName
             )
         }
     }

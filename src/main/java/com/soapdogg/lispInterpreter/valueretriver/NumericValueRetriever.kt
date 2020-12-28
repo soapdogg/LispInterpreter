@@ -14,16 +14,12 @@ class NumericValueRetriever(
     fun retrieveNumericValue(
         node: NodeV2,
         functionName: String,
-        index: Int,
-        variableMap: Map<String, NodeV2>
+        index: Int
     ): Int {
         if (node is AtomNode) {
-            val value = variableMap.getOrDefault(node.value, node)
-            if (value is AtomNode) {
-                val isNumeric = numericStringDeterminer.isStringNumeric(value.value)
-                if (isNumeric) {
-                    return value.value.toInt()
-                }
+            val isNumeric = numericStringDeterminer.isStringNumeric(node.value)
+            if (isNumeric) {
+                return node.value.toInt()
             }
         }
         val value = listNotationPrinter.printInListNotation(node)

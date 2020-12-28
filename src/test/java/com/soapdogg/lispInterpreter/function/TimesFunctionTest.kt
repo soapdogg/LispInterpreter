@@ -35,8 +35,7 @@ class TimesFunctionTest {
             numericValueRetriever.retrieveNumericValue(
                 first,
                 FunctionNameConstants.TIMES,
-                1,
-                variableMap
+                1
             )
         ).thenReturn(firstNumeric)
 
@@ -45,8 +44,7 @@ class TimesFunctionTest {
             numericValueRetriever.retrieveNumericValue(
                 second,
                 FunctionNameConstants.TIMES,
-                2,
-                variableMap
+                2
             )
         ).thenReturn(secondNumeric)
 
@@ -56,8 +54,7 @@ class TimesFunctionTest {
         ).thenReturn(resultingNode)
 
         val actual = timesFunction.evaluate(
-            params,
-            variableMap
+            params
         )
 
         Assertions.assertEquals(resultingNode, actual)

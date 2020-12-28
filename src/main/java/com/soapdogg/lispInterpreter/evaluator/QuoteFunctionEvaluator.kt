@@ -18,6 +18,7 @@ class QuoteFunctionEvaluator(
         val quoted = quoteExprNode.children[1]
         return postEvaluationStackUpdater.updateStacksAfterEvaluation(
             quoted,
+            top.variableMap,
             evalStack,
             programStack
         )

@@ -18,6 +18,7 @@ class PostEvaluationStackUpdaterTest {
     @Test
     fun updateStacksAfterEvaluationTest() {
         val evaluatedNode = Mockito.mock(NodeV2::class.java)
+        val variableMap = emptyMap<String, NodeV2>()
         val evalStack = Stack<NodeV2>()
         val programStack = Stack<ProgramStackItem>()
 
@@ -26,6 +27,7 @@ class PostEvaluationStackUpdaterTest {
 
         val actual = postEvaluationStackUpdater.updateStacksAfterEvaluation(
             evaluatedNode,
+            variableMap,
             evalStack,
             programStack
         )

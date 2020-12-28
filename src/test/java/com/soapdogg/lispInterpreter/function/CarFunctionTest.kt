@@ -29,8 +29,7 @@ class CarFunctionTest {
         Mockito.`when`(
             listValueRetriever.retrieveListValue(
                 first,
-                FunctionNameConstants.CAR,
-                variableMap
+                FunctionNameConstants.CAR
             )
         ).thenReturn(firstExpressionListNode)
 
@@ -39,8 +38,7 @@ class CarFunctionTest {
         Mockito.`when`(firstExpressionListNode.children).thenReturn(children)
 
         val actual = carFunction.evaluate(
-            params,
-            variableMap
+            params
         )
 
         Assertions.assertEquals(child0, actual)

@@ -34,12 +34,13 @@ class BuiltInFunctionEvaluatorTest {
         Mockito.`when`(top.variableMap).thenReturn(variableMap)
 
         val evaluatedFunctionResult = Mockito.mock(NodeV2::class.java)
-        Mockito.`when`(function.evaluate(functionStack, variableMap)).thenReturn(evaluatedFunctionResult)
+        Mockito.`when`(function.evaluate(functionStack)).thenReturn(evaluatedFunctionResult)
 
         val stacks = Mockito.mock(Stacks::class.java)
         Mockito.`when`(
             postEvaluationStackUpdater.updateStacksAfterEvaluation(
                 evaluatedFunctionResult,
+                variableMap,
                 evalStack,
                 programStack
             )

@@ -1,6 +1,5 @@
 package com.soapdogg.lispInterpreter.evaluator
 
-import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
 import com.soapdogg.lispInterpreter.exceptions.NotAListException
 import org.junit.jupiter.api.Assertions
@@ -20,7 +19,6 @@ class CondProgramStackItemEvaluatorTest {
 
     @Test
     fun currentParameterIndexIsZeroTest() {
-        val firstChildValue = FunctionNameConstants.COND
         val top = Mockito.mock(ProgramStackItem::class.java)
         val programStack = Stack<ProgramStackItem>()
 
@@ -39,7 +37,6 @@ class CondProgramStackItemEvaluatorTest {
         ).thenReturn(expected)
 
         val actual = condProgramStackItemEvaluator.evaluateCondProgramStackItem(
-            firstChildValue,
             top,
             programStack
         )
@@ -49,7 +46,6 @@ class CondProgramStackItemEvaluatorTest {
 
     @Test
     fun noCondConditionsEvaluatedToTrueTest() {
-        val firstChildValue = FunctionNameConstants.COND
         val top = Mockito.mock(ProgramStackItem::class.java)
         val programStack = Stack<ProgramStackItem>()
 
@@ -60,29 +56,11 @@ class CondProgramStackItemEvaluatorTest {
             NotAListException::class.java
         ) {
             condProgramStackItemEvaluator.evaluateCondProgramStackItem(
-                firstChildValue,
                 top,
                 programStack
             )
         }
 
-        Mockito.verifyNoInteractions(topProgramStackItemUpdater)
-        Mockito.verifyNoInteractions(condChildStackItemBuilder)
-    }
-
-    @Test
-    fun firstChildValueIsNotCondTest() {
-        val firstChildValue = FunctionNameConstants.CAR
-        val top = Mockito.mock(ProgramStackItem::class.java)
-        val programStack = Stack<ProgramStackItem>()
-
-        val actual = condProgramStackItemEvaluator.evaluateCondProgramStackItem(
-            firstChildValue,
-            top,
-            programStack
-        )
-
-        Assertions.assertEquals(programStack, actual)
         Mockito.verifyNoInteractions(topProgramStackItemUpdater)
         Mockito.verifyNoInteractions(condChildStackItemBuilder)
     }

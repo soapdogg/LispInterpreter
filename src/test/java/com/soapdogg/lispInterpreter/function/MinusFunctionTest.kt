@@ -35,8 +35,7 @@ class MinusFunctionTest {
             numericValueRetriever.retrieveNumericValue(
                 first,
                 FunctionNameConstants.MINUS,
-                1,
-                variableMap
+                1
             )
         ).thenReturn(firstNumeric)
 
@@ -45,8 +44,7 @@ class MinusFunctionTest {
             numericValueRetriever.retrieveNumericValue(
                 second,
                 FunctionNameConstants.MINUS,
-                2,
-                variableMap
+                2
             )
         ).thenReturn(secondNumeric)
 
@@ -56,8 +54,7 @@ class MinusFunctionTest {
         ).thenReturn(resultingNode)
 
         val actual = minusFunction.evaluate(
-            params,
-            variableMap
+            params
         )
 
         Assertions.assertEquals(resultingNode, actual)

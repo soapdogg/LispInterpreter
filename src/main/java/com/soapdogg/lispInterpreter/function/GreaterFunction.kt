@@ -12,22 +12,19 @@ class GreaterFunction(
 ) : Function {
 
     override fun evaluate(
-        params: Stack<NodeV2>,
-        variableMap: Map<String, NodeV2>
+        params: Stack<NodeV2>
     ): NodeV2 {
         val first = params.pop()
         val second = params.pop()
         val firstNumeric = numericValueRetriever.retrieveNumericValue(
             first,
             FunctionNameConstants.GREATER,
-            1,
-            variableMap
+            1
         )
         val secondNumeric = numericValueRetriever.retrieveNumericValue(
             second,
             FunctionNameConstants.GREATER,
-            2,
-            variableMap
+            2
         )
 
         val result = firstNumeric > secondNumeric

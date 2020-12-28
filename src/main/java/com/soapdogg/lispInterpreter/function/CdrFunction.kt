@@ -11,15 +11,13 @@ class CdrFunction(
    private val nodeGenerator: NodeGenerator
 ): Function {
     override fun evaluate(
-        params: Stack<NodeV2>,
-        variableMap: Map<String, NodeV2>
+        params: Stack<NodeV2>
     ): NodeV2 {
         val first = params.pop()
 
         val firstExpressionListNode = listValueRetriever.retrieveListValue(
             first,
-            FunctionNameConstants.CDR,
-            variableMap
+            FunctionNameConstants.CDR
         )
 
         return when (firstExpressionListNode.children.size) {

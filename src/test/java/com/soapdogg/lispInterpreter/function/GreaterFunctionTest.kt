@@ -8,7 +8,6 @@ import com.soapdogg.lispInterpreter.valueretriver.NumericValueRetriever
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
-import org.mockito.junit.MockitoJUnit
 import java.util.*
 
 class GreaterFunctionTest {
@@ -36,8 +35,7 @@ class GreaterFunctionTest {
             numericValueRetriever.retrieveNumericValue(
                 first,
                 FunctionNameConstants.GREATER,
-                1,
-                variableMap
+                1
             )
         ).thenReturn(firstNumeric)
 
@@ -46,8 +44,7 @@ class GreaterFunctionTest {
             numericValueRetriever.retrieveNumericValue(
                 second,
                 FunctionNameConstants.GREATER,
-                2,
-                variableMap
+                2
             )
         ).thenReturn(secondNumeric)
 
@@ -57,8 +54,7 @@ class GreaterFunctionTest {
         ).thenReturn(resultingNode)
 
         val actual = greaterFunction.evaluate(
-            params,
-            variableMap
+            params
         )
 
         Assertions.assertEquals(resultingNode, actual)

@@ -32,8 +32,7 @@ class CdrFunctionTest {
         Mockito.`when`(
             listValueRetriever.retrieveListValue(
                 first,
-                FunctionNameConstants.CDR,
-                variableMap
+                FunctionNameConstants.CDR
             )
         ).thenReturn(firstExpressionListNode)
 
@@ -42,8 +41,7 @@ class CdrFunctionTest {
         Mockito.`when`(firstExpressionListNode.children).thenReturn(children)
 
         val actual = cdrFunction.evaluate(
-            params,
-            variableMap
+            params
         )
 
         Assertions.assertEquals(child0, actual)
@@ -59,8 +57,7 @@ class CdrFunctionTest {
         Mockito.`when`(
             listValueRetriever.retrieveListValue(
                 first,
-                FunctionNameConstants.CDR,
-                variableMap
+                FunctionNameConstants.CDR
             )
         ).thenReturn(firstExpressionListNode)
 
@@ -70,8 +67,7 @@ class CdrFunctionTest {
         Mockito.`when`(firstExpressionListNode.children).thenReturn(children)
 
         val actual = cdrFunction.evaluate(
-            params,
-            variableMap
+            params
         )
 
         Assertions.assertEquals(child1, actual)
@@ -87,8 +83,7 @@ class CdrFunctionTest {
         Mockito.`when`(
             listValueRetriever.retrieveListValue(
                 first,
-                FunctionNameConstants.CDR,
-                variableMap
+                FunctionNameConstants.CDR
             )
         ).thenReturn(firstExpressionListNode)
 
@@ -107,8 +102,7 @@ class CdrFunctionTest {
 
 
         val actual = cdrFunction.evaluate(
-            params,
-            variableMap
+            params
         )
 
         Assertions.assertEquals(expected, actual)

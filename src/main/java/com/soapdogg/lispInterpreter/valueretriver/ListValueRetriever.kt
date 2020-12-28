@@ -9,17 +9,10 @@ class ListValueRetriever(
 ){
     fun retrieveListValue(
         node: NodeV2,
-        functionName: String,
-        variableNameToValueMap: Map<String, NodeV2>
+        functionName: String
     ): ExpressionListNode {
         if (node is ExpressionListNode) {
             return node
-        }
-        val nodeValue = (node as AtomNode).value
-        val isVariable = variableNameToValueMap.containsKey(nodeValue)
-        if (isVariable) {
-            val result = variableNameToValueMap.getValue(nodeValue)
-            if (result is ExpressionListNode) return result
         }
         val sb = """Error! Parameter of $functionName is not a list.    Actual: ${dotNotationPrinter.printInDotNotation(node)}${'\n'}"""
         throw NotAListException(sb)

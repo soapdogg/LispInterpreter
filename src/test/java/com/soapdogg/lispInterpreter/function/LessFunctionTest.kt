@@ -36,8 +36,7 @@ class LessFunctionTest {
             numericValueRetriever.retrieveNumericValue(
                 first,
                 FunctionNameConstants.LESS,
-                1,
-                variableMap
+                1
             )
         ).thenReturn(firstNumeric)
 
@@ -46,8 +45,7 @@ class LessFunctionTest {
             numericValueRetriever.retrieveNumericValue(
                 second,
                 FunctionNameConstants.LESS,
-                2,
-                variableMap
+                2
             )
         ).thenReturn(secondNumeric)
 
@@ -57,8 +55,7 @@ class LessFunctionTest {
         ).thenReturn(resultingNode)
 
         val actual = lessFunction.evaluate(
-            params,
-            variableMap
+            params
         )
 
         Assertions.assertEquals(resultingNode, actual)

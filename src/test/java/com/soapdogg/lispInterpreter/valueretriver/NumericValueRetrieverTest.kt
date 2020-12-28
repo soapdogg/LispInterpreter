@@ -33,8 +33,7 @@ class NumericValueRetrieverTest {
             numericValueRetriever.retrieveNumericValue(
                 node,
                 functionName,
-                index,
-                variableMap
+                index
             )
         }
     }
@@ -49,8 +48,7 @@ class NumericValueRetrieverTest {
         val actual = numericValueRetriever.retrieveNumericValue(
             node,
             functionName,
-            index,
-            variableMap
+            index
         )
         Assertions.assertEquals(value, actual)
     }

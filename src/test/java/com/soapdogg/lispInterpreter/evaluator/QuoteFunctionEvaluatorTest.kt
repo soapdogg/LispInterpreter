@@ -29,10 +29,14 @@ class QuoteFunctionEvaluatorTest {
         val quoteExprNodeChildren = listOf(child0, quoted)
         Mockito.`when`(quoteExprNode.children).thenReturn(quoteExprNodeChildren)
 
+        val variableMap = emptyMap<String, NodeV2>()
+        Mockito.`when`(top.variableMap).thenReturn(variableMap)
+
         val stacks = Mockito.mock(Stacks::class.java)
         Mockito.`when`(
             postEvaluationStackUpdater.updateStacksAfterEvaluation(
                 quoted,
+                variableMap,
                 evalStack,
                 programStack
             )
