@@ -4,7 +4,7 @@ import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
 import com.soapdogg.lispInterpreter.exceptions.NotAListException
 import java.util.*
 
-class CondProgramStackItemEvaluator(
+class CondFunctionEvaluator(
     private val topProgramStackItemUpdater: TopProgramStackItemUpdater,
     private val condChildStackItemBuilder: CondChildStackItemBuilder
 ) {

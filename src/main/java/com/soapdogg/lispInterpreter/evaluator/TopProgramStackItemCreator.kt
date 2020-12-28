@@ -15,9 +15,8 @@ class TopProgramStackItemCreator(
         variableMap: Map<String, NodeV2>,
         programStack: Stack<ProgramStackItem>
     ) {
-        val top = programStackItemGenerator.generateProgramStackItem(
+        val top = programStackItemGenerator.generateProgramStackItemFromScratch(
             expressionListNode,
-            0,
             variableMap
         )
         programStack.push(

@@ -1,7 +1,5 @@
 package com.soapdogg.lispInterpreter.evaluator
 
-import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
-import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
 import com.soapdogg.lispInterpreter.generator.ProgramStackItemGenerator
 import org.junit.jupiter.api.Assertions
@@ -21,24 +19,13 @@ class TopProgramStackItemUpdaterTest {
     fun updateTopProgramStackItemToNextChildTest() {
         val programStackItem = Mockito.mock(ProgramStackItem::class.java)
 
-        val functionExpressionNode = Mockito.mock(ExpressionListNode::class.java)
-        Mockito.`when`(programStackItem.functionExpressionNode).thenReturn(functionExpressionNode)
-
-        val currentParameterIndex = 1
-        Mockito.`when`(programStackItem.currentParameterIndex).thenReturn(currentParameterIndex)
-
-        val variableMap = emptyMap<String, NodeV2>()
-        Mockito.`when`(programStackItem.variableMap).thenReturn(variableMap)
-
         val programStack = Stack<ProgramStackItem>()
         programStack.push(programStackItem)
 
         val updatedHead = Mockito.mock(ProgramStackItem::class.java)
         Mockito.`when`(
-            programStackItemGenerator.generateProgramStackItem(
-                functionExpressionNode,
-                currentParameterIndex + 1,
-                variableMap
+            programStackItemGenerator.generateProgramStackItemFromExisting(
+                programStackItem
             )
         ).thenReturn(updatedHead)
 

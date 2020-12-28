@@ -2,7 +2,6 @@ package com.soapdogg.lispInterpreter.valueretriver
 
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.datamodels.AtomNode
-import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.determiner.NumericStringDeterminer
 import com.soapdogg.lispInterpreter.exceptions.NotNumericException
 import com.soapdogg.lispInterpreter.printer.ListNotationPrinter

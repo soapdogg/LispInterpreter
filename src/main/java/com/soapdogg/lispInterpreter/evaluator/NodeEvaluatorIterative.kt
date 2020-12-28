@@ -13,7 +13,7 @@ class NodeEvaluatorIterative(
     private val functionLengthDeterminer: FunctionLengthDeterminer,
     private val functionMap: Map<String, Function>,
     private val postEvaluationStackUpdater: PostEvaluationStackUpdater,
-    private val condProgramStackItemEvaluator: CondProgramStackItemEvaluator,
+    private val condFunctionEvaluator: CondFunctionEvaluator,
     private val quoteFunctionEvaluator: QuoteFunctionEvaluator,
     private val builtInFunctionEvaluator: BuiltInFunctionEvaluator
 ){
@@ -39,7 +39,7 @@ class NodeEvaluatorIterative(
 
             if (top.functionName == FunctionNameConstants.COND) {
                 programStack.push(top)
-                condProgramStackItemEvaluator.evaluateCondProgramStackItem(
+                condFunctionEvaluator.evaluateCondProgramStackItem(
                     top,
                     programStack
                 )

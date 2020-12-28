@@ -23,9 +23,8 @@ class TopProgramStackItemCreatorTest {
 
         val top = Mockito.mock(ProgramStackItem::class.java)
         Mockito.`when`(
-            programStackItemGenerator.generateProgramStackItem(
+            programStackItemGenerator.generateProgramStackItemFromScratch(
                 expressionListNode,
-                0,
                 variableMap
             )
         ).thenReturn(top)

@@ -7,12 +7,12 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 import java.util.*
 
-class CondProgramStackItemEvaluatorTest {
+class CondFunctionEvaluatorTest {
 
     private val topProgramStackItemUpdater = Mockito.mock(TopProgramStackItemUpdater::class.java)
     private val condChildStackItemBuilder = Mockito.mock(CondChildStackItemBuilder::class.java)
 
-    private val condProgramStackItemEvaluator = CondProgramStackItemEvaluator(
+    private val condProgramStackItemEvaluator = CondFunctionEvaluator(
         topProgramStackItemUpdater,
         condChildStackItemBuilder
     )

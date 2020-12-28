@@ -7,16 +7,26 @@ import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
 
 class ProgramStackItemGenerator {
 
-    fun generateProgramStackItem(
+    fun generateProgramStackItemFromScratch(
         functionExpressionNode: ExpressionListNode,
-        currentParameterIndex: Int,
         variableMap: Map<String, NodeV2>
     ): ProgramStackItem {
         return ProgramStackItem(
             functionExpressionNode,
-            currentParameterIndex,
+            0,
             variableMap,
             (functionExpressionNode.children[0] as AtomNode).value
+        )
+    }
+
+    fun generateProgramStackItemFromExisting(
+        existingProgramStackItem: ProgramStackItem
+    ): ProgramStackItem {
+        return ProgramStackItem(
+            existingProgramStackItem.functionExpressionNode,
+            existingProgramStackItem.currentParameterIndex + 1,
+            existingProgramStackItem.variableMap,
+            existingProgramStackItem.functionName
         )
     }
 }

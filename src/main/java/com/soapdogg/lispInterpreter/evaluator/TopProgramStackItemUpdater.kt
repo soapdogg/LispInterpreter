@@ -13,10 +13,8 @@ class TopProgramStackItemUpdater (
     ) {
         if (programStack.isNotEmpty()) {
             val head = programStack.pop()
-            val updatedHead = programStackItemGenerator.generateProgramStackItem(
-                head.functionExpressionNode,
-                head.currentParameterIndex + 1,
-                head.variableMap
+            val updatedHead = programStackItemGenerator.generateProgramStackItemFromExisting(
+                head
             )
             programStack.push(
                 updatedHead

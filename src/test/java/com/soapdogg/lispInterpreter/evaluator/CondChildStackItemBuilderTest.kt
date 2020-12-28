@@ -6,8 +6,6 @@ import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
 import com.soapdogg.lispInterpreter.generator.NodeGenerator
-import com.soapdogg.lispInterpreter.generator.ProgramStackItemGenerator
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 import java.util.*
@@ -15,7 +13,6 @@ import java.util.*
 class CondChildStackItemBuilderTest {
 
     private val nodeGenerator = Mockito.mock(NodeGenerator::class.java)
-    private val programStackItemGenerator = Mockito.mock(ProgramStackItemGenerator::class.java)
     private val topProgramStackItemCreator = Mockito.mock(TopProgramStackItemCreator::class.java)
 
     private val condChildStackItemBuilder = CondChildStackItemBuilder(
@@ -55,21 +52,15 @@ class CondChildStackItemBuilderTest {
         val condChildExpressionListNode = Mockito.mock(ExpressionListNode::class.java)
         Mockito.`when`(nodeGenerator.generateExpressionListNode(condChildsChildren)).thenReturn(condChildExpressionListNode)
 
-        val condChildStackItem = Mockito.mock(ProgramStackItem::class.java)
-        Mockito.`when`(
-            programStackItemGenerator.generateProgramStackItem(
-                condChildExpressionListNode,
-                1,
-                variableMap
-            )
-        ).thenReturn(condChildStackItem)
-
         condChildStackItemBuilder.buildCondChildStackItems(
             condProgramStackItem,
             programStack
         )
 
-        Assertions.assertEquals(1, programStack.size)
-        Assertions.assertEquals(condChildStackItem, programStack.peek())
+        Mockito.verify(topProgramStackItemCreator).createTopProgramStackItem(
+            condChildExpressionListNode,
+            variableMap,
+            programStack
+        )
     }
 }

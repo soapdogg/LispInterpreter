@@ -27,7 +27,7 @@ enum class EvaluatorSingleton {
         topProgramStackItemCreator
     )
 
-    private val condProgramStackItemEvaluator = CondProgramStackItemEvaluator(
+    private val condProgramStackItemEvaluator = CondFunctionEvaluator(
         topProgramStackItemUpdater,
         condChildStackItemBuilder
     )
