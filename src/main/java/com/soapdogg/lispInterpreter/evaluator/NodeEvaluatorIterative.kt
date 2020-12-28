@@ -42,21 +42,17 @@ class NodeEvaluatorIterative(
             val top = programStack.pop()
 
             if (
-                top.functionExpressionNode.children[0] is AtomNode
-                && (
-                    ((top.functionExpressionNode.children[0] as AtomNode).value == FunctionNameConstants.COND)
-                    ||
-                    ((top.functionExpressionNode.children[0] as AtomNode).value == FunctionNameConstants.CONDCHILD)
-                    )
+                top.functionName == FunctionNameConstants.COND
+                ||
+                top.functionName == FunctionNameConstants.CONDCHILD
             ) {
-                val firstChild = top.functionExpressionNode.children[0] as AtomNode
                 programStack = condProgramStackItemEvaluator.evaluateCondProgramStackItem(
-                    firstChild.value,
+                    top.functionName,
                     top,
                     programStack
                 )
 
-                if (firstChild.value == FunctionNameConstants.CONDCHILD) {
+                if (top.functionName == FunctionNameConstants.CONDCHILD) {
                     val condChildExprNode = top.functionExpressionNode
                     val secondChild = condChildExprNode.children[1] as ExpressionListNode
 
@@ -87,7 +83,7 @@ class NodeEvaluatorIterative(
                         val evaluatedCondChild = evalStack.pop() as AtomNode
                         if (evaluatedCondChild.value != ReservedValuesConstants.NIL) {
                             while (
-                                (programStack.peek().functionExpressionNode.children[0] as AtomNode).value == FunctionNameConstants.CONDCHILD
+                                programStack.peek().functionName == FunctionNameConstants.CONDCHILD
                             ) {
                                 programStack.pop()
                             }
@@ -170,7 +166,7 @@ class NodeEvaluatorIterative(
                     }
 
                     val functionNameNode = functionStack.pop()
-                    val functionName = (functionNameNode as AtomNode).value
+                    val functionName = top.functionName
                     if (functionName == ReservedValuesConstants.NIL) {
                         val updatedStacks = postEvaluationStackUpdater.updateStacksAfterEvaluation(
                             functionNameNode,
