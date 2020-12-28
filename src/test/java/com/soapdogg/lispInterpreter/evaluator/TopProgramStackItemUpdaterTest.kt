@@ -42,22 +42,22 @@ class TopProgramStackItemUpdaterTest {
             )
         ).thenReturn(updatedHead)
 
-        val actual = topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
+        topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
             programStack
         )
 
-        Assertions.assertEquals(1, actual.size)
-        Assertions.assertEquals(updatedHead, actual.peek())
+        Assertions.assertEquals(1, programStack.size)
+        Assertions.assertEquals(updatedHead, programStack.peek())
     }
 
     @Test
     fun updateTopProgramStackItemToNextChildEmptyStackTest() {
         val programStack = Stack<ProgramStackItem>()
-        val actual = topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
+        topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
             programStack
         )
 
-        Assertions.assertTrue(actual.empty())
+        Assertions.assertTrue(programStack.empty())
         Mockito.verifyNoInteractions(programStackItemGenerator)
     }
 }

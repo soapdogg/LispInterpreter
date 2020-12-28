@@ -22,18 +22,16 @@ class PostEvaluationStackUpdaterTest {
         val evalStack = Stack<NodeV2>()
         val programStack = Stack<ProgramStackItem>()
 
-        val updatedProgramStack = Stack<ProgramStackItem>()
-        Mockito.`when`(topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(programStack)).thenReturn(updatedProgramStack)
-
-        val actual = postEvaluationStackUpdater.updateStacksAfterEvaluation(
+        postEvaluationStackUpdater.updateStacksAfterEvaluation(
             evaluatedNode,
             variableMap,
             evalStack,
             programStack
         )
 
-        Assertions.assertEquals(evalStack, actual.evalStack)
         Assertions.assertEquals(evaluatedNode, evalStack.peek())
-        Assertions.assertEquals(updatedProgramStack, actual.programStack)
+        Mockito.verify(
+            topProgramStackItemUpdater
+        ).updateTopProgramStackItemToNextChild(programStack)
     }
 }

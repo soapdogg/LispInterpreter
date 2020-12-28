@@ -2,9 +2,7 @@ package com.soapdogg.lispInterpreter.evaluator
 
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
-import com.soapdogg.lispInterpreter.datamodels.Stacks
 import com.soapdogg.lispInterpreter.function.Function
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 import java.util.*
@@ -36,17 +34,7 @@ class BuiltInFunctionEvaluatorTest {
         val evaluatedFunctionResult = Mockito.mock(NodeV2::class.java)
         Mockito.`when`(function.evaluate(functionStack)).thenReturn(evaluatedFunctionResult)
 
-        val stacks = Mockito.mock(Stacks::class.java)
-        Mockito.`when`(
-            postEvaluationStackUpdater.updateStacksAfterEvaluation(
-                evaluatedFunctionResult,
-                variableMap,
-                evalStack,
-                programStack
-            )
-        ).thenReturn(stacks)
-
-        val actual = builtInFunctionEvaluator.evaluateBuiltInFunction(
+        builtInFunctionEvaluator.evaluateBuiltInFunction(
             functionName,
             functionStack,
             top,
@@ -54,6 +42,11 @@ class BuiltInFunctionEvaluatorTest {
             programStack
         )
 
-        Assertions.assertEquals(stacks, actual)
+        Mockito.verify(postEvaluationStackUpdater).updateStacksAfterEvaluation(
+            evaluatedFunctionResult,
+            variableMap,
+            evalStack,
+            programStack
+        )
     }
 }

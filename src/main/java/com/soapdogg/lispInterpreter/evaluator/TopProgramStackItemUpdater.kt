@@ -10,7 +10,7 @@ class TopProgramStackItemUpdater (
 
     fun updateTopProgramStackItemToNextChild(
         programStack: Stack<ProgramStackItem>
-    ): Stack<ProgramStackItem> {
+    ) {
         if (programStack.isNotEmpty()) {
             val head = programStack.pop()
             val updatedHead = programStackItemGenerator.generateProgramStackItem(
@@ -22,6 +22,5 @@ class TopProgramStackItemUpdater (
                 updatedHead
             )
         }
-        return programStack
     }
 }

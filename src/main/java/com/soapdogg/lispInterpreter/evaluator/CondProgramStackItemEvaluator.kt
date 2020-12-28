@@ -12,15 +12,15 @@ class CondProgramStackItemEvaluator(
     fun evaluateCondProgramStackItem(
         top: ProgramStackItem,
         programStack: Stack<ProgramStackItem>
-    ): Stack<ProgramStackItem> {
+    ) {
         when (top.currentParameterIndex) {
             0 -> {
-                val updatedProgramStack = topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
+                topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
                     programStack
                 )
-                return condChildStackItemBuilder.buildCondChildStackItems(
+                condChildStackItemBuilder.buildCondChildStackItems(
                     top,
-                    updatedProgramStack
+                    programStack
                 )
             }
             else -> {

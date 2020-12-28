@@ -16,10 +16,11 @@ class CondChildStackItemBuilderTest {
 
     private val nodeGenerator = Mockito.mock(NodeGenerator::class.java)
     private val programStackItemGenerator = Mockito.mock(ProgramStackItemGenerator::class.java)
+    private val topProgramStackItemCreator = Mockito.mock(TopProgramStackItemCreator::class.java)
 
     private val condChildStackItemBuilder = CondChildStackItemBuilder(
         nodeGenerator,
-        programStackItemGenerator
+        topProgramStackItemCreator
     )
 
     @Test
@@ -63,12 +64,12 @@ class CondChildStackItemBuilderTest {
             )
         ).thenReturn(condChildStackItem)
 
-        val actual = condChildStackItemBuilder.buildCondChildStackItems(
+        condChildStackItemBuilder.buildCondChildStackItems(
             condProgramStackItem,
             programStack
         )
 
-        Assertions.assertEquals(1, actual.size)
-        Assertions.assertEquals(condChildStackItem, actual.peek())
+        Assertions.assertEquals(1, programStack.size)
+        Assertions.assertEquals(condChildStackItem, programStack.peek())
     }
 }

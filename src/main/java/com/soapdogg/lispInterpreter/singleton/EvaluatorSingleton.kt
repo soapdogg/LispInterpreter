@@ -5,6 +5,10 @@ import com.soapdogg.lispInterpreter.evaluator.*
 enum class EvaluatorSingleton {
     INSTANCE;
 
+    private val topProgramStackItemCreator = TopProgramStackItemCreator(
+        GeneratorSingleton.INSTANCE.programStackItemGenerator
+    )
+
     private val topProgramStackItemUpdater = TopProgramStackItemUpdater(
         GeneratorSingleton.INSTANCE.programStackItemGenerator
     )
@@ -20,7 +24,7 @@ enum class EvaluatorSingleton {
 
     private val condChildStackItemBuilder = CondChildStackItemBuilder(
         GeneratorSingleton.INSTANCE.nodeGenerator,
-        GeneratorSingleton.INSTANCE.programStackItemGenerator
+        topProgramStackItemCreator
     )
 
     private val condProgramStackItemEvaluator = CondProgramStackItemEvaluator(
@@ -33,7 +37,7 @@ enum class EvaluatorSingleton {
     )
 
     private val nodeEvaluatorIterative = NodeEvaluatorIterative(
-        GeneratorSingleton.INSTANCE.programStackItemGenerator,
+        topProgramStackItemCreator,
         DeterminerSingleton.INSTANCE.functionLengthDeterminer,
         FunctionSingleton.INSTANCE.functionMap,
         stackUpdater,

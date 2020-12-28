@@ -22,7 +22,6 @@ class NumericValueRetrieverTest {
 
     @Test
     fun nodeIsNotNumericTest() {
-        val variableMap = mapOf<String, NodeV2>()
         val node = Mockito.mock(AtomNode::class.java)
         val value = "value"
         Mockito.`when`(node.value).thenReturn(value)
@@ -40,7 +39,6 @@ class NumericValueRetrieverTest {
 
     @Test
     fun nodeIsNumericTest() {
-        val variableMap = mapOf<String, NodeV2>()
         val value = 34
         val node = Mockito.mock(AtomNode::class.java)
         Mockito.`when`(node.value).thenReturn(value.toString())

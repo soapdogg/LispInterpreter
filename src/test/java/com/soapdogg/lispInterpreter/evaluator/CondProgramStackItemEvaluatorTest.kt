@@ -25,23 +25,17 @@ class CondProgramStackItemEvaluatorTest {
         val currentParameterIndex = 0
         Mockito.`when`(top.currentParameterIndex).thenReturn(currentParameterIndex)
 
-        val updatedProgramStack = Stack<ProgramStackItem>()
-        Mockito.`when`(topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(programStack)).thenReturn(updatedProgramStack)
-
-        val expected = Stack<ProgramStackItem>()
-        Mockito.`when`(
-            condChildStackItemBuilder.buildCondChildStackItems(
-                top,
-                updatedProgramStack
-            )
-        ).thenReturn(expected)
-
-        val actual = condProgramStackItemEvaluator.evaluateCondProgramStackItem(
+        condProgramStackItemEvaluator.evaluateCondProgramStackItem(
             top,
             programStack
         )
 
-        Assertions.assertEquals(expected, actual)
+        Mockito.verify(topProgramStackItemUpdater).updateTopProgramStackItemToNextChild(programStack)
+
+        Mockito.verify(condChildStackItemBuilder).buildCondChildStackItems(
+            top,
+            programStack
+        )
     }
 
     @Test
