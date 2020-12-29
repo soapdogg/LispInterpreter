@@ -13,13 +13,13 @@ enum class EvaluatorSingleton {
         GeneratorSingleton.INSTANCE.programStackItemGenerator
     )
 
-    private val stackUpdater = PostEvaluationStackUpdater(
+    private val postEvaluationStackUpdater = PostEvaluationStackUpdater(
         topProgramStackItemUpdater
     )
 
     private val builtInFunctionEvaluator = BuiltInFunctionEvaluator(
         FunctionSingleton.INSTANCE.functionMap,
-        stackUpdater
+        postEvaluationStackUpdater
     )
 
     private val condChildStackItemBuilder = CondChildStackItemBuilder(
@@ -33,14 +33,20 @@ enum class EvaluatorSingleton {
     )
 
     private val quoteFunctionEvaluator = QuoteFunctionEvaluator(
-        stackUpdater
+        postEvaluationStackUpdater
+    )
+
+    private val stackUpdateDeterminer = StackUpdateDeterminer(
+        topProgramStackItemCreator,
+        postEvaluationStackUpdater
     )
 
     private val nodeEvaluatorIterative = NodeEvaluatorIterative(
         topProgramStackItemCreator,
+        stackUpdateDeterminer,
         DeterminerSingleton.INSTANCE.functionLengthDeterminer,
         FunctionSingleton.INSTANCE.functionMap,
-        stackUpdater,
+        postEvaluationStackUpdater,
         condProgramStackItemEvaluator,
         quoteFunctionEvaluator,
         builtInFunctionEvaluator

@@ -10,6 +10,7 @@ import kotlin.collections.HashMap
 
 class NodeEvaluatorIterative(
     private val topProgramStackItemCreator: TopProgramStackItemCreator,
+    private val stackUpdateDeterminer: StackUpdateDeterminer,
     private val functionLengthDeterminer: FunctionLengthDeterminer,
     private val functionMap: Map<String, Function>,
     private val postEvaluationStackUpdater: PostEvaluationStackUpdater,
@@ -46,38 +47,19 @@ class NodeEvaluatorIterative(
                 continue
             }
 
-            if (
-                top.functionName == FunctionNameConstants.CONDCHILD
-            ) {
+            if (top.functionName == FunctionNameConstants.CONDCHILD) {
                 val condChildExprNode = top.functionExpressionNode
 
                 programStack.push(top)
                 if (top.currentParameterIndex == 0) {
 
                     val condChildsCondition = condChildExprNode.children[top.currentParameterIndex +1]
-                    if (condChildsCondition is ExpressionListNode) {
-                        if (condChildsCondition.children.size > 1) {
-                            topProgramStackItemCreator.createTopProgramStackItem(
-                                condChildsCondition,
-                                top.variableMap,
-                                programStack
-                            )
-                        } else {
-                            postEvaluationStackUpdater.updateStacksAfterEvaluation(
-                                condChildsCondition.children[0],
-                                top.variableMap,
-                                evalStack,
-                                programStack
-                            )
-                        }
-                    } else {
-                        postEvaluationStackUpdater.updateStacksAfterEvaluation(
-                            condChildsCondition,
-                            top.variableMap,
-                            evalStack,
-                            programStack
-                        )
-                    }
+                    stackUpdateDeterminer.determineHowToUpdateStacks(
+                        condChildsCondition,
+                        top.variableMap,
+                        evalStack,
+                        programStack
+                    )
                 }
                 else {
                     programStack.pop()
@@ -92,30 +74,12 @@ class NodeEvaluatorIterative(
 
 
                         val condChildsValue = top.functionExpressionNode.children[top.currentParameterIndex +1]
-                        if (condChildsValue is ExpressionListNode) {
-                            if (condChildsValue.children.size > 1) {
-                                topProgramStackItemCreator.createTopProgramStackItem(
-                                    condChildsValue,
-                                    top.variableMap,
-                                    programStack
-                                )
-                            } else {
-                                postEvaluationStackUpdater.updateStacksAfterEvaluation(
-                                    condChildsValue.children[0],
-                                    top.variableMap,
-                                    evalStack,
-                                    programStack
-                                )
-                            }
-                        }
-                        else {
-                            postEvaluationStackUpdater.updateStacksAfterEvaluation(
-                                condChildsValue,
-                                top.variableMap,
-                                evalStack,
-                                programStack
-                            )
-                        }
+                        stackUpdateDeterminer.determineHowToUpdateStacks(
+                            condChildsValue,
+                            top.variableMap,
+                            evalStack,
+                            programStack
+                        )
                     }
                 }
                 continue
@@ -134,29 +98,12 @@ class NodeEvaluatorIterative(
             if (top.currentParameterIndex < expectedFunctionLength) {
                 val nthChild = top.functionExpressionNode.children[top.currentParameterIndex]
                 programStack.push(top)
-                if (nthChild is ExpressionListNode) {
-                    if (nthChild.children.size > 1) {
-                        topProgramStackItemCreator.createTopProgramStackItem(
-                            nthChild,
-                            top.variableMap,
-                            programStack
-                        )
-                    } else {
-                        postEvaluationStackUpdater.updateStacksAfterEvaluation(
-                            nthChild.children[0],
-                            top.variableMap,
-                            evalStack,
-                            programStack
-                        )
-                    }
-                } else {
-                    postEvaluationStackUpdater.updateStacksAfterEvaluation(
-                        nthChild,
-                        top.variableMap,
-                        evalStack,
-                        programStack
-                    )
-                }
+                stackUpdateDeterminer.determineHowToUpdateStacks(
+                    nthChild,
+                    top.variableMap,
+                    evalStack,
+                    programStack
+                )
             }
             else {
                 val functionStack = Stack<NodeV2>()
@@ -194,20 +141,12 @@ class NodeEvaluatorIterative(
                         mapCopy[variableName] = param
                         ++i
                     }
-                    if (userDefinedFunction.body is ExpressionListNode && userDefinedFunction.formalParameters.isNotEmpty()) {
-                        topProgramStackItemCreator.createTopProgramStackItem(
-                            userDefinedFunction.body,
-                            mapCopy,
-                            programStack
-                        )
-                    } else {
-                        postEvaluationStackUpdater.updateStacksAfterEvaluation(
-                            userDefinedFunction.body,
-                            top.variableMap,
-                            evalStack,
-                            programStack
-                        )
-                    }
+                    stackUpdateDeterminer.determineHowToUpdateStacks(
+                        userDefinedFunction.body,
+                        mapCopy,
+                        evalStack,
+                        programStack
+                    )
                 }
                 else {
                     throw Exception("Error! Invalid CAR value: $functionName\n")
