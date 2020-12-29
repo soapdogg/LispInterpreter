@@ -45,16 +45,20 @@ enum class EvaluatorSingleton {
         stackUpdateDeterminer
     )
 
+    private val userDefinedFunctionEvaluator = UserDefinedFunctionEvaluator(
+        stackUpdateDeterminer
+    )
+
     private val nodeEvaluatorIterative = NodeEvaluatorIterative(
         topProgramStackItemCreator,
         stackUpdateDeterminer,
-        DeterminerSingleton.INSTANCE.functionLengthDeterminer,
         FunctionSingleton.INSTANCE.functionMap,
         postEvaluationStackUpdater,
         condProgramStackItemEvaluator,
         condChildFunctionEvaluator,
         quoteFunctionEvaluator,
-        builtInFunctionEvaluator
+        builtInFunctionEvaluator,
+        userDefinedFunctionEvaluator
     )
     val programEvaluator: ProgramEvaluator = ProgramEvaluator(
         AsserterSingleton.INSTANCE.atomRootNodeAsserter,

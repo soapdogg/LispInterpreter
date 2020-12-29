@@ -3,21 +3,19 @@ package com.soapdogg.lispInterpreter.evaluator
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
 import com.soapdogg.lispInterpreter.datamodels.*
-import com.soapdogg.lispInterpreter.determiner.FunctionLengthDeterminer
 import com.soapdogg.lispInterpreter.function.Function
 import java.util.*
-import kotlin.collections.HashMap
 
 class NodeEvaluatorIterative(
     private val topProgramStackItemCreator: TopProgramStackItemCreator,
     private val stackUpdateDeterminer: StackUpdateDeterminer,
-    private val functionLengthDeterminer: FunctionLengthDeterminer,
     private val functionMap: Map<String, Function>,
     private val postEvaluationStackUpdater: PostEvaluationStackUpdater,
     private val condFunctionEvaluator: CondFunctionEvaluator,
     private val condChildFunctionEvaluator: CondChildFunctionEvaluator,
     private val quoteFunctionEvaluator: QuoteFunctionEvaluator,
-    private val builtInFunctionEvaluator: BuiltInFunctionEvaluator
+    private val builtInFunctionEvaluator: BuiltInFunctionEvaluator,
+    private val userDefinedFunctionEvaluator: UserDefinedFunctionEvaluator
 ){
 
     fun evaluate(
@@ -40,34 +38,29 @@ class NodeEvaluatorIterative(
             val top = programStack.pop()
 
             if (top.functionName == FunctionNameConstants.COND) {
-                programStack.push(top)
                 condFunctionEvaluator.evaluateCondProgramStackItem(
                     top,
                     programStack
                 )
-                continue
             }
 
-            if (top.functionName == FunctionNameConstants.CONDCHILD) {
+            else if (top.functionName == FunctionNameConstants.CONDCHILD) {
                 condChildFunctionEvaluator.evaluateCondChildFunction(
                     top,
                     evalStack,
                     programStack
                 )
-                continue
             }
 
-            if (top.functionName == FunctionNameConstants.QUOTE) {
+            else if (top.functionName == FunctionNameConstants.QUOTE) {
                 quoteFunctionEvaluator.evaluateQuoteFunction(
                     top,
                     evalStack,
                     programStack
                 )
-                continue
             }
 
-            val expectedFunctionLength = functionLengthDeterminer.determineFunctionLength(top.functionExpressionNode)
-            if (top.currentParameterIndex < expectedFunctionLength) {
+            else if (top.currentParameterIndex < top.functionExpressionNode.children.size - 1) {
                 val nthChild = top.functionExpressionNode.children[top.currentParameterIndex]
                 programStack.push(top)
                 stackUpdateDeterminer.determineHowToUpdateStacks(
@@ -79,7 +72,7 @@ class NodeEvaluatorIterative(
             }
             else {
                 val functionStack = Stack<NodeV2>()
-                for (i in 0 until expectedFunctionLength) {
+                for (i in 0 until top.functionExpressionNode.children.size - 1) {
                     functionStack.push(evalStack.pop())
                 }
 
@@ -103,19 +96,10 @@ class NodeEvaluatorIterative(
                     )
                 }
                 else if (userDefinedFunctions.containsKey(functionName)) {
-                    val userDefinedFunction = userDefinedFunctions.getValue(functionName)
-                    var i = 0
-                    val mapCopy = HashMap(top.variableMap)
-                    while (functionStack.isNotEmpty()) {
-                        val param = functionStack.pop()
-
-                        val variableName = userDefinedFunction.formalParameters[i]
-                        mapCopy[variableName] = param
-                        ++i
-                    }
-                    stackUpdateDeterminer.determineHowToUpdateStacks(
-                        userDefinedFunction.body,
-                        mapCopy,
+                    userDefinedFunctionEvaluator.evaluateUserDefinedFunction(
+                        userDefinedFunctions.getValue(functionName),
+                        top.variableMap,
+                        functionStack,
                         evalStack,
                         programStack
                     )

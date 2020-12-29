@@ -13,6 +13,7 @@ class CondFunctionEvaluator(
         top: ProgramStackItem,
         programStack: Stack<ProgramStackItem>
     ) {
+        programStack.push(top)
         when (top.currentParameterIndex) {
             0 -> {
                 topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
