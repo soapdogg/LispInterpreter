@@ -49,17 +49,26 @@ enum class EvaluatorSingleton {
         stackUpdateDeterminer
     )
 
-    private val nodeEvaluatorIterative = NodeEvaluatorIterative(
-        topProgramStackItemCreator,
-        stackUpdateDeterminer,
-        FunctionSingleton.INSTANCE.functionMap,
+    private val unfinishedProgramStackItemEvaluator = UnfinishedProgramStackItemEvaluator(
+        stackUpdateDeterminer
+    )
+
+    private val finishedProgramStackItemEvaluator = FinishedProgramStackItemEvaluator(
         postEvaluationStackUpdater,
-        condProgramStackItemEvaluator,
-        condChildFunctionEvaluator,
-        quoteFunctionEvaluator,
+        FunctionSingleton.INSTANCE.functionMap,
         builtInFunctionEvaluator,
         userDefinedFunctionEvaluator
     )
+
+    private val nodeEvaluatorIterative = NodeEvaluatorIterative(
+        topProgramStackItemCreator,
+        condProgramStackItemEvaluator,
+        condChildFunctionEvaluator,
+        quoteFunctionEvaluator,
+        unfinishedProgramStackItemEvaluator,
+        finishedProgramStackItemEvaluator
+    )
+
     val programEvaluator: ProgramEvaluator = ProgramEvaluator(
         AsserterSingleton.INSTANCE.atomRootNodeAsserter,
         nodeEvaluatorIterative
