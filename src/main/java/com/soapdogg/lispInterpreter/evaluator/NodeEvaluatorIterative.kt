@@ -15,6 +15,7 @@ class NodeEvaluatorIterative(
     private val functionMap: Map<String, Function>,
     private val postEvaluationStackUpdater: PostEvaluationStackUpdater,
     private val condFunctionEvaluator: CondFunctionEvaluator,
+    private val condChildFunctionEvaluator: CondChildFunctionEvaluator,
     private val quoteFunctionEvaluator: QuoteFunctionEvaluator,
     private val builtInFunctionEvaluator: BuiltInFunctionEvaluator
 ){
@@ -48,40 +49,11 @@ class NodeEvaluatorIterative(
             }
 
             if (top.functionName == FunctionNameConstants.CONDCHILD) {
-                val condChildExprNode = top.functionExpressionNode
-
-                programStack.push(top)
-                if (top.currentParameterIndex == 0) {
-
-                    val condChildsCondition = condChildExprNode.children[top.currentParameterIndex +1]
-                    stackUpdateDeterminer.determineHowToUpdateStacks(
-                        condChildsCondition,
-                        top.variableMap,
-                        evalStack,
-                        programStack
-                    )
-                }
-                else {
-                    programStack.pop()
-                    val evaluatedCondChild = evalStack.pop() as AtomNode
-                    if (evaluatedCondChild.value != ReservedValuesConstants.NIL) {
-                        while (
-                            programStack.peek().functionName == FunctionNameConstants.CONDCHILD
-                        ) {
-                            programStack.pop()
-                        }
-                        programStack.pop() //CondProgramStackItem
-
-
-                        val condChildsValue = top.functionExpressionNode.children[top.currentParameterIndex +1]
-                        stackUpdateDeterminer.determineHowToUpdateStacks(
-                            condChildsValue,
-                            top.variableMap,
-                            evalStack,
-                            programStack
-                        )
-                    }
-                }
+                condChildFunctionEvaluator.evaluateCondChildFunction(
+                    top,
+                    evalStack,
+                    programStack
+                )
                 continue
             }
 
