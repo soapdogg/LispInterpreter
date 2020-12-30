@@ -1,12 +1,11 @@
 package com.soapdogg.lispInterpreter.evaluator
 
-import com.soapdogg.lispInterpreter.datamodels.MyStack
+import com.soapdogg.lispInterpreter.datamodels.Stack
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
 import com.soapdogg.lispInterpreter.function.Function
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
-import java.util.*
 
 class BuiltInFunctionEvaluatorTest {
 
@@ -24,10 +23,10 @@ class BuiltInFunctionEvaluatorTest {
 
     @Test
     fun evaluateBuiltInFunctionTest() {
-        val functionStack = MyStack<NodeV2>()
+        val functionStack = Stack<NodeV2>()
         val top = Mockito.mock(ProgramStackItem::class.java)
-        val evalStack = MyStack<NodeV2>()
-        val programStack = MyStack<ProgramStackItem>()
+        val evalStack = Stack<NodeV2>()
+        val programStack = Stack<ProgramStackItem>()
 
         val variableMap = emptyMap<String, NodeV2>()
         Mockito.`when`(top.variableMap).thenReturn(variableMap)

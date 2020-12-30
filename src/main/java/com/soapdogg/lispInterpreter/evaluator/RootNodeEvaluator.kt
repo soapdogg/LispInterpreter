@@ -15,8 +15,8 @@ class RootNodeEvaluator(
     fun evaluate(
         rootNode: ExpressionListNode,
         userDefinedFunctions: Map<String, UserDefinedFunction>,
-        programStack: MyStack<ProgramStackItem>,
-        evalStack: MyStack<NodeV2>
+        programStack: Stack<ProgramStackItem>,
+        evalStack: Stack<NodeV2>
     ): NodeV2 {
 
         topProgramStackItemCreator.createTopProgramStackItem(

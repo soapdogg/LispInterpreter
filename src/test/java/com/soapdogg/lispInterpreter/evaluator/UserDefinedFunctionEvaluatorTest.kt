@@ -1,12 +1,11 @@
 package com.soapdogg.lispInterpreter.evaluator
 
-import com.soapdogg.lispInterpreter.datamodels.MyStack
+import com.soapdogg.lispInterpreter.datamodels.Stack
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
 import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
-import java.util.*
 
 class UserDefinedFunctionEvaluatorTest {
 
@@ -20,9 +19,9 @@ class UserDefinedFunctionEvaluatorTest {
     fun evaluateUserDefinedFunctionTest() {
         val userDefinedFunction = Mockito.mock(UserDefinedFunction::class.java)
         val variableMap = emptyMap<String, NodeV2>()
-        val functionStack = MyStack<NodeV2>()
-        val evalStack = MyStack<NodeV2>()
-        val programStack = MyStack<ProgramStackItem>()
+        val functionStack = Stack<NodeV2>()
+        val evalStack = Stack<NodeV2>()
+        val programStack = Stack<ProgramStackItem>()
 
         val formalParameter0 = "formalParameter0"
         Mockito.`when`(userDefinedFunction.formalParameters).thenReturn(listOf(formalParameter0))

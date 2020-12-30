@@ -1,10 +1,9 @@
 package com.soapdogg.lispInterpreter.evaluator
 
-import com.soapdogg.lispInterpreter.datamodels.MyStack
+import com.soapdogg.lispInterpreter.datamodels.Stack
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
 import com.soapdogg.lispInterpreter.function.Function
-import java.util.*
 
 class BuiltInFunctionEvaluator(
     private val functionMap: Map<String, Function>,
@@ -13,10 +12,10 @@ class BuiltInFunctionEvaluator(
 
     fun evaluateBuiltInFunction(
         functionName: String,
-        functionStack: MyStack<NodeV2>,
+        functionStack: Stack<NodeV2>,
         top: ProgramStackItem,
-        evalStack: MyStack<NodeV2>,
-        programStack: MyStack<ProgramStackItem>
+        evalStack: Stack<NodeV2>,
+        programStack: Stack<ProgramStackItem>
     ) {
         val function = functionMap.getValue(functionName)
         val evaluatedFunctionResult = function.evaluate(functionStack)

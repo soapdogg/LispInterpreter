@@ -1,13 +1,12 @@
 package com.soapdogg.lispInterpreter.evaluator
 
 import com.soapdogg.lispInterpreter.datamodels.AtomNode
-import com.soapdogg.lispInterpreter.datamodels.MyStack
+import com.soapdogg.lispInterpreter.datamodels.Stack
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
-import java.util.*
 
 class PostEvaluationStackUpdaterTest {
 
@@ -21,8 +20,8 @@ class PostEvaluationStackUpdaterTest {
     fun updateStacksAfterEvaluationAtomNodeTest() {
         val evaluatedNode = Mockito.mock(AtomNode::class.java)
         val variableMap = emptyMap<String, NodeV2>()
-        val evalStack = MyStack<NodeV2>()
-        val programStack = MyStack<ProgramStackItem>()
+        val evalStack = Stack<NodeV2>()
+        val programStack = Stack<ProgramStackItem>()
 
         val value = "value"
         Mockito.`when`(evaluatedNode.value).thenReturn(value)
@@ -44,8 +43,8 @@ class PostEvaluationStackUpdaterTest {
     fun updateStacksAfterEvaluationTest() {
         val evaluatedNode = Mockito.mock(NodeV2::class.java)
         val variableMap = emptyMap<String, NodeV2>()
-        val evalStack = MyStack<NodeV2>()
-        val programStack = MyStack<ProgramStackItem>()
+        val evalStack = Stack<NodeV2>()
+        val programStack = Stack<ProgramStackItem>()
 
         postEvaluationStackUpdater.updateStacksAfterEvaluation(
             evaluatedNode,

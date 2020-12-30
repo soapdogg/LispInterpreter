@@ -1,6 +1,6 @@
 package com.soapdogg.lispInterpreter.evaluator
 
-import com.soapdogg.lispInterpreter.datamodels.MyStack
+import com.soapdogg.lispInterpreter.datamodels.Stack
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
 import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
@@ -13,9 +13,9 @@ class UserDefinedFunctionEvaluator(
     fun evaluateUserDefinedFunction(
         userDefinedFunction: UserDefinedFunction,
         variableMap: Map<String, NodeV2>,
-        functionStack: MyStack<NodeV2>,
-        evalStack: MyStack<NodeV2>,
-        programStack: MyStack<ProgramStackItem>
+        functionStack: Stack<NodeV2>,
+        evalStack: Stack<NodeV2>,
+        programStack: Stack<ProgramStackItem>
     ) {
         val mapCopy = HashMap(variableMap)
         userDefinedFunction.formalParameters.forEach {

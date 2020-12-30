@@ -1,14 +1,13 @@
 package com.soapdogg.lispInterpreter.evaluator
 
 import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
-import com.soapdogg.lispInterpreter.datamodels.MyStack
+import com.soapdogg.lispInterpreter.datamodels.Stack
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
 import com.soapdogg.lispInterpreter.generator.ProgramStackItemGenerator
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
-import java.util.*
 
 class TopProgramStackItemCreatorTest {
 
@@ -20,7 +19,7 @@ class TopProgramStackItemCreatorTest {
     fun createTopProgramStackItemTest() {
         val expressionListNode = Mockito.mock(ExpressionListNode::class.java)
         val variableMap = emptyMap<String, NodeV2>()
-        val programStack = MyStack<ProgramStackItem>()
+        val programStack = Stack<ProgramStackItem>()
 
         val top = Mockito.mock(ProgramStackItem::class.java)
         Mockito.`when`(

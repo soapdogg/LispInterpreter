@@ -2,10 +2,10 @@ package com.soapdogg.lispInterpreter.evaluator
 
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.datamodels.*
+import com.soapdogg.lispInterpreter.datamodels.Stack
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
-import java.util.*
 
 class RootNodeEvaluatorTest {
 
@@ -29,8 +29,8 @@ class RootNodeEvaluatorTest {
     fun evaluateCondFunctionTest() {
         val rootNode = Mockito.mock(ExpressionListNode::class.java)
         val userDefinedFunctions = emptyMap<String, UserDefinedFunction>()
-        val programStack = MyStack<ProgramStackItem>()
-        val evalStack = MyStack<NodeV2>()
+        val programStack = Stack<ProgramStackItem>()
+        val evalStack = Stack<NodeV2>()
 
         val rootProgramStackItem = Mockito.mock(ProgramStackItem::class.java)
         Mockito.`when`(
@@ -75,8 +75,8 @@ class RootNodeEvaluatorTest {
     fun evaluateCondChildFunctionTest() {
         val rootNode = Mockito.mock(ExpressionListNode::class.java)
         val userDefinedFunctions = emptyMap<String, UserDefinedFunction>()
-        val programStack = MyStack<ProgramStackItem>()
-        val evalStack = MyStack<NodeV2>()
+        val programStack = Stack<ProgramStackItem>()
+        val evalStack = Stack<NodeV2>()
 
         val rootProgramStackItem = Mockito.mock(ProgramStackItem::class.java)
         Mockito.`when`(
@@ -122,8 +122,8 @@ class RootNodeEvaluatorTest {
     fun evaluateQuoteFunctionTest() {
         val rootNode = Mockito.mock(ExpressionListNode::class.java)
         val userDefinedFunctions = emptyMap<String, UserDefinedFunction>()
-        val programStack = MyStack<ProgramStackItem>()
-        val evalStack = MyStack<NodeV2>()
+        val programStack = Stack<ProgramStackItem>()
+        val evalStack = Stack<NodeV2>()
 
         val rootProgramStackItem = Mockito.mock(ProgramStackItem::class.java)
         Mockito.`when`(
@@ -169,8 +169,8 @@ class RootNodeEvaluatorTest {
     fun evaluateUnfinishedProgramStackItemTest() {
         val rootNode = Mockito.mock(ExpressionListNode::class.java)
         val userDefinedFunctions = emptyMap<String, UserDefinedFunction>()
-        val programStack = MyStack<ProgramStackItem>()
-        val evalStack = MyStack<NodeV2>()
+        val programStack = Stack<ProgramStackItem>()
+        val evalStack = Stack<NodeV2>()
 
         val rootProgramStackItem = Mockito.mock(ProgramStackItem::class.java)
         Mockito.`when`(
@@ -227,8 +227,8 @@ class RootNodeEvaluatorTest {
     fun evaluateFinishedProgramStackItemTest() {
         val rootNode = Mockito.mock(ExpressionListNode::class.java)
         val userDefinedFunctions = emptyMap<String, UserDefinedFunction>()
-        val programStack = MyStack<ProgramStackItem>()
-        val evalStack = MyStack<NodeV2>()
+        val programStack = Stack<ProgramStackItem>()
+        val evalStack = Stack<NodeV2>()
 
         val rootProgramStackItem = Mockito.mock(ProgramStackItem::class.java)
         Mockito.`when`(

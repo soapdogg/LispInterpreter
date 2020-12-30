@@ -1,12 +1,11 @@
 package com.soapdogg.lispInterpreter.evaluator
 
 import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
-import com.soapdogg.lispInterpreter.datamodels.MyStack
+import com.soapdogg.lispInterpreter.datamodels.Stack
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
-import java.util.*
 
 class QuoteFunctionEvaluatorTest {
 
@@ -17,8 +16,8 @@ class QuoteFunctionEvaluatorTest {
     @Test
     fun evaluateQuoteFunctionTest() {
         val top = Mockito.mock(ProgramStackItem::class.java)
-        val evalStack = MyStack<NodeV2>()
-        val programStack = MyStack<ProgramStackItem>()
+        val evalStack = Stack<NodeV2>()
+        val programStack = Stack<ProgramStackItem>()
 
         val quoteExprNode = Mockito.mock(ExpressionListNode::class.java)
         Mockito.`when`(top.functionExpressionNode).thenReturn(quoteExprNode)

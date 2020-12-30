@@ -3,9 +3,9 @@ package com.soapdogg.lispInterpreter.evaluator
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
 import com.soapdogg.lispInterpreter.datamodels.*
+import com.soapdogg.lispInterpreter.datamodels.Stack
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
-import java.util.*
 
 class CondChildFunctionEvaluatorTest {
 
@@ -18,8 +18,8 @@ class CondChildFunctionEvaluatorTest {
     @Test
     fun evaluateCondChildsConditionTest() {
         val top = Mockito.mock(ProgramStackItem::class.java)
-        val evalStack = MyStack<NodeV2>()
-        val programStack = MyStack<ProgramStackItem>()
+        val evalStack = Stack<NodeV2>()
+        val programStack = Stack<ProgramStackItem>()
 
         val functionExpressionNode = Mockito.mock(ExpressionListNode::class.java)
         Mockito.`when`(top.functionExpressionNode).thenReturn(functionExpressionNode)
@@ -53,8 +53,8 @@ class CondChildFunctionEvaluatorTest {
     @Test
     fun evaluateCondChildsValueTest() {
         val top = Mockito.mock(ProgramStackItem::class.java)
-        val evalStack = MyStack<NodeV2>()
-        val programStack = MyStack<ProgramStackItem>()
+        val evalStack = Stack<NodeV2>()
+        val programStack = Stack<ProgramStackItem>()
 
         val functionExpressionNode = Mockito.mock(ExpressionListNode::class.java)
         Mockito.`when`(top.functionExpressionNode).thenReturn(functionExpressionNode)

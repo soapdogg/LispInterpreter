@@ -2,7 +2,6 @@ package com.soapdogg.lispInterpreter.evaluator
 
 import com.soapdogg.lispInterpreter.asserter.AtomRootNodeAsserter
 import com.soapdogg.lispInterpreter.datamodels.*
-import java.util.Stack
 
 class ProgramEvaluator(
     private val atomRootNodeAsserter: AtomRootNodeAsserter,
@@ -20,8 +19,8 @@ class ProgramEvaluator(
             rootNodeEvaluator.evaluate(
                 it as ExpressionListNode,
                 userDefinedFunctions,
-                MyStack(),
-                MyStack()
+                com.soapdogg.lispInterpreter.datamodels.Stack(),
+                com.soapdogg.lispInterpreter.datamodels.Stack()
             )
         }
     }

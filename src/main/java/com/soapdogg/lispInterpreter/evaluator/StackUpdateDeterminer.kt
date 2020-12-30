@@ -1,10 +1,9 @@
 package com.soapdogg.lispInterpreter.evaluator
 
 import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
-import com.soapdogg.lispInterpreter.datamodels.MyStack
+import com.soapdogg.lispInterpreter.datamodels.Stack
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
-import java.util.*
 
 class StackUpdateDeterminer (
     private val topProgramStackItemCreator: TopProgramStackItemCreator,
@@ -14,8 +13,8 @@ class StackUpdateDeterminer (
     fun determineHowToUpdateStacks(
         node: NodeV2,
         variableMap: Map<String, NodeV2>,
-        evalStack: MyStack<NodeV2>,
-        programStack: MyStack<ProgramStackItem>
+        evalStack: Stack<NodeV2>,
+        programStack: Stack<ProgramStackItem>
     ) {
         if (node is ExpressionListNode) {
             if (node.children.size > 1) {

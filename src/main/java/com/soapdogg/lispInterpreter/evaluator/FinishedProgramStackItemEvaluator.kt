@@ -1,12 +1,11 @@
 package com.soapdogg.lispInterpreter.evaluator
 
 import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
-import com.soapdogg.lispInterpreter.datamodels.MyStack
+import com.soapdogg.lispInterpreter.datamodels.Stack
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
 import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
 import com.soapdogg.lispInterpreter.function.Function
-import java.util.*
 
 class FinishedProgramStackItemEvaluator(
     private val postEvaluationStackUpdater: PostEvaluationStackUpdater,
@@ -17,10 +16,10 @@ class FinishedProgramStackItemEvaluator(
     fun evaluateFinishedProgramStackItem(
         top: ProgramStackItem,
         userDefinedFunctions: Map<String, UserDefinedFunction>,
-        evalStack: MyStack<NodeV2>,
-        programStack: MyStack<ProgramStackItem>
+        evalStack: Stack<NodeV2>,
+        programStack: Stack<ProgramStackItem>
     ) {
-        val functionStack = MyStack<NodeV2>()
+        val functionStack = Stack<NodeV2>()
         for (i in 0 until top.functionExpressionNode.children.size - 1) {
             functionStack.push(evalStack.pop())
         }

@@ -1,6 +1,6 @@
 package com.soapdogg.lispInterpreter.datamodels
 
-class MyStack<T> {
+class Stack<T> {
 
     private val elements = mutableListOf<T>()
 

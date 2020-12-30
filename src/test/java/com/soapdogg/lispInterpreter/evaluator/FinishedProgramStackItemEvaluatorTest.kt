@@ -3,13 +3,12 @@ package com.soapdogg.lispInterpreter.evaluator
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
 import com.soapdogg.lispInterpreter.datamodels.*
+import com.soapdogg.lispInterpreter.datamodels.Stack
 import com.soapdogg.lispInterpreter.function.Function
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
 import java.lang.Exception
-import java.util.*
 import kotlin.collections.HashMap
 
 class FinishedProgramStackItemEvaluatorTest {
@@ -30,8 +29,8 @@ class FinishedProgramStackItemEvaluatorTest {
     fun functionNameIsNilTest() {
         val top = Mockito.mock(ProgramStackItem::class.java)
         val userDefinedFunctions = emptyMap<String, UserDefinedFunction>()
-        val evalStack = MyStack<NodeV2>()
-        val programStack = MyStack<ProgramStackItem>()
+        val evalStack = Stack<NodeV2>()
+        val programStack = Stack<ProgramStackItem>()
 
         val functionExpressionNode = Mockito.mock(ExpressionListNode::class.java)
         Mockito.`when`(top.functionExpressionNode).thenReturn(functionExpressionNode)
@@ -73,8 +72,8 @@ class FinishedProgramStackItemEvaluatorTest {
     fun functionNameIsBuiltInFunctionTest() {
         val top = Mockito.mock(ProgramStackItem::class.java)
         val userDefinedFunctions = emptyMap<String, UserDefinedFunction>()
-        val evalStack = MyStack<NodeV2>()
-        val programStack = MyStack<ProgramStackItem>()
+        val evalStack = Stack<NodeV2>()
+        val programStack = Stack<ProgramStackItem>()
 
         val functionExpressionNode = Mockito.mock(ExpressionListNode::class.java)
         Mockito.`when`(top.functionExpressionNode).thenReturn(functionExpressionNode)
@@ -94,7 +93,7 @@ class FinishedProgramStackItemEvaluatorTest {
         val function = Mockito.mock(Function::class.java)
         functionMap[functionName] = function
 
-        val functionStack = MyStack<NodeV2>()
+        val functionStack = Stack<NodeV2>()
 
         Assertions.assertDoesNotThrow {
             finishedProgramStackItemEvaluator.evaluateFinishedProgramStackItem(
@@ -120,8 +119,8 @@ class FinishedProgramStackItemEvaluatorTest {
     @Test
     fun functionNameIsUserDefinedFunctionTest() {
         val top = Mockito.mock(ProgramStackItem::class.java)
-        val evalStack = MyStack<NodeV2>()
-        val programStack = MyStack<ProgramStackItem>()
+        val evalStack = Stack<NodeV2>()
+        val programStack = Stack<ProgramStackItem>()
 
         val functionExpressionNode = Mockito.mock(ExpressionListNode::class.java)
         Mockito.`when`(top.functionExpressionNode).thenReturn(functionExpressionNode)
@@ -144,7 +143,7 @@ class FinishedProgramStackItemEvaluatorTest {
             Pair(functionName, userDefinedFunction)
         )
 
-        val functionStack = MyStack<NodeV2>()
+        val functionStack = Stack<NodeV2>()
 
         Assertions.assertDoesNotThrow {
             finishedProgramStackItemEvaluator.evaluateFinishedProgramStackItem(
@@ -172,8 +171,8 @@ class FinishedProgramStackItemEvaluatorTest {
     fun functionNameIsInvalidCarValueTest() {
         val top = Mockito.mock(ProgramStackItem::class.java)
         val userDefinedFunctions = emptyMap<String, UserDefinedFunction>()
-        val evalStack = MyStack<NodeV2>()
-        val programStack = MyStack<ProgramStackItem>()
+        val evalStack = Stack<NodeV2>()
+        val programStack = Stack<ProgramStackItem>()
 
         val functionExpressionNode = Mockito.mock(ExpressionListNode::class.java)
         Mockito.`when`(top.functionExpressionNode).thenReturn(functionExpressionNode)

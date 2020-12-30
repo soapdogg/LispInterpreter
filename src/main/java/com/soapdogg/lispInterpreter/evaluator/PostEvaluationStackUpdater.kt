@@ -1,10 +1,9 @@
 package com.soapdogg.lispInterpreter.evaluator
 
 import com.soapdogg.lispInterpreter.datamodels.AtomNode
-import com.soapdogg.lispInterpreter.datamodels.MyStack
+import com.soapdogg.lispInterpreter.datamodels.Stack
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
-import java.util.*
 
 class PostEvaluationStackUpdater(
     private val topProgramStackItemUpdater: TopProgramStackItemUpdater
@@ -13,8 +12,8 @@ class PostEvaluationStackUpdater(
     fun updateStacksAfterEvaluation(
         evaluatedNode: NodeV2,
         variableMap: Map<String, NodeV2>,
-        evalStack: MyStack<NodeV2>,
-        programStack: MyStack<ProgramStackItem>
+        evalStack: Stack<NodeV2>,
+        programStack: Stack<ProgramStackItem>
     ) {
         val nodeToPush = if (evaluatedNode is AtomNode) {
             variableMap.getOrDefault(evaluatedNode.value, evaluatedNode)
