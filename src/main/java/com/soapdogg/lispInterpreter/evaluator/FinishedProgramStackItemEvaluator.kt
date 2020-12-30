@@ -17,7 +17,7 @@ class FinishedProgramStackItemEvaluator(
     fun evaluateFinishedProgramStackItem(
         top: ProgramStackItem,
         userDefinedFunctions: Map<String, UserDefinedFunction>,
-        evalStack: Stack<NodeV2>,
+        evalStack: MyStack<NodeV2>,
         programStack: MyStack<ProgramStackItem>
     ) {
         val functionStack = MyStack<NodeV2>()

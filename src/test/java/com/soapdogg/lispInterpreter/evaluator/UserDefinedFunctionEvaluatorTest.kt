@@ -21,7 +21,7 @@ class UserDefinedFunctionEvaluatorTest {
         val userDefinedFunction = Mockito.mock(UserDefinedFunction::class.java)
         val variableMap = emptyMap<String, NodeV2>()
         val functionStack = MyStack<NodeV2>()
-        val evalStack = Stack<NodeV2>()
+        val evalStack = MyStack<NodeV2>()
         val programStack = MyStack<ProgramStackItem>()
 
         val formalParameter0 = "formalParameter0"

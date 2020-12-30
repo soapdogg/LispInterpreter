@@ -3,7 +3,6 @@ package com.soapdogg.lispInterpreter.evaluator
 import com.soapdogg.lispInterpreter.datamodels.MyStack
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
-import java.util.*
 
 class UnfinishedProgramStackItemEvaluator(
     private val stackUpdateDeterminer: StackUpdateDeterminer
@@ -11,7 +10,7 @@ class UnfinishedProgramStackItemEvaluator(
 
     fun evaluateUnfinishedProgramStackItem(
         top: ProgramStackItem,
-        evalStack: Stack<NodeV2>,
+        evalStack: MyStack<NodeV2>,
         programStack: MyStack<ProgramStackItem>
     ) {
         val nthChild = top.functionExpressionNode.children[top.currentParameterIndex]

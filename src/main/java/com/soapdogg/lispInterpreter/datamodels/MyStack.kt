@@ -8,7 +8,7 @@ class MyStack<T> {
 
     fun pop(): T {
         val item = elements.last()
-        elements.remove(item)
+        elements.removeLast()
         return item
     }
 

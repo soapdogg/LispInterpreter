@@ -14,7 +14,7 @@ class StackUpdateDeterminer (
     fun determineHowToUpdateStacks(
         node: NodeV2,
         variableMap: Map<String, NodeV2>,
-        evalStack: Stack<NodeV2>,
+        evalStack: MyStack<NodeV2>,
         programStack: MyStack<ProgramStackItem>
     ) {
         if (node is ExpressionListNode) {

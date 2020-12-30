@@ -30,7 +30,7 @@ class RootNodeEvaluatorTest {
         val rootNode = Mockito.mock(ExpressionListNode::class.java)
         val userDefinedFunctions = emptyMap<String, UserDefinedFunction>()
         val programStack = MyStack<ProgramStackItem>()
-        val evalStack = Stack<NodeV2>()
+        val evalStack = MyStack<NodeV2>()
 
         val rootProgramStackItem = Mockito.mock(ProgramStackItem::class.java)
         Mockito.`when`(
@@ -76,7 +76,7 @@ class RootNodeEvaluatorTest {
         val rootNode = Mockito.mock(ExpressionListNode::class.java)
         val userDefinedFunctions = emptyMap<String, UserDefinedFunction>()
         val programStack = MyStack<ProgramStackItem>()
-        val evalStack = Stack<NodeV2>()
+        val evalStack = MyStack<NodeV2>()
 
         val rootProgramStackItem = Mockito.mock(ProgramStackItem::class.java)
         Mockito.`when`(
@@ -123,7 +123,7 @@ class RootNodeEvaluatorTest {
         val rootNode = Mockito.mock(ExpressionListNode::class.java)
         val userDefinedFunctions = emptyMap<String, UserDefinedFunction>()
         val programStack = MyStack<ProgramStackItem>()
-        val evalStack = Stack<NodeV2>()
+        val evalStack = MyStack<NodeV2>()
 
         val rootProgramStackItem = Mockito.mock(ProgramStackItem::class.java)
         Mockito.`when`(
@@ -170,7 +170,7 @@ class RootNodeEvaluatorTest {
         val rootNode = Mockito.mock(ExpressionListNode::class.java)
         val userDefinedFunctions = emptyMap<String, UserDefinedFunction>()
         val programStack = MyStack<ProgramStackItem>()
-        val evalStack = Stack<NodeV2>()
+        val evalStack = MyStack<NodeV2>()
 
         val rootProgramStackItem = Mockito.mock(ProgramStackItem::class.java)
         Mockito.`when`(
@@ -228,7 +228,7 @@ class RootNodeEvaluatorTest {
         val rootNode = Mockito.mock(ExpressionListNode::class.java)
         val userDefinedFunctions = emptyMap<String, UserDefinedFunction>()
         val programStack = MyStack<ProgramStackItem>()
-        val evalStack = Stack<NodeV2>()
+        val evalStack = MyStack<NodeV2>()
 
         val rootProgramStackItem = Mockito.mock(ProgramStackItem::class.java)
         Mockito.`when`(

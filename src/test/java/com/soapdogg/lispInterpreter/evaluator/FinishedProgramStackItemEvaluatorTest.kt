@@ -30,7 +30,7 @@ class FinishedProgramStackItemEvaluatorTest {
     fun functionNameIsNilTest() {
         val top = Mockito.mock(ProgramStackItem::class.java)
         val userDefinedFunctions = emptyMap<String, UserDefinedFunction>()
-        val evalStack = Stack<NodeV2>()
+        val evalStack = MyStack<NodeV2>()
         val programStack = MyStack<ProgramStackItem>()
 
         val functionExpressionNode = Mockito.mock(ExpressionListNode::class.java)
@@ -73,7 +73,7 @@ class FinishedProgramStackItemEvaluatorTest {
     fun functionNameIsBuiltInFunctionTest() {
         val top = Mockito.mock(ProgramStackItem::class.java)
         val userDefinedFunctions = emptyMap<String, UserDefinedFunction>()
-        val evalStack = Stack<NodeV2>()
+        val evalStack = MyStack<NodeV2>()
         val programStack = MyStack<ProgramStackItem>()
 
         val functionExpressionNode = Mockito.mock(ExpressionListNode::class.java)
@@ -120,7 +120,7 @@ class FinishedProgramStackItemEvaluatorTest {
     @Test
     fun functionNameIsUserDefinedFunctionTest() {
         val top = Mockito.mock(ProgramStackItem::class.java)
-        val evalStack = Stack<NodeV2>()
+        val evalStack = MyStack<NodeV2>()
         val programStack = MyStack<ProgramStackItem>()
 
         val functionExpressionNode = Mockito.mock(ExpressionListNode::class.java)
@@ -172,7 +172,7 @@ class FinishedProgramStackItemEvaluatorTest {
     fun functionNameIsInvalidCarValueTest() {
         val top = Mockito.mock(ProgramStackItem::class.java)
         val userDefinedFunctions = emptyMap<String, UserDefinedFunction>()
-        val evalStack = Stack<NodeV2>()
+        val evalStack = MyStack<NodeV2>()
         val programStack = MyStack<ProgramStackItem>()
 
         val functionExpressionNode = Mockito.mock(ExpressionListNode::class.java)

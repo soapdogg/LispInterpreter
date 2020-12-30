@@ -17,7 +17,7 @@ class QuoteFunctionEvaluatorTest {
     @Test
     fun evaluateQuoteFunctionTest() {
         val top = Mockito.mock(ProgramStackItem::class.java)
-        val evalStack = Stack<NodeV2>()
+        val evalStack = MyStack<NodeV2>()
         val programStack = MyStack<ProgramStackItem>()
 
         val quoteExprNode = Mockito.mock(ExpressionListNode::class.java)

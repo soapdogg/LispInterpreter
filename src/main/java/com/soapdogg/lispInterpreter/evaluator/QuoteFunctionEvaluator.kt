@@ -11,7 +11,7 @@ class QuoteFunctionEvaluator(
 
     fun evaluateQuoteFunction(
         top: ProgramStackItem,
-        evalStack: Stack<NodeV2>,
+        evalStack: MyStack<NodeV2>,
         programStack: MyStack<ProgramStackItem>
     ) {
         val quoteExprNode = top.functionExpressionNode

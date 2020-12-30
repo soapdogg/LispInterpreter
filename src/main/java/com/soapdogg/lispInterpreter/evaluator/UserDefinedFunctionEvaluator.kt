@@ -4,7 +4,6 @@ import com.soapdogg.lispInterpreter.datamodels.MyStack
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
 import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
-import java.util.*
 import kotlin.collections.HashMap
 
 class UserDefinedFunctionEvaluator(
@@ -15,7 +14,7 @@ class UserDefinedFunctionEvaluator(
         userDefinedFunction: UserDefinedFunction,
         variableMap: Map<String, NodeV2>,
         functionStack: MyStack<NodeV2>,
-        evalStack: Stack<NodeV2>,
+        evalStack: MyStack<NodeV2>,
         programStack: MyStack<ProgramStackItem>
     ) {
         val mapCopy = HashMap(variableMap)

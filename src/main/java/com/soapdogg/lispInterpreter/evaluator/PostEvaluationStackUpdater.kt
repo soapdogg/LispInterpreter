@@ -13,7 +13,7 @@ class PostEvaluationStackUpdater(
     fun updateStacksAfterEvaluation(
         evaluatedNode: NodeV2,
         variableMap: Map<String, NodeV2>,
-        evalStack: Stack<NodeV2>,
+        evalStack: MyStack<NodeV2>,
         programStack: MyStack<ProgramStackItem>
     ) {
         val nodeToPush = if (evaluatedNode is AtomNode) {

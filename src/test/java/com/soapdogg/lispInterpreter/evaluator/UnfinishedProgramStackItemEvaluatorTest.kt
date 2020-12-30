@@ -19,7 +19,7 @@ class UnfinishedProgramStackItemEvaluatorTest {
     @Test
     fun evaluateUnfinishedProgramStackItemTest() {
         val top = Mockito.mock(ProgramStackItem::class.java)
-        val evalStack = Stack<NodeV2>()
+        val evalStack = MyStack<NodeV2>()
         val programStack = MyStack<ProgramStackItem>()
 
         val functionExpressionNode = Mockito.mock(ExpressionListNode::class.java)

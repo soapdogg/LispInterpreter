@@ -14,7 +14,7 @@ class CondChildFunctionEvaluator(
 
     fun evaluateCondChildFunction(
         top: ProgramStackItem,
-        evalStack: Stack<NodeV2>,
+        evalStack: MyStack<NodeV2>,
         programStack: MyStack<ProgramStackItem>
     ) {
         programStack.push(top)

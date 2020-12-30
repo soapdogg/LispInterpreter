@@ -21,7 +21,7 @@ class ProgramEvaluator(
                 it as ExpressionListNode,
                 userDefinedFunctions,
                 MyStack(),
-                Stack()
+                MyStack()
             )
         }
     }

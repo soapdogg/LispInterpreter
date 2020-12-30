@@ -5,7 +5,6 @@ import com.soapdogg.lispInterpreter.datamodels.*
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
-import java.util.Stack
 
 class ProgramEvaluatorTest {
     private val userDefinedFunctions: Map<String, UserDefinedFunction> = emptyMap()

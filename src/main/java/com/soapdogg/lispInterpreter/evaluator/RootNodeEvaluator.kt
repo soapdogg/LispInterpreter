@@ -2,7 +2,6 @@ package com.soapdogg.lispInterpreter.evaluator
 
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.datamodels.*
-import java.util.Stack
 
 class RootNodeEvaluator(
     private val topProgramStackItemCreator: TopProgramStackItemCreator,
@@ -17,7 +16,7 @@ class RootNodeEvaluator(
         rootNode: ExpressionListNode,
         userDefinedFunctions: Map<String, UserDefinedFunction>,
         programStack: MyStack<ProgramStackItem>,
-        evalStack: Stack<NodeV2>
+        evalStack: MyStack<NodeV2>
     ): NodeV2 {
 
         topProgramStackItemCreator.createTopProgramStackItem(
@@ -70,6 +69,6 @@ class RootNodeEvaluator(
             }
         }
 
-        return evalStack[0]
+        return evalStack.pop()
     }
 }
