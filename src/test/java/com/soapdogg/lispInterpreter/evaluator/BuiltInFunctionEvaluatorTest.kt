@@ -1,5 +1,6 @@
 package com.soapdogg.lispInterpreter.evaluator
 
+import com.soapdogg.lispInterpreter.datamodels.MyStack
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
 import com.soapdogg.lispInterpreter.function.Function
@@ -23,7 +24,7 @@ class BuiltInFunctionEvaluatorTest {
 
     @Test
     fun evaluateBuiltInFunctionTest() {
-        val functionStack = Stack<NodeV2>()
+        val functionStack = MyStack<NodeV2>()
         val top = Mockito.mock(ProgramStackItem::class.java)
         val evalStack = Stack<NodeV2>()
         val programStack = Stack<ProgramStackItem>()

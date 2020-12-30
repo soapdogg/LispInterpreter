@@ -1,11 +1,11 @@
 package com.soapdogg.lispInterpreter.function
 
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
-import java.util.*
+import com.soapdogg.lispInterpreter.datamodels.MyStack
 
 interface Function {
 
     fun evaluate(
-        params: Stack<NodeV2>
+        params: MyStack<NodeV2>
     ): NodeV2
 }

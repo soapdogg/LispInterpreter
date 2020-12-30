@@ -1,5 +1,6 @@
 package com.soapdogg.lispInterpreter.evaluator
 
+import com.soapdogg.lispInterpreter.datamodels.MyStack
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
 import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
@@ -19,7 +20,7 @@ class UserDefinedFunctionEvaluatorTest {
     fun evaluateUserDefinedFunctionTest() {
         val userDefinedFunction = Mockito.mock(UserDefinedFunction::class.java)
         val variableMap = emptyMap<String, NodeV2>()
-        val functionStack = Stack<NodeV2>()
+        val functionStack = MyStack<NodeV2>()
         val evalStack = Stack<NodeV2>()
         val programStack = Stack<ProgramStackItem>()
 

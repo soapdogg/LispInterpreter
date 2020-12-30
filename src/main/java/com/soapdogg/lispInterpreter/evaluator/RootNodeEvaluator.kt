@@ -2,7 +2,7 @@ package com.soapdogg.lispInterpreter.evaluator
 
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.datamodels.*
-import java.util.*
+import java.util.Stack
 
 class RootNodeEvaluator(
     private val topProgramStackItemCreator: TopProgramStackItemCreator,

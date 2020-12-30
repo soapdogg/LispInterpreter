@@ -1,6 +1,7 @@
 package com.soapdogg.lispInterpreter.evaluator
 
 import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
+import com.soapdogg.lispInterpreter.datamodels.MyStack
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
 import com.soapdogg.lispInterpreter.datamodels.UserDefinedFunction
@@ -19,7 +20,7 @@ class FinishedProgramStackItemEvaluator(
         evalStack: Stack<NodeV2>,
         programStack: Stack<ProgramStackItem>
     ) {
-        val functionStack = Stack<NodeV2>()
+        val functionStack = MyStack<NodeV2>()
         for (i in 0 until top.functionExpressionNode.children.size - 1) {
             functionStack.push(evalStack.pop())
         }

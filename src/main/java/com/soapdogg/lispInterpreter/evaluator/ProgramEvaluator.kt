@@ -2,7 +2,7 @@ package com.soapdogg.lispInterpreter.evaluator
 
 import com.soapdogg.lispInterpreter.asserter.AtomRootNodeAsserter
 import com.soapdogg.lispInterpreter.datamodels.*
-import java.util.*
+import java.util.Stack
 
 class ProgramEvaluator(
     private val atomRootNodeAsserter: AtomRootNodeAsserter,
