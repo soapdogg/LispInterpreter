@@ -18,7 +18,7 @@ class FinishedProgramStackItemEvaluator(
         top: ProgramStackItem,
         userDefinedFunctions: Map<String, UserDefinedFunction>,
         evalStack: Stack<NodeV2>,
-        programStack: Stack<ProgramStackItem>
+        programStack: MyStack<ProgramStackItem>
     ) {
         val functionStack = MyStack<NodeV2>()
         for (i in 0 until top.functionExpressionNode.children.size - 1) {

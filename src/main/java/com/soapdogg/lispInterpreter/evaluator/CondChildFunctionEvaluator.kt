@@ -3,6 +3,7 @@ package com.soapdogg.lispInterpreter.evaluator
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.constants.ReservedValuesConstants
 import com.soapdogg.lispInterpreter.datamodels.AtomNode
+import com.soapdogg.lispInterpreter.datamodels.MyStack
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
 import java.util.*
@@ -14,7 +15,7 @@ class CondChildFunctionEvaluator(
     fun evaluateCondChildFunction(
         top: ProgramStackItem,
         evalStack: Stack<NodeV2>,
-        programStack: Stack<ProgramStackItem>
+        programStack: MyStack<ProgramStackItem>
     ) {
         programStack.push(top)
         val condChildCurrentParam = top.functionExpressionNode.children[top.currentParameterIndex +1]

@@ -1,9 +1,6 @@
 package com.soapdogg.lispInterpreter.evaluator
 
-import com.soapdogg.lispInterpreter.datamodels.AtomNode
-import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
-import com.soapdogg.lispInterpreter.datamodels.NodeV2
-import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
+import com.soapdogg.lispInterpreter.datamodels.*
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 import java.util.*
@@ -23,7 +20,7 @@ class StackUpdaterDeterminerTest {
         val node = Mockito.mock(ExpressionListNode::class.java)
         val variableMap = emptyMap<String, NodeV2>()
         val evalStack = Stack<NodeV2>()
-        val programStack = Stack<ProgramStackItem>()
+        val programStack = MyStack<ProgramStackItem>()
 
         val child0 = Mockito.mock(NodeV2::class.java)
         val child1 = Mockito.mock(NodeV2::class.java)
@@ -51,7 +48,7 @@ class StackUpdaterDeterminerTest {
         val node = Mockito.mock(ExpressionListNode::class.java)
         val variableMap = emptyMap<String, NodeV2>()
         val evalStack = Stack<NodeV2>()
-        val programStack = Stack<ProgramStackItem>()
+        val programStack = MyStack<ProgramStackItem>()
 
         val child0 = Mockito.mock(NodeV2::class.java)
         val children = listOf(child0)
@@ -79,7 +76,7 @@ class StackUpdaterDeterminerTest {
         val node = Mockito.mock(AtomNode::class.java)
         val variableMap = emptyMap<String, NodeV2>()
         val evalStack = Stack<NodeV2>()
-        val programStack = Stack<ProgramStackItem>()
+        val programStack = MyStack<ProgramStackItem>()
 
         stackUpdateDeterminer.determineHowToUpdateStacks(
             node,

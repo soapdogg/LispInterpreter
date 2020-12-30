@@ -16,7 +16,7 @@ class BuiltInFunctionEvaluator(
         functionStack: MyStack<NodeV2>,
         top: ProgramStackItem,
         evalStack: Stack<NodeV2>,
-        programStack: Stack<ProgramStackItem>
+        programStack: MyStack<ProgramStackItem>
     ) {
         val function = functionMap.getValue(functionName)
         val evaluatedFunctionResult = function.evaluate(functionStack)

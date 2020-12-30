@@ -1,5 +1,6 @@
 package com.soapdogg.lispInterpreter.evaluator
 
+import com.soapdogg.lispInterpreter.datamodels.MyStack
 import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
 import com.soapdogg.lispInterpreter.exceptions.NotAListException
 import org.junit.jupiter.api.Assertions
@@ -20,7 +21,7 @@ class CondFunctionEvaluatorTest {
     @Test
     fun currentParameterIndexIsZeroTest() {
         val top = Mockito.mock(ProgramStackItem::class.java)
-        val programStack = Stack<ProgramStackItem>()
+        val programStack = MyStack<ProgramStackItem>()
 
         val currentParameterIndex = 0
         Mockito.`when`(top.currentParameterIndex).thenReturn(currentParameterIndex)
@@ -41,7 +42,7 @@ class CondFunctionEvaluatorTest {
     @Test
     fun noCondConditionsEvaluatedToTrueTest() {
         val top = Mockito.mock(ProgramStackItem::class.java)
-        val programStack = Stack<ProgramStackItem>()
+        val programStack = MyStack<ProgramStackItem>()
 
         val currentParameterIndex = 1
         Mockito.`when`(top.currentParameterIndex).thenReturn(currentParameterIndex)

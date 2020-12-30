@@ -31,7 +31,7 @@ class FinishedProgramStackItemEvaluatorTest {
         val top = Mockito.mock(ProgramStackItem::class.java)
         val userDefinedFunctions = emptyMap<String, UserDefinedFunction>()
         val evalStack = Stack<NodeV2>()
-        val programStack = Stack<ProgramStackItem>()
+        val programStack = MyStack<ProgramStackItem>()
 
         val functionExpressionNode = Mockito.mock(ExpressionListNode::class.java)
         Mockito.`when`(top.functionExpressionNode).thenReturn(functionExpressionNode)
@@ -74,7 +74,7 @@ class FinishedProgramStackItemEvaluatorTest {
         val top = Mockito.mock(ProgramStackItem::class.java)
         val userDefinedFunctions = emptyMap<String, UserDefinedFunction>()
         val evalStack = Stack<NodeV2>()
-        val programStack = Stack<ProgramStackItem>()
+        val programStack = MyStack<ProgramStackItem>()
 
         val functionExpressionNode = Mockito.mock(ExpressionListNode::class.java)
         Mockito.`when`(top.functionExpressionNode).thenReturn(functionExpressionNode)
@@ -121,7 +121,7 @@ class FinishedProgramStackItemEvaluatorTest {
     fun functionNameIsUserDefinedFunctionTest() {
         val top = Mockito.mock(ProgramStackItem::class.java)
         val evalStack = Stack<NodeV2>()
-        val programStack = Stack<ProgramStackItem>()
+        val programStack = MyStack<ProgramStackItem>()
 
         val functionExpressionNode = Mockito.mock(ExpressionListNode::class.java)
         Mockito.`when`(top.functionExpressionNode).thenReturn(functionExpressionNode)
@@ -173,7 +173,7 @@ class FinishedProgramStackItemEvaluatorTest {
         val top = Mockito.mock(ProgramStackItem::class.java)
         val userDefinedFunctions = emptyMap<String, UserDefinedFunction>()
         val evalStack = Stack<NodeV2>()
-        val programStack = Stack<ProgramStackItem>()
+        val programStack = MyStack<ProgramStackItem>()
 
         val functionExpressionNode = Mockito.mock(ExpressionListNode::class.java)
         Mockito.`when`(top.functionExpressionNode).thenReturn(functionExpressionNode)

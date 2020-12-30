@@ -1,5 +1,6 @@
 package com.soapdogg.lispInterpreter.evaluator
 
+import com.soapdogg.lispInterpreter.datamodels.MyStack
 import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
 import com.soapdogg.lispInterpreter.exceptions.NotAListException
 import java.util.*
@@ -11,7 +12,7 @@ class CondFunctionEvaluator(
 
     fun evaluateCondProgramStackItem(
         top: ProgramStackItem,
-        programStack: Stack<ProgramStackItem>
+        programStack: MyStack<ProgramStackItem>
     ) {
         programStack.push(top)
         when (top.currentParameterIndex) {

@@ -27,7 +27,7 @@ class BuiltInFunctionEvaluatorTest {
         val functionStack = MyStack<NodeV2>()
         val top = Mockito.mock(ProgramStackItem::class.java)
         val evalStack = Stack<NodeV2>()
-        val programStack = Stack<ProgramStackItem>()
+        val programStack = MyStack<ProgramStackItem>()
 
         val variableMap = emptyMap<String, NodeV2>()
         Mockito.`when`(top.variableMap).thenReturn(variableMap)

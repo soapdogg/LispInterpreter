@@ -1,5 +1,6 @@
 package com.soapdogg.lispInterpreter.evaluator
 
+import com.soapdogg.lispInterpreter.datamodels.MyStack
 import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
 import com.soapdogg.lispInterpreter.generator.ProgramStackItemGenerator
 import java.util.*
@@ -9,7 +10,7 @@ class TopProgramStackItemUpdater (
 ) {
 
     fun updateTopProgramStackItemToNextChild(
-        programStack: Stack<ProgramStackItem>
+        programStack: MyStack<ProgramStackItem>
     ) {
         if (programStack.isNotEmpty()) {
             val head = programStack.pop()

@@ -20,7 +20,7 @@ class ProgramEvaluator(
             rootNodeEvaluator.evaluate(
                 it as ExpressionListNode,
                 userDefinedFunctions,
-                Stack(),
+                MyStack(),
                 Stack()
             )
         }

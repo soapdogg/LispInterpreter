@@ -1,6 +1,7 @@
 package com.soapdogg.lispInterpreter.evaluator
 
 import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
+import com.soapdogg.lispInterpreter.datamodels.MyStack
 import com.soapdogg.lispInterpreter.datamodels.NodeV2
 import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
 import com.soapdogg.lispInterpreter.generator.ProgramStackItemGenerator
@@ -19,7 +20,7 @@ class TopProgramStackItemCreatorTest {
     fun createTopProgramStackItemTest() {
         val expressionListNode = Mockito.mock(ExpressionListNode::class.java)
         val variableMap = emptyMap<String, NodeV2>()
-        val programStack = Stack<ProgramStackItem>()
+        val programStack = MyStack<ProgramStackItem>()
 
         val top = Mockito.mock(ProgramStackItem::class.java)
         Mockito.`when`(
@@ -35,7 +36,7 @@ class TopProgramStackItemCreatorTest {
             programStack
         )
 
-        Assertions.assertEquals(1, programStack.size)
+        Assertions.assertEquals(1, programStack.size())
         Assertions.assertEquals(top, programStack.peek())
     }
 }

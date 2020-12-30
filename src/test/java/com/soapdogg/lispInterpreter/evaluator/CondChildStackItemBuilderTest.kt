@@ -1,10 +1,7 @@
 package com.soapdogg.lispInterpreter.evaluator
 
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
-import com.soapdogg.lispInterpreter.datamodels.AtomNode
-import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
-import com.soapdogg.lispInterpreter.datamodels.NodeV2
-import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
+import com.soapdogg.lispInterpreter.datamodels.*
 import com.soapdogg.lispInterpreter.generator.NodeGenerator
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
@@ -23,7 +20,7 @@ class CondChildStackItemBuilderTest {
     @Test
     fun buildCondChildStackItemsTest() {
         val condProgramStackItem = Mockito.mock(ProgramStackItem::class.java)
-        val programStack = Stack<ProgramStackItem>()
+        val programStack = MyStack<ProgramStackItem>()
 
         val variableMap = emptyMap<String, NodeV2>()
         Mockito.`when`(condProgramStackItem.variableMap).thenReturn(variableMap)

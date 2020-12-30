@@ -2,6 +2,7 @@ package com.soapdogg.lispInterpreter.evaluator
 
 import com.soapdogg.lispInterpreter.constants.FunctionNameConstants
 import com.soapdogg.lispInterpreter.datamodels.ExpressionListNode
+import com.soapdogg.lispInterpreter.datamodels.MyStack
 import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
 import com.soapdogg.lispInterpreter.generator.NodeGenerator
 import java.util.*
@@ -13,7 +14,7 @@ class CondChildStackItemBuilder(
 
     fun buildCondChildStackItems(
         condProgramStackItem: ProgramStackItem,
-        programStack: Stack<ProgramStackItem>
+        programStack: MyStack<ProgramStackItem>
     ) {
         val variableMap = condProgramStackItem.variableMap
         val condChildren = condProgramStackItem.functionExpressionNode.children

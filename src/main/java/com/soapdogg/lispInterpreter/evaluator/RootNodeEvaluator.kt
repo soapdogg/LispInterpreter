@@ -16,7 +16,7 @@ class RootNodeEvaluator(
     fun evaluate(
         rootNode: ExpressionListNode,
         userDefinedFunctions: Map<String, UserDefinedFunction>,
-        programStack: Stack<ProgramStackItem>,
+        programStack: MyStack<ProgramStackItem>,
         evalStack: Stack<NodeV2>
     ): NodeV2 {
 

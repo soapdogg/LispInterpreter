@@ -22,7 +22,7 @@ class UserDefinedFunctionEvaluatorTest {
         val variableMap = emptyMap<String, NodeV2>()
         val functionStack = MyStack<NodeV2>()
         val evalStack = Stack<NodeV2>()
-        val programStack = Stack<ProgramStackItem>()
+        val programStack = MyStack<ProgramStackItem>()
 
         val formalParameter0 = "formalParameter0"
         Mockito.`when`(userDefinedFunction.formalParameters).thenReturn(listOf(formalParameter0))

@@ -1,5 +1,6 @@
 package com.soapdogg.lispInterpreter.evaluator
 
+import com.soapdogg.lispInterpreter.datamodels.MyStack
 import com.soapdogg.lispInterpreter.datamodels.ProgramStackItem
 import com.soapdogg.lispInterpreter.generator.ProgramStackItemGenerator
 import org.junit.jupiter.api.Assertions
@@ -19,7 +20,7 @@ class TopProgramStackItemUpdaterTest {
     fun updateTopProgramStackItemToNextChildTest() {
         val programStackItem = Mockito.mock(ProgramStackItem::class.java)
 
-        val programStack = Stack<ProgramStackItem>()
+        val programStack = MyStack<ProgramStackItem>()
         programStack.push(programStackItem)
 
         val updatedHead = Mockito.mock(ProgramStackItem::class.java)
@@ -33,18 +34,18 @@ class TopProgramStackItemUpdaterTest {
             programStack
         )
 
-        Assertions.assertEquals(1, programStack.size)
+        Assertions.assertEquals(1, programStack.size())
         Assertions.assertEquals(updatedHead, programStack.peek())
     }
 
     @Test
     fun updateTopProgramStackItemToNextChildEmptyStackTest() {
-        val programStack = Stack<ProgramStackItem>()
+        val programStack = MyStack<ProgramStackItem>()
         topProgramStackItemUpdater.updateTopProgramStackItemToNextChild(
             programStack
         )
 
-        Assertions.assertTrue(programStack.empty())
+        Assertions.assertTrue(programStack.isEmpty())
         Mockito.verifyNoInteractions(programStackItemGenerator)
     }
 }

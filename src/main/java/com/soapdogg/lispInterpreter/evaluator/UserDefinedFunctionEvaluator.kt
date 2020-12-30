@@ -16,7 +16,7 @@ class UserDefinedFunctionEvaluator(
         variableMap: Map<String, NodeV2>,
         functionStack: MyStack<NodeV2>,
         evalStack: Stack<NodeV2>,
-        programStack: Stack<ProgramStackItem>
+        programStack: MyStack<ProgramStackItem>
     ) {
         val mapCopy = HashMap(variableMap)
         userDefinedFunction.formalParameters.forEach {
