@@ -2,10 +2,11 @@ package com.soapdogg.lispInterpreter.evaluator
 
 import com.soapdogg.lispInterpreter.asserter.AtomRootNodeAsserter
 import com.soapdogg.lispInterpreter.datamodels.*
+import java.util.*
 
 class ProgramEvaluator(
     private val atomRootNodeAsserter: AtomRootNodeAsserter,
-    private val nodeEvaluatorIterative: NodeEvaluatorIterative
+    private val rootNodeEvaluator: RootNodeEvaluator
 ) {
     fun evaluatePostOrder(
         rootNodes: List<NodeV2>,
@@ -16,9 +17,11 @@ class ProgramEvaluator(
                 atomRootNodeAsserter.assertAtomRootNode(it)
                 return@map it
             }
-            nodeEvaluatorIterative.evaluate(
+            rootNodeEvaluator.evaluate(
                 it as ExpressionListNode,
-                userDefinedFunctions
+                userDefinedFunctions,
+                Stack(),
+                Stack()
             )
         }
     }

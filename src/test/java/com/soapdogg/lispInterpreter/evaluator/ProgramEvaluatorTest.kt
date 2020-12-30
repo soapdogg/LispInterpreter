@@ -5,12 +5,13 @@ import com.soapdogg.lispInterpreter.datamodels.*
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
+import java.util.*
 
 class ProgramEvaluatorTest {
     private val userDefinedFunctions: Map<String, UserDefinedFunction> = emptyMap()
 
     private val atomRootNodeAsserter = Mockito.mock(AtomRootNodeAsserter::class.java)
-    private val nodeEvaluatorIterative = Mockito.mock(NodeEvaluatorIterative::class.java)
+    private val nodeEvaluatorIterative = Mockito.mock(RootNodeEvaluator::class.java)
 
     private val programEvaluator = ProgramEvaluator(
         atomRootNodeAsserter,
@@ -39,7 +40,9 @@ class ProgramEvaluatorTest {
         Mockito.`when`(
             nodeEvaluatorIterative.evaluate(
                 expressionNode,
-                userDefinedFunctions
+                userDefinedFunctions,
+                Stack(),
+                Stack()
             )
         ).thenReturn(evaluatedNode)
         val actual = programEvaluator.evaluatePostOrder(

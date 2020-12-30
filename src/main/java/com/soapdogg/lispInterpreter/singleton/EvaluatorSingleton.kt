@@ -60,7 +60,7 @@ enum class EvaluatorSingleton {
         userDefinedFunctionEvaluator
     )
 
-    private val nodeEvaluatorIterative = NodeEvaluatorIterative(
+    private val nodeEvaluatorIterative = RootNodeEvaluator(
         topProgramStackItemCreator,
         condProgramStackItemEvaluator,
         condChildFunctionEvaluator,
